@@ -1,11 +1,5 @@
 #pragma once
-
-#include <stdint.h>
-#include <cstddef>
-
-template<int N> class reserved_t { private: uint32_t m_pad[N]; };
-
-static inline uint32_t BV(uint8_t x) { return 1 << x; }
+#include "stm32.h"
 
 ////
 //
