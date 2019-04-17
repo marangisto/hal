@@ -7,7 +7,7 @@ extern uint32_t __estack;
 
 extern void main(void);
 
-__attribute__ ((section(".text"))) void __reset(void)
+__attribute__ ((section(".text"))) void Reset_HDLR(void)
 {
     uint32_t *bss = &__sbss;
     uint32_t *data = &__sdata;
@@ -29,11 +29,11 @@ __attribute__ ((section(".text"))) void __reset(void)
 
 __attribute__ ((section(".text"), optimize("-O3"))) void __nothing(void) {}
 
-void ISR_NMI(void) __attribute__ ((weak, alias("__nothing")));
-void ISR_HardFault(void) __attribute__ ((weak, alias("__nothing")));
-void ISR_SVCall(void) __attribute__ ((weak, alias("__nothing")));
-void ISR_PendSV(void) __attribute__ ((weak, alias("__nothing")));
-void ISR_SysTick(void) __attribute__ ((weak, alias("__nothing")));
+void NMI_HDLR(void) __attribute__ ((weak, alias("__nothing")));
+void HardFault_HDLR(void) __attribute__ ((weak, alias("__nothing")));
+void SVCall_HDLR(void) __attribute__ ((weak, alias("__nothing")));
+void PendSV_HDLR(void) __attribute__ ((weak, alias("__nothing")));
+void SysTick_HDLR(void) __attribute__ ((weak, alias("__nothing")));
 
 void ISR_WWDG(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_PVD_VDDIO2(void) __attribute__ ((weak, alias("__nothing")));
@@ -77,9 +77,9 @@ struct __vector_table
 
 struct __vector_table vectors __attribute__ ((section(".vectors"))) =
     { &__estack
-    , { __reset
-      , ISR_NMI
-      , ISR_HardFault
+    , { Reset_HDLR
+      , NMI_HDLR
+      , HardFault_HDLR
       , 0x0
       , 0x0
       , 0x0
@@ -87,11 +87,11 @@ struct __vector_table vectors __attribute__ ((section(".vectors"))) =
       , 0x0
       , 0x0
       , 0x0
-      , ISR_SVCall
+      , SVCall_HDLR
       , 0x0
       , 0x0
-      , ISR_PendSV
-      , ISR_SysTick
+      , PendSV_HDLR
+      , SysTick_HDLR
       }
     , { ISR_WWDG
       , ISR_PVD_VDDIO2

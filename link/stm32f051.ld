@@ -1,6 +1,6 @@
 /* STM32F051 64k FLASH, 8k RAM */
 
-ENTRY(__reset)
+ENTRY(Reset_HDLR)
 
 MEMORY
 {
