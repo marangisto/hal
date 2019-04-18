@@ -20,11 +20,41 @@ template<> struct port_traits<A>
     static inline void setup() { rcc::RCC.AHBENR |= BV(rcc::AHBENR::IOPAEN); }
 };
 
+template<> struct port_traits<B>
+{
+    typedef gpiob::gpiob_t gpio_t;
+    static inline gpio_t& gpio() { return gpiob::GPIOB; }
+    static inline void setup() { rcc::RCC.AHBENR |= BV(rcc::AHBENR::IOPBEN); }
+};
+
 template<> struct port_traits<C>
 {
     typedef gpioc::gpioc_t gpio_t;
     static inline gpio_t& gpio() { return gpioc::GPIOC; }
     static inline void setup() { rcc::RCC.AHBENR |= BV(rcc::AHBENR::IOPCEN); }
+};
+
+template<> struct port_traits<D>
+{
+    typedef gpiod::gpiod_t gpio_t;
+    static inline gpio_t& gpio() { return gpiod::GPIOD; }
+    static inline void setup() { rcc::RCC.AHBENR |= BV(rcc::AHBENR::IOPDEN); }
+};
+
+#if defined(STM32F07x) || defined(STM32F09x)
+template<> struct port_traits<E>
+{
+    typedef gpioe::gpioe_t gpio_t;
+    static inline gpio_t& gpio() { return gpioe::GPIOE; }
+    static inline void setup() { rcc::RCC.AHBENR |= BV(rcc::AHBENR::IOPEEN); }
+};
+#endif
+
+template<> struct port_traits<F>
+{
+    typedef gpiof::gpiof_t gpio_t;
+    static inline gpio_t& gpio() { return gpiof::GPIOF; }
+    static inline void setup() { rcc::RCC.AHBENR |= BV(rcc::AHBENR::IOPFEN); }
 };
 
 template<port_enum_t PORT, int BIT>
@@ -58,3 +88,4 @@ private:
 }
 
 }
+
