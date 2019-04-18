@@ -35,16 +35,18 @@ struct crc_t
     volatile uint32_t    INIT;                 // [Read-write] Initial CRC value
 };
 
-crc_t& CRC = *reinterpret_cast<crc_t*>(0x40023000);
+static crc_t& CRC = *reinterpret_cast<crc_t*>(0x40023000);
 
 namespace DR // Data register fields
 {
     static const uint8_t DR = 0;               // Data register bits (32 bits)
+    static const uint32_t RESET_VALUE = 0xffffffff;
 }
 
 namespace IDR // Independent data register fields
 {
     static const uint8_t IDR = 0;              // General-purpose 8-bit data register bits (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR // Control register fields
@@ -53,11 +55,13 @@ namespace CR // Control register fields
     static const uint8_t POLYSIZE = 3;         // Polynomial size (2 bits)
     static const uint8_t REV_IN = 5;           // Reverse input data (2 bits)
     static const uint8_t REV_OUT = 7;          // Reverse output data
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace INIT // Initial CRC value fields
 {
     static const uint8_t INIT = 0;             // Programmable initial CRC value (32 bits)
+    static const uint32_t RESET_VALUE = 0xffffffff;
 }
 
 }
@@ -86,7 +90,7 @@ struct gpiof_t
     volatile uint32_t    BRR;                  // [Write-only] Port bit reset register
 };
 
-gpiof_t& GPIOF = *reinterpret_cast<gpiof_t*>(0x48001400);
+static gpiof_t& GPIOF = *reinterpret_cast<gpiof_t*>(0x48001400);
 
 namespace MODER // GPIO port mode register fields
 {
@@ -106,6 +110,7 @@ namespace MODER // GPIO port mode register fields
     static const uint8_t MODER2 = 4;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t MODER1 = 2;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t MODER0 = 0;           // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OTYPER // GPIO port output type register fields
@@ -126,6 +131,7 @@ namespace OTYPER // GPIO port output type register fields
     static const uint8_t OT2 = 2;              // Port x configuration bit 2
     static const uint8_t OT1 = 1;              // Port x configuration bit 1
     static const uint8_t OT0 = 0;              // Port x configuration bit 0
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OSPEEDR // GPIO port output speed register fields
@@ -146,6 +152,7 @@ namespace OSPEEDR // GPIO port output speed register fields
     static const uint8_t OSPEEDR2 = 4;         // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t OSPEEDR1 = 2;         // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t OSPEEDR0 = 0;         // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PUPDR // GPIO port pull-up/pull-down register fields
@@ -166,6 +173,7 @@ namespace PUPDR // GPIO port pull-up/pull-down register fields
     static const uint8_t PUPDR2 = 4;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t PUPDR1 = 2;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t PUPDR0 = 0;           // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IDR // GPIO port input data register fields
@@ -186,6 +194,7 @@ namespace IDR // GPIO port input data register fields
     static const uint8_t IDR2 = 2;             // Port input data (y = 0..15)
     static const uint8_t IDR1 = 1;             // Port input data (y = 0..15)
     static const uint8_t IDR0 = 0;             // Port input data (y = 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ODR // GPIO port output data register fields
@@ -206,6 +215,7 @@ namespace ODR // GPIO port output data register fields
     static const uint8_t ODR2 = 2;             // Port output data (y = 0..15)
     static const uint8_t ODR1 = 1;             // Port output data (y = 0..15)
     static const uint8_t ODR0 = 0;             // Port output data (y = 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BSRR // GPIO port bit set/reset register fields
@@ -242,6 +252,7 @@ namespace BSRR // GPIO port bit set/reset register fields
     static const uint8_t BS2 = 2;              // Port x set bit y (y= 0..15)
     static const uint8_t BS1 = 1;              // Port x set bit y (y= 0..15)
     static const uint8_t BS0 = 0;              // Port x set bit y (y= 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace LCKR // GPIO port configuration lock register fields
@@ -263,6 +274,7 @@ namespace LCKR // GPIO port configuration lock register fields
     static const uint8_t LCK2 = 2;             // Port x lock bit y (y= 0..15)
     static const uint8_t LCK1 = 1;             // Port x lock bit y (y= 0..15)
     static const uint8_t LCK0 = 0;             // Port x lock bit y (y= 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace AFRL // GPIO alternate function low register fields
@@ -275,6 +287,7 @@ namespace AFRL // GPIO alternate function low register fields
     static const uint8_t AFRL2 = 8;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint8_t AFRL1 = 4;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint8_t AFRL0 = 0;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace AFRH // GPIO alternate function high register fields
@@ -287,6 +300,7 @@ namespace AFRH // GPIO alternate function high register fields
     static const uint8_t AFRH10 = 8;           // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint8_t AFRH9 = 4;            // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint8_t AFRH8 = 0;            // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BRR // Port bit reset register fields
@@ -307,6 +321,7 @@ namespace BRR // Port bit reset register fields
     static const uint8_t BR13 = 13;            // Port x Reset bit y
     static const uint8_t BR14 = 14;            // Port x Reset bit y
     static const uint8_t BR15 = 15;            // Port x Reset bit y
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -335,7 +350,7 @@ struct gpiod_t
     volatile uint32_t    BRR;                  // [Write-only] Port bit reset register
 };
 
-gpiod_t& GPIOD = *reinterpret_cast<gpiod_t*>(0x48000c00);
+static gpiod_t& GPIOD = *reinterpret_cast<gpiod_t*>(0x48000c00);
 
 namespace MODER // GPIO port mode register fields
 {
@@ -355,6 +370,7 @@ namespace MODER // GPIO port mode register fields
     static const uint8_t MODER2 = 4;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t MODER1 = 2;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t MODER0 = 0;           // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OTYPER // GPIO port output type register fields
@@ -375,6 +391,7 @@ namespace OTYPER // GPIO port output type register fields
     static const uint8_t OT2 = 2;              // Port x configuration bit 2
     static const uint8_t OT1 = 1;              // Port x configuration bit 1
     static const uint8_t OT0 = 0;              // Port x configuration bit 0
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OSPEEDR // GPIO port output speed register fields
@@ -395,6 +412,7 @@ namespace OSPEEDR // GPIO port output speed register fields
     static const uint8_t OSPEEDR2 = 4;         // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t OSPEEDR1 = 2;         // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t OSPEEDR0 = 0;         // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PUPDR // GPIO port pull-up/pull-down register fields
@@ -415,6 +433,7 @@ namespace PUPDR // GPIO port pull-up/pull-down register fields
     static const uint8_t PUPDR2 = 4;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t PUPDR1 = 2;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t PUPDR0 = 0;           // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IDR // GPIO port input data register fields
@@ -435,6 +454,7 @@ namespace IDR // GPIO port input data register fields
     static const uint8_t IDR2 = 2;             // Port input data (y = 0..15)
     static const uint8_t IDR1 = 1;             // Port input data (y = 0..15)
     static const uint8_t IDR0 = 0;             // Port input data (y = 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ODR // GPIO port output data register fields
@@ -455,6 +475,7 @@ namespace ODR // GPIO port output data register fields
     static const uint8_t ODR2 = 2;             // Port output data (y = 0..15)
     static const uint8_t ODR1 = 1;             // Port output data (y = 0..15)
     static const uint8_t ODR0 = 0;             // Port output data (y = 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BSRR // GPIO port bit set/reset register fields
@@ -491,6 +512,7 @@ namespace BSRR // GPIO port bit set/reset register fields
     static const uint8_t BS2 = 2;              // Port x set bit y (y= 0..15)
     static const uint8_t BS1 = 1;              // Port x set bit y (y= 0..15)
     static const uint8_t BS0 = 0;              // Port x set bit y (y= 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace LCKR // GPIO port configuration lock register fields
@@ -512,6 +534,7 @@ namespace LCKR // GPIO port configuration lock register fields
     static const uint8_t LCK2 = 2;             // Port x lock bit y (y= 0..15)
     static const uint8_t LCK1 = 1;             // Port x lock bit y (y= 0..15)
     static const uint8_t LCK0 = 0;             // Port x lock bit y (y= 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace AFRL // GPIO alternate function low register fields
@@ -524,6 +547,7 @@ namespace AFRL // GPIO alternate function low register fields
     static const uint8_t AFRL2 = 8;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint8_t AFRL1 = 4;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint8_t AFRL0 = 0;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace AFRH // GPIO alternate function high register fields
@@ -536,6 +560,7 @@ namespace AFRH // GPIO alternate function high register fields
     static const uint8_t AFRH10 = 8;           // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint8_t AFRH9 = 4;            // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint8_t AFRH8 = 0;            // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BRR // Port bit reset register fields
@@ -556,6 +581,7 @@ namespace BRR // Port bit reset register fields
     static const uint8_t BR13 = 13;            // Port x Reset bit y
     static const uint8_t BR14 = 14;            // Port x Reset bit y
     static const uint8_t BR15 = 15;            // Port x Reset bit y
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -584,7 +610,7 @@ struct gpioc_t
     volatile uint32_t    BRR;                  // [Write-only] Port bit reset register
 };
 
-gpioc_t& GPIOC = *reinterpret_cast<gpioc_t*>(0x48000800);
+static gpioc_t& GPIOC = *reinterpret_cast<gpioc_t*>(0x48000800);
 
 namespace MODER // GPIO port mode register fields
 {
@@ -604,6 +630,7 @@ namespace MODER // GPIO port mode register fields
     static const uint8_t MODER2 = 4;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t MODER1 = 2;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t MODER0 = 0;           // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OTYPER // GPIO port output type register fields
@@ -624,6 +651,7 @@ namespace OTYPER // GPIO port output type register fields
     static const uint8_t OT2 = 2;              // Port x configuration bit 2
     static const uint8_t OT1 = 1;              // Port x configuration bit 1
     static const uint8_t OT0 = 0;              // Port x configuration bit 0
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OSPEEDR // GPIO port output speed register fields
@@ -644,6 +672,7 @@ namespace OSPEEDR // GPIO port output speed register fields
     static const uint8_t OSPEEDR2 = 4;         // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t OSPEEDR1 = 2;         // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t OSPEEDR0 = 0;         // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PUPDR // GPIO port pull-up/pull-down register fields
@@ -664,6 +693,7 @@ namespace PUPDR // GPIO port pull-up/pull-down register fields
     static const uint8_t PUPDR2 = 4;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t PUPDR1 = 2;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t PUPDR0 = 0;           // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IDR // GPIO port input data register fields
@@ -684,6 +714,7 @@ namespace IDR // GPIO port input data register fields
     static const uint8_t IDR2 = 2;             // Port input data (y = 0..15)
     static const uint8_t IDR1 = 1;             // Port input data (y = 0..15)
     static const uint8_t IDR0 = 0;             // Port input data (y = 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ODR // GPIO port output data register fields
@@ -704,6 +735,7 @@ namespace ODR // GPIO port output data register fields
     static const uint8_t ODR2 = 2;             // Port output data (y = 0..15)
     static const uint8_t ODR1 = 1;             // Port output data (y = 0..15)
     static const uint8_t ODR0 = 0;             // Port output data (y = 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BSRR // GPIO port bit set/reset register fields
@@ -740,6 +772,7 @@ namespace BSRR // GPIO port bit set/reset register fields
     static const uint8_t BS2 = 2;              // Port x set bit y (y= 0..15)
     static const uint8_t BS1 = 1;              // Port x set bit y (y= 0..15)
     static const uint8_t BS0 = 0;              // Port x set bit y (y= 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace LCKR // GPIO port configuration lock register fields
@@ -761,6 +794,7 @@ namespace LCKR // GPIO port configuration lock register fields
     static const uint8_t LCK2 = 2;             // Port x lock bit y (y= 0..15)
     static const uint8_t LCK1 = 1;             // Port x lock bit y (y= 0..15)
     static const uint8_t LCK0 = 0;             // Port x lock bit y (y= 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace AFRL // GPIO alternate function low register fields
@@ -773,6 +807,7 @@ namespace AFRL // GPIO alternate function low register fields
     static const uint8_t AFRL2 = 8;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint8_t AFRL1 = 4;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint8_t AFRL0 = 0;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace AFRH // GPIO alternate function high register fields
@@ -785,6 +820,7 @@ namespace AFRH // GPIO alternate function high register fields
     static const uint8_t AFRH10 = 8;           // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint8_t AFRH9 = 4;            // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint8_t AFRH8 = 0;            // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BRR // Port bit reset register fields
@@ -805,6 +841,7 @@ namespace BRR // Port bit reset register fields
     static const uint8_t BR13 = 13;            // Port x Reset bit y
     static const uint8_t BR14 = 14;            // Port x Reset bit y
     static const uint8_t BR15 = 15;            // Port x Reset bit y
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -833,7 +870,7 @@ struct gpiob_t
     volatile uint32_t    BRR;                  // [Write-only] Port bit reset register
 };
 
-gpiob_t& GPIOB = *reinterpret_cast<gpiob_t*>(0x48000400);
+static gpiob_t& GPIOB = *reinterpret_cast<gpiob_t*>(0x48000400);
 
 namespace MODER // GPIO port mode register fields
 {
@@ -853,6 +890,7 @@ namespace MODER // GPIO port mode register fields
     static const uint8_t MODER2 = 4;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t MODER1 = 2;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t MODER0 = 0;           // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OTYPER // GPIO port output type register fields
@@ -873,6 +911,7 @@ namespace OTYPER // GPIO port output type register fields
     static const uint8_t OT2 = 2;              // Port x configuration bit 2
     static const uint8_t OT1 = 1;              // Port x configuration bit 1
     static const uint8_t OT0 = 0;              // Port x configuration bit 0
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OSPEEDR // GPIO port output speed register fields
@@ -893,6 +932,7 @@ namespace OSPEEDR // GPIO port output speed register fields
     static const uint8_t OSPEEDR2 = 4;         // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t OSPEEDR1 = 2;         // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t OSPEEDR0 = 0;         // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PUPDR // GPIO port pull-up/pull-down register fields
@@ -913,6 +953,7 @@ namespace PUPDR // GPIO port pull-up/pull-down register fields
     static const uint8_t PUPDR2 = 4;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t PUPDR1 = 2;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t PUPDR0 = 0;           // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IDR // GPIO port input data register fields
@@ -933,6 +974,7 @@ namespace IDR // GPIO port input data register fields
     static const uint8_t IDR2 = 2;             // Port input data (y = 0..15)
     static const uint8_t IDR1 = 1;             // Port input data (y = 0..15)
     static const uint8_t IDR0 = 0;             // Port input data (y = 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ODR // GPIO port output data register fields
@@ -953,6 +995,7 @@ namespace ODR // GPIO port output data register fields
     static const uint8_t ODR2 = 2;             // Port output data (y = 0..15)
     static const uint8_t ODR1 = 1;             // Port output data (y = 0..15)
     static const uint8_t ODR0 = 0;             // Port output data (y = 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BSRR // GPIO port bit set/reset register fields
@@ -989,6 +1032,7 @@ namespace BSRR // GPIO port bit set/reset register fields
     static const uint8_t BS2 = 2;              // Port x set bit y (y= 0..15)
     static const uint8_t BS1 = 1;              // Port x set bit y (y= 0..15)
     static const uint8_t BS0 = 0;              // Port x set bit y (y= 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace LCKR // GPIO port configuration lock register fields
@@ -1010,6 +1054,7 @@ namespace LCKR // GPIO port configuration lock register fields
     static const uint8_t LCK2 = 2;             // Port x lock bit y (y= 0..15)
     static const uint8_t LCK1 = 1;             // Port x lock bit y (y= 0..15)
     static const uint8_t LCK0 = 0;             // Port x lock bit y (y= 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace AFRL // GPIO alternate function low register fields
@@ -1022,6 +1067,7 @@ namespace AFRL // GPIO alternate function low register fields
     static const uint8_t AFRL2 = 8;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint8_t AFRL1 = 4;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint8_t AFRL0 = 0;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace AFRH // GPIO alternate function high register fields
@@ -1034,6 +1080,7 @@ namespace AFRH // GPIO alternate function high register fields
     static const uint8_t AFRH10 = 8;           // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint8_t AFRH9 = 4;            // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint8_t AFRH8 = 0;            // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BRR // Port bit reset register fields
@@ -1054,6 +1101,7 @@ namespace BRR // Port bit reset register fields
     static const uint8_t BR13 = 13;            // Port x Reset bit y
     static const uint8_t BR14 = 14;            // Port x Reset bit y
     static const uint8_t BR15 = 15;            // Port x Reset bit y
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -1082,7 +1130,7 @@ struct gpioe_t
     volatile uint32_t    BRR;                  // [Write-only] Port bit reset register
 };
 
-gpioe_t& GPIOE = *reinterpret_cast<gpioe_t*>(0x48001000);
+static gpioe_t& GPIOE = *reinterpret_cast<gpioe_t*>(0x48001000);
 
 namespace MODER // GPIO port mode register fields
 {
@@ -1102,6 +1150,7 @@ namespace MODER // GPIO port mode register fields
     static const uint8_t MODER2 = 4;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t MODER1 = 2;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t MODER0 = 0;           // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OTYPER // GPIO port output type register fields
@@ -1122,6 +1171,7 @@ namespace OTYPER // GPIO port output type register fields
     static const uint8_t OT2 = 2;              // Port x configuration bit 2
     static const uint8_t OT1 = 1;              // Port x configuration bit 1
     static const uint8_t OT0 = 0;              // Port x configuration bit 0
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OSPEEDR // GPIO port output speed register fields
@@ -1142,6 +1192,7 @@ namespace OSPEEDR // GPIO port output speed register fields
     static const uint8_t OSPEEDR2 = 4;         // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t OSPEEDR1 = 2;         // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t OSPEEDR0 = 0;         // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PUPDR // GPIO port pull-up/pull-down register fields
@@ -1162,6 +1213,7 @@ namespace PUPDR // GPIO port pull-up/pull-down register fields
     static const uint8_t PUPDR2 = 4;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t PUPDR1 = 2;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t PUPDR0 = 0;           // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IDR // GPIO port input data register fields
@@ -1182,6 +1234,7 @@ namespace IDR // GPIO port input data register fields
     static const uint8_t IDR2 = 2;             // Port input data (y = 0..15)
     static const uint8_t IDR1 = 1;             // Port input data (y = 0..15)
     static const uint8_t IDR0 = 0;             // Port input data (y = 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ODR // GPIO port output data register fields
@@ -1202,6 +1255,7 @@ namespace ODR // GPIO port output data register fields
     static const uint8_t ODR2 = 2;             // Port output data (y = 0..15)
     static const uint8_t ODR1 = 1;             // Port output data (y = 0..15)
     static const uint8_t ODR0 = 0;             // Port output data (y = 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BSRR // GPIO port bit set/reset register fields
@@ -1238,6 +1292,7 @@ namespace BSRR // GPIO port bit set/reset register fields
     static const uint8_t BS2 = 2;              // Port x set bit y (y= 0..15)
     static const uint8_t BS1 = 1;              // Port x set bit y (y= 0..15)
     static const uint8_t BS0 = 0;              // Port x set bit y (y= 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace LCKR // GPIO port configuration lock register fields
@@ -1259,6 +1314,7 @@ namespace LCKR // GPIO port configuration lock register fields
     static const uint8_t LCK2 = 2;             // Port x lock bit y (y= 0..15)
     static const uint8_t LCK1 = 1;             // Port x lock bit y (y= 0..15)
     static const uint8_t LCK0 = 0;             // Port x lock bit y (y= 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace AFRL // GPIO alternate function low register fields
@@ -1271,6 +1327,7 @@ namespace AFRL // GPIO alternate function low register fields
     static const uint8_t AFRL2 = 8;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint8_t AFRL1 = 4;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint8_t AFRL0 = 0;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace AFRH // GPIO alternate function high register fields
@@ -1283,6 +1340,7 @@ namespace AFRH // GPIO alternate function high register fields
     static const uint8_t AFRH10 = 8;           // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint8_t AFRH9 = 4;            // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint8_t AFRH8 = 0;            // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BRR // Port bit reset register fields
@@ -1303,6 +1361,7 @@ namespace BRR // Port bit reset register fields
     static const uint8_t BR13 = 13;            // Port x Reset bit y
     static const uint8_t BR14 = 14;            // Port x Reset bit y
     static const uint8_t BR15 = 15;            // Port x Reset bit y
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -1331,7 +1390,7 @@ struct gpioa_t
     volatile uint32_t    BRR;                  // [Write-only] Port bit reset register
 };
 
-gpioa_t& GPIOA = *reinterpret_cast<gpioa_t*>(0x48000000);
+static gpioa_t& GPIOA = *reinterpret_cast<gpioa_t*>(0x48000000);
 
 namespace MODER // GPIO port mode register fields
 {
@@ -1351,6 +1410,7 @@ namespace MODER // GPIO port mode register fields
     static const uint8_t MODER2 = 4;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t MODER1 = 2;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t MODER0 = 0;           // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x28000000;
 }
 
 namespace OTYPER // GPIO port output type register fields
@@ -1371,6 +1431,7 @@ namespace OTYPER // GPIO port output type register fields
     static const uint8_t OT2 = 2;              // Port x configuration bits (y = 0..15)
     static const uint8_t OT1 = 1;              // Port x configuration bits (y = 0..15)
     static const uint8_t OT0 = 0;              // Port x configuration bits (y = 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OSPEEDR // GPIO port output speed register fields
@@ -1391,6 +1452,7 @@ namespace OSPEEDR // GPIO port output speed register fields
     static const uint8_t OSPEEDR2 = 4;         // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t OSPEEDR1 = 2;         // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t OSPEEDR0 = 0;         // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PUPDR // GPIO port pull-up/pull-down register fields
@@ -1411,6 +1473,7 @@ namespace PUPDR // GPIO port pull-up/pull-down register fields
     static const uint8_t PUPDR2 = 4;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t PUPDR1 = 2;           // Port x configuration bits (y = 0..15) (2 bits)
     static const uint8_t PUPDR0 = 0;           // Port x configuration bits (y = 0..15) (2 bits)
+    static const uint32_t RESET_VALUE = 0x24000000;
 }
 
 namespace IDR // GPIO port input data register fields
@@ -1431,6 +1494,7 @@ namespace IDR // GPIO port input data register fields
     static const uint8_t IDR2 = 2;             // Port input data (y = 0..15)
     static const uint8_t IDR1 = 1;             // Port input data (y = 0..15)
     static const uint8_t IDR0 = 0;             // Port input data (y = 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ODR // GPIO port output data register fields
@@ -1451,6 +1515,7 @@ namespace ODR // GPIO port output data register fields
     static const uint8_t ODR2 = 2;             // Port output data (y = 0..15)
     static const uint8_t ODR1 = 1;             // Port output data (y = 0..15)
     static const uint8_t ODR0 = 0;             // Port output data (y = 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BSRR // GPIO port bit set/reset register fields
@@ -1487,6 +1552,7 @@ namespace BSRR // GPIO port bit set/reset register fields
     static const uint8_t BS2 = 2;              // Port x set bit y (y= 0..15)
     static const uint8_t BS1 = 1;              // Port x set bit y (y= 0..15)
     static const uint8_t BS0 = 0;              // Port x set bit y (y= 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace LCKR // GPIO port configuration lock register fields
@@ -1508,6 +1574,7 @@ namespace LCKR // GPIO port configuration lock register fields
     static const uint8_t LCK2 = 2;             // Port x lock bit y (y= 0..15)
     static const uint8_t LCK1 = 1;             // Port x lock bit y (y= 0..15)
     static const uint8_t LCK0 = 0;             // Port x lock bit y (y= 0..15)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace AFRL // GPIO alternate function low register fields
@@ -1520,6 +1587,7 @@ namespace AFRL // GPIO alternate function low register fields
     static const uint8_t AFRL2 = 8;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint8_t AFRL1 = 4;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint8_t AFRL0 = 0;            // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace AFRH // GPIO alternate function high register fields
@@ -1532,6 +1600,7 @@ namespace AFRH // GPIO alternate function high register fields
     static const uint8_t AFRH10 = 8;           // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint8_t AFRH9 = 4;            // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint8_t AFRH8 = 0;            // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BRR // Port bit reset register fields
@@ -1552,6 +1621,7 @@ namespace BRR // Port bit reset register fields
     static const uint8_t BR13 = 13;            // Port x Reset bit y
     static const uint8_t BR14 = 14;            // Port x Reset bit y
     static const uint8_t BR15 = 15;            // Port x Reset bit y
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -1578,7 +1648,7 @@ struct spi1_t
     volatile uint32_t    I2SPR;                // [Read-write] I2S prescaler register
 };
 
-spi1_t& SPI1 = *reinterpret_cast<spi1_t*>(0x40013000);
+static spi1_t& SPI1 = *reinterpret_cast<spi1_t*>(0x40013000);
 
 namespace CR1 // control register 1 fields
 {
@@ -1596,6 +1666,7 @@ namespace CR1 // control register 1 fields
     static const uint8_t MSTR = 2;             // Master selection
     static const uint8_t CPOL = 1;             // Clock polarity
     static const uint8_t CPHA = 0;             // Clock phase
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // control register 2 fields
@@ -1612,6 +1683,7 @@ namespace CR2 // control register 2 fields
     static const uint8_t FRXTH = 12;           // FIFO reception threshold
     static const uint8_t LDMA_RX = 13;         // Last DMA transfer for reception
     static const uint8_t LDMA_TX = 14;         // Last DMA transfer for transmission
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SR // status register fields
@@ -1627,26 +1699,31 @@ namespace SR // status register fields
     static const uint8_t TIFRFE = 8;           // TI frame format error, Read-only
     static const uint8_t FRLVL = 9;            // FIFO reception level (2 bits), Read-only
     static const uint8_t FTLVL = 11;           // FIFO transmission level (2 bits), Read-only
+    static const uint32_t RESET_VALUE = 0x2;
 }
 
 namespace DR // data register fields
 {
     static const uint8_t DR = 0;               // Data register (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CRCPR // CRC polynomial register fields
 {
     static const uint8_t CRCPOLY = 0;          // CRC polynomial register (16 bits)
+    static const uint32_t RESET_VALUE = 0x7;
 }
 
 namespace RXCRCR // RX CRC register fields
 {
     static const uint8_t RxCRC = 0;            // Rx CRC register (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TXCRCR // TX CRC register fields
 {
     static const uint8_t TxCRC = 0;            // Tx CRC register (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace I2SCFGR // I2S configuration register fields
@@ -1659,6 +1736,7 @@ namespace I2SCFGR // I2S configuration register fields
     static const uint8_t CKPOL = 3;            // Steady state clock polarity
     static const uint8_t DATLEN = 1;           // Data length to be transferred (2 bits)
     static const uint8_t CHLEN = 0;            // Channel length (number of bits per audio channel)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace I2SPR // I2S prescaler register fields
@@ -1666,6 +1744,7 @@ namespace I2SPR // I2S prescaler register fields
     static const uint8_t MCKOE = 9;            // Master clock output enable
     static const uint8_t ODD = 8;              // Odd factor for the prescaler
     static const uint8_t I2SDIV = 0;           // I2S Linear prescaler (8 bits)
+    static const uint32_t RESET_VALUE = 0x10;
 }
 
 }
@@ -1692,7 +1771,7 @@ struct spi2_t
     volatile uint32_t    I2SPR;                // [Read-write] I2S prescaler register
 };
 
-spi2_t& SPI2 = *reinterpret_cast<spi2_t*>(0x40003800);
+static spi2_t& SPI2 = *reinterpret_cast<spi2_t*>(0x40003800);
 
 namespace CR1 // control register 1 fields
 {
@@ -1710,6 +1789,7 @@ namespace CR1 // control register 1 fields
     static const uint8_t MSTR = 2;             // Master selection
     static const uint8_t CPOL = 1;             // Clock polarity
     static const uint8_t CPHA = 0;             // Clock phase
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // control register 2 fields
@@ -1726,6 +1806,7 @@ namespace CR2 // control register 2 fields
     static const uint8_t FRXTH = 12;           // FIFO reception threshold
     static const uint8_t LDMA_RX = 13;         // Last DMA transfer for reception
     static const uint8_t LDMA_TX = 14;         // Last DMA transfer for transmission
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SR // status register fields
@@ -1741,26 +1822,31 @@ namespace SR // status register fields
     static const uint8_t TIFRFE = 8;           // TI frame format error, Read-only
     static const uint8_t FRLVL = 9;            // FIFO reception level (2 bits), Read-only
     static const uint8_t FTLVL = 11;           // FIFO transmission level (2 bits), Read-only
+    static const uint32_t RESET_VALUE = 0x2;
 }
 
 namespace DR // data register fields
 {
     static const uint8_t DR = 0;               // Data register (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CRCPR // CRC polynomial register fields
 {
     static const uint8_t CRCPOLY = 0;          // CRC polynomial register (16 bits)
+    static const uint32_t RESET_VALUE = 0x7;
 }
 
 namespace RXCRCR // RX CRC register fields
 {
     static const uint8_t RxCRC = 0;            // Rx CRC register (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TXCRCR // TX CRC register fields
 {
     static const uint8_t TxCRC = 0;            // Tx CRC register (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace I2SCFGR // I2S configuration register fields
@@ -1773,6 +1859,7 @@ namespace I2SCFGR // I2S configuration register fields
     static const uint8_t CKPOL = 3;            // Steady state clock polarity
     static const uint8_t DATLEN = 1;           // Data length to be transferred (2 bits)
     static const uint8_t CHLEN = 0;            // Channel length (number of bits per audio channel)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace I2SPR // I2S prescaler register fields
@@ -1780,6 +1867,7 @@ namespace I2SPR // I2S prescaler register fields
     static const uint8_t MCKOE = 9;            // Master clock output enable
     static const uint8_t ODD = 8;              // Odd factor for the prescaler
     static const uint8_t I2SDIV = 0;           // I2S Linear prescaler (8 bits)
+    static const uint32_t RESET_VALUE = 0x10;
 }
 
 }
@@ -1799,7 +1887,7 @@ struct pwr_t
     volatile uint32_t    CSR;                  // power control/status register
 };
 
-pwr_t& PWR = *reinterpret_cast<pwr_t*>(0x40007000);
+static pwr_t& PWR = *reinterpret_cast<pwr_t*>(0x40007000);
 
 namespace CR // power control register fields
 {
@@ -1810,6 +1898,7 @@ namespace CR // power control register fields
     static const uint8_t CWUF = 2;             // Clear wakeup flag
     static const uint8_t PDDS = 1;             // Power down deepsleep
     static const uint8_t LPDS = 0;             // Low-power deep sleep
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CSR // power control/status register fields
@@ -1826,6 +1915,7 @@ namespace CSR // power control/status register fields
     static const uint8_t EWUP6 = 13;           // Enable WKUP pin 6, Read-write
     static const uint8_t EWUP7 = 14;           // Enable WKUP pin 7, Read-write
     static const uint8_t EWUP8 = 15;           // Enable WKUP pin 8, Read-write
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -1854,7 +1944,7 @@ struct i2c1_t
     volatile uint32_t    TXDR;                 // [Read-write] Transmit data register
 };
 
-i2c1_t& I2C1 = *reinterpret_cast<i2c1_t*>(0x40005400);
+static i2c1_t& I2C1 = *reinterpret_cast<i2c1_t*>(0x40005400);
 
 namespace CR1 // Control register 1 fields
 {
@@ -1879,6 +1969,7 @@ namespace CR1 // Control register 1 fields
     static const uint8_t SMBDEN = 21;          // SMBus Device Default address enable, Read-write
     static const uint8_t ALERTEN = 22;         // SMBUS alert enable, Read-write
     static const uint8_t PECEN = 23;           // PEC enable, Read-write
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // Control register 2 fields
@@ -1896,6 +1987,7 @@ namespace CR2 // Control register 2 fields
     static const uint8_t SADD8 = 8;            // Slave address bit 9:8 (master mode) (2 bits)
     static const uint8_t SADD1 = 1;            // Slave address bit 7:1 (master mode) (7 bits)
     static const uint8_t SADD0 = 0;            // Slave address bit 0 (master mode)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OAR1 // Own address register 1 fields
@@ -1905,6 +1997,7 @@ namespace OAR1 // Own address register 1 fields
     static const uint8_t OA1_8 = 8;            // Interface address (2 bits)
     static const uint8_t OA1MODE = 10;         // Own Address 1 10-bit mode
     static const uint8_t OA1EN = 15;           // Own Address 1 enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OAR2 // Own address register 2 fields
@@ -1912,6 +2005,7 @@ namespace OAR2 // Own address register 2 fields
     static const uint8_t OA2 = 1;              // Interface address (7 bits)
     static const uint8_t OA2MSK = 8;           // Own Address 2 masks (3 bits)
     static const uint8_t OA2EN = 15;           // Own Address 2 enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TIMINGR // Timing register fields
@@ -1921,6 +2015,7 @@ namespace TIMINGR // Timing register fields
     static const uint8_t SDADEL = 16;          // Data hold time (4 bits)
     static const uint8_t SCLDEL = 20;          // Data setup time (4 bits)
     static const uint8_t PRESC = 28;           // Timing prescaler (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TIMEOUTR // Status register 1 fields
@@ -1930,6 +2025,7 @@ namespace TIMEOUTR // Status register 1 fields
     static const uint8_t TIMOUTEN = 15;        // Clock timeout enable
     static const uint8_t TIMEOUTB = 16;        // Bus timeout B (12 bits)
     static const uint8_t TEXTEN = 31;          // Extended clock timeout enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ISR // Interrupt and Status register fields
@@ -1951,6 +2047,7 @@ namespace ISR // Interrupt and Status register fields
     static const uint8_t RXNE = 2;             // Receive data register not empty (receivers), Read-only
     static const uint8_t TXIS = 1;             // Transmit interrupt status (transmitters), Read-write
     static const uint8_t TXE = 0;              // Transmit data register empty (transmitters), Read-write
+    static const uint32_t RESET_VALUE = 0x1;
 }
 
 namespace ICR // Interrupt clear register fields
@@ -1964,21 +2061,25 @@ namespace ICR // Interrupt clear register fields
     static const uint8_t STOPCF = 5;           // Stop detection flag clear
     static const uint8_t NACKCF = 4;           // Not Acknowledge flag clear
     static const uint8_t ADDRCF = 3;           // Address Matched flag clear
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PECR // PEC register fields
 {
     static const uint8_t PEC = 0;              // Packet error checking register (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RXDR // Receive data register fields
 {
     static const uint8_t RXDATA = 0;           // 8-bit receive data (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TXDR // Transmit data register fields
 {
     static const uint8_t TXDATA = 0;           // 8-bit transmit data (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -2007,7 +2108,7 @@ struct i2c2_t
     volatile uint32_t    TXDR;                 // [Read-write] Transmit data register
 };
 
-i2c2_t& I2C2 = *reinterpret_cast<i2c2_t*>(0x40005800);
+static i2c2_t& I2C2 = *reinterpret_cast<i2c2_t*>(0x40005800);
 
 namespace CR1 // Control register 1 fields
 {
@@ -2032,6 +2133,7 @@ namespace CR1 // Control register 1 fields
     static const uint8_t SMBDEN = 21;          // SMBus Device Default address enable, Read-write
     static const uint8_t ALERTEN = 22;         // SMBUS alert enable, Read-write
     static const uint8_t PECEN = 23;           // PEC enable, Read-write
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // Control register 2 fields
@@ -2049,6 +2151,7 @@ namespace CR2 // Control register 2 fields
     static const uint8_t SADD8 = 8;            // Slave address bit 9:8 (master mode) (2 bits)
     static const uint8_t SADD1 = 1;            // Slave address bit 7:1 (master mode) (7 bits)
     static const uint8_t SADD0 = 0;            // Slave address bit 0 (master mode)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OAR1 // Own address register 1 fields
@@ -2058,6 +2161,7 @@ namespace OAR1 // Own address register 1 fields
     static const uint8_t OA1_8 = 8;            // Interface address (2 bits)
     static const uint8_t OA1MODE = 10;         // Own Address 1 10-bit mode
     static const uint8_t OA1EN = 15;           // Own Address 1 enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OAR2 // Own address register 2 fields
@@ -2065,6 +2169,7 @@ namespace OAR2 // Own address register 2 fields
     static const uint8_t OA2 = 1;              // Interface address (7 bits)
     static const uint8_t OA2MSK = 8;           // Own Address 2 masks (3 bits)
     static const uint8_t OA2EN = 15;           // Own Address 2 enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TIMINGR // Timing register fields
@@ -2074,6 +2179,7 @@ namespace TIMINGR // Timing register fields
     static const uint8_t SDADEL = 16;          // Data hold time (4 bits)
     static const uint8_t SCLDEL = 20;          // Data setup time (4 bits)
     static const uint8_t PRESC = 28;           // Timing prescaler (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TIMEOUTR // Status register 1 fields
@@ -2083,6 +2189,7 @@ namespace TIMEOUTR // Status register 1 fields
     static const uint8_t TIMOUTEN = 15;        // Clock timeout enable
     static const uint8_t TIMEOUTB = 16;        // Bus timeout B (12 bits)
     static const uint8_t TEXTEN = 31;          // Extended clock timeout enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ISR // Interrupt and Status register fields
@@ -2104,6 +2211,7 @@ namespace ISR // Interrupt and Status register fields
     static const uint8_t RXNE = 2;             // Receive data register not empty (receivers), Read-only
     static const uint8_t TXIS = 1;             // Transmit interrupt status (transmitters), Read-write
     static const uint8_t TXE = 0;              // Transmit data register empty (transmitters), Read-write
+    static const uint32_t RESET_VALUE = 0x1;
 }
 
 namespace ICR // Interrupt clear register fields
@@ -2117,21 +2225,25 @@ namespace ICR // Interrupt clear register fields
     static const uint8_t STOPCF = 5;           // Stop detection flag clear
     static const uint8_t NACKCF = 4;           // Not Acknowledge flag clear
     static const uint8_t ADDRCF = 3;           // Address Matched flag clear
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PECR // PEC register fields
 {
     static const uint8_t PEC = 0;              // Packet error checking register (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RXDR // Receive data register fields
 {
     static const uint8_t RXDATA = 0;           // 8-bit receive data (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TXDR // Transmit data register fields
 {
     static const uint8_t TXDATA = 0;           // 8-bit transmit data (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -2154,21 +2266,24 @@ struct iwdg_t
     volatile uint32_t    WINR;                 // [Read-write] Window register
 };
 
-iwdg_t& IWDG = *reinterpret_cast<iwdg_t*>(0x40003000);
+static iwdg_t& IWDG = *reinterpret_cast<iwdg_t*>(0x40003000);
 
 namespace KR // Key register fields
 {
     static const uint8_t KEY = 0;              // Key value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PR // Prescaler register fields
 {
     static const uint8_t PR = 0;               // Prescaler divider (3 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RLR // Reload register fields
 {
     static const uint8_t RL = 0;               // Watchdog counter reload value (12 bits)
+    static const uint32_t RESET_VALUE = 0xfff;
 }
 
 namespace SR // Status register fields
@@ -2176,11 +2291,13 @@ namespace SR // Status register fields
     static const uint8_t PVU = 0;              // Watchdog prescaler value update
     static const uint8_t RVU = 1;              // Watchdog counter reload value update
     static const uint8_t WVU = 2;              // Watchdog counter window value update
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace WINR // Window register fields
 {
     static const uint8_t WIN = 0;              // Watchdog counter window value (12 bits)
+    static const uint32_t RESET_VALUE = 0xfff;
 }
 
 }
@@ -2201,12 +2318,13 @@ struct wwdg_t
     volatile uint32_t    SR;                   // [Read-write] Status register
 };
 
-wwdg_t& WWDG = *reinterpret_cast<wwdg_t*>(0x40002c00);
+static wwdg_t& WWDG = *reinterpret_cast<wwdg_t*>(0x40002c00);
 
 namespace CR // Control register fields
 {
     static const uint8_t WDGA = 7;             // Activation bit
     static const uint8_t T = 0;                // 7-bit counter (7 bits)
+    static const uint32_t RESET_VALUE = 0x7f;
 }
 
 namespace CFR // Configuration register fields
@@ -2214,11 +2332,13 @@ namespace CFR // Configuration register fields
     static const uint8_t EWI = 9;              // Early wakeup interrupt
     static const uint8_t WDGTB = 7;            // Timer base (2 bits)
     static const uint8_t W = 0;                // 7-bit window value (7 bits)
+    static const uint32_t RESET_VALUE = 0x7f;
 }
 
 namespace SR // Status register fields
 {
     static const uint8_t EWIF = 0;             // Early wakeup interrupt flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -2258,7 +2378,7 @@ struct tim1_t
     volatile uint32_t    DMAR;                 // [Read-write] DMA address for full transfer
 };
 
-tim1_t& TIM1 = *reinterpret_cast<tim1_t*>(0x40012c00);
+static tim1_t& TIM1 = *reinterpret_cast<tim1_t*>(0x40012c00);
 
 namespace CR1 // control register 1 fields
 {
@@ -2270,6 +2390,7 @@ namespace CR1 // control register 1 fields
     static const uint8_t URS = 2;              // Update request source
     static const uint8_t UDIS = 1;             // Update disable
     static const uint8_t CEN = 0;              // Counter enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // control register 2 fields
@@ -2286,6 +2407,7 @@ namespace CR2 // control register 2 fields
     static const uint8_t CCDS = 3;             // Capture/compare DMA selection
     static const uint8_t CCUS = 2;             // Capture/compare control update selection
     static const uint8_t CCPC = 0;             // Capture/compare preloaded control
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SMCR // slave mode control register fields
@@ -2297,6 +2419,7 @@ namespace SMCR // slave mode control register fields
     static const uint8_t MSM = 7;              // Master/Slave mode
     static const uint8_t TS = 4;               // Trigger selection (3 bits)
     static const uint8_t SMS = 0;              // Slave mode selection (3 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DIER // DMA/Interrupt enable register fields
@@ -2316,6 +2439,7 @@ namespace DIER // DMA/Interrupt enable register fields
     static const uint8_t CC2IE = 2;            // Capture/Compare 2 interrupt enable
     static const uint8_t CC1IE = 1;            // Capture/Compare 1 interrupt enable
     static const uint8_t UIE = 0;              // Update interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SR // status register fields
@@ -2332,6 +2456,7 @@ namespace SR // status register fields
     static const uint8_t CC2IF = 2;            // Capture/Compare 2 interrupt flag
     static const uint8_t CC1IF = 1;            // Capture/compare 1 interrupt flag
     static const uint8_t UIF = 0;              // Update interrupt flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EGR // event generation register fields
@@ -2344,6 +2469,7 @@ namespace EGR // event generation register fields
     static const uint8_t CC2G = 2;             // Capture/compare 2 generation
     static const uint8_t CC1G = 1;             // Capture/compare 1 generation
     static const uint8_t UG = 0;               // Update generation
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR1_Output // capture/compare mode register (output mode) fields
@@ -2358,6 +2484,7 @@ namespace CCMR1_Output // capture/compare mode register (output mode) fields
     static const uint8_t OC1PE = 3;            // Output Compare 1 preload enable
     static const uint8_t OC1FE = 2;            // Output Compare 1 fast enable
     static const uint8_t CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR1_Input // capture/compare mode register 1 (input mode) fields
@@ -2368,6 +2495,7 @@ namespace CCMR1_Input // capture/compare mode register 1 (input mode) fields
     static const uint8_t IC1F = 4;             // Input capture 1 filter (4 bits)
     static const uint8_t IC1PCS = 2;           // Input capture 1 prescaler (2 bits)
     static const uint8_t CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR2_Output // capture/compare mode register (output mode) fields
@@ -2382,6 +2510,7 @@ namespace CCMR2_Output // capture/compare mode register (output mode) fields
     static const uint8_t OC3PE = 3;            // Output compare 3 preload enable
     static const uint8_t OC3FE = 2;            // Output compare 3 fast enable
     static const uint8_t CC3S = 0;             // Capture/Compare 3 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR2_Input // capture/compare mode register 2 (input mode) fields
@@ -2392,6 +2521,7 @@ namespace CCMR2_Input // capture/compare mode register 2 (input mode) fields
     static const uint8_t IC3F = 4;             // Input capture 3 filter (4 bits)
     static const uint8_t IC3PSC = 2;           // Input capture 3 prescaler (2 bits)
     static const uint8_t CC3S = 0;             // Capture/compare 3 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCER // capture/compare enable register fields
@@ -2410,46 +2540,55 @@ namespace CCER // capture/compare enable register fields
     static const uint8_t CC1NE = 2;            // Capture/Compare 1 complementary output enable
     static const uint8_t CC1P = 1;             // Capture/Compare 1 output Polarity
     static const uint8_t CC1E = 0;             // Capture/Compare 1 output enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNT // counter fields
 {
     static const uint8_t CNT = 0;              // counter value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PSC // prescaler fields
 {
     static const uint8_t PSC = 0;              // Prescaler value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ARR // auto-reload register fields
 {
     static const uint8_t ARR = 0;              // Auto-reload value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RCR // repetition counter register fields
 {
     static const uint8_t REP = 0;              // Repetition counter value (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR1 // capture/compare register 1 fields
 {
     static const uint8_t CCR1 = 0;             // Capture/Compare 1 value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR2 // capture/compare register 2 fields
 {
     static const uint8_t CCR2 = 0;             // Capture/Compare 2 value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR3 // capture/compare register 3 fields
 {
     static const uint8_t CCR3 = 0;             // Capture/Compare 3 value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR4 // capture/compare register 4 fields
 {
     static const uint8_t CCR4 = 0;             // Capture/Compare 3 value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BDTR // break and dead-time register fields
@@ -2462,17 +2601,20 @@ namespace BDTR // break and dead-time register fields
     static const uint8_t OSSI = 10;            // Off-state selection for Idle mode
     static const uint8_t LOCK = 8;             // Lock configuration (2 bits)
     static const uint8_t DTG = 0;              // Dead-time generator setup (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DCR // DMA control register fields
 {
     static const uint8_t DBL = 8;              // DMA burst length (5 bits)
     static const uint8_t DBA = 0;              // DMA base address (5 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DMAR // DMA address for full transfer fields
 {
     static const uint8_t DMAB = 0;             // DMA register for burst accesses (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -2512,7 +2654,7 @@ struct tim2_t
     volatile uint32_t    DMAR;                 // [Read-write] DMA address for full transfer
 };
 
-tim2_t& TIM2 = *reinterpret_cast<tim2_t*>(0x40000000);
+static tim2_t& TIM2 = *reinterpret_cast<tim2_t*>(0x40000000);
 
 namespace CR1 // control register 1 fields
 {
@@ -2524,6 +2666,7 @@ namespace CR1 // control register 1 fields
     static const uint8_t URS = 2;              // Update request source
     static const uint8_t UDIS = 1;             // Update disable
     static const uint8_t CEN = 0;              // Counter enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // control register 2 fields
@@ -2531,6 +2674,7 @@ namespace CR2 // control register 2 fields
     static const uint8_t TI1S = 7;             // TI1 selection
     static const uint8_t MMS = 4;              // Master mode selection (3 bits)
     static const uint8_t CCDS = 3;             // Capture/compare DMA selection
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SMCR // slave mode control register fields
@@ -2542,6 +2686,7 @@ namespace SMCR // slave mode control register fields
     static const uint8_t MSM = 7;              // Master/Slave mode
     static const uint8_t TS = 4;               // Trigger selection (3 bits)
     static const uint8_t SMS = 0;              // Slave mode selection (3 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DIER // DMA/Interrupt enable register fields
@@ -2559,6 +2704,7 @@ namespace DIER // DMA/Interrupt enable register fields
     static const uint8_t CC2IE = 2;            // Capture/Compare 2 interrupt enable
     static const uint8_t CC1IE = 1;            // Capture/Compare 1 interrupt enable
     static const uint8_t UIE = 0;              // Update interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SR // status register fields
@@ -2573,6 +2719,7 @@ namespace SR // status register fields
     static const uint8_t CC2IF = 2;            // Capture/Compare 2 interrupt flag
     static const uint8_t CC1IF = 1;            // Capture/compare 1 interrupt flag
     static const uint8_t UIF = 0;              // Update interrupt flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EGR // event generation register fields
@@ -2583,6 +2730,7 @@ namespace EGR // event generation register fields
     static const uint8_t CC2G = 2;             // Capture/compare 2 generation
     static const uint8_t CC1G = 1;             // Capture/compare 1 generation
     static const uint8_t UG = 0;               // Update generation
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR1_Output // capture/compare mode register 1 (output mode) fields
@@ -2597,6 +2745,7 @@ namespace CCMR1_Output // capture/compare mode register 1 (output mode) fields
     static const uint8_t OC1PE = 3;            // Output compare 1 preload enable
     static const uint8_t OC1FE = 2;            // Output compare 1 fast enable
     static const uint8_t CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR1_Input // capture/compare mode register 1 (input mode) fields
@@ -2607,6 +2756,7 @@ namespace CCMR1_Input // capture/compare mode register 1 (input mode) fields
     static const uint8_t IC1F = 4;             // Input capture 1 filter (4 bits)
     static const uint8_t IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
     static const uint8_t CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR2_Output // capture/compare mode register 2 (output mode) fields
@@ -2621,6 +2771,7 @@ namespace CCMR2_Output // capture/compare mode register 2 (output mode) fields
     static const uint8_t OC3PE = 3;            // Output compare 3 preload enable
     static const uint8_t OC3FE = 2;            // Output compare 3 fast enable
     static const uint8_t CC3S = 0;             // Capture/Compare 3 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR2_Input // capture/compare mode register 2 (input mode) fields
@@ -2631,6 +2782,7 @@ namespace CCMR2_Input // capture/compare mode register 2 (input mode) fields
     static const uint8_t IC3F = 4;             // Input capture 3 filter (4 bits)
     static const uint8_t IC3PSC = 2;           // Input capture 3 prescaler (2 bits)
     static const uint8_t CC3S = 0;             // Capture/Compare 3 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCER // capture/compare enable register fields
@@ -2647,58 +2799,68 @@ namespace CCER // capture/compare enable register fields
     static const uint8_t CC1NP = 3;            // Capture/Compare 1 output Polarity
     static const uint8_t CC1P = 1;             // Capture/Compare 1 output Polarity
     static const uint8_t CC1E = 0;             // Capture/Compare 1 output enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNT // counter fields
 {
     static const uint8_t CNT_H = 16;           // High counter value (TIM2 only) (16 bits)
     static const uint8_t CNT_L = 0;            // Low counter value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PSC // prescaler fields
 {
     static const uint8_t PSC = 0;              // Prescaler value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ARR // auto-reload register fields
 {
     static const uint8_t ARR_H = 16;           // High Auto-reload value (TIM2 only) (16 bits)
     static const uint8_t ARR_L = 0;            // Low Auto-reload value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR1 // capture/compare register 1 fields
 {
     static const uint8_t CCR1_H = 16;          // High Capture/Compare 1 value (TIM2 only) (16 bits)
     static const uint8_t CCR1_L = 0;           // Low Capture/Compare 1 value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR2 // capture/compare register 2 fields
 {
     static const uint8_t CCR2_H = 16;          // High Capture/Compare 2 value (TIM2 only) (16 bits)
     static const uint8_t CCR2_L = 0;           // Low Capture/Compare 2 value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR3 // capture/compare register 3 fields
 {
     static const uint8_t CCR3_H = 16;          // High Capture/Compare value (TIM2 only) (16 bits)
     static const uint8_t CCR3_L = 0;           // Low Capture/Compare value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR4 // capture/compare register 4 fields
 {
     static const uint8_t CCR4_H = 16;          // High Capture/Compare value (TIM2 only) (16 bits)
     static const uint8_t CCR4_L = 0;           // Low Capture/Compare value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DCR // DMA control register fields
 {
     static const uint8_t DBL = 8;              // DMA burst length (5 bits)
     static const uint8_t DBA = 0;              // DMA base address (5 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DMAR // DMA address for full transfer fields
 {
     static const uint8_t DMAR = 0;             // DMA register for burst accesses (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -2738,7 +2900,7 @@ struct tim3_t
     volatile uint32_t    DMAR;                 // [Read-write] DMA address for full transfer
 };
 
-tim3_t& TIM3 = *reinterpret_cast<tim3_t*>(0x40000400);
+static tim3_t& TIM3 = *reinterpret_cast<tim3_t*>(0x40000400);
 
 namespace CR1 // control register 1 fields
 {
@@ -2750,6 +2912,7 @@ namespace CR1 // control register 1 fields
     static const uint8_t URS = 2;              // Update request source
     static const uint8_t UDIS = 1;             // Update disable
     static const uint8_t CEN = 0;              // Counter enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // control register 2 fields
@@ -2757,6 +2920,7 @@ namespace CR2 // control register 2 fields
     static const uint8_t TI1S = 7;             // TI1 selection
     static const uint8_t MMS = 4;              // Master mode selection (3 bits)
     static const uint8_t CCDS = 3;             // Capture/compare DMA selection
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SMCR // slave mode control register fields
@@ -2768,6 +2932,7 @@ namespace SMCR // slave mode control register fields
     static const uint8_t MSM = 7;              // Master/Slave mode
     static const uint8_t TS = 4;               // Trigger selection (3 bits)
     static const uint8_t SMS = 0;              // Slave mode selection (3 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DIER // DMA/Interrupt enable register fields
@@ -2785,6 +2950,7 @@ namespace DIER // DMA/Interrupt enable register fields
     static const uint8_t CC2IE = 2;            // Capture/Compare 2 interrupt enable
     static const uint8_t CC1IE = 1;            // Capture/Compare 1 interrupt enable
     static const uint8_t UIE = 0;              // Update interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SR // status register fields
@@ -2799,6 +2965,7 @@ namespace SR // status register fields
     static const uint8_t CC2IF = 2;            // Capture/Compare 2 interrupt flag
     static const uint8_t CC1IF = 1;            // Capture/compare 1 interrupt flag
     static const uint8_t UIF = 0;              // Update interrupt flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EGR // event generation register fields
@@ -2809,6 +2976,7 @@ namespace EGR // event generation register fields
     static const uint8_t CC2G = 2;             // Capture/compare 2 generation
     static const uint8_t CC1G = 1;             // Capture/compare 1 generation
     static const uint8_t UG = 0;               // Update generation
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR1_Output // capture/compare mode register 1 (output mode) fields
@@ -2823,6 +2991,7 @@ namespace CCMR1_Output // capture/compare mode register 1 (output mode) fields
     static const uint8_t OC1PE = 3;            // Output compare 1 preload enable
     static const uint8_t OC1FE = 2;            // Output compare 1 fast enable
     static const uint8_t CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR1_Input // capture/compare mode register 1 (input mode) fields
@@ -2833,6 +3002,7 @@ namespace CCMR1_Input // capture/compare mode register 1 (input mode) fields
     static const uint8_t IC1F = 4;             // Input capture 1 filter (4 bits)
     static const uint8_t IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
     static const uint8_t CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR2_Output // capture/compare mode register 2 (output mode) fields
@@ -2847,6 +3017,7 @@ namespace CCMR2_Output // capture/compare mode register 2 (output mode) fields
     static const uint8_t OC3PE = 3;            // Output compare 3 preload enable
     static const uint8_t OC3FE = 2;            // Output compare 3 fast enable
     static const uint8_t CC3S = 0;             // Capture/Compare 3 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR2_Input // capture/compare mode register 2 (input mode) fields
@@ -2857,6 +3028,7 @@ namespace CCMR2_Input // capture/compare mode register 2 (input mode) fields
     static const uint8_t IC3F = 4;             // Input capture 3 filter (4 bits)
     static const uint8_t IC3PSC = 2;           // Input capture 3 prescaler (2 bits)
     static const uint8_t CC3S = 0;             // Capture/Compare 3 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCER // capture/compare enable register fields
@@ -2873,58 +3045,68 @@ namespace CCER // capture/compare enable register fields
     static const uint8_t CC1NP = 3;            // Capture/Compare 1 output Polarity
     static const uint8_t CC1P = 1;             // Capture/Compare 1 output Polarity
     static const uint8_t CC1E = 0;             // Capture/Compare 1 output enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNT // counter fields
 {
     static const uint8_t CNT_H = 16;           // High counter value (TIM2 only) (16 bits)
     static const uint8_t CNT_L = 0;            // Low counter value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PSC // prescaler fields
 {
     static const uint8_t PSC = 0;              // Prescaler value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ARR // auto-reload register fields
 {
     static const uint8_t ARR_H = 16;           // High Auto-reload value (TIM2 only) (16 bits)
     static const uint8_t ARR_L = 0;            // Low Auto-reload value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR1 // capture/compare register 1 fields
 {
     static const uint8_t CCR1_H = 16;          // High Capture/Compare 1 value (TIM2 only) (16 bits)
     static const uint8_t CCR1_L = 0;           // Low Capture/Compare 1 value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR2 // capture/compare register 2 fields
 {
     static const uint8_t CCR2_H = 16;          // High Capture/Compare 2 value (TIM2 only) (16 bits)
     static const uint8_t CCR2_L = 0;           // Low Capture/Compare 2 value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR3 // capture/compare register 3 fields
 {
     static const uint8_t CCR3_H = 16;          // High Capture/Compare value (TIM2 only) (16 bits)
     static const uint8_t CCR3_L = 0;           // Low Capture/Compare value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR4 // capture/compare register 4 fields
 {
     static const uint8_t CCR4_H = 16;          // High Capture/Compare value (TIM2 only) (16 bits)
     static const uint8_t CCR4_L = 0;           // Low Capture/Compare value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DCR // DMA control register fields
 {
     static const uint8_t DBL = 8;              // DMA burst length (5 bits)
     static const uint8_t DBA = 0;              // DMA base address (5 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DMAR // DMA address for full transfer fields
 {
     static const uint8_t DMAR = 0;             // DMA register for burst accesses (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -2958,7 +3140,7 @@ struct tim14_t
     volatile uint32_t    OR;                   // [Read-write] option register
 };
 
-tim14_t& TIM14 = *reinterpret_cast<tim14_t*>(0x40002000);
+static tim14_t& TIM14 = *reinterpret_cast<tim14_t*>(0x40002000);
 
 namespace CR1 // control register 1 fields
 {
@@ -2967,12 +3149,14 @@ namespace CR1 // control register 1 fields
     static const uint8_t URS = 2;              // Update request source
     static const uint8_t UDIS = 1;             // Update disable
     static const uint8_t CEN = 0;              // Counter enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DIER // DMA/Interrupt enable register fields
 {
     static const uint8_t CC1IE = 1;            // Capture/Compare 1 interrupt enable
     static const uint8_t UIE = 0;              // Update interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SR // status register fields
@@ -2980,12 +3164,14 @@ namespace SR // status register fields
     static const uint8_t CC1OF = 9;            // Capture/Compare 1 overcapture flag
     static const uint8_t CC1IF = 1;            // Capture/compare 1 interrupt flag
     static const uint8_t UIF = 0;              // Update interrupt flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EGR // event generation register fields
 {
     static const uint8_t CC1G = 1;             // Capture/compare 1 generation
     static const uint8_t UG = 0;               // Update generation
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR1_Output // capture/compare mode register (output mode) fields
@@ -2994,6 +3180,7 @@ namespace CCMR1_Output // capture/compare mode register (output mode) fields
     static const uint8_t OC1FE = 2;            // Output compare 1 fast enable
     static const uint8_t OC1PE = 3;            // Output Compare 1 preload enable
     static const uint8_t OC1M = 4;             // Output Compare 1 mode (3 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR1_Input // capture/compare mode register (input mode) fields
@@ -3001,6 +3188,7 @@ namespace CCMR1_Input // capture/compare mode register (input mode) fields
     static const uint8_t IC1F = 4;             // Input capture 1 filter (4 bits)
     static const uint8_t IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
     static const uint8_t CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCER // capture/compare enable register fields
@@ -3008,31 +3196,37 @@ namespace CCER // capture/compare enable register fields
     static const uint8_t CC1NP = 3;            // Capture/Compare 1 output Polarity
     static const uint8_t CC1P = 1;             // Capture/Compare 1 output Polarity
     static const uint8_t CC1E = 0;             // Capture/Compare 1 output enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNT // counter fields
 {
     static const uint8_t CNT = 0;              // counter value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PSC // prescaler fields
 {
     static const uint8_t PSC = 0;              // Prescaler value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ARR // auto-reload register fields
 {
     static const uint8_t ARR = 0;              // Auto-reload value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR1 // capture/compare register 1 fields
 {
     static const uint8_t CCR1 = 0;             // Capture/Compare 1 value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OR // option register fields
 {
     static const uint8_t RMP = 0;              // Timer input 1 remap (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -3060,7 +3254,7 @@ struct tim6_t
     volatile uint32_t    ARR;                  // [Read-write] auto-reload register
 };
 
-tim6_t& TIM6 = *reinterpret_cast<tim6_t*>(0x40001000);
+static tim6_t& TIM6 = *reinterpret_cast<tim6_t*>(0x40001000);
 
 namespace CR1 // control register 1 fields
 {
@@ -3069,42 +3263,50 @@ namespace CR1 // control register 1 fields
     static const uint8_t URS = 2;              // Update request source
     static const uint8_t UDIS = 1;             // Update disable
     static const uint8_t CEN = 0;              // Counter enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // control register 2 fields
 {
     static const uint8_t MMS = 4;              // Master mode selection (3 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DIER // DMA/Interrupt enable register fields
 {
     static const uint8_t UDE = 8;              // Update DMA request enable
     static const uint8_t UIE = 0;              // Update interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SR // status register fields
 {
     static const uint8_t UIF = 0;              // Update interrupt flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EGR // event generation register fields
 {
     static const uint8_t UG = 0;               // Update generation
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNT // counter fields
 {
     static const uint8_t CNT = 0;              // Low counter value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PSC // prescaler fields
 {
     static const uint8_t PSC = 0;              // Prescaler value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ARR // auto-reload register fields
 {
     static const uint8_t ARR = 0;              // Low Auto-reload value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -3132,7 +3334,7 @@ struct tim7_t
     volatile uint32_t    ARR;                  // [Read-write] auto-reload register
 };
 
-tim7_t& TIM7 = *reinterpret_cast<tim7_t*>(0x40001400);
+static tim7_t& TIM7 = *reinterpret_cast<tim7_t*>(0x40001400);
 
 namespace CR1 // control register 1 fields
 {
@@ -3141,42 +3343,50 @@ namespace CR1 // control register 1 fields
     static const uint8_t URS = 2;              // Update request source
     static const uint8_t UDIS = 1;             // Update disable
     static const uint8_t CEN = 0;              // Counter enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // control register 2 fields
 {
     static const uint8_t MMS = 4;              // Master mode selection (3 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DIER // DMA/Interrupt enable register fields
 {
     static const uint8_t UDE = 8;              // Update DMA request enable
     static const uint8_t UIE = 0;              // Update interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SR // status register fields
 {
     static const uint8_t UIF = 0;              // Update interrupt flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EGR // event generation register fields
 {
     static const uint8_t UG = 0;               // Update generation
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNT // counter fields
 {
     static const uint8_t CNT = 0;              // Low counter value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PSC // prescaler fields
 {
     static const uint8_t PSC = 0;              // Prescaler value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ARR // auto-reload register fields
 {
     static const uint8_t ARR = 0;              // Low Auto-reload value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -3200,7 +3410,7 @@ struct exti_t
     volatile uint32_t    PR;                   // [Read-write] Pending register (EXTI_PR)
 };
 
-exti_t& EXTI = *reinterpret_cast<exti_t*>(0x40010400);
+static exti_t& EXTI = *reinterpret_cast<exti_t*>(0x40010400);
 
 namespace IMR // Interrupt mask register (EXTI_IMR) fields
 {
@@ -3232,6 +3442,7 @@ namespace IMR // Interrupt mask register (EXTI_IMR) fields
     static const uint8_t MR25 = 25;            // Interrupt Mask on line 25
     static const uint8_t MR26 = 26;            // Interrupt Mask on line 26
     static const uint8_t MR27 = 27;            // Interrupt Mask on line 27
+    static const uint32_t RESET_VALUE = 0xf940000;
 }
 
 namespace EMR // Event mask register (EXTI_EMR) fields
@@ -3264,6 +3475,7 @@ namespace EMR // Event mask register (EXTI_EMR) fields
     static const uint8_t MR25 = 25;            // Event Mask on line 25
     static const uint8_t MR26 = 26;            // Event Mask on line 26
     static const uint8_t MR27 = 27;            // Event Mask on line 27
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RTSR // Rising Trigger selection register (EXTI_RTSR) fields
@@ -3287,6 +3499,7 @@ namespace RTSR // Rising Trigger selection register (EXTI_RTSR) fields
     static const uint8_t TR16 = 16;            // Rising trigger event configuration of line 16
     static const uint8_t TR17 = 17;            // Rising trigger event configuration of line 17
     static const uint8_t TR19 = 19;            // Rising trigger event configuration of line 19
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace FTSR // Falling Trigger selection register (EXTI_FTSR) fields
@@ -3310,6 +3523,7 @@ namespace FTSR // Falling Trigger selection register (EXTI_FTSR) fields
     static const uint8_t TR16 = 16;            // Falling trigger event configuration of line 16
     static const uint8_t TR17 = 17;            // Falling trigger event configuration of line 17
     static const uint8_t TR19 = 19;            // Falling trigger event configuration of line 19
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SWIER // Software interrupt event register (EXTI_SWIER) fields
@@ -3333,6 +3547,7 @@ namespace SWIER // Software interrupt event register (EXTI_SWIER) fields
     static const uint8_t SWIER16 = 16;         // Software Interrupt on line 16
     static const uint8_t SWIER17 = 17;         // Software Interrupt on line 17
     static const uint8_t SWIER19 = 19;         // Software Interrupt on line 19
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PR // Pending register (EXTI_PR) fields
@@ -3356,6 +3571,7 @@ namespace PR // Pending register (EXTI_PR) fields
     static const uint8_t PR16 = 16;            // Pending bit 16
     static const uint8_t PR17 = 17;            // Pending bit 17
     static const uint8_t PR19 = 19;            // Pending bit 19
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -3389,26 +3605,30 @@ struct nvic_t
     volatile uint32_t    IPR7;                 // [Read-write] Interrupt Priority Register 7
 };
 
-nvic_t& NVIC = *reinterpret_cast<nvic_t*>(0xe000e100);
+static nvic_t& NVIC = *reinterpret_cast<nvic_t*>(0xe000e100);
 
 namespace ISER // Interrupt Set Enable Register fields
 {
     static const uint8_t SETENA = 0;           // SETENA (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ICER // Interrupt Clear Enable Register fields
 {
     static const uint8_t CLRENA = 0;           // CLRENA (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ISPR // Interrupt Set-Pending Register fields
 {
     static const uint8_t SETPEND = 0;          // SETPEND (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ICPR // Interrupt Clear-Pending Register fields
 {
     static const uint8_t CLRPEND = 0;          // CLRPEND (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IPR0 // Interrupt Priority Register 0 fields
@@ -3417,6 +3637,7 @@ namespace IPR0 // Interrupt Priority Register 0 fields
     static const uint8_t PRI_01 = 14;          // PRI_01 (2 bits)
     static const uint8_t PRI_02 = 22;          // PRI_02 (2 bits)
     static const uint8_t PRI_03 = 30;          // PRI_03 (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IPR1 // Interrupt Priority Register 1 fields
@@ -3425,6 +3646,7 @@ namespace IPR1 // Interrupt Priority Register 1 fields
     static const uint8_t PRI_41 = 14;          // PRI_41 (2 bits)
     static const uint8_t PRI_42 = 22;          // PRI_42 (2 bits)
     static const uint8_t PRI_43 = 30;          // PRI_43 (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IPR2 // Interrupt Priority Register 2 fields
@@ -3433,6 +3655,7 @@ namespace IPR2 // Interrupt Priority Register 2 fields
     static const uint8_t PRI_81 = 14;          // PRI_81 (2 bits)
     static const uint8_t PRI_82 = 22;          // PRI_82 (2 bits)
     static const uint8_t PRI_83 = 30;          // PRI_83 (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IPR3 // Interrupt Priority Register 3 fields
@@ -3441,6 +3664,7 @@ namespace IPR3 // Interrupt Priority Register 3 fields
     static const uint8_t PRI_121 = 14;         // PRI_121 (2 bits)
     static const uint8_t PRI_122 = 22;         // PRI_122 (2 bits)
     static const uint8_t PRI_123 = 30;         // PRI_123 (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IPR4 // Interrupt Priority Register 4 fields
@@ -3449,6 +3673,7 @@ namespace IPR4 // Interrupt Priority Register 4 fields
     static const uint8_t PRI_161 = 14;         // PRI_161 (2 bits)
     static const uint8_t PRI_162 = 22;         // PRI_162 (2 bits)
     static const uint8_t PRI_163 = 30;         // PRI_163 (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IPR5 // Interrupt Priority Register 5 fields
@@ -3457,6 +3682,7 @@ namespace IPR5 // Interrupt Priority Register 5 fields
     static const uint8_t PRI_201 = 14;         // PRI_201 (2 bits)
     static const uint8_t PRI_202 = 22;         // PRI_202 (2 bits)
     static const uint8_t PRI_203 = 30;         // PRI_203 (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IPR6 // Interrupt Priority Register 6 fields
@@ -3465,6 +3691,7 @@ namespace IPR6 // Interrupt Priority Register 6 fields
     static const uint8_t PRI_241 = 14;         // PRI_241 (2 bits)
     static const uint8_t PRI_242 = 22;         // PRI_242 (2 bits)
     static const uint8_t PRI_243 = 30;         // PRI_243 (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IPR7 // Interrupt Priority Register 7 fields
@@ -3473,6 +3700,7 @@ namespace IPR7 // Interrupt Priority Register 7 fields
     static const uint8_t PRI_281 = 14;         // PRI_281 (2 bits)
     static const uint8_t PRI_282 = 22;         // PRI_282 (2 bits)
     static const uint8_t PRI_283 = 30;         // PRI_283 (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -3526,7 +3754,7 @@ struct dma1_t
     volatile uint32_t    CMAR7;                // [Read-write] DMA channel 7 memory address register
 };
 
-dma1_t& DMA1 = *reinterpret_cast<dma1_t*>(0x40020000);
+static dma1_t& DMA1 = *reinterpret_cast<dma1_t*>(0x40020000);
 
 namespace ISR // DMA interrupt status register (DMA_ISR) fields
 {
@@ -3558,6 +3786,7 @@ namespace ISR // DMA interrupt status register (DMA_ISR) fields
     static const uint8_t TCIF7 = 25;           // Channel 7 Transfer Complete flag
     static const uint8_t HTIF7 = 26;           // Channel 7 Half Transfer Complete flag
     static const uint8_t TEIF7 = 27;           // Channel 7 Transfer Error flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IFCR // DMA interrupt flag clear register (DMA_IFCR) fields
@@ -3590,6 +3819,7 @@ namespace IFCR // DMA interrupt flag clear register (DMA_IFCR) fields
     static const uint8_t CTCIF7 = 25;          // Channel 7 Transfer Complete clear
     static const uint8_t CHTIF7 = 26;          // Channel 7 Half Transfer clear
     static const uint8_t CTEIF7 = 27;          // Channel 7 Transfer Error clear
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR1 // DMA channel configuration register (DMA_CCR) fields
@@ -3606,21 +3836,25 @@ namespace CCR1 // DMA channel configuration register (DMA_CCR) fields
     static const uint8_t MSIZE = 10;           // Memory size (2 bits)
     static const uint8_t PL = 12;              // Channel Priority level (2 bits)
     static const uint8_t MEM2MEM = 14;         // Memory to memory mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNDTR1 // DMA channel 1 number of data register fields
 {
     static const uint8_t NDT = 0;              // Number of data to transfer (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CPAR1 // DMA channel 1 peripheral address register fields
 {
     static const uint8_t PA = 0;               // Peripheral address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CMAR1 // DMA channel 1 memory address register fields
 {
     static const uint8_t MA = 0;               // Memory address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR2 // DMA channel configuration register (DMA_CCR) fields
@@ -3637,21 +3871,25 @@ namespace CCR2 // DMA channel configuration register (DMA_CCR) fields
     static const uint8_t MSIZE = 10;           // Memory size (2 bits)
     static const uint8_t PL = 12;              // Channel Priority level (2 bits)
     static const uint8_t MEM2MEM = 14;         // Memory to memory mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNDTR2 // DMA channel 2 number of data register fields
 {
     static const uint8_t NDT = 0;              // Number of data to transfer (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CPAR2 // DMA channel 2 peripheral address register fields
 {
     static const uint8_t PA = 0;               // Peripheral address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CMAR2 // DMA channel 2 memory address register fields
 {
     static const uint8_t MA = 0;               // Memory address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR3 // DMA channel configuration register (DMA_CCR) fields
@@ -3668,21 +3906,25 @@ namespace CCR3 // DMA channel configuration register (DMA_CCR) fields
     static const uint8_t MSIZE = 10;           // Memory size (2 bits)
     static const uint8_t PL = 12;              // Channel Priority level (2 bits)
     static const uint8_t MEM2MEM = 14;         // Memory to memory mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNDTR3 // DMA channel 3 number of data register fields
 {
     static const uint8_t NDT = 0;              // Number of data to transfer (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CPAR3 // DMA channel 3 peripheral address register fields
 {
     static const uint8_t PA = 0;               // Peripheral address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CMAR3 // DMA channel 3 memory address register fields
 {
     static const uint8_t MA = 0;               // Memory address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR4 // DMA channel configuration register (DMA_CCR) fields
@@ -3699,21 +3941,25 @@ namespace CCR4 // DMA channel configuration register (DMA_CCR) fields
     static const uint8_t MSIZE = 10;           // Memory size (2 bits)
     static const uint8_t PL = 12;              // Channel Priority level (2 bits)
     static const uint8_t MEM2MEM = 14;         // Memory to memory mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNDTR4 // DMA channel 4 number of data register fields
 {
     static const uint8_t NDT = 0;              // Number of data to transfer (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CPAR4 // DMA channel 4 peripheral address register fields
 {
     static const uint8_t PA = 0;               // Peripheral address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CMAR4 // DMA channel 4 memory address register fields
 {
     static const uint8_t MA = 0;               // Memory address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR5 // DMA channel configuration register (DMA_CCR) fields
@@ -3730,21 +3976,25 @@ namespace CCR5 // DMA channel configuration register (DMA_CCR) fields
     static const uint8_t MSIZE = 10;           // Memory size (2 bits)
     static const uint8_t PL = 12;              // Channel Priority level (2 bits)
     static const uint8_t MEM2MEM = 14;         // Memory to memory mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNDTR5 // DMA channel 5 number of data register fields
 {
     static const uint8_t NDT = 0;              // Number of data to transfer (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CPAR5 // DMA channel 5 peripheral address register fields
 {
     static const uint8_t PA = 0;               // Peripheral address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CMAR5 // DMA channel 5 memory address register fields
 {
     static const uint8_t MA = 0;               // Memory address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR6 // DMA channel configuration register (DMA_CCR) fields
@@ -3761,21 +4011,25 @@ namespace CCR6 // DMA channel configuration register (DMA_CCR) fields
     static const uint8_t MSIZE = 10;           // Memory size (2 bits)
     static const uint8_t PL = 12;              // Channel Priority level (2 bits)
     static const uint8_t MEM2MEM = 14;         // Memory to memory mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNDTR6 // DMA channel 6 number of data register fields
 {
     static const uint8_t NDT = 0;              // Number of data to transfer (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CPAR6 // DMA channel 6 peripheral address register fields
 {
     static const uint8_t PA = 0;               // Peripheral address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CMAR6 // DMA channel 6 memory address register fields
 {
     static const uint8_t MA = 0;               // Memory address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR7 // DMA channel configuration register (DMA_CCR) fields
@@ -3792,21 +4046,25 @@ namespace CCR7 // DMA channel configuration register (DMA_CCR) fields
     static const uint8_t MSIZE = 10;           // Memory size (2 bits)
     static const uint8_t PL = 12;              // Channel Priority level (2 bits)
     static const uint8_t MEM2MEM = 14;         // Memory to memory mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNDTR7 // DMA channel 7 number of data register fields
 {
     static const uint8_t NDT = 0;              // Number of data to transfer (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CPAR7 // DMA channel 7 peripheral address register fields
 {
     static const uint8_t PA = 0;               // Peripheral address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CMAR7 // DMA channel 7 memory address register fields
 {
     static const uint8_t MA = 0;               // Memory address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -3860,7 +4118,7 @@ struct dma2_t
     volatile uint32_t    CMAR7;                // [Read-write] DMA channel 7 memory address register
 };
 
-dma2_t& DMA2 = *reinterpret_cast<dma2_t*>(0x40020400);
+static dma2_t& DMA2 = *reinterpret_cast<dma2_t*>(0x40020400);
 
 namespace ISR // DMA interrupt status register (DMA_ISR) fields
 {
@@ -3892,6 +4150,7 @@ namespace ISR // DMA interrupt status register (DMA_ISR) fields
     static const uint8_t TCIF7 = 25;           // Channel 7 Transfer Complete flag
     static const uint8_t HTIF7 = 26;           // Channel 7 Half Transfer Complete flag
     static const uint8_t TEIF7 = 27;           // Channel 7 Transfer Error flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IFCR // DMA interrupt flag clear register (DMA_IFCR) fields
@@ -3924,6 +4183,7 @@ namespace IFCR // DMA interrupt flag clear register (DMA_IFCR) fields
     static const uint8_t CTCIF7 = 25;          // Channel 7 Transfer Complete clear
     static const uint8_t CHTIF7 = 26;          // Channel 7 Half Transfer clear
     static const uint8_t CTEIF7 = 27;          // Channel 7 Transfer Error clear
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR1 // DMA channel configuration register (DMA_CCR) fields
@@ -3940,21 +4200,25 @@ namespace CCR1 // DMA channel configuration register (DMA_CCR) fields
     static const uint8_t MSIZE = 10;           // Memory size (2 bits)
     static const uint8_t PL = 12;              // Channel Priority level (2 bits)
     static const uint8_t MEM2MEM = 14;         // Memory to memory mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNDTR1 // DMA channel 1 number of data register fields
 {
     static const uint8_t NDT = 0;              // Number of data to transfer (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CPAR1 // DMA channel 1 peripheral address register fields
 {
     static const uint8_t PA = 0;               // Peripheral address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CMAR1 // DMA channel 1 memory address register fields
 {
     static const uint8_t MA = 0;               // Memory address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR2 // DMA channel configuration register (DMA_CCR) fields
@@ -3971,21 +4235,25 @@ namespace CCR2 // DMA channel configuration register (DMA_CCR) fields
     static const uint8_t MSIZE = 10;           // Memory size (2 bits)
     static const uint8_t PL = 12;              // Channel Priority level (2 bits)
     static const uint8_t MEM2MEM = 14;         // Memory to memory mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNDTR2 // DMA channel 2 number of data register fields
 {
     static const uint8_t NDT = 0;              // Number of data to transfer (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CPAR2 // DMA channel 2 peripheral address register fields
 {
     static const uint8_t PA = 0;               // Peripheral address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CMAR2 // DMA channel 2 memory address register fields
 {
     static const uint8_t MA = 0;               // Memory address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR3 // DMA channel configuration register (DMA_CCR) fields
@@ -4002,21 +4270,25 @@ namespace CCR3 // DMA channel configuration register (DMA_CCR) fields
     static const uint8_t MSIZE = 10;           // Memory size (2 bits)
     static const uint8_t PL = 12;              // Channel Priority level (2 bits)
     static const uint8_t MEM2MEM = 14;         // Memory to memory mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNDTR3 // DMA channel 3 number of data register fields
 {
     static const uint8_t NDT = 0;              // Number of data to transfer (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CPAR3 // DMA channel 3 peripheral address register fields
 {
     static const uint8_t PA = 0;               // Peripheral address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CMAR3 // DMA channel 3 memory address register fields
 {
     static const uint8_t MA = 0;               // Memory address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR4 // DMA channel configuration register (DMA_CCR) fields
@@ -4033,21 +4305,25 @@ namespace CCR4 // DMA channel configuration register (DMA_CCR) fields
     static const uint8_t MSIZE = 10;           // Memory size (2 bits)
     static const uint8_t PL = 12;              // Channel Priority level (2 bits)
     static const uint8_t MEM2MEM = 14;         // Memory to memory mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNDTR4 // DMA channel 4 number of data register fields
 {
     static const uint8_t NDT = 0;              // Number of data to transfer (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CPAR4 // DMA channel 4 peripheral address register fields
 {
     static const uint8_t PA = 0;               // Peripheral address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CMAR4 // DMA channel 4 memory address register fields
 {
     static const uint8_t MA = 0;               // Memory address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR5 // DMA channel configuration register (DMA_CCR) fields
@@ -4064,21 +4340,25 @@ namespace CCR5 // DMA channel configuration register (DMA_CCR) fields
     static const uint8_t MSIZE = 10;           // Memory size (2 bits)
     static const uint8_t PL = 12;              // Channel Priority level (2 bits)
     static const uint8_t MEM2MEM = 14;         // Memory to memory mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNDTR5 // DMA channel 5 number of data register fields
 {
     static const uint8_t NDT = 0;              // Number of data to transfer (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CPAR5 // DMA channel 5 peripheral address register fields
 {
     static const uint8_t PA = 0;               // Peripheral address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CMAR5 // DMA channel 5 memory address register fields
 {
     static const uint8_t MA = 0;               // Memory address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR6 // DMA channel configuration register (DMA_CCR) fields
@@ -4095,21 +4375,25 @@ namespace CCR6 // DMA channel configuration register (DMA_CCR) fields
     static const uint8_t MSIZE = 10;           // Memory size (2 bits)
     static const uint8_t PL = 12;              // Channel Priority level (2 bits)
     static const uint8_t MEM2MEM = 14;         // Memory to memory mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNDTR6 // DMA channel 6 number of data register fields
 {
     static const uint8_t NDT = 0;              // Number of data to transfer (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CPAR6 // DMA channel 6 peripheral address register fields
 {
     static const uint8_t PA = 0;               // Peripheral address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CMAR6 // DMA channel 6 memory address register fields
 {
     static const uint8_t MA = 0;               // Memory address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR7 // DMA channel configuration register (DMA_CCR) fields
@@ -4126,21 +4410,25 @@ namespace CCR7 // DMA channel configuration register (DMA_CCR) fields
     static const uint8_t MSIZE = 10;           // Memory size (2 bits)
     static const uint8_t PL = 12;              // Channel Priority level (2 bits)
     static const uint8_t MEM2MEM = 14;         // Memory to memory mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNDTR7 // DMA channel 7 number of data register fields
 {
     static const uint8_t NDT = 0;              // Number of data to transfer (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CPAR7 // DMA channel 7 peripheral address register fields
 {
     static const uint8_t PA = 0;               // Peripheral address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CMAR7 // DMA channel 7 memory address register fields
 {
     static const uint8_t MA = 0;               // Memory address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -4172,7 +4460,7 @@ struct rcc_t
     volatile uint32_t    CR2;                  // Clock control register 2
 };
 
-rcc_t& RCC = *reinterpret_cast<rcc_t*>(0x40021000);
+static rcc_t& RCC = *reinterpret_cast<rcc_t*>(0x40021000);
 
 namespace CR // Clock control register fields
 {
@@ -4186,6 +4474,7 @@ namespace CR // Clock control register fields
     static const uint8_t CSSON = 19;           // Clock Security System enable, Read-write
     static const uint8_t PLLON = 24;           // PLL enable, Read-write
     static const uint8_t PLLRDY = 25;          // PLL clock ready flag, Read-only
+    static const uint32_t RESET_VALUE = 0x83;
 }
 
 namespace CFGR // Clock configuration register (RCC_CFGR) fields
@@ -4201,6 +4490,7 @@ namespace CFGR // Clock configuration register (RCC_CFGR) fields
     static const uint8_t MCO = 24;             // Microcontroller clock output (3 bits), Read-write
     static const uint8_t MCOPRE = 28;          // Microcontroller Clock Output Prescaler (3 bits), Read-write
     static const uint8_t PLLNODIV = 31;        // PLL clock not divided for MCO, Read-write
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CIR // Clock interrupt register (RCC_CIR) fields
@@ -4228,6 +4518,7 @@ namespace CIR // Clock interrupt register (RCC_CIR) fields
     static const uint8_t HSI14RDYC = 21;       // HSI 14 MHz Ready Interrupt Clear, Write-only
     static const uint8_t HSI48RDYC = 22;       // HSI48 Ready Interrupt Clear, Write-only
     static const uint8_t CSSC = 23;            // Clock security system interrupt clear, Write-only
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace APB2RSTR // APB2 peripheral reset register (RCC_APB2RSTR) fields
@@ -4241,6 +4532,7 @@ namespace APB2RSTR // APB2 peripheral reset register (RCC_APB2RSTR) fields
     static const uint8_t TIM16RST = 17;        // TIM16 timer reset
     static const uint8_t TIM17RST = 18;        // TIM17 timer reset
     static const uint8_t DBGMCURST = 22;       // Debug MCU reset
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace APB1RSTR // APB1 peripheral reset register (RCC_APB1RSTR) fields
@@ -4264,6 +4556,7 @@ namespace APB1RSTR // APB1 peripheral reset register (RCC_APB1RSTR) fields
     static const uint8_t PWRRST = 28;          // Power interface reset
     static const uint8_t DACRST = 29;          // DAC interface reset
     static const uint8_t CECRST = 30;          // HDMI CEC reset
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace AHBENR // AHB Peripheral Clock enable register (RCC_AHBENR) fields
@@ -4279,6 +4572,7 @@ namespace AHBENR // AHB Peripheral Clock enable register (RCC_AHBENR) fields
     static const uint8_t IOPDEN = 20;          // I/O port D clock enable
     static const uint8_t IOPFEN = 22;          // I/O port F clock enable
     static const uint8_t TSCEN = 24;           // Touch sensing controller clock enable
+    static const uint32_t RESET_VALUE = 0x14;
 }
 
 namespace APB2ENR // APB2 peripheral clock enable register (RCC_APB2ENR) fields
@@ -4295,6 +4589,7 @@ namespace APB2ENR // APB2 peripheral clock enable register (RCC_APB2ENR) fields
     static const uint8_t USART8EN = 7;         // USART8 clock enable
     static const uint8_t USART7EN = 6;         // USART7 clock enable
     static const uint8_t USART6EN = 5;         // USART6 clock enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace APB1ENR // APB1 peripheral clock enable register (RCC_APB1ENR) fields
@@ -4318,6 +4613,7 @@ namespace APB1ENR // APB1 peripheral clock enable register (RCC_APB1ENR) fields
     static const uint8_t PWREN = 28;           // Power interface clock enable
     static const uint8_t DACEN = 29;           // DAC interface clock enable
     static const uint8_t CECEN = 30;           // HDMI CEC interface clock enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BDCR // Backup domain control register (RCC_BDCR) fields
@@ -4329,6 +4625,7 @@ namespace BDCR // Backup domain control register (RCC_BDCR) fields
     static const uint8_t RTCSEL = 8;           // RTC clock source selection (2 bits), Read-write
     static const uint8_t RTCEN = 15;           // RTC clock enable, Read-write
     static const uint8_t BDRST = 16;           // Backup domain software reset, Read-write
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CSR // Control/status register (RCC_CSR) fields
@@ -4343,6 +4640,7 @@ namespace CSR // Control/status register (RCC_CSR) fields
     static const uint8_t IWDGRSTF = 29;        // Independent watchdog reset flag, Read-write
     static const uint8_t WWDGRSTF = 30;        // Window watchdog reset flag, Read-write
     static const uint8_t LPWRRSTF = 31;        // Low-power reset flag, Read-write
+    static const uint32_t RESET_VALUE = 0xc000000;
 }
 
 namespace AHBRSTR // AHB peripheral reset register fields
@@ -4353,11 +4651,13 @@ namespace AHBRSTR // AHB peripheral reset register fields
     static const uint8_t IOPDRST = 20;         // I/O port D reset
     static const uint8_t IOPFRST = 22;         // I/O port F reset
     static const uint8_t TSCRST = 24;          // Touch sensing controller reset
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CFGR2 // Clock configuration register 2 fields
 {
     static const uint8_t PREDIV = 0;           // PREDIV division factor (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CFGR3 // Clock configuration register 3 fields
@@ -4368,6 +4668,7 @@ namespace CFGR3 // Clock configuration register 3 fields
     static const uint8_t USBSW = 7;            // USB clock source selection
     static const uint8_t ADCSW = 8;            // ADC clock source selection
     static const uint8_t USART2SW = 16;        // USART2 clock source selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // Clock control register 2 fields
@@ -4380,6 +4681,7 @@ namespace CR2 // Clock control register 2 fields
     static const uint8_t HSI48ON = 16;         // HSI48 clock enable, Read-write
     static const uint8_t HSI48RDY = 17;        // HSI48 clock ready flag, Read-only
     static const uint8_t HSI48CAL = 24;        // HSI48 factory clock calibration, Read-only
+    static const uint32_t RESET_VALUE = 0x80;
 }
 
 }
@@ -4405,7 +4707,7 @@ struct syscfg_comp_t
     volatile uint32_t    COMP_CSR;             // control and status register
 };
 
-syscfg_comp_t& SYSCFG_COMP = *reinterpret_cast<syscfg_comp_t*>(0x40010000);
+static syscfg_comp_t& SYSCFG_COMP = *reinterpret_cast<syscfg_comp_t*>(0x40010000);
 
 namespace SYSCFG_CFGR1 // configuration register 1 fields
 {
@@ -4428,6 +4730,7 @@ namespace SYSCFG_CFGR1 // configuration register 1 fields
     static const uint8_t TIM1_DMA_RMP = 28;    // TIM1 DMA request remapping bit
     static const uint8_t TIM2_DMA_RMP = 29;    // TIM2 DMA request remapping bit
     static const uint8_t TIM3_DMA_RMP = 30;    // TIM3 DMA request remapping bit
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SYSCFG_EXTICR1 // external interrupt configuration register 1 fields
@@ -4436,6 +4739,7 @@ namespace SYSCFG_EXTICR1 // external interrupt configuration register 1 fields
     static const uint8_t EXTI2 = 8;            // EXTI 2 configuration bits (4 bits)
     static const uint8_t EXTI1 = 4;            // EXTI 1 configuration bits (4 bits)
     static const uint8_t EXTI0 = 0;            // EXTI 0 configuration bits (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SYSCFG_EXTICR2 // external interrupt configuration register 2 fields
@@ -4444,6 +4748,7 @@ namespace SYSCFG_EXTICR2 // external interrupt configuration register 2 fields
     static const uint8_t EXTI6 = 8;            // EXTI 6 configuration bits (4 bits)
     static const uint8_t EXTI5 = 4;            // EXTI 5 configuration bits (4 bits)
     static const uint8_t EXTI4 = 0;            // EXTI 4 configuration bits (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SYSCFG_EXTICR3 // external interrupt configuration register 3 fields
@@ -4452,6 +4757,7 @@ namespace SYSCFG_EXTICR3 // external interrupt configuration register 3 fields
     static const uint8_t EXTI10 = 8;           // EXTI 10 configuration bits (4 bits)
     static const uint8_t EXTI9 = 4;            // EXTI 9 configuration bits (4 bits)
     static const uint8_t EXTI8 = 0;            // EXTI 8 configuration bits (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SYSCFG_EXTICR4 // external interrupt configuration register 4 fields
@@ -4460,6 +4766,7 @@ namespace SYSCFG_EXTICR4 // external interrupt configuration register 4 fields
     static const uint8_t EXTI14 = 8;           // EXTI 14 configuration bits (4 bits)
     static const uint8_t EXTI13 = 4;           // EXTI 13 configuration bits (4 bits)
     static const uint8_t EXTI12 = 0;           // EXTI 12 configuration bits (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SYSCFG_CFGR2 // configuration register 2 fields
@@ -4468,6 +4775,7 @@ namespace SYSCFG_CFGR2 // configuration register 2 fields
     static const uint8_t PVD_LOCK = 2;         // PVD lock enable bit
     static const uint8_t SRAM_PARITY_LOCK = 1; // SRAM parity lock bit
     static const uint8_t LOCUP_LOCK = 0;       // Cortex-M0 LOCKUP bit enable bit
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace COMP_CSR // control and status register fields
@@ -4490,6 +4798,7 @@ namespace COMP_CSR // control and status register fields
     static const uint8_t COMP2HYST = 28;       // Comparator 2 hysteresis (2 bits), Read-write
     static const uint8_t COMP2OUT = 30;        // Comparator 2 output, Read-only
     static const uint8_t COMP2LOCK = 31;       // Comparator 2 lock, Read-write
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -4521,7 +4830,7 @@ struct adc_t
     volatile uint32_t    CCR;                  // [Read-write] common configuration register
 };
 
-adc_t& ADC = *reinterpret_cast<adc_t*>(0x40012400);
+static adc_t& ADC = *reinterpret_cast<adc_t*>(0x40012400);
 
 namespace ISR // interrupt and status register fields
 {
@@ -4531,6 +4840,7 @@ namespace ISR // interrupt and status register fields
     static const uint8_t EOC = 2;              // End of conversion flag
     static const uint8_t EOSMP = 1;            // End of sampling flag
     static const uint8_t ADRDY = 0;            // ADC ready
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IER // interrupt enable register fields
@@ -4541,6 +4851,7 @@ namespace IER // interrupt enable register fields
     static const uint8_t EOCIE = 2;            // End of conversion interrupt enable
     static const uint8_t EOSMPIE = 1;          // End of sampling flag interrupt enable
     static const uint8_t ADRDYIE = 0;          // ADC ready interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR // control register fields
@@ -4550,6 +4861,7 @@ namespace CR // control register fields
     static const uint8_t ADSTART = 2;          // ADC start conversion command
     static const uint8_t ADDIS = 1;            // ADC disable command
     static const uint8_t ADEN = 0;             // ADC enable command
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CFGR1 // configuration register 1 fields
@@ -4569,23 +4881,27 @@ namespace CFGR1 // configuration register 1 fields
     static const uint8_t SCANDIR = 2;          // Scan sequence direction
     static const uint8_t DMACFG = 1;           // Direct memery access configuration
     static const uint8_t DMAEN = 0;            // Direct memory access enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CFGR2 // configuration register 2 fields
 {
     static const uint8_t JITOFF_D4 = 31;       // JITOFF_D4
     static const uint8_t JITOFF_D2 = 30;       // JITOFF_D2
+    static const uint32_t RESET_VALUE = 0x8000;
 }
 
 namespace SMPR // sampling time register fields
 {
     static const uint8_t SMPR = 0;             // Sampling time selection (3 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TR // watchdog threshold register fields
 {
     static const uint8_t HT = 16;              // Analog watchdog higher threshold (12 bits)
     static const uint8_t LT = 0;               // Analog watchdog lower threshold (12 bits)
+    static const uint32_t RESET_VALUE = 0xfff;
 }
 
 namespace CHSELR // channel selection register fields
@@ -4609,11 +4925,13 @@ namespace CHSELR // channel selection register fields
     static const uint8_t CHSEL2 = 2;           // Channel-x selection
     static const uint8_t CHSEL1 = 1;           // Channel-x selection
     static const uint8_t CHSEL0 = 0;           // Channel-x selection
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DR // data register fields
 {
     static const uint8_t DATA = 0;             // Converted data (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR // common configuration register fields
@@ -4621,6 +4939,7 @@ namespace CCR // common configuration register fields
     static const uint8_t VBATEN = 24;          // VBAT enable
     static const uint8_t TSEN = 23;            // Temperature sensor enable
     static const uint8_t VREFEN = 22;          // Temperature sensor and VREFINT enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -4649,7 +4968,7 @@ struct usart1_t
     volatile uint32_t    TDR;                  // [Read-write] Transmit data register
 };
 
-usart1_t& USART1 = *reinterpret_cast<usart1_t*>(0x40013800);
+static usart1_t& USART1 = *reinterpret_cast<usart1_t*>(0x40013800);
 
 namespace CR1 // Control register 1 fields
 {
@@ -4674,6 +4993,7 @@ namespace CR1 // Control register 1 fields
     static const uint8_t RTOIE = 26;           // Receiver timeout interrupt enable
     static const uint8_t EOBIE = 27;           // End of Block interrupt enable
     static const uint8_t M1 = 28;              // Word length
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // Control register 2 fields
@@ -4697,6 +5017,7 @@ namespace CR2 // Control register 2 fields
     static const uint8_t LBDIE = 6;            // LIN break detection interrupt enable
     static const uint8_t LBDL = 5;             // LIN break detection length
     static const uint8_t ADDM7 = 4;            // 7-bit Address Detection/4-bit Address Detection
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR3 // Control register 3 fields
@@ -4720,24 +5041,28 @@ namespace CR3 // Control register 3 fields
     static const uint8_t IRLP = 2;             // IrDA low-power
     static const uint8_t IREN = 1;             // IrDA mode enable
     static const uint8_t EIE = 0;              // Error interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BRR // Baud rate register fields
 {
     static const uint8_t DIV_Mantissa = 4;     // mantissa of USARTDIV (12 bits)
     static const uint8_t DIV_Fraction = 0;     // fraction of USARTDIV (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace GTPR // Guard time and prescaler register fields
 {
     static const uint8_t GT = 8;               // Guard time value (8 bits)
     static const uint8_t PSC = 0;              // Prescaler value (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RTOR // Receiver timeout register fields
 {
     static const uint8_t BLEN = 24;            // Block Length (8 bits)
     static const uint8_t RTO = 0;              // Receiver timeout value (24 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RQR // Request register fields
@@ -4747,6 +5072,7 @@ namespace RQR // Request register fields
     static const uint8_t MMRQ = 2;             // Mute mode request
     static const uint8_t SBKRQ = 1;            // Send break request
     static const uint8_t ABRRQ = 0;            // Auto baud rate request
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ISR // Interrupt &amp; status register fields
@@ -4773,6 +5099,7 @@ namespace ISR // Interrupt &amp; status register fields
     static const uint8_t NF = 2;               // Noise detected flag
     static const uint8_t FE = 1;               // Framing error
     static const uint8_t PE = 0;               // Parity error
+    static const uint32_t RESET_VALUE = 0xc0;
 }
 
 namespace ICR // Interrupt flag clear register fields
@@ -4789,16 +5116,19 @@ namespace ICR // Interrupt flag clear register fields
     static const uint8_t NCF = 2;              // Noise detected clear flag
     static const uint8_t FECF = 1;             // Framing error clear flag
     static const uint8_t PECF = 0;             // Parity error clear flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RDR // Receive data register fields
 {
     static const uint8_t RDR = 0;              // Receive data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TDR // Transmit data register fields
 {
     static const uint8_t TDR = 0;              // Transmit data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -4827,7 +5157,7 @@ struct usart2_t
     volatile uint32_t    TDR;                  // [Read-write] Transmit data register
 };
 
-usart2_t& USART2 = *reinterpret_cast<usart2_t*>(0x40004400);
+static usart2_t& USART2 = *reinterpret_cast<usart2_t*>(0x40004400);
 
 namespace CR1 // Control register 1 fields
 {
@@ -4852,6 +5182,7 @@ namespace CR1 // Control register 1 fields
     static const uint8_t RTOIE = 26;           // Receiver timeout interrupt enable
     static const uint8_t EOBIE = 27;           // End of Block interrupt enable
     static const uint8_t M1 = 28;              // Word length
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // Control register 2 fields
@@ -4875,6 +5206,7 @@ namespace CR2 // Control register 2 fields
     static const uint8_t LBDIE = 6;            // LIN break detection interrupt enable
     static const uint8_t LBDL = 5;             // LIN break detection length
     static const uint8_t ADDM7 = 4;            // 7-bit Address Detection/4-bit Address Detection
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR3 // Control register 3 fields
@@ -4898,24 +5230,28 @@ namespace CR3 // Control register 3 fields
     static const uint8_t IRLP = 2;             // IrDA low-power
     static const uint8_t IREN = 1;             // IrDA mode enable
     static const uint8_t EIE = 0;              // Error interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BRR // Baud rate register fields
 {
     static const uint8_t DIV_Mantissa = 4;     // mantissa of USARTDIV (12 bits)
     static const uint8_t DIV_Fraction = 0;     // fraction of USARTDIV (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace GTPR // Guard time and prescaler register fields
 {
     static const uint8_t GT = 8;               // Guard time value (8 bits)
     static const uint8_t PSC = 0;              // Prescaler value (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RTOR // Receiver timeout register fields
 {
     static const uint8_t BLEN = 24;            // Block Length (8 bits)
     static const uint8_t RTO = 0;              // Receiver timeout value (24 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RQR // Request register fields
@@ -4925,6 +5261,7 @@ namespace RQR // Request register fields
     static const uint8_t MMRQ = 2;             // Mute mode request
     static const uint8_t SBKRQ = 1;            // Send break request
     static const uint8_t ABRRQ = 0;            // Auto baud rate request
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ISR // Interrupt &amp; status register fields
@@ -4951,6 +5288,7 @@ namespace ISR // Interrupt &amp; status register fields
     static const uint8_t NF = 2;               // Noise detected flag
     static const uint8_t FE = 1;               // Framing error
     static const uint8_t PE = 0;               // Parity error
+    static const uint32_t RESET_VALUE = 0xc0;
 }
 
 namespace ICR // Interrupt flag clear register fields
@@ -4967,16 +5305,19 @@ namespace ICR // Interrupt flag clear register fields
     static const uint8_t NCF = 2;              // Noise detected clear flag
     static const uint8_t FECF = 1;             // Framing error clear flag
     static const uint8_t PECF = 0;             // Parity error clear flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RDR // Receive data register fields
 {
     static const uint8_t RDR = 0;              // Receive data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TDR // Transmit data register fields
 {
     static const uint8_t TDR = 0;              // Transmit data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -5005,7 +5346,7 @@ struct usart3_t
     volatile uint32_t    TDR;                  // [Read-write] Transmit data register
 };
 
-usart3_t& USART3 = *reinterpret_cast<usart3_t*>(0x40004800);
+static usart3_t& USART3 = *reinterpret_cast<usart3_t*>(0x40004800);
 
 namespace CR1 // Control register 1 fields
 {
@@ -5030,6 +5371,7 @@ namespace CR1 // Control register 1 fields
     static const uint8_t RTOIE = 26;           // Receiver timeout interrupt enable
     static const uint8_t EOBIE = 27;           // End of Block interrupt enable
     static const uint8_t M1 = 28;              // Word length
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // Control register 2 fields
@@ -5053,6 +5395,7 @@ namespace CR2 // Control register 2 fields
     static const uint8_t LBDIE = 6;            // LIN break detection interrupt enable
     static const uint8_t LBDL = 5;             // LIN break detection length
     static const uint8_t ADDM7 = 4;            // 7-bit Address Detection/4-bit Address Detection
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR3 // Control register 3 fields
@@ -5076,24 +5419,28 @@ namespace CR3 // Control register 3 fields
     static const uint8_t IRLP = 2;             // IrDA low-power
     static const uint8_t IREN = 1;             // IrDA mode enable
     static const uint8_t EIE = 0;              // Error interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BRR // Baud rate register fields
 {
     static const uint8_t DIV_Mantissa = 4;     // mantissa of USARTDIV (12 bits)
     static const uint8_t DIV_Fraction = 0;     // fraction of USARTDIV (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace GTPR // Guard time and prescaler register fields
 {
     static const uint8_t GT = 8;               // Guard time value (8 bits)
     static const uint8_t PSC = 0;              // Prescaler value (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RTOR // Receiver timeout register fields
 {
     static const uint8_t BLEN = 24;            // Block Length (8 bits)
     static const uint8_t RTO = 0;              // Receiver timeout value (24 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RQR // Request register fields
@@ -5103,6 +5450,7 @@ namespace RQR // Request register fields
     static const uint8_t MMRQ = 2;             // Mute mode request
     static const uint8_t SBKRQ = 1;            // Send break request
     static const uint8_t ABRRQ = 0;            // Auto baud rate request
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ISR // Interrupt &amp; status register fields
@@ -5129,6 +5477,7 @@ namespace ISR // Interrupt &amp; status register fields
     static const uint8_t NF = 2;               // Noise detected flag
     static const uint8_t FE = 1;               // Framing error
     static const uint8_t PE = 0;               // Parity error
+    static const uint32_t RESET_VALUE = 0xc0;
 }
 
 namespace ICR // Interrupt flag clear register fields
@@ -5145,16 +5494,19 @@ namespace ICR // Interrupt flag clear register fields
     static const uint8_t NCF = 2;              // Noise detected clear flag
     static const uint8_t FECF = 1;             // Framing error clear flag
     static const uint8_t PECF = 0;             // Parity error clear flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RDR // Receive data register fields
 {
     static const uint8_t RDR = 0;              // Receive data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TDR // Transmit data register fields
 {
     static const uint8_t TDR = 0;              // Transmit data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -5183,7 +5535,7 @@ struct usart4_t
     volatile uint32_t    TDR;                  // [Read-write] Transmit data register
 };
 
-usart4_t& USART4 = *reinterpret_cast<usart4_t*>(0x40004c00);
+static usart4_t& USART4 = *reinterpret_cast<usart4_t*>(0x40004c00);
 
 namespace CR1 // Control register 1 fields
 {
@@ -5208,6 +5560,7 @@ namespace CR1 // Control register 1 fields
     static const uint8_t RTOIE = 26;           // Receiver timeout interrupt enable
     static const uint8_t EOBIE = 27;           // End of Block interrupt enable
     static const uint8_t M1 = 28;              // Word length
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // Control register 2 fields
@@ -5231,6 +5584,7 @@ namespace CR2 // Control register 2 fields
     static const uint8_t LBDIE = 6;            // LIN break detection interrupt enable
     static const uint8_t LBDL = 5;             // LIN break detection length
     static const uint8_t ADDM7 = 4;            // 7-bit Address Detection/4-bit Address Detection
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR3 // Control register 3 fields
@@ -5254,24 +5608,28 @@ namespace CR3 // Control register 3 fields
     static const uint8_t IRLP = 2;             // IrDA low-power
     static const uint8_t IREN = 1;             // IrDA mode enable
     static const uint8_t EIE = 0;              // Error interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BRR // Baud rate register fields
 {
     static const uint8_t DIV_Mantissa = 4;     // mantissa of USARTDIV (12 bits)
     static const uint8_t DIV_Fraction = 0;     // fraction of USARTDIV (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace GTPR // Guard time and prescaler register fields
 {
     static const uint8_t GT = 8;               // Guard time value (8 bits)
     static const uint8_t PSC = 0;              // Prescaler value (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RTOR // Receiver timeout register fields
 {
     static const uint8_t BLEN = 24;            // Block Length (8 bits)
     static const uint8_t RTO = 0;              // Receiver timeout value (24 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RQR // Request register fields
@@ -5281,6 +5639,7 @@ namespace RQR // Request register fields
     static const uint8_t MMRQ = 2;             // Mute mode request
     static const uint8_t SBKRQ = 1;            // Send break request
     static const uint8_t ABRRQ = 0;            // Auto baud rate request
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ISR // Interrupt &amp; status register fields
@@ -5307,6 +5666,7 @@ namespace ISR // Interrupt &amp; status register fields
     static const uint8_t NF = 2;               // Noise detected flag
     static const uint8_t FE = 1;               // Framing error
     static const uint8_t PE = 0;               // Parity error
+    static const uint32_t RESET_VALUE = 0xc0;
 }
 
 namespace ICR // Interrupt flag clear register fields
@@ -5323,16 +5683,19 @@ namespace ICR // Interrupt flag clear register fields
     static const uint8_t NCF = 2;              // Noise detected clear flag
     static const uint8_t FECF = 1;             // Framing error clear flag
     static const uint8_t PECF = 0;             // Parity error clear flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RDR // Receive data register fields
 {
     static const uint8_t RDR = 0;              // Receive data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TDR // Transmit data register fields
 {
     static const uint8_t TDR = 0;              // Transmit data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -5361,7 +5724,7 @@ struct usart6_t
     volatile uint32_t    TDR;                  // [Read-write] Transmit data register
 };
 
-usart6_t& USART6 = *reinterpret_cast<usart6_t*>(0x40011400);
+static usart6_t& USART6 = *reinterpret_cast<usart6_t*>(0x40011400);
 
 namespace CR1 // Control register 1 fields
 {
@@ -5386,6 +5749,7 @@ namespace CR1 // Control register 1 fields
     static const uint8_t RTOIE = 26;           // Receiver timeout interrupt enable
     static const uint8_t EOBIE = 27;           // End of Block interrupt enable
     static const uint8_t M1 = 28;              // Word length
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // Control register 2 fields
@@ -5409,6 +5773,7 @@ namespace CR2 // Control register 2 fields
     static const uint8_t LBDIE = 6;            // LIN break detection interrupt enable
     static const uint8_t LBDL = 5;             // LIN break detection length
     static const uint8_t ADDM7 = 4;            // 7-bit Address Detection/4-bit Address Detection
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR3 // Control register 3 fields
@@ -5432,24 +5797,28 @@ namespace CR3 // Control register 3 fields
     static const uint8_t IRLP = 2;             // IrDA low-power
     static const uint8_t IREN = 1;             // IrDA mode enable
     static const uint8_t EIE = 0;              // Error interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BRR // Baud rate register fields
 {
     static const uint8_t DIV_Mantissa = 4;     // mantissa of USARTDIV (12 bits)
     static const uint8_t DIV_Fraction = 0;     // fraction of USARTDIV (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace GTPR // Guard time and prescaler register fields
 {
     static const uint8_t GT = 8;               // Guard time value (8 bits)
     static const uint8_t PSC = 0;              // Prescaler value (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RTOR // Receiver timeout register fields
 {
     static const uint8_t BLEN = 24;            // Block Length (8 bits)
     static const uint8_t RTO = 0;              // Receiver timeout value (24 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RQR // Request register fields
@@ -5459,6 +5828,7 @@ namespace RQR // Request register fields
     static const uint8_t MMRQ = 2;             // Mute mode request
     static const uint8_t SBKRQ = 1;            // Send break request
     static const uint8_t ABRRQ = 0;            // Auto baud rate request
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ISR // Interrupt &amp; status register fields
@@ -5485,6 +5855,7 @@ namespace ISR // Interrupt &amp; status register fields
     static const uint8_t NF = 2;               // Noise detected flag
     static const uint8_t FE = 1;               // Framing error
     static const uint8_t PE = 0;               // Parity error
+    static const uint32_t RESET_VALUE = 0xc0;
 }
 
 namespace ICR // Interrupt flag clear register fields
@@ -5501,16 +5872,19 @@ namespace ICR // Interrupt flag clear register fields
     static const uint8_t NCF = 2;              // Noise detected clear flag
     static const uint8_t FECF = 1;             // Framing error clear flag
     static const uint8_t PECF = 0;             // Parity error clear flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RDR // Receive data register fields
 {
     static const uint8_t RDR = 0;              // Receive data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TDR // Transmit data register fields
 {
     static const uint8_t TDR = 0;              // Transmit data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -5539,7 +5913,7 @@ struct usart7_t
     volatile uint32_t    TDR;                  // [Read-write] Transmit data register
 };
 
-usart7_t& USART7 = *reinterpret_cast<usart7_t*>(0x40011800);
+static usart7_t& USART7 = *reinterpret_cast<usart7_t*>(0x40011800);
 
 namespace CR1 // Control register 1 fields
 {
@@ -5564,6 +5938,7 @@ namespace CR1 // Control register 1 fields
     static const uint8_t RTOIE = 26;           // Receiver timeout interrupt enable
     static const uint8_t EOBIE = 27;           // End of Block interrupt enable
     static const uint8_t M1 = 28;              // Word length
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // Control register 2 fields
@@ -5587,6 +5962,7 @@ namespace CR2 // Control register 2 fields
     static const uint8_t LBDIE = 6;            // LIN break detection interrupt enable
     static const uint8_t LBDL = 5;             // LIN break detection length
     static const uint8_t ADDM7 = 4;            // 7-bit Address Detection/4-bit Address Detection
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR3 // Control register 3 fields
@@ -5610,24 +5986,28 @@ namespace CR3 // Control register 3 fields
     static const uint8_t IRLP = 2;             // IrDA low-power
     static const uint8_t IREN = 1;             // IrDA mode enable
     static const uint8_t EIE = 0;              // Error interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BRR // Baud rate register fields
 {
     static const uint8_t DIV_Mantissa = 4;     // mantissa of USARTDIV (12 bits)
     static const uint8_t DIV_Fraction = 0;     // fraction of USARTDIV (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace GTPR // Guard time and prescaler register fields
 {
     static const uint8_t GT = 8;               // Guard time value (8 bits)
     static const uint8_t PSC = 0;              // Prescaler value (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RTOR // Receiver timeout register fields
 {
     static const uint8_t BLEN = 24;            // Block Length (8 bits)
     static const uint8_t RTO = 0;              // Receiver timeout value (24 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RQR // Request register fields
@@ -5637,6 +6017,7 @@ namespace RQR // Request register fields
     static const uint8_t MMRQ = 2;             // Mute mode request
     static const uint8_t SBKRQ = 1;            // Send break request
     static const uint8_t ABRRQ = 0;            // Auto baud rate request
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ISR // Interrupt &amp; status register fields
@@ -5663,6 +6044,7 @@ namespace ISR // Interrupt &amp; status register fields
     static const uint8_t NF = 2;               // Noise detected flag
     static const uint8_t FE = 1;               // Framing error
     static const uint8_t PE = 0;               // Parity error
+    static const uint32_t RESET_VALUE = 0xc0;
 }
 
 namespace ICR // Interrupt flag clear register fields
@@ -5679,16 +6061,19 @@ namespace ICR // Interrupt flag clear register fields
     static const uint8_t NCF = 2;              // Noise detected clear flag
     static const uint8_t FECF = 1;             // Framing error clear flag
     static const uint8_t PECF = 0;             // Parity error clear flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RDR // Receive data register fields
 {
     static const uint8_t RDR = 0;              // Receive data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TDR // Transmit data register fields
 {
     static const uint8_t TDR = 0;              // Transmit data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -5717,7 +6102,7 @@ struct usart8_t
     volatile uint32_t    TDR;                  // [Read-write] Transmit data register
 };
 
-usart8_t& USART8 = *reinterpret_cast<usart8_t*>(0x40011c00);
+static usart8_t& USART8 = *reinterpret_cast<usart8_t*>(0x40011c00);
 
 namespace CR1 // Control register 1 fields
 {
@@ -5742,6 +6127,7 @@ namespace CR1 // Control register 1 fields
     static const uint8_t RTOIE = 26;           // Receiver timeout interrupt enable
     static const uint8_t EOBIE = 27;           // End of Block interrupt enable
     static const uint8_t M1 = 28;              // Word length
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // Control register 2 fields
@@ -5765,6 +6151,7 @@ namespace CR2 // Control register 2 fields
     static const uint8_t LBDIE = 6;            // LIN break detection interrupt enable
     static const uint8_t LBDL = 5;             // LIN break detection length
     static const uint8_t ADDM7 = 4;            // 7-bit Address Detection/4-bit Address Detection
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR3 // Control register 3 fields
@@ -5788,24 +6175,28 @@ namespace CR3 // Control register 3 fields
     static const uint8_t IRLP = 2;             // IrDA low-power
     static const uint8_t IREN = 1;             // IrDA mode enable
     static const uint8_t EIE = 0;              // Error interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BRR // Baud rate register fields
 {
     static const uint8_t DIV_Mantissa = 4;     // mantissa of USARTDIV (12 bits)
     static const uint8_t DIV_Fraction = 0;     // fraction of USARTDIV (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace GTPR // Guard time and prescaler register fields
 {
     static const uint8_t GT = 8;               // Guard time value (8 bits)
     static const uint8_t PSC = 0;              // Prescaler value (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RTOR // Receiver timeout register fields
 {
     static const uint8_t BLEN = 24;            // Block Length (8 bits)
     static const uint8_t RTO = 0;              // Receiver timeout value (24 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RQR // Request register fields
@@ -5815,6 +6206,7 @@ namespace RQR // Request register fields
     static const uint8_t MMRQ = 2;             // Mute mode request
     static const uint8_t SBKRQ = 1;            // Send break request
     static const uint8_t ABRRQ = 0;            // Auto baud rate request
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ISR // Interrupt &amp; status register fields
@@ -5841,6 +6233,7 @@ namespace ISR // Interrupt &amp; status register fields
     static const uint8_t NF = 2;               // Noise detected flag
     static const uint8_t FE = 1;               // Framing error
     static const uint8_t PE = 0;               // Parity error
+    static const uint32_t RESET_VALUE = 0xc0;
 }
 
 namespace ICR // Interrupt flag clear register fields
@@ -5857,16 +6250,19 @@ namespace ICR // Interrupt flag clear register fields
     static const uint8_t NCF = 2;              // Noise detected clear flag
     static const uint8_t FECF = 1;             // Framing error clear flag
     static const uint8_t PECF = 0;             // Parity error clear flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RDR // Receive data register fields
 {
     static const uint8_t RDR = 0;              // Receive data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TDR // Transmit data register fields
 {
     static const uint8_t TDR = 0;              // Transmit data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -5895,7 +6291,7 @@ struct usart5_t
     volatile uint32_t    TDR;                  // [Read-write] Transmit data register
 };
 
-usart5_t& USART5 = *reinterpret_cast<usart5_t*>(0x40005000);
+static usart5_t& USART5 = *reinterpret_cast<usart5_t*>(0x40005000);
 
 namespace CR1 // Control register 1 fields
 {
@@ -5920,6 +6316,7 @@ namespace CR1 // Control register 1 fields
     static const uint8_t RTOIE = 26;           // Receiver timeout interrupt enable
     static const uint8_t EOBIE = 27;           // End of Block interrupt enable
     static const uint8_t M1 = 28;              // Word length
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // Control register 2 fields
@@ -5943,6 +6340,7 @@ namespace CR2 // Control register 2 fields
     static const uint8_t LBDIE = 6;            // LIN break detection interrupt enable
     static const uint8_t LBDL = 5;             // LIN break detection length
     static const uint8_t ADDM7 = 4;            // 7-bit Address Detection/4-bit Address Detection
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR3 // Control register 3 fields
@@ -5966,24 +6364,28 @@ namespace CR3 // Control register 3 fields
     static const uint8_t IRLP = 2;             // IrDA low-power
     static const uint8_t IREN = 1;             // IrDA mode enable
     static const uint8_t EIE = 0;              // Error interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BRR // Baud rate register fields
 {
     static const uint8_t DIV_Mantissa = 4;     // mantissa of USARTDIV (12 bits)
     static const uint8_t DIV_Fraction = 0;     // fraction of USARTDIV (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace GTPR // Guard time and prescaler register fields
 {
     static const uint8_t GT = 8;               // Guard time value (8 bits)
     static const uint8_t PSC = 0;              // Prescaler value (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RTOR // Receiver timeout register fields
 {
     static const uint8_t BLEN = 24;            // Block Length (8 bits)
     static const uint8_t RTO = 0;              // Receiver timeout value (24 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RQR // Request register fields
@@ -5993,6 +6395,7 @@ namespace RQR // Request register fields
     static const uint8_t MMRQ = 2;             // Mute mode request
     static const uint8_t SBKRQ = 1;            // Send break request
     static const uint8_t ABRRQ = 0;            // Auto baud rate request
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ISR // Interrupt &amp; status register fields
@@ -6019,6 +6422,7 @@ namespace ISR // Interrupt &amp; status register fields
     static const uint8_t NF = 2;               // Noise detected flag
     static const uint8_t FE = 1;               // Framing error
     static const uint8_t PE = 0;               // Parity error
+    static const uint32_t RESET_VALUE = 0xc0;
 }
 
 namespace ICR // Interrupt flag clear register fields
@@ -6035,16 +6439,19 @@ namespace ICR // Interrupt flag clear register fields
     static const uint8_t NCF = 2;              // Noise detected clear flag
     static const uint8_t FECF = 1;             // Framing error clear flag
     static const uint8_t PECF = 0;             // Parity error clear flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RDR // Receive data register fields
 {
     static const uint8_t RDR = 0;              // Receive data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TDR // Transmit data register fields
 {
     static const uint8_t TDR = 0;              // Transmit data value (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -6085,7 +6492,7 @@ struct rtc_t
     volatile uint32_t    BKP4R;                // [Read-write] backup register
 };
 
-rtc_t& RTC = *reinterpret_cast<rtc_t*>(0x40002800);
+static rtc_t& RTC = *reinterpret_cast<rtc_t*>(0x40002800);
 
 namespace TR // time register fields
 {
@@ -6096,6 +6503,7 @@ namespace TR // time register fields
     static const uint8_t MNU = 8;              // Minute units in BCD format (4 bits)
     static const uint8_t ST = 4;               // Second tens in BCD format (3 bits)
     static const uint8_t SU = 0;               // Second units in BCD format (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DR // date register fields
@@ -6107,6 +6515,7 @@ namespace DR // date register fields
     static const uint8_t MU = 8;               // Month units in BCD format (4 bits)
     static const uint8_t DT = 4;               // Date tens in BCD format (2 bits)
     static const uint8_t DU = 0;               // Date units in BCD format (4 bits)
+    static const uint32_t RESET_VALUE = 0x2101;
 }
 
 namespace CR // control register fields
@@ -6126,6 +6535,7 @@ namespace CR // control register fields
     static const uint8_t POL = 20;             // Output polarity, Read-write
     static const uint8_t OSEL = 21;            // Output selection (2 bits), Read-write
     static const uint8_t COE = 23;             // Calibration output enable, Read-write
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ISR // initialization and status register fields
@@ -6142,12 +6552,14 @@ namespace ISR // initialization and status register fields
     static const uint8_t TAMP1F = 13;          // RTC_TAMP1 detection flag, Read-write
     static const uint8_t TAMP2F = 14;          // RTC_TAMP2 detection flag, Read-write
     static const uint8_t RECALPF = 16;         // Recalibration pending Flag, Read-only
+    static const uint32_t RESET_VALUE = 0x7;
 }
 
 namespace PRER // prescaler register fields
 {
     static const uint8_t PREDIV_A = 16;        // Asynchronous prescaler factor (7 bits)
     static const uint8_t PREDIV_S = 0;         // Synchronous prescaler factor (15 bits)
+    static const uint32_t RESET_VALUE = 0x7f00ff;
 }
 
 namespace ALRMAR // alarm A register fields
@@ -6166,22 +6578,26 @@ namespace ALRMAR // alarm A register fields
     static const uint8_t MSK1 = 7;             // Alarm A seconds mask
     static const uint8_t ST = 4;               // Second tens in BCD format. (3 bits)
     static const uint8_t SU = 0;               // Second units in BCD format. (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace WPR // write protection register fields
 {
     static const uint8_t KEY = 0;              // Write protection key (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SSR // sub second register fields
 {
     static const uint8_t SS = 0;               // Sub second value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SHIFTR // shift control register fields
 {
     static const uint8_t ADD1S = 31;           // Add one second
     static const uint8_t SUBFS = 0;            // Subtract a fraction of a second (15 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TSTR // timestamp time register fields
@@ -6193,6 +6609,7 @@ namespace TSTR // timestamp time register fields
     static const uint8_t MNU = 8;              // Minute units in BCD format. (4 bits)
     static const uint8_t ST = 4;               // Second tens in BCD format. (3 bits)
     static const uint8_t SU = 0;               // Second units in BCD format. (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TSDR // timestamp date register fields
@@ -6202,11 +6619,13 @@ namespace TSDR // timestamp date register fields
     static const uint8_t MU = 8;               // Month units in BCD format (4 bits)
     static const uint8_t DT = 4;               // Date tens in BCD format (2 bits)
     static const uint8_t DU = 0;               // Date units in BCD format (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TSSSR // time-stamp sub second register fields
 {
     static const uint8_t SS = 0;               // Sub second value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CALR // calibration register fields
@@ -6215,6 +6634,7 @@ namespace CALR // calibration register fields
     static const uint8_t CALW8 = 14;           // Use an 8-second calibration cycle period
     static const uint8_t CALW16 = 13;          // Use a 16-second calibration cycle period
     static const uint8_t CALM = 0;             // Calibration minus (9 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TAFCR // tamper and alternate function configuration register fields
@@ -6235,37 +6655,44 @@ namespace TAFCR // tamper and alternate function configuration register fields
     static const uint8_t TAMPIE = 2;           // Tamper interrupt enable
     static const uint8_t TAMP1TRG = 1;         // Active level for RTC_TAMP1 input
     static const uint8_t TAMP1E = 0;           // RTC_TAMP1 input detection enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ALRMASSR // alarm A sub second register fields
 {
     static const uint8_t MASKSS = 24;          // Mask the most-significant bits starting at this bit (4 bits)
     static const uint8_t SS = 0;               // Sub seconds value (15 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BKP0R // backup register fields
 {
     static const uint8_t BKP = 0;              // BKP (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BKP1R // backup register fields
 {
     static const uint8_t BKP = 0;              // BKP (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BKP2R // backup register fields
 {
     static const uint8_t BKP = 0;              // BKP (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BKP3R // backup register fields
 {
     static const uint8_t BKP = 0;              // BKP (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BKP4R // backup register fields
 {
     static const uint8_t BKP = 0;              // BKP (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -6303,7 +6730,7 @@ struct tim15_t
     volatile uint32_t    DMAR;                 // [Read-write] DMA address for full transfer
 };
 
-tim15_t& TIM15 = *reinterpret_cast<tim15_t*>(0x40014000);
+static tim15_t& TIM15 = *reinterpret_cast<tim15_t*>(0x40014000);
 
 namespace CR1 // control register 1 fields
 {
@@ -6313,6 +6740,7 @@ namespace CR1 // control register 1 fields
     static const uint8_t URS = 2;              // Update request source
     static const uint8_t UDIS = 1;             // Update disable
     static const uint8_t CEN = 0;              // Counter enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // control register 2 fields
@@ -6324,6 +6752,7 @@ namespace CR2 // control register 2 fields
     static const uint8_t CCDS = 3;             // Capture/compare DMA selection
     static const uint8_t CCUS = 2;             // Capture/compare control update selection
     static const uint8_t CCPC = 0;             // Capture/compare preloaded control
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SMCR // slave mode control register fields
@@ -6331,6 +6760,7 @@ namespace SMCR // slave mode control register fields
     static const uint8_t MSM = 7;              // Master/Slave mode
     static const uint8_t TS = 4;               // Trigger selection (3 bits)
     static const uint8_t SMS = 0;              // Slave mode selection (3 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DIER // DMA/Interrupt enable register fields
@@ -6345,6 +6775,7 @@ namespace DIER // DMA/Interrupt enable register fields
     static const uint8_t CC2IE = 2;            // Capture/Compare 2 interrupt enable
     static const uint8_t CC1IE = 1;            // Capture/Compare 1 interrupt enable
     static const uint8_t UIE = 0;              // Update interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SR // status register fields
@@ -6357,6 +6788,7 @@ namespace SR // status register fields
     static const uint8_t CC2IF = 2;            // Capture/Compare 2 interrupt flag
     static const uint8_t CC1IF = 1;            // Capture/compare 1 interrupt flag
     static const uint8_t UIF = 0;              // Update interrupt flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EGR // event generation register fields
@@ -6367,6 +6799,7 @@ namespace EGR // event generation register fields
     static const uint8_t CC2G = 2;             // Capture/compare 2 generation
     static const uint8_t CC1G = 1;             // Capture/compare 1 generation
     static const uint8_t UG = 0;               // Update generation
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR1_Output // capture/compare mode register (output mode) fields
@@ -6379,6 +6812,7 @@ namespace CCMR1_Output // capture/compare mode register (output mode) fields
     static const uint8_t OC1PE = 3;            // Output Compare 1 preload enable
     static const uint8_t OC1FE = 2;            // Output Compare 1 fast enable
     static const uint8_t CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR1_Input // capture/compare mode register 1 (input mode) fields
@@ -6389,6 +6823,7 @@ namespace CCMR1_Input // capture/compare mode register 1 (input mode) fields
     static const uint8_t IC1F = 4;             // Input capture 1 filter (4 bits)
     static const uint8_t IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
     static const uint8_t CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCER // capture/compare enable register fields
@@ -6400,36 +6835,43 @@ namespace CCER // capture/compare enable register fields
     static const uint8_t CC1NE = 2;            // Capture/Compare 1 complementary output enable
     static const uint8_t CC1P = 1;             // Capture/Compare 1 output Polarity
     static const uint8_t CC1E = 0;             // Capture/Compare 1 output enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNT // counter fields
 {
     static const uint8_t CNT = 0;              // counter value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PSC // prescaler fields
 {
     static const uint8_t PSC = 0;              // Prescaler value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ARR // auto-reload register fields
 {
     static const uint8_t ARR = 0;              // Auto-reload value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RCR // repetition counter register fields
 {
     static const uint8_t REP = 0;              // Repetition counter value (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR1 // capture/compare register 1 fields
 {
     static const uint8_t CCR1 = 0;             // Capture/Compare 1 value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR2 // capture/compare register 2 fields
 {
     static const uint8_t CCR2 = 0;             // Capture/Compare 2 value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BDTR // break and dead-time register fields
@@ -6442,17 +6884,20 @@ namespace BDTR // break and dead-time register fields
     static const uint8_t OSSI = 10;            // Off-state selection for Idle mode
     static const uint8_t LOCK = 8;             // Lock configuration (2 bits)
     static const uint8_t DTG = 0;              // Dead-time generator setup (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DCR // DMA control register fields
 {
     static const uint8_t DBL = 8;              // DMA burst length (5 bits)
     static const uint8_t DBA = 0;              // DMA base address (5 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DMAR // DMA address for full transfer fields
 {
     static const uint8_t DMAB = 0;             // DMA register for burst accesses (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -6489,7 +6934,7 @@ struct tim16_t
     volatile uint32_t    DMAR;                 // [Read-write] DMA address for full transfer
 };
 
-tim16_t& TIM16 = *reinterpret_cast<tim16_t*>(0x40014400);
+static tim16_t& TIM16 = *reinterpret_cast<tim16_t*>(0x40014400);
 
 namespace CR1 // control register 1 fields
 {
@@ -6499,6 +6944,7 @@ namespace CR1 // control register 1 fields
     static const uint8_t URS = 2;              // Update request source
     static const uint8_t UDIS = 1;             // Update disable
     static const uint8_t CEN = 0;              // Counter enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // control register 2 fields
@@ -6508,6 +6954,7 @@ namespace CR2 // control register 2 fields
     static const uint8_t CCDS = 3;             // Capture/compare DMA selection
     static const uint8_t CCUS = 2;             // Capture/compare control update selection
     static const uint8_t CCPC = 0;             // Capture/compare preloaded control
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DIER // DMA/Interrupt enable register fields
@@ -6520,6 +6967,7 @@ namespace DIER // DMA/Interrupt enable register fields
     static const uint8_t COMIE = 5;            // COM interrupt enable
     static const uint8_t CC1IE = 1;            // Capture/Compare 1 interrupt enable
     static const uint8_t UIE = 0;              // Update interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SR // status register fields
@@ -6530,6 +6978,7 @@ namespace SR // status register fields
     static const uint8_t COMIF = 5;            // COM interrupt flag
     static const uint8_t CC1IF = 1;            // Capture/compare 1 interrupt flag
     static const uint8_t UIF = 0;              // Update interrupt flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EGR // event generation register fields
@@ -6539,6 +6988,7 @@ namespace EGR // event generation register fields
     static const uint8_t COMG = 5;             // Capture/Compare control update generation
     static const uint8_t CC1G = 1;             // Capture/compare 1 generation
     static const uint8_t UG = 0;               // Update generation
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR1_Output // capture/compare mode register (output mode) fields
@@ -6547,6 +6997,7 @@ namespace CCMR1_Output // capture/compare mode register (output mode) fields
     static const uint8_t OC1PE = 3;            // Output Compare 1 preload enable
     static const uint8_t OC1FE = 2;            // Output Compare 1 fast enable
     static const uint8_t CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR1_Input // capture/compare mode register 1 (input mode) fields
@@ -6554,6 +7005,7 @@ namespace CCMR1_Input // capture/compare mode register 1 (input mode) fields
     static const uint8_t IC1F = 4;             // Input capture 1 filter (4 bits)
     static const uint8_t IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
     static const uint8_t CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCER // capture/compare enable register fields
@@ -6562,31 +7014,37 @@ namespace CCER // capture/compare enable register fields
     static const uint8_t CC1NE = 2;            // Capture/Compare 1 complementary output enable
     static const uint8_t CC1P = 1;             // Capture/Compare 1 output Polarity
     static const uint8_t CC1E = 0;             // Capture/Compare 1 output enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNT // counter fields
 {
     static const uint8_t CNT = 0;              // counter value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PSC // prescaler fields
 {
     static const uint8_t PSC = 0;              // Prescaler value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ARR // auto-reload register fields
 {
     static const uint8_t ARR = 0;              // Auto-reload value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RCR // repetition counter register fields
 {
     static const uint8_t REP = 0;              // Repetition counter value (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR1 // capture/compare register 1 fields
 {
     static const uint8_t CCR1 = 0;             // Capture/Compare 1 value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BDTR // break and dead-time register fields
@@ -6599,17 +7057,20 @@ namespace BDTR // break and dead-time register fields
     static const uint8_t OSSI = 10;            // Off-state selection for Idle mode
     static const uint8_t LOCK = 8;             // Lock configuration (2 bits)
     static const uint8_t DTG = 0;              // Dead-time generator setup (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DCR // DMA control register fields
 {
     static const uint8_t DBL = 8;              // DMA burst length (5 bits)
     static const uint8_t DBA = 0;              // DMA base address (5 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DMAR // DMA address for full transfer fields
 {
     static const uint8_t DMAB = 0;             // DMA register for burst accesses (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -6646,7 +7107,7 @@ struct tim17_t
     volatile uint32_t    DMAR;                 // [Read-write] DMA address for full transfer
 };
 
-tim17_t& TIM17 = *reinterpret_cast<tim17_t*>(0x40014800);
+static tim17_t& TIM17 = *reinterpret_cast<tim17_t*>(0x40014800);
 
 namespace CR1 // control register 1 fields
 {
@@ -6656,6 +7117,7 @@ namespace CR1 // control register 1 fields
     static const uint8_t URS = 2;              // Update request source
     static const uint8_t UDIS = 1;             // Update disable
     static const uint8_t CEN = 0;              // Counter enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR2 // control register 2 fields
@@ -6665,6 +7127,7 @@ namespace CR2 // control register 2 fields
     static const uint8_t CCDS = 3;             // Capture/compare DMA selection
     static const uint8_t CCUS = 2;             // Capture/compare control update selection
     static const uint8_t CCPC = 0;             // Capture/compare preloaded control
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DIER // DMA/Interrupt enable register fields
@@ -6677,6 +7140,7 @@ namespace DIER // DMA/Interrupt enable register fields
     static const uint8_t COMIE = 5;            // COM interrupt enable
     static const uint8_t CC1IE = 1;            // Capture/Compare 1 interrupt enable
     static const uint8_t UIE = 0;              // Update interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SR // status register fields
@@ -6687,6 +7151,7 @@ namespace SR // status register fields
     static const uint8_t COMIF = 5;            // COM interrupt flag
     static const uint8_t CC1IF = 1;            // Capture/compare 1 interrupt flag
     static const uint8_t UIF = 0;              // Update interrupt flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EGR // event generation register fields
@@ -6696,6 +7161,7 @@ namespace EGR // event generation register fields
     static const uint8_t COMG = 5;             // Capture/Compare control update generation
     static const uint8_t CC1G = 1;             // Capture/compare 1 generation
     static const uint8_t UG = 0;               // Update generation
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR1_Output // capture/compare mode register (output mode) fields
@@ -6704,6 +7170,7 @@ namespace CCMR1_Output // capture/compare mode register (output mode) fields
     static const uint8_t OC1PE = 3;            // Output Compare 1 preload enable
     static const uint8_t OC1FE = 2;            // Output Compare 1 fast enable
     static const uint8_t CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCMR1_Input // capture/compare mode register 1 (input mode) fields
@@ -6711,6 +7178,7 @@ namespace CCMR1_Input // capture/compare mode register 1 (input mode) fields
     static const uint8_t IC1F = 4;             // Input capture 1 filter (4 bits)
     static const uint8_t IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
     static const uint8_t CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCER // capture/compare enable register fields
@@ -6719,31 +7187,37 @@ namespace CCER // capture/compare enable register fields
     static const uint8_t CC1NE = 2;            // Capture/Compare 1 complementary output enable
     static const uint8_t CC1P = 1;             // Capture/Compare 1 output Polarity
     static const uint8_t CC1E = 0;             // Capture/Compare 1 output enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNT // counter fields
 {
     static const uint8_t CNT = 0;              // counter value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace PSC // prescaler fields
 {
     static const uint8_t PSC = 0;              // Prescaler value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ARR // auto-reload register fields
 {
     static const uint8_t ARR = 0;              // Auto-reload value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RCR // repetition counter register fields
 {
     static const uint8_t REP = 0;              // Repetition counter value (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR1 // capture/compare register 1 fields
 {
     static const uint8_t CCR1 = 0;             // Capture/Compare 1 value (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BDTR // break and dead-time register fields
@@ -6756,17 +7230,20 @@ namespace BDTR // break and dead-time register fields
     static const uint8_t OSSI = 10;            // Off-state selection for Idle mode
     static const uint8_t LOCK = 8;             // Lock configuration (2 bits)
     static const uint8_t DTG = 0;              // Dead-time generator setup (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DCR // DMA control register fields
 {
     static const uint8_t DBL = 8;              // DMA burst length (5 bits)
     static const uint8_t DBA = 0;              // DMA base address (5 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DMAR // DMA address for full transfer fields
 {
     static const uint8_t DMAB = 0;             // DMA register for burst accesses (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -6803,7 +7280,7 @@ struct tsc_t
     volatile uint32_t    IOG6CR;               // [Read-only] I/O group x counter register
 };
 
-tsc_t& TSC = *reinterpret_cast<tsc_t*>(0x40024000);
+static tsc_t& TSC = *reinterpret_cast<tsc_t*>(0x40024000);
 
 namespace CR // control register fields
 {
@@ -6819,24 +7296,28 @@ namespace CR // control register fields
     static const uint8_t AM = 2;               // Acquisition mode
     static const uint8_t START = 1;            // Start a new acquisition
     static const uint8_t TSCE = 0;             // Touch sensing controller enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IER // interrupt enable register fields
 {
     static const uint8_t MCEIE = 1;            // Max count error interrupt enable
     static const uint8_t EOAIE = 0;            // End of acquisition interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ICR // interrupt clear register fields
 {
     static const uint8_t MCEIC = 1;            // Max count error interrupt clear
     static const uint8_t EOAIC = 0;            // End of acquisition interrupt clear
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ISR // interrupt status register fields
 {
     static const uint8_t MCEF = 1;             // Max count error flag
     static const uint8_t EOAF = 0;             // End of acquisition flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IOHCR // I/O hysteresis control register fields
@@ -6865,6 +7346,7 @@ namespace IOHCR // I/O hysteresis control register fields
     static const uint8_t G1_IO3 = 2;           // G1_IO3 Schmitt trigger hysteresis mode
     static const uint8_t G1_IO2 = 1;           // G1_IO2 Schmitt trigger hysteresis mode
     static const uint8_t G1_IO1 = 0;           // G1_IO1 Schmitt trigger hysteresis mode
+    static const uint32_t RESET_VALUE = 0xffffffff;
 }
 
 namespace IOASCR // I/O analog switch control register fields
@@ -6893,6 +7375,7 @@ namespace IOASCR // I/O analog switch control register fields
     static const uint8_t G1_IO3 = 2;           // G1_IO3 analog switch enable
     static const uint8_t G1_IO2 = 1;           // G1_IO2 analog switch enable
     static const uint8_t G1_IO1 = 0;           // G1_IO1 analog switch enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IOSCR // I/O sampling control register fields
@@ -6921,6 +7404,7 @@ namespace IOSCR // I/O sampling control register fields
     static const uint8_t G1_IO3 = 2;           // G1_IO3 sampling mode
     static const uint8_t G1_IO2 = 1;           // G1_IO2 sampling mode
     static const uint8_t G1_IO1 = 0;           // G1_IO1 sampling mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IOCCR // I/O channel control register fields
@@ -6949,6 +7433,7 @@ namespace IOCCR // I/O channel control register fields
     static const uint8_t G1_IO3 = 2;           // G1_IO3 channel mode
     static const uint8_t G1_IO2 = 1;           // G1_IO2 channel mode
     static const uint8_t G1_IO1 = 0;           // G1_IO1 channel mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IOGCSR // I/O group control status register fields
@@ -6969,36 +7454,43 @@ namespace IOGCSR // I/O group control status register fields
     static const uint8_t G3E = 2;              // Analog I/O group x enable, Read-write
     static const uint8_t G2E = 1;              // Analog I/O group x enable, Read-write
     static const uint8_t G1E = 0;              // Analog I/O group x enable, Read-write
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IOG1CR // I/O group x counter register fields
 {
     static const uint8_t CNT = 0;              // Counter value (14 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IOG2CR // I/O group x counter register fields
 {
     static const uint8_t CNT = 0;              // Counter value (14 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IOG3CR // I/O group x counter register fields
 {
     static const uint8_t CNT = 0;              // Counter value (14 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IOG4CR // I/O group x counter register fields
 {
     static const uint8_t CNT = 0;              // Counter value (14 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IOG5CR // I/O group x counter register fields
 {
     static const uint8_t CNT = 0;              // Counter value (14 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IOG6CR // I/O group x counter register fields
 {
     static const uint8_t CNT = 0;              // Counter value (14 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -7022,13 +7514,14 @@ struct cec_t
     volatile uint32_t    IER;                  // [Read-write] interrupt enable register
 };
 
-cec_t& CEC = *reinterpret_cast<cec_t*>(0x40007800);
+static cec_t& CEC = *reinterpret_cast<cec_t*>(0x40007800);
 
 namespace CR // control register fields
 {
     static const uint8_t TXEOM = 2;            // Tx End Of Message
     static const uint8_t TXSOM = 1;            // Tx start of message
     static const uint8_t CECEN = 0;            // CEC Enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CFGR // configuration register fields
@@ -7040,16 +7533,19 @@ namespace CFGR // configuration register fields
     static const uint8_t SFT = 5;              // Signal Free Time (3 bits)
     static const uint8_t LSTN = 4;             // Listen mode
     static const uint8_t OAR = 0;              // Own Address (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace TXDR // Tx data register fields
 {
     static const uint8_t TXD = 0;              // Tx Data register (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RXDR // Rx Data Register fields
 {
     static const uint8_t RXDR = 0;             // CEC Rx Data Register (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ISR // Interrupt and Status Register fields
@@ -7067,6 +7563,7 @@ namespace ISR // Interrupt and Status Register fields
     static const uint8_t RXOVR = 2;            // Rx-Overrun
     static const uint8_t RXEND = 1;            // End Of Reception
     static const uint8_t RXBR = 0;             // Rx-Byte Received
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace IER // interrupt enable register fields
@@ -7084,6 +7581,7 @@ namespace IER // interrupt enable register fields
     static const uint8_t RXOVRIE = 2;          // Rx-Buffer Overrun Interrupt Enable
     static const uint8_t RXENDIE = 1;          // End Of Reception Interrupt Enable
     static const uint8_t RXBRIE = 0;           // Rx-Byte Received Interrupt Enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -7110,23 +7608,26 @@ struct flash_t
     volatile uint32_t    WRPR;                 // [Read-only] Write protection register
 };
 
-flash_t& Flash = *reinterpret_cast<flash_t*>(0x40022000);
+static flash_t& Flash = *reinterpret_cast<flash_t*>(0x40022000);
 
 namespace ACR // Flash access control register fields
 {
     static const uint8_t LATENCY = 0;          // LATENCY (3 bits), Read-write
     static const uint8_t PRFTBE = 4;           // PRFTBE, Read-write
     static const uint8_t PRFTBS = 5;           // PRFTBS, Read-only
+    static const uint32_t RESET_VALUE = 0x30;
 }
 
 namespace KEYR // Flash key register fields
 {
     static const uint8_t FKEYR = 0;            // Flash Key (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OPTKEYR // Flash option key register fields
 {
     static const uint8_t OPTKEYR = 0;          // Option byte key (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SR // Flash status register fields
@@ -7135,6 +7636,7 @@ namespace SR // Flash status register fields
     static const uint8_t WRPRT = 4;            // Write protection error, Read-write
     static const uint8_t PGERR = 2;            // Programming error, Read-write
     static const uint8_t BSY = 0;              // Busy, Read-only
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR // Flash control register fields
@@ -7150,11 +7652,13 @@ namespace CR // Flash control register fields
     static const uint8_t MER = 2;              // Mass erase
     static const uint8_t PER = 1;              // Page erase
     static const uint8_t PG = 0;               // Programming
+    static const uint32_t RESET_VALUE = 0x80;
 }
 
 namespace AR // Flash address register fields
 {
     static const uint8_t FAR = 0;              // Flash address (32 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace OBR // Option byte register fields
@@ -7171,11 +7675,13 @@ namespace OBR // Option byte register fields
     static const uint8_t BOOT_SEL = 15;        // BOOT_SEL
     static const uint8_t Data0 = 16;           // Data0 (8 bits)
     static const uint8_t Data1 = 24;           // Data1 (8 bits)
+    static const uint32_t RESET_VALUE = 0x3fffff2;
 }
 
 namespace WRPR // Write protection register fields
 {
     static const uint8_t WRP = 0;              // Write protect (32 bits)
+    static const uint32_t RESET_VALUE = 0xffffffff;
 }
 
 }
@@ -7197,19 +7703,21 @@ struct dbgmcu_t
     volatile uint32_t    APB2_FZ;              // [Read-write] Debug MCU APB2 freeze register
 };
 
-dbgmcu_t& DBGMCU = *reinterpret_cast<dbgmcu_t*>(0x40015800);
+static dbgmcu_t& DBGMCU = *reinterpret_cast<dbgmcu_t*>(0x40015800);
 
 namespace IDCODE // MCU Device ID Code Register fields
 {
     static const uint8_t DEV_ID = 0;           // Device Identifier (12 bits)
     static const uint8_t DIV_ID = 12;          // Division Identifier (4 bits)
     static const uint8_t REV_ID = 16;          // Revision Identifier (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CR // Debug MCU Configuration Register fields
 {
     static const uint8_t DBG_STOP = 1;         // Debug Stop Mode
     static const uint8_t DBG_STANDBY = 2;      // Debug Standby Mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace APB1_FZ // Debug MCU APB1 freeze register fields
@@ -7224,6 +7732,7 @@ namespace APB1_FZ // Debug MCU APB1 freeze register fields
     static const uint8_t DBG_IWDG_STOP = 12;   // Debug independent watchdog stopped when core is halted
     static const uint8_t DBG_I2C1_SMBUS_TIMEOUT = 21;// SMBUS timeout mode stopped when core is halted
     static const uint8_t DBG_CAN_STOP = 25;    // CAN stopped when core is halted
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace APB2_FZ // Debug MCU APB2 freeze register fields
@@ -7232,6 +7741,7 @@ namespace APB2_FZ // Debug MCU APB2 freeze register fields
     static const uint8_t DBG_TIM15_STOP = 16;  // TIM15 counter stopped when core is halted
     static const uint8_t DBG_TIM16_STOP = 17;  // TIM16 counter stopped when core is halted
     static const uint8_t DBG_TIM17_STOP = 18;  // TIM17 counter stopped when core is halted
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -7265,7 +7775,7 @@ struct usb_t
     volatile uint32_t    BCDR;                 // Battery charging detector
 };
 
-usb_t& USB = *reinterpret_cast<usb_t*>(0x40005c00);
+static usb_t& USB = *reinterpret_cast<usb_t*>(0x40005c00);
 
 namespace EP0R // endpoint 0 register fields
 {
@@ -7279,6 +7789,7 @@ namespace EP0R // endpoint 0 register fields
     static const uint8_t STAT_RX = 12;         // Status bits, for reception transfers (2 bits)
     static const uint8_t DTOG_RX = 14;         // Data Toggle, for reception transfers
     static const uint8_t CTR_RX = 15;          // Correct transfer for reception
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EP1R // endpoint 1 register fields
@@ -7293,6 +7804,7 @@ namespace EP1R // endpoint 1 register fields
     static const uint8_t STAT_RX = 12;         // Status bits, for reception transfers (2 bits)
     static const uint8_t DTOG_RX = 14;         // Data Toggle, for reception transfers
     static const uint8_t CTR_RX = 15;          // Correct transfer for reception
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EP2R // endpoint 2 register fields
@@ -7307,6 +7819,7 @@ namespace EP2R // endpoint 2 register fields
     static const uint8_t STAT_RX = 12;         // Status bits, for reception transfers (2 bits)
     static const uint8_t DTOG_RX = 14;         // Data Toggle, for reception transfers
     static const uint8_t CTR_RX = 15;          // Correct transfer for reception
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EP3R // endpoint 3 register fields
@@ -7321,6 +7834,7 @@ namespace EP3R // endpoint 3 register fields
     static const uint8_t STAT_RX = 12;         // Status bits, for reception transfers (2 bits)
     static const uint8_t DTOG_RX = 14;         // Data Toggle, for reception transfers
     static const uint8_t CTR_RX = 15;          // Correct transfer for reception
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EP4R // endpoint 4 register fields
@@ -7335,6 +7849,7 @@ namespace EP4R // endpoint 4 register fields
     static const uint8_t STAT_RX = 12;         // Status bits, for reception transfers (2 bits)
     static const uint8_t DTOG_RX = 14;         // Data Toggle, for reception transfers
     static const uint8_t CTR_RX = 15;          // Correct transfer for reception
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EP5R // endpoint 5 register fields
@@ -7349,6 +7864,7 @@ namespace EP5R // endpoint 5 register fields
     static const uint8_t STAT_RX = 12;         // Status bits, for reception transfers (2 bits)
     static const uint8_t DTOG_RX = 14;         // Data Toggle, for reception transfers
     static const uint8_t CTR_RX = 15;          // Correct transfer for reception
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EP6R // endpoint 6 register fields
@@ -7363,6 +7879,7 @@ namespace EP6R // endpoint 6 register fields
     static const uint8_t STAT_RX = 12;         // Status bits, for reception transfers (2 bits)
     static const uint8_t DTOG_RX = 14;         // Data Toggle, for reception transfers
     static const uint8_t CTR_RX = 15;          // Correct transfer for reception
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace EP7R // endpoint 7 register fields
@@ -7377,6 +7894,7 @@ namespace EP7R // endpoint 7 register fields
     static const uint8_t STAT_RX = 12;         // Status bits, for reception transfers (2 bits)
     static const uint8_t DTOG_RX = 14;         // Data Toggle, for reception transfers
     static const uint8_t CTR_RX = 15;          // Correct transfer for reception
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CNTR // control register fields
@@ -7396,6 +7914,7 @@ namespace CNTR // control register fields
     static const uint8_t ERRM = 13;            // Error interrupt mask
     static const uint8_t PMAOVRM = 14;         // Packet memory area over / underrun interrupt mask
     static const uint8_t CTRM = 15;            // Correct transfer interrupt mask
+    static const uint32_t RESET_VALUE = 0x3;
 }
 
 namespace ISTR // interrupt status register fields
@@ -7411,6 +7930,7 @@ namespace ISTR // interrupt status register fields
     static const uint8_t ERR = 13;             // Error, Read-write
     static const uint8_t PMAOVR = 14;          // Packet memory area over / underrun, Read-write
     static const uint8_t CTR = 15;             // Correct transfer, Read-only
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace FNR // frame number register fields
@@ -7420,17 +7940,20 @@ namespace FNR // frame number register fields
     static const uint8_t LCK = 13;             // Locked
     static const uint8_t RXDM = 14;            // Receive data - line status
     static const uint8_t RXDP = 15;            // Receive data + line status
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DADDR // device address fields
 {
     static const uint8_t ADD = 0;              // Device address (7 bits)
     static const uint8_t EF = 7;               // Enable function
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BTABLE // Buffer table address fields
 {
     static const uint8_t BTABLE = 3;           // Buffer table (13 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace LPMCSR // LPM control and status register fields
@@ -7439,6 +7962,7 @@ namespace LPMCSR // LPM control and status register fields
     static const uint8_t LPMACK = 1;           // LPM Token acknowledge enable, Read-write
     static const uint8_t REMWAKE = 3;          // bRemoteWake value, Read-only
     static const uint8_t BESL = 4;             // BESL value (4 bits), Read-only
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace BCDR // Battery charging detector fields
@@ -7452,6 +7976,7 @@ namespace BCDR // Battery charging detector fields
     static const uint8_t SDET = 6;             // Secondary detection (SD) status, Read-only
     static const uint8_t PS2DET = 7;           // DM pull-up detection status, Read-only
     static const uint8_t DPPU = 15;            // DP pull-up control, Read-write
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -7473,7 +7998,7 @@ struct crs_t
     volatile uint32_t    ICR;                  // [Read-write] interrupt flag clear register
 };
 
-crs_t& CRS = *reinterpret_cast<crs_t*>(0x40006c00);
+static crs_t& CRS = *reinterpret_cast<crs_t*>(0x40006c00);
 
 namespace CR // control register fields
 {
@@ -7485,6 +8010,7 @@ namespace CR // control register fields
     static const uint8_t ERRIE = 2;            // Synchronization or trimming error interrupt enable
     static const uint8_t SYNCWARNIE = 1;       // SYNC warning interrupt enable
     static const uint8_t SYNCOKIE = 0;         // SYNC event OK interrupt enable
+    static const uint32_t RESET_VALUE = 0x2000;
 }
 
 namespace CFGR // configuration register fields
@@ -7494,6 +8020,7 @@ namespace CFGR // configuration register fields
     static const uint8_t SYNCDIV = 24;         // SYNC divider (3 bits)
     static const uint8_t FELIM = 16;           // Frequency error limit (8 bits)
     static const uint8_t RELOAD = 0;           // Counter reload value (16 bits)
+    static const uint32_t RESET_VALUE = 0x2022bb7f;
 }
 
 namespace ISR // interrupt and status register fields
@@ -7507,6 +8034,7 @@ namespace ISR // interrupt and status register fields
     static const uint8_t ERRF = 2;             // Error flag
     static const uint8_t SYNCWARNF = 1;        // SYNC warning flag
     static const uint8_t SYNCOKF = 0;          // SYNC event OK flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace ICR // interrupt flag clear register fields
@@ -7515,6 +8043,7 @@ namespace ICR // interrupt flag clear register fields
     static const uint8_t ERRC = 2;             // Error clear flag
     static const uint8_t SYNCWARNC = 1;        // SYNC warning clear flag
     static const uint8_t SYNCOKC = 0;          // SYNC event OK clear flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -7627,7 +8156,7 @@ struct can_t
     volatile uint32_t    F27R2;                // [Read-write] Filter bank 27 register 2
 };
 
-can_t& CAN = *reinterpret_cast<can_t*>(0x40006400);
+static can_t& CAN = *reinterpret_cast<can_t*>(0x40006400);
 
 namespace CAN_MCR // CAN_MCR fields
 {
@@ -7641,6 +8170,7 @@ namespace CAN_MCR // CAN_MCR fields
     static const uint8_t TXFP = 2;             // TXFP
     static const uint8_t SLEEP = 1;            // SLEEP
     static const uint8_t INRQ = 0;             // INRQ
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_MSR // CAN_MSR fields
@@ -7654,6 +8184,7 @@ namespace CAN_MSR // CAN_MSR fields
     static const uint8_t ERRI = 2;             // ERRI, Read-write
     static const uint8_t SLAK = 1;             // SLAK, Read-only
     static const uint8_t INAK = 0;             // INAK, Read-only
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_TSR // CAN_TSR fields
@@ -7680,6 +8211,7 @@ namespace CAN_TSR // CAN_TSR fields
     static const uint8_t ALST0 = 2;            // ALST0, Read-write
     static const uint8_t TXOK0 = 1;            // TXOK0, Read-write
     static const uint8_t RQCP0 = 0;            // RQCP0, Read-write
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_RF0R // CAN_RF0R fields
@@ -7688,6 +8220,7 @@ namespace CAN_RF0R // CAN_RF0R fields
     static const uint8_t FOVR0 = 4;            // FOVR0, Read-write
     static const uint8_t FULL0 = 3;            // FULL0, Read-write
     static const uint8_t FMP0 = 0;             // FMP0 (2 bits), Read-only
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_RF1R // CAN_RF1R fields
@@ -7696,6 +8229,7 @@ namespace CAN_RF1R // CAN_RF1R fields
     static const uint8_t FOVR1 = 4;            // FOVR1, Read-write
     static const uint8_t FULL1 = 3;            // FULL1, Read-write
     static const uint8_t FMP1 = 0;             // FMP1 (2 bits), Read-only
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_IER // CAN_IER fields
@@ -7714,6 +8248,7 @@ namespace CAN_IER // CAN_IER fields
     static const uint8_t FFIE0 = 2;            // FFIE0
     static const uint8_t FMPIE0 = 1;           // FMPIE0
     static const uint8_t TMEIE = 0;            // TMEIE
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_ESR // CAN_ESR fields
@@ -7724,6 +8259,7 @@ namespace CAN_ESR // CAN_ESR fields
     static const uint8_t BOFF = 2;             // BOFF, Read-only
     static const uint8_t EPVF = 1;             // EPVF, Read-only
     static const uint8_t EWGF = 0;             // EWGF, Read-only
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_BTR // CAN BTR fields
@@ -7734,6 +8270,7 @@ namespace CAN_BTR // CAN BTR fields
     static const uint8_t TS2 = 20;             // TS2 (3 bits)
     static const uint8_t TS1 = 16;             // TS1 (4 bits)
     static const uint8_t BRP = 0;              // BRP (10 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_TI0R // CAN_TI0R fields
@@ -7743,6 +8280,7 @@ namespace CAN_TI0R // CAN_TI0R fields
     static const uint8_t IDE = 2;              // IDE
     static const uint8_t RTR = 1;              // RTR
     static const uint8_t TXRQ = 0;             // TXRQ
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_TDT0R // CAN_TDT0R fields
@@ -7750,6 +8288,7 @@ namespace CAN_TDT0R // CAN_TDT0R fields
     static const uint8_t TIME = 16;            // TIME (16 bits)
     static const uint8_t TGT = 8;              // TGT
     static const uint8_t DLC = 0;              // DLC (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_TDL0R // CAN_TDL0R fields
@@ -7758,6 +8297,7 @@ namespace CAN_TDL0R // CAN_TDL0R fields
     static const uint8_t DATA2 = 16;           // DATA2 (8 bits)
     static const uint8_t DATA1 = 8;            // DATA1 (8 bits)
     static const uint8_t DATA0 = 0;            // DATA0 (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_TDH0R // CAN_TDH0R fields
@@ -7766,6 +8306,7 @@ namespace CAN_TDH0R // CAN_TDH0R fields
     static const uint8_t DATA6 = 16;           // DATA6 (8 bits)
     static const uint8_t DATA5 = 8;            // DATA5 (8 bits)
     static const uint8_t DATA4 = 0;            // DATA4 (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_TI1R // CAN_TI1R fields
@@ -7775,6 +8316,7 @@ namespace CAN_TI1R // CAN_TI1R fields
     static const uint8_t IDE = 2;              // IDE
     static const uint8_t RTR = 1;              // RTR
     static const uint8_t TXRQ = 0;             // TXRQ
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_TDT1R // CAN_TDT1R fields
@@ -7782,6 +8324,7 @@ namespace CAN_TDT1R // CAN_TDT1R fields
     static const uint8_t TIME = 16;            // TIME (16 bits)
     static const uint8_t TGT = 8;              // TGT
     static const uint8_t DLC = 0;              // DLC (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_TDL1R // CAN_TDL1R fields
@@ -7790,6 +8333,7 @@ namespace CAN_TDL1R // CAN_TDL1R fields
     static const uint8_t DATA2 = 16;           // DATA2 (8 bits)
     static const uint8_t DATA1 = 8;            // DATA1 (8 bits)
     static const uint8_t DATA0 = 0;            // DATA0 (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_TDH1R // CAN_TDH1R fields
@@ -7798,6 +8342,7 @@ namespace CAN_TDH1R // CAN_TDH1R fields
     static const uint8_t DATA6 = 16;           // DATA6 (8 bits)
     static const uint8_t DATA5 = 8;            // DATA5 (8 bits)
     static const uint8_t DATA4 = 0;            // DATA4 (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_TI2R // CAN_TI2R fields
@@ -7807,6 +8352,7 @@ namespace CAN_TI2R // CAN_TI2R fields
     static const uint8_t IDE = 2;              // IDE
     static const uint8_t RTR = 1;              // RTR
     static const uint8_t TXRQ = 0;             // TXRQ
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_TDT2R // CAN_TDT2R fields
@@ -7814,6 +8360,7 @@ namespace CAN_TDT2R // CAN_TDT2R fields
     static const uint8_t TIME = 16;            // TIME (16 bits)
     static const uint8_t TGT = 8;              // TGT
     static const uint8_t DLC = 0;              // DLC (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_TDL2R // CAN_TDL2R fields
@@ -7822,6 +8369,7 @@ namespace CAN_TDL2R // CAN_TDL2R fields
     static const uint8_t DATA2 = 16;           // DATA2 (8 bits)
     static const uint8_t DATA1 = 8;            // DATA1 (8 bits)
     static const uint8_t DATA0 = 0;            // DATA0 (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_TDH2R // CAN_TDH2R fields
@@ -7830,6 +8378,7 @@ namespace CAN_TDH2R // CAN_TDH2R fields
     static const uint8_t DATA6 = 16;           // DATA6 (8 bits)
     static const uint8_t DATA5 = 8;            // DATA5 (8 bits)
     static const uint8_t DATA4 = 0;            // DATA4 (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_RI0R // CAN_RI0R fields
@@ -7838,6 +8387,7 @@ namespace CAN_RI0R // CAN_RI0R fields
     static const uint8_t EXID = 3;             // EXID (18 bits)
     static const uint8_t IDE = 2;              // IDE
     static const uint8_t RTR = 1;              // RTR
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_RDT0R // CAN_RDT0R fields
@@ -7845,6 +8395,7 @@ namespace CAN_RDT0R // CAN_RDT0R fields
     static const uint8_t TIME = 16;            // TIME (16 bits)
     static const uint8_t FMI = 8;              // FMI (8 bits)
     static const uint8_t DLC = 0;              // DLC (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_RDL0R // CAN_RDL0R fields
@@ -7853,6 +8404,7 @@ namespace CAN_RDL0R // CAN_RDL0R fields
     static const uint8_t DATA2 = 16;           // DATA2 (8 bits)
     static const uint8_t DATA1 = 8;            // DATA1 (8 bits)
     static const uint8_t DATA0 = 0;            // DATA0 (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_RDH0R // CAN_RDH0R fields
@@ -7861,6 +8413,7 @@ namespace CAN_RDH0R // CAN_RDH0R fields
     static const uint8_t DATA6 = 16;           // DATA6 (8 bits)
     static const uint8_t DATA5 = 8;            // DATA5 (8 bits)
     static const uint8_t DATA4 = 0;            // DATA4 (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_RI1R // CAN_RI1R fields
@@ -7869,6 +8422,7 @@ namespace CAN_RI1R // CAN_RI1R fields
     static const uint8_t EXID = 3;             // EXID (18 bits)
     static const uint8_t IDE = 2;              // IDE
     static const uint8_t RTR = 1;              // RTR
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_RDT1R // CAN_RDT1R fields
@@ -7876,6 +8430,7 @@ namespace CAN_RDT1R // CAN_RDT1R fields
     static const uint8_t TIME = 16;            // TIME (16 bits)
     static const uint8_t FMI = 8;              // FMI (8 bits)
     static const uint8_t DLC = 0;              // DLC (4 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_RDL1R // CAN_RDL1R fields
@@ -7884,6 +8439,7 @@ namespace CAN_RDL1R // CAN_RDL1R fields
     static const uint8_t DATA2 = 16;           // DATA2 (8 bits)
     static const uint8_t DATA1 = 8;            // DATA1 (8 bits)
     static const uint8_t DATA0 = 0;            // DATA0 (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_RDH1R // CAN_RDH1R fields
@@ -7892,12 +8448,14 @@ namespace CAN_RDH1R // CAN_RDH1R fields
     static const uint8_t DATA6 = 16;           // DATA6 (8 bits)
     static const uint8_t DATA5 = 8;            // DATA5 (8 bits)
     static const uint8_t DATA4 = 0;            // DATA4 (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_FMR // CAN_FMR fields
 {
     static const uint8_t CAN2SB = 8;           // CAN2SB (6 bits)
     static const uint8_t FINIT = 0;            // FINIT
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_FM1R // CAN_FM1R fields
@@ -7930,6 +8488,7 @@ namespace CAN_FM1R // CAN_FM1R fields
     static const uint8_t FBM25 = 25;           // Filter mode
     static const uint8_t FBM26 = 26;           // Filter mode
     static const uint8_t FBM27 = 27;           // Filter mode
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_FS1R // CAN_FS1R fields
@@ -7962,6 +8521,7 @@ namespace CAN_FS1R // CAN_FS1R fields
     static const uint8_t FSC25 = 25;           // Filter scale configuration
     static const uint8_t FSC26 = 26;           // Filter scale configuration
     static const uint8_t FSC27 = 27;           // Filter scale configuration
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_FFA1R // CAN_FFA1R fields
@@ -7994,6 +8554,7 @@ namespace CAN_FFA1R // CAN_FFA1R fields
     static const uint8_t FFA25 = 25;           // Filter FIFO assignment for filter 25
     static const uint8_t FFA26 = 26;           // Filter FIFO assignment for filter 26
     static const uint8_t FFA27 = 27;           // Filter FIFO assignment for filter 27
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CAN_FA1R // CAN_FA1R fields
@@ -8026,6 +8587,7 @@ namespace CAN_FA1R // CAN_FA1R fields
     static const uint8_t FACT25 = 25;          // Filter active
     static const uint8_t FACT26 = 26;          // Filter active
     static const uint8_t FACT27 = 27;          // Filter active
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F0R1 // Filter bank 0 register 1 fields
@@ -8062,6 +8624,7 @@ namespace F0R1 // Filter bank 0 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F0R2 // Filter bank 0 register 2 fields
@@ -8098,6 +8661,7 @@ namespace F0R2 // Filter bank 0 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F1R1 // Filter bank 1 register 1 fields
@@ -8134,6 +8698,7 @@ namespace F1R1 // Filter bank 1 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F1R2 // Filter bank 1 register 2 fields
@@ -8170,6 +8735,7 @@ namespace F1R2 // Filter bank 1 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F2R1 // Filter bank 2 register 1 fields
@@ -8206,6 +8772,7 @@ namespace F2R1 // Filter bank 2 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F2R2 // Filter bank 2 register 2 fields
@@ -8242,6 +8809,7 @@ namespace F2R2 // Filter bank 2 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F3R1 // Filter bank 3 register 1 fields
@@ -8278,6 +8846,7 @@ namespace F3R1 // Filter bank 3 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F3R2 // Filter bank 3 register 2 fields
@@ -8314,6 +8883,7 @@ namespace F3R2 // Filter bank 3 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F4R1 // Filter bank 4 register 1 fields
@@ -8350,6 +8920,7 @@ namespace F4R1 // Filter bank 4 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F4R2 // Filter bank 4 register 2 fields
@@ -8386,6 +8957,7 @@ namespace F4R2 // Filter bank 4 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F5R1 // Filter bank 5 register 1 fields
@@ -8422,6 +8994,7 @@ namespace F5R1 // Filter bank 5 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F5R2 // Filter bank 5 register 2 fields
@@ -8458,6 +9031,7 @@ namespace F5R2 // Filter bank 5 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F6R1 // Filter bank 6 register 1 fields
@@ -8494,6 +9068,7 @@ namespace F6R1 // Filter bank 6 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F6R2 // Filter bank 6 register 2 fields
@@ -8530,6 +9105,7 @@ namespace F6R2 // Filter bank 6 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F7R1 // Filter bank 7 register 1 fields
@@ -8566,6 +9142,7 @@ namespace F7R1 // Filter bank 7 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F7R2 // Filter bank 7 register 2 fields
@@ -8602,6 +9179,7 @@ namespace F7R2 // Filter bank 7 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F8R1 // Filter bank 8 register 1 fields
@@ -8638,6 +9216,7 @@ namespace F8R1 // Filter bank 8 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F8R2 // Filter bank 8 register 2 fields
@@ -8674,6 +9253,7 @@ namespace F8R2 // Filter bank 8 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F9R1 // Filter bank 9 register 1 fields
@@ -8710,6 +9290,7 @@ namespace F9R1 // Filter bank 9 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F9R2 // Filter bank 9 register 2 fields
@@ -8746,6 +9327,7 @@ namespace F9R2 // Filter bank 9 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F10R1 // Filter bank 10 register 1 fields
@@ -8782,6 +9364,7 @@ namespace F10R1 // Filter bank 10 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F10R2 // Filter bank 10 register 2 fields
@@ -8818,6 +9401,7 @@ namespace F10R2 // Filter bank 10 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F11R1 // Filter bank 11 register 1 fields
@@ -8854,6 +9438,7 @@ namespace F11R1 // Filter bank 11 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F11R2 // Filter bank 11 register 2 fields
@@ -8890,6 +9475,7 @@ namespace F11R2 // Filter bank 11 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F12R1 // Filter bank 4 register 1 fields
@@ -8926,6 +9512,7 @@ namespace F12R1 // Filter bank 4 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F12R2 // Filter bank 12 register 2 fields
@@ -8962,6 +9549,7 @@ namespace F12R2 // Filter bank 12 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F13R1 // Filter bank 13 register 1 fields
@@ -8998,6 +9586,7 @@ namespace F13R1 // Filter bank 13 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F13R2 // Filter bank 13 register 2 fields
@@ -9034,6 +9623,7 @@ namespace F13R2 // Filter bank 13 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F14R1 // Filter bank 14 register 1 fields
@@ -9070,6 +9660,7 @@ namespace F14R1 // Filter bank 14 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F14R2 // Filter bank 14 register 2 fields
@@ -9106,6 +9697,7 @@ namespace F14R2 // Filter bank 14 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F15R1 // Filter bank 15 register 1 fields
@@ -9142,6 +9734,7 @@ namespace F15R1 // Filter bank 15 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F15R2 // Filter bank 15 register 2 fields
@@ -9178,6 +9771,7 @@ namespace F15R2 // Filter bank 15 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F16R1 // Filter bank 16 register 1 fields
@@ -9214,6 +9808,7 @@ namespace F16R1 // Filter bank 16 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F16R2 // Filter bank 16 register 2 fields
@@ -9250,6 +9845,7 @@ namespace F16R2 // Filter bank 16 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F17R1 // Filter bank 17 register 1 fields
@@ -9286,6 +9882,7 @@ namespace F17R1 // Filter bank 17 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F17R2 // Filter bank 17 register 2 fields
@@ -9322,6 +9919,7 @@ namespace F17R2 // Filter bank 17 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F18R1 // Filter bank 18 register 1 fields
@@ -9358,6 +9956,7 @@ namespace F18R1 // Filter bank 18 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F18R2 // Filter bank 18 register 2 fields
@@ -9394,6 +9993,7 @@ namespace F18R2 // Filter bank 18 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F19R1 // Filter bank 19 register 1 fields
@@ -9430,6 +10030,7 @@ namespace F19R1 // Filter bank 19 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F19R2 // Filter bank 19 register 2 fields
@@ -9466,6 +10067,7 @@ namespace F19R2 // Filter bank 19 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F20R1 // Filter bank 20 register 1 fields
@@ -9502,6 +10104,7 @@ namespace F20R1 // Filter bank 20 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F20R2 // Filter bank 20 register 2 fields
@@ -9538,6 +10141,7 @@ namespace F20R2 // Filter bank 20 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F21R1 // Filter bank 21 register 1 fields
@@ -9574,6 +10178,7 @@ namespace F21R1 // Filter bank 21 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F21R2 // Filter bank 21 register 2 fields
@@ -9610,6 +10215,7 @@ namespace F21R2 // Filter bank 21 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F22R1 // Filter bank 22 register 1 fields
@@ -9646,6 +10252,7 @@ namespace F22R1 // Filter bank 22 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F22R2 // Filter bank 22 register 2 fields
@@ -9682,6 +10289,7 @@ namespace F22R2 // Filter bank 22 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F23R1 // Filter bank 23 register 1 fields
@@ -9718,6 +10326,7 @@ namespace F23R1 // Filter bank 23 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F23R2 // Filter bank 23 register 2 fields
@@ -9754,6 +10363,7 @@ namespace F23R2 // Filter bank 23 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F24R1 // Filter bank 24 register 1 fields
@@ -9790,6 +10400,7 @@ namespace F24R1 // Filter bank 24 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F24R2 // Filter bank 24 register 2 fields
@@ -9826,6 +10437,7 @@ namespace F24R2 // Filter bank 24 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F25R1 // Filter bank 25 register 1 fields
@@ -9862,6 +10474,7 @@ namespace F25R1 // Filter bank 25 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F25R2 // Filter bank 25 register 2 fields
@@ -9898,6 +10511,7 @@ namespace F25R2 // Filter bank 25 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F26R1 // Filter bank 26 register 1 fields
@@ -9934,6 +10548,7 @@ namespace F26R1 // Filter bank 26 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F26R2 // Filter bank 26 register 2 fields
@@ -9970,6 +10585,7 @@ namespace F26R2 // Filter bank 26 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F27R1 // Filter bank 27 register 1 fields
@@ -10006,6 +10622,7 @@ namespace F27R1 // Filter bank 27 register 1 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace F27R2 // Filter bank 27 register 2 fields
@@ -10042,6 +10659,7 @@ namespace F27R2 // Filter bank 27 register 2 fields
     static const uint8_t FB29 = 29;            // Filter bits
     static const uint8_t FB30 = 30;            // Filter bits
     static const uint8_t FB31 = 31;            // Filter bits
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -10073,7 +10691,7 @@ struct dac_t
     volatile uint32_t    SR;                   // [Read-write] status register
 };
 
-dac_t& DAC = *reinterpret_cast<dac_t*>(0x40007400);
+static dac_t& DAC = *reinterpret_cast<dac_t*>(0x40007400);
 
 namespace CR // control register fields
 {
@@ -10093,76 +10711,90 @@ namespace CR // control register fields
     static const uint8_t MAMP2 = 24;           // DAC channel2 mask/amplitude selector (4 bits)
     static const uint8_t DMAEN2 = 28;          // DAC channel2 DMA enable
     static const uint8_t DMAUDRIE2 = 29;       // DAC channel2 DMA underrun interrupt enable
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SWTRIGR // software trigger register fields
 {
     static const uint8_t SWTRIG1 = 0;          // DAC channel1 software trigger
     static const uint8_t SWTRIG2 = 1;          // DAC channel2 software trigger
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DHR12R1 // channel1 12-bit right-aligned data holding register fields
 {
     static const uint8_t DACC1DHR = 0;         // DAC channel1 12-bit right-aligned data (12 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DHR12L1 // channel1 12-bit left aligned data holding register fields
 {
     static const uint8_t DACC1DHR = 4;         // DAC channel1 12-bit left-aligned data (12 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DHR8R1 // channel1 8-bit right aligned data holding register fields
 {
     static const uint8_t DACC1DHR = 0;         // DAC channel1 8-bit right-aligned data (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DOR1 // channel1 data output register fields
 {
     static const uint8_t DACC1DOR = 0;         // DAC channel1 data output (12 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SR // status register fields
 {
     static const uint8_t DMAUDR2 = 29;         // DAC channel2 DMA underrun flag
     static const uint8_t DMAUDR1 = 13;         // DAC channel1 DMA underrun flag
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DHR12R2 // DAC channel2 12-bit right-aligned data holding register fields
 {
     static const uint8_t DACC2DHR = 0;         // DAC channel2 12-bit right-aligned data (12 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DHR12L2 // DAC channel2 12-bit left-aligned data holding register fields
 {
     static const uint8_t DACC2DHR = 4;         // DAC channel2 12-bit left-aligned data (12 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DHR8R2 // DAC channel2 8-bit right-aligned data holding register fields
 {
     static const uint8_t DACC2DHR = 0;         // DAC channel2 8-bit right-aligned data (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DHR12RD // DHR12RD fields
 {
     static const uint8_t DACC1DHR = 0;         // DAC channel1 12-bit right-aligned data (12 bits)
     static const uint8_t DACC2DHR = 16;        // DAC channel2 12-bit right-aligned data (12 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DHR12LD // Dual DAC 12-bit left-aligned data holding register fields
 {
     static const uint8_t DACC1DHR = 4;         // DAC channel1 12-bit left-aligned data (12 bits)
     static const uint8_t DACC2DHR = 20;        // DAC channel2 12-bit left-aligned data (12 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DHR8RD // Dual DAC 8-bit right-aligned data holding register fields
 {
     static const uint8_t DACC2DHR = 8;         // DAC channel2 8-bit right-aligned data (8 bits)
     static const uint8_t DACC1DHR = 0;         // DAC channel1 8-bit right-aligned data (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace DOR2 // DAC channel2 data output register fields
 {
     static const uint8_t DACC2DOR = 0;         // DAC channel2 data output (12 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -10189,7 +10821,7 @@ struct scb_t
     volatile uint32_t    SHPR3;                // [Read-write] System handler priority registers
 };
 
-scb_t& SCB = *reinterpret_cast<scb_t*>(0xe000ed00);
+static scb_t& SCB = *reinterpret_cast<scb_t*>(0xe000ed00);
 
 namespace CPUID // CPUID base register fields
 {
@@ -10198,6 +10830,7 @@ namespace CPUID // CPUID base register fields
     static const uint8_t Constant = 16;        // Reads as 0xF (4 bits)
     static const uint8_t Variant = 20;         // Variant number (4 bits)
     static const uint8_t Implementer = 24;     // Implementer code (8 bits)
+    static const uint32_t RESET_VALUE = 0x410fc241;
 }
 
 namespace ICSR // Interrupt control and state register fields
@@ -10210,6 +10843,7 @@ namespace ICSR // Interrupt control and state register fields
     static const uint8_t PENDSVCLR = 27;       // PendSV clear-pending bit
     static const uint8_t PENDSVSET = 28;       // PendSV set-pending bit
     static const uint8_t NMIPENDSET = 31;      // NMI set-pending bit.
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace AIRCR // Application interrupt and reset control register fields
@@ -10218,6 +10852,7 @@ namespace AIRCR // Application interrupt and reset control register fields
     static const uint8_t SYSRESETREQ = 2;      // SYSRESETREQ
     static const uint8_t ENDIANESS = 15;       // ENDIANESS
     static const uint8_t VECTKEYSTAT = 16;     // Register key (16 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SCR // System control register fields
@@ -10225,23 +10860,27 @@ namespace SCR // System control register fields
     static const uint8_t SLEEPONEXIT = 1;      // SLEEPONEXIT
     static const uint8_t SLEEPDEEP = 2;        // SLEEPDEEP
     static const uint8_t SEVEONPEND = 4;       // Send Event on Pending bit
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CCR // Configuration and control register fields
 {
     static const uint8_t UNALIGN__TRP = 3;     // UNALIGN_ TRP
     static const uint8_t STKALIGN = 9;         // STKALIGN
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SHPR2 // System handler priority registers fields
 {
     static const uint8_t PRI_11 = 24;          // Priority of system handler 11 (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace SHPR3 // System handler priority registers fields
 {
     static const uint8_t PRI_14 = 16;          // Priority of system handler 14 (8 bits)
     static const uint8_t PRI_15 = 24;          // Priority of system handler 15 (8 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }
@@ -10263,7 +10902,7 @@ struct stk_t
     volatile uint32_t    CALIB;                // [Read-write] SysTick calibration value register
 };
 
-stk_t& STK = *reinterpret_cast<stk_t*>(0xe000e010);
+static stk_t& STK = *reinterpret_cast<stk_t*>(0xe000e010);
 
 namespace CSR // SysTick control and status register fields
 {
@@ -10271,16 +10910,19 @@ namespace CSR // SysTick control and status register fields
     static const uint8_t TICKINT = 1;          // SysTick exception request enable
     static const uint8_t CLKSOURCE = 2;        // Clock source selection
     static const uint8_t COUNTFLAG = 16;       // COUNTFLAG
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace RVR // SysTick reload value register fields
 {
     static const uint8_t RELOAD = 0;           // RELOAD value (24 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CVR // SysTick current value register fields
 {
     static const uint8_t CURRENT = 0;          // Current counter value (24 bits)
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 namespace CALIB // SysTick calibration value register fields
@@ -10288,6 +10930,7 @@ namespace CALIB // SysTick calibration value register fields
     static const uint8_t TENMS = 0;            // Calibration value (24 bits)
     static const uint8_t SKEW = 30;            // SKEW flag: Indicates whether the TENMS value is exact
     static const uint8_t NOREF = 31;           // NOREF flag. Reads as zero
+    static const uint32_t RESET_VALUE = 0x0;
 }
 
 }

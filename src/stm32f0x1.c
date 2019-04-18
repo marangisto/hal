@@ -5,6 +5,7 @@ extern uint32_t __sdata, __edata;
 extern uint32_t __sidata;
 extern uint32_t __estack;
 
+extern void system_init(void);
 extern void main(void);
 
 __attribute__ ((section(".text"))) void Reset_HDLR(void)
@@ -19,7 +20,7 @@ __attribute__ ((section(".text"))) void Reset_HDLR(void)
     while (bss < &__ebss)
         *bss++ = 0;
 
-    // FIXME: sys-clock-init here!
+    system_init();
 
     main();
 
