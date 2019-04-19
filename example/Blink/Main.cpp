@@ -21,7 +21,7 @@ void loop()
 {
     led_a::toggle();
 
-    if (led_a::get())
+    if (led_a::read())
         led_b::toggle();
 
     sys_tick::delay_ms(250);

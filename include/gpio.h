@@ -12,6 +12,7 @@ using namespace device;
 
 enum port_enum_t { A, B, C, D, E, F };
 enum output_type_t { push_pull, open_drain };
+enum input_type_t { floating, pull_up, pull_down };
 
 template<port_enum_t PORT> struct port_traits {};
 
@@ -62,6 +63,7 @@ template<> struct port_traits<F>
 template<port_enum_t PORT, int BIT>
 struct pin_t
 {
+    enum moder { input_mode, output_mode, alternate_mode, analog_mode };
     static_assert(BIT < 16, "pin_t bit out of range");
     typedef typename port_traits<PORT>::gpio_t gpio_t;
     static inline gpio_t& gpio() { return port_traits<PORT>::gpio(); }
@@ -73,24 +75,42 @@ template<port_enum_t PORT, int BIT>
 class output_t
 {
 public:
-    template<output_type_t ot = push_pull>
+    template<output_type_t output_type = push_pull>
     static inline void setup()
     {
         port_traits<PORT>::setup();
-        pin::gpio().MODER |= output_mode << (BIT*2);
-        if (ot == open_drain)
+        pin::gpio().MODER |= pin::output_mode << (BIT*2);
+        if (output_type == open_drain)
             pin::gpio().OTYPER |= BV(BIT);
     }
 
-    static inline bool get() { return (pin::gpio().ODR & pin::bit_mask) != 0; }
     static inline void set() { pin::gpio().BSRR = pin::bit_mask; }
     static inline void clear() { pin::gpio().BRR = pin::bit_mask; }
+    static inline bool read() { return (pin::gpio().ODR & pin::bit_mask) != 0; }
     static inline void write(bool x) { x ? set() : clear(); }
-    static inline void toggle() { write(!get()); }
+    static inline void toggle() { write(!read()); }
 
 private:
     typedef pin_t<PORT, BIT> pin;
-    enum moder { input_mode, output_mode, alternate_mode, analog_mode };
+};
+
+template<port_enum_t PORT, int BIT>
+class input_t
+{
+public:
+    template<input_type_t input_type = floating>
+    static inline void setup()
+    {
+        port_traits<PORT>::setup();
+        pin::gpio().MODER |= pin::input_mode << (BIT*2);
+        if (input_type != floating)
+            pin::gpio().PUPDR |= input_type << (BIT*2);
+    }
+
+    static inline bool read() { return (pin::gpio().IDR & pin::bit_mask) != 0; }
+
+private:
+    typedef pin_t<PORT, BIT> pin;
 };
 
 }
