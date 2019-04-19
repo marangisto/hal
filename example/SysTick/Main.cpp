@@ -1,31 +1,30 @@
-#include <stm32f0x1.h>
+#include <gpio.h>
 
-using namespace stm32f0x1;
-using namespace gpioc;
+using namespace stm32f0;
+using namespace gpio;
+
+typedef output_t<C, 8> led_a;
+typedef output_t<C, 9> led_b;
 
 int main()
 {
-    rcc::RCC.AHBENR |= BV(rcc::AHBENR::IOPCEN);       // IOPCEN - enable clock on GPIOC
-    GPIOC.MODER |= BV(MODER::MODER8) | BV(MODER::MODER9); // bit-0 output mode
+    led_a::setup();
+    led_b::setup();
 
-    for (bool on = true; true; on = !on)
+    for (;;)
     {
         static uint32_t next_a = 0, next_b = 0;
-        static bool on_a = false, on_b = false;
-
         uint32_t now = sys_tick::count();
 
         if (now >= next_a)
         {
-            (on_a ? GPIOC.BSRR : GPIOC.BRR) = 0x0100;
-            on_a = !on_a;
+            led_a::toggle();
             next_a = now + 101;
         }
 
         if (now >= next_b)
         {
-            (on_b ? GPIOC.BSRR : GPIOC.BRR) = 0x0200;
-            on_b = !on_b;
+            led_b::toggle();
             next_b = now + 103;
         }
     }

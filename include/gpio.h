@@ -1,12 +1,14 @@
 #pragma once
 
-#include <stm32f0x1.h>
+#include <stm32f0.h>
 
-namespace stm32f0x1
+namespace stm32f0
 {
 
 namespace gpio
 {
+
+using namespace device;
 
 enum port_enum_t { A, B, C, D, E, F };
 enum output_type_t { push_pull, open_drain };

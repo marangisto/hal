@@ -1,6 +1,7 @@
 #include <gpio.h>
 
-using namespace stm32f0x1::gpio;
+using namespace stm32f0;
+using namespace gpio;
 
 typedef output_t<C, 8> led_a;
 typedef output_t<C, 9> led_b;
@@ -19,7 +20,10 @@ int main()
 void loop()
 {
     led_a::toggle();
+
     if (led_a::get())
         led_b::toggle();
+
     sys_tick::delay_ms(250);
 }
+

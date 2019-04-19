@@ -1,7 +1,14 @@
 #pragma once
 
-#include <stdint.h>
 #include <cstddef>
+
+#if defined(STM32F0x1)
+#include <stm32f0x1.h>
+namespace device = stm32f0x1;
+#endif
+
+namespace stm32f0
+{
 
 template<int N> class reserved_t { private: uint32_t m_pad[N]; };
 
@@ -25,4 +32,6 @@ private:
 
     static volatile uint32_t ms_counter;
 };
+
+}
 

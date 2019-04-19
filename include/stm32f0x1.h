@@ -1,5 +1,6 @@
 #pragma once
-#include "stm32.h"
+
+#include <stdint.h>
 
 ////
 //
@@ -17,6 +18,8 @@
 
 namespace stm32f0x1
 {
+
+template<int N> class reserved_t { private: uint32_t m_pad[N]; };
 
 ////
 //
