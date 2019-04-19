@@ -60,6 +60,16 @@ template<> struct port_traits<F>
 };
 
 template<port_enum_t PORT, int BIT>
+struct pin_t
+{
+    static_assert(BIT < 16, "pin_t bit out of range");
+    typedef typename port_traits<PORT>::gpio_t gpio_t;
+    static inline gpio_t& gpio() { return port_traits<PORT>::gpio(); }
+    static const uint8_t bit_pos = BIT;
+    static const uint32_t bit_mask = BV(BIT);
+};
+
+template<port_enum_t PORT, int BIT>
 class output_t
 {
 public:
@@ -67,24 +77,20 @@ public:
     static inline void setup()
     {
         port_traits<PORT>::setup();
-        gpio().MODER |= output_mode << (BIT*2);
+        pin::gpio().MODER |= output_mode << (BIT*2);
         if (ot == open_drain)
-            gpio().OTYPER |= BV(BIT);
+            pin::gpio().OTYPER |= BV(BIT);
     }
 
-    static inline bool get() { return (gpio().ODR & bit_mask) != 0; }
-    static inline void set() { gpio().BSRR = bit_mask; }
-    static inline void clear() { gpio().BRR = bit_mask; }
+    static inline bool get() { return (pin::gpio().ODR & pin::bit_mask) != 0; }
+    static inline void set() { pin::gpio().BSRR = pin::bit_mask; }
+    static inline void clear() { pin::gpio().BRR = pin::bit_mask; }
     static inline void write(bool x) { x ? set() : clear(); }
     static inline void toggle() { write(!get()); }
 
 private:
+    typedef pin_t<PORT, BIT> pin;
     enum moder { input_mode, output_mode, alternate_mode, analog_mode };
-    static_assert(BIT < 16, "pin_t bit out of range");
-    typedef typename port_traits<PORT>::gpio_t gpio_t;        
-    static inline gpio_t& gpio() { return port_traits<PORT>::gpio(); }
-    static const uint8_t bit_pos = BIT;
-    static const uint32_t bit_mask = BV(BIT);
 };
 
 }
