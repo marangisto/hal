@@ -44,6 +44,46 @@ template<> struct timer_traits<6>
     static inline void nvic_enable() { NVIC.ISER |= BV(17); }
 };
 
+template<> struct timer_traits<7>
+{
+    typedef tim7_t T;
+    static inline T& TIM() { return TIM7; }
+    static inline void rcc_enable() { RCC.APB1ENR |= BV(rcc_t::APB1ENR_TIM7EN); }
+    static inline void nvic_enable() { NVIC.ISER |= BV(18); }
+};
+
+template<> struct timer_traits<14>
+{
+    typedef tim14_t T;
+    static inline T& TIM() { return TIM14; }
+    static inline void rcc_enable() { RCC.APB1ENR |= BV(rcc_t::APB1ENR_TIM14EN); }
+    static inline void nvic_enable() { NVIC.ISER |= BV(19); }
+};
+
+template<> struct timer_traits<15>
+{
+    typedef tim15_t T;
+    static inline T& TIM() { return TIM15; }
+    static inline void rcc_enable() { RCC.APB2ENR |= BV(rcc_t::APB2ENR_TIM15EN); }
+    static inline void nvic_enable() { NVIC.ISER |= BV(20); }
+};
+
+template<> struct timer_traits<16>
+{
+    typedef tim16_t T;
+    static inline T& TIM() { return TIM16; }
+    static inline void rcc_enable() { RCC.APB2ENR |= BV(rcc_t::APB2ENR_TIM16EN); }
+    static inline void nvic_enable() { NVIC.ISER |= BV(21); }
+};
+
+template<> struct timer_traits<17>
+{
+    typedef tim17_t T;
+    static inline T& TIM() { return TIM17; }
+    static inline void rcc_enable() { RCC.APB2ENR |= BV(rcc_t::APB2ENR_TIM17EN); }
+    static inline void nvic_enable() { NVIC.ISER |= BV(22); }
+};
+
 template<int TN>
 class timer_t
 {
