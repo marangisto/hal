@@ -1,0 +1,41 @@
+#include <timer.h>
+#include <button.h>
+#include <gpio.h>
+
+using namespace stm32f0;
+using namespace timer;
+using namespace gpio;
+
+typedef button_t<A, 0> btn;
+typedef timer_t<6> aux;
+
+typedef output_t<C, 8> led_a;
+typedef output_t<C, 9> led_b;
+
+extern "C" void ISR_TIM6_DAC(void)
+{
+    aux::clear_uif();
+    btn::update();
+}
+
+int main()
+{
+    btn::setup<pull_down>();
+    aux::setup(100, 1000);
+    aux::update_interrupt_enable();
+    led_a::setup();
+    led_b::setup();
+    int i = 0;
+
+    cpsie();
+
+    for (;;)
+    {
+        if (btn::read())
+            ++i;
+
+        led_a::write(i & 1);
+        led_b::write(i & 2);
+    }
+}
+
