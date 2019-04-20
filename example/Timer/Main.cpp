@@ -2,43 +2,40 @@
 #include <gpio.h>
 
 using namespace stm32f0;
-//using namespace timer;
+using namespace timer;
 using namespace gpio;
-using namespace device; // FIXME: remove
+
+typedef timer_t<1> tim_a;
+typedef timer_t<3> tim_b;
 
 typedef output_t<C, 8> led_a;
 typedef output_t<C, 9> led_b;
 
-extern "C" void ISR_TIM6_DAC(void)
+extern "C" void ISR_TIM1_BRK_UP_TRG_COM(void)
 {
-    TIM6.SR &= ~BV(tim6_t::SR_UIF);
+    tim_a::clear_uif();
     led_a::toggle();
+}
+
+extern "C" void ISR_TIM3(void)
+{
+    tim_b::clear_uif();
     led_b::write(!led_a::read());
 }
 
-void loop();
-
 int main()
 {
+    tim_a::setup(100, 65535);
+    tim_a::update_interrupt_enable();
+
+    tim_b::setup(120, 65535);
+    tim_b::update_interrupt_enable();
+
     led_a::setup();
     led_b::setup();
 
-    RCC.APB1ENR |= BV(rcc_t::APB1ENR_TIM6EN);
-    TIM6.CR1 = tim6_t::CR1_RESET_VALUE;
-    TIM6.PSC = 100;
-    TIM6.ARR = 65535;
-//    tim6::TIM6.CR1 |= BV(tim6_t::CR1_ARPE);      // auto-reload
-    TIM6.CR1 |= BV(tim6_t::CR1_CEN);       // enable counter
-    TIM6.DIER |= BV(tim6_t::DIER_UIE);     // update interupt enable
-    NVIC.ISER |= BV(17);                  // enable TIM6 interrupt
-
     cpsie();
 
-    for (;;)
-        loop();
-}
-
-void loop()
-{
+    for (;;);
 }
 
