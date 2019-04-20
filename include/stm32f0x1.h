@@ -1944,10 +1944,8 @@ struct tim1_t
     volatile uint32_t    DIER;                 // [Read-write] DMA/Interrupt enable register
     volatile uint32_t    SR;                   // [Read-write] status register
     volatile uint32_t    EGR;                  // [Write-only] event generation register
-    volatile uint32_t    CCMR1_Output;         // [Read-write] capture/compare mode register (output mode)
-    volatile uint32_t    CCMR1_Input;          // [Read-write] capture/compare mode register 1 (input mode)
-    volatile uint32_t    CCMR2_Output;         // [Read-write] capture/compare mode register (output mode)
-    volatile uint32_t    CCMR2_Input;          // [Read-write] capture/compare mode register 2 (input mode)
+    volatile uint32_t    CCMR1;                // [Read-write] capture/compare mode register (output mode)
+    volatile uint32_t    CCMR2;                // [Read-write] capture/compare mode register (output mode)
     volatile uint32_t    CCER;                 // [Read-write] capture/compare enable register
     volatile uint32_t    CNT;                  // [Read-write] counter
     volatile uint32_t    PSC;                  // [Read-write] prescaler
@@ -2035,45 +2033,37 @@ struct tim1_t
     static const uint8_t EGR_UG = 0;               // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static const uint8_t CCMR1_Output_OC2CE = 15;           // Output Compare 2 clear enable
-    static const uint8_t CCMR1_Output_OC2M = 12;            // Output Compare 2 mode (3 bits)
-    static const uint8_t CCMR1_Output_OC2PE = 11;           // Output Compare 2 preload enable
-    static const uint8_t CCMR1_Output_OC2FE = 10;           // Output Compare 2 fast enable
-    static const uint8_t CCMR1_Output_CC2S = 8;             // Capture/Compare 2 selection (2 bits)
-    static const uint8_t CCMR1_Output_OC1CE = 7;            // Output Compare 1 clear enable
-    static const uint8_t CCMR1_Output_OC1M = 4;             // Output Compare 1 mode (3 bits)
-    static const uint8_t CCMR1_Output_OC1PE = 3;            // Output Compare 1 preload enable
-    static const uint8_t CCMR1_Output_OC1FE = 2;            // Output Compare 1 fast enable
-    static const uint8_t CCMR1_Output_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
-    static const uint32_t CCMR1_Output_RESET_VALUE = 0x0;
+    static const uint8_t CCMR1_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint8_t CCMR1_CC2S = 8;             // Capture/Compare 2 selection (2 bits)
+    static const uint8_t CCMR1_IC1F = 4;             // Input capture 1 filter (4 bits)
+    static const uint8_t CCMR1_IC1PCS = 2;           // Input capture 1 prescaler (2 bits)
+    static const uint8_t CCMR1_IC2F = 12;            // Input capture 2 filter (4 bits)
+    static const uint8_t CCMR1_IC2PCS = 10;          // Input capture 2 prescaler (2 bits)
+    static const uint8_t CCMR1_OC1CE = 7;            // Output Compare 1 clear enable
+    static const uint8_t CCMR1_OC1FE = 2;            // Output Compare 1 fast enable
+    static const uint8_t CCMR1_OC1M = 4;             // Output Compare 1 mode (3 bits)
+    static const uint8_t CCMR1_OC1PE = 3;            // Output Compare 1 preload enable
+    static const uint8_t CCMR1_OC2CE = 15;           // Output Compare 2 clear enable
+    static const uint8_t CCMR1_OC2FE = 10;           // Output Compare 2 fast enable
+    static const uint8_t CCMR1_OC2M = 12;            // Output Compare 2 mode (3 bits)
+    static const uint8_t CCMR1_OC2PE = 11;           // Output Compare 2 preload enable
+    static const uint32_t CCMR1_RESET_VALUE = 0x0;
 
-    static const uint8_t CCMR1_Input_IC2F = 12;            // Input capture 2 filter (4 bits)
-    static const uint8_t CCMR1_Input_IC2PCS = 10;          // Input capture 2 prescaler (2 bits)
-    static const uint8_t CCMR1_Input_CC2S = 8;             // Capture/Compare 2 selection (2 bits)
-    static const uint8_t CCMR1_Input_IC1F = 4;             // Input capture 1 filter (4 bits)
-    static const uint8_t CCMR1_Input_IC1PCS = 2;           // Input capture 1 prescaler (2 bits)
-    static const uint8_t CCMR1_Input_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
-    static const uint32_t CCMR1_Input_RESET_VALUE = 0x0;
-
-    static const uint8_t CCMR2_Output_OC4CE = 15;           // Output compare 4 clear enable
-    static const uint8_t CCMR2_Output_OC4M = 12;            // Output compare 4 mode (3 bits)
-    static const uint8_t CCMR2_Output_OC4PE = 11;           // Output compare 4 preload enable
-    static const uint8_t CCMR2_Output_OC4FE = 10;           // Output compare 4 fast enable
-    static const uint8_t CCMR2_Output_CC4S = 8;             // Capture/Compare 4 selection (2 bits)
-    static const uint8_t CCMR2_Output_OC3CE = 7;            // Output compare 3 clear enable
-    static const uint8_t CCMR2_Output_OC3M = 4;             // Output compare 3 mode (3 bits)
-    static const uint8_t CCMR2_Output_OC3PE = 3;            // Output compare 3 preload enable
-    static const uint8_t CCMR2_Output_OC3FE = 2;            // Output compare 3 fast enable
-    static const uint8_t CCMR2_Output_CC3S = 0;             // Capture/Compare 3 selection (2 bits)
-    static const uint32_t CCMR2_Output_RESET_VALUE = 0x0;
-
-    static const uint8_t CCMR2_Input_IC4F = 12;            // Input capture 4 filter (4 bits)
-    static const uint8_t CCMR2_Input_IC4PSC = 10;          // Input capture 4 prescaler (2 bits)
-    static const uint8_t CCMR2_Input_CC4S = 8;             // Capture/Compare 4 selection (2 bits)
-    static const uint8_t CCMR2_Input_IC3F = 4;             // Input capture 3 filter (4 bits)
-    static const uint8_t CCMR2_Input_IC3PSC = 2;           // Input capture 3 prescaler (2 bits)
-    static const uint8_t CCMR2_Input_CC3S = 0;             // Capture/compare 3 selection (2 bits)
-    static const uint32_t CCMR2_Input_RESET_VALUE = 0x0;
+    static const uint8_t CCMR2_CC3S = 0;             // Capture/Compare 3 selection (2 bits)
+    static const uint8_t CCMR2_CC4S = 8;             // Capture/Compare 4 selection (2 bits)
+    static const uint8_t CCMR2_IC3F = 4;             // Input capture 3 filter (4 bits)
+    static const uint8_t CCMR2_IC3PSC = 2;           // Input capture 3 prescaler (2 bits)
+    static const uint8_t CCMR2_IC4F = 12;            // Input capture 4 filter (4 bits)
+    static const uint8_t CCMR2_IC4PSC = 10;          // Input capture 4 prescaler (2 bits)
+    static const uint8_t CCMR2_OC3CE = 7;            // Output compare 3 clear enable
+    static const uint8_t CCMR2_OC3FE = 2;            // Output compare 3 fast enable
+    static const uint8_t CCMR2_OC3M = 4;             // Output compare 3 mode (3 bits)
+    static const uint8_t CCMR2_OC3PE = 3;            // Output compare 3 preload enable
+    static const uint8_t CCMR2_OC4CE = 15;           // Output compare 4 clear enable
+    static const uint8_t CCMR2_OC4FE = 10;           // Output compare 4 fast enable
+    static const uint8_t CCMR2_OC4M = 12;            // Output compare 4 mode (3 bits)
+    static const uint8_t CCMR2_OC4PE = 11;           // Output compare 4 preload enable
+    static const uint32_t CCMR2_RESET_VALUE = 0x0;
 
     static const uint8_t CCER_CC4P = 13;            // Capture/Compare 3 output Polarity
     static const uint8_t CCER_CC4E = 12;            // Capture/Compare 4 output enable
@@ -2150,10 +2140,8 @@ struct tim2_t
     volatile uint32_t    DIER;                 // [Read-write] DMA/Interrupt enable register
     volatile uint32_t    SR;                   // [Read-write] status register
     volatile uint32_t    EGR;                  // [Write-only] event generation register
-    volatile uint32_t    CCMR1_Output;         // [Read-write] capture/compare mode register 1 (output mode)
-    volatile uint32_t    CCMR1_Input;          // [Read-write] capture/compare mode register 1 (input mode)
-    volatile uint32_t    CCMR2_Output;         // [Read-write] capture/compare mode register 2 (output mode)
-    volatile uint32_t    CCMR2_Input;          // [Read-write] capture/compare mode register 2 (input mode)
+    volatile uint32_t    CCMR1;                // [Read-write] capture/compare mode register 1 (output mode)
+    volatile uint32_t    CCMR2;                // [Read-write] capture/compare mode register 2 (output mode)
     volatile uint32_t    CCER;                 // [Read-write] capture/compare enable register
     volatile uint32_t    CNT;                  // [Read-write] counter
     volatile uint32_t    PSC;                  // [Read-write] prescaler
@@ -2226,45 +2214,37 @@ struct tim2_t
     static const uint8_t EGR_UG = 0;               // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static const uint8_t CCMR1_Output_OC2CE = 15;           // Output compare 2 clear enable
-    static const uint8_t CCMR1_Output_OC2M = 12;            // Output compare 2 mode (3 bits)
-    static const uint8_t CCMR1_Output_OC2PE = 11;           // Output compare 2 preload enable
-    static const uint8_t CCMR1_Output_OC2FE = 10;           // Output compare 2 fast enable
-    static const uint8_t CCMR1_Output_CC2S = 8;             // Capture/Compare 2 selection (2 bits)
-    static const uint8_t CCMR1_Output_OC1CE = 7;            // Output compare 1 clear enable
-    static const uint8_t CCMR1_Output_OC1M = 4;             // Output compare 1 mode (3 bits)
-    static const uint8_t CCMR1_Output_OC1PE = 3;            // Output compare 1 preload enable
-    static const uint8_t CCMR1_Output_OC1FE = 2;            // Output compare 1 fast enable
-    static const uint8_t CCMR1_Output_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
-    static const uint32_t CCMR1_Output_RESET_VALUE = 0x0;
+    static const uint8_t CCMR1_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint8_t CCMR1_CC2S = 8;             // Capture/Compare 2 selection (2 bits)
+    static const uint8_t CCMR1_IC1F = 4;             // Input capture 1 filter (4 bits)
+    static const uint8_t CCMR1_IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
+    static const uint8_t CCMR1_IC2F = 12;            // Input capture 2 filter (4 bits)
+    static const uint8_t CCMR1_IC2PSC = 10;          // Input capture 2 prescaler (2 bits)
+    static const uint8_t CCMR1_OC1CE = 7;            // Output compare 1 clear enable
+    static const uint8_t CCMR1_OC1FE = 2;            // Output compare 1 fast enable
+    static const uint8_t CCMR1_OC1M = 4;             // Output compare 1 mode (3 bits)
+    static const uint8_t CCMR1_OC1PE = 3;            // Output compare 1 preload enable
+    static const uint8_t CCMR1_OC2CE = 15;           // Output compare 2 clear enable
+    static const uint8_t CCMR1_OC2FE = 10;           // Output compare 2 fast enable
+    static const uint8_t CCMR1_OC2M = 12;            // Output compare 2 mode (3 bits)
+    static const uint8_t CCMR1_OC2PE = 11;           // Output compare 2 preload enable
+    static const uint32_t CCMR1_RESET_VALUE = 0x0;
 
-    static const uint8_t CCMR1_Input_IC2F = 12;            // Input capture 2 filter (4 bits)
-    static const uint8_t CCMR1_Input_IC2PSC = 10;          // Input capture 2 prescaler (2 bits)
-    static const uint8_t CCMR1_Input_CC2S = 8;             // Capture/compare 2 selection (2 bits)
-    static const uint8_t CCMR1_Input_IC1F = 4;             // Input capture 1 filter (4 bits)
-    static const uint8_t CCMR1_Input_IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
-    static const uint8_t CCMR1_Input_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
-    static const uint32_t CCMR1_Input_RESET_VALUE = 0x0;
-
-    static const uint8_t CCMR2_Output_OC4CE = 15;           // Output compare 4 clear enable
-    static const uint8_t CCMR2_Output_OC4M = 12;            // Output compare 4 mode (3 bits)
-    static const uint8_t CCMR2_Output_OC4PE = 11;           // Output compare 4 preload enable
-    static const uint8_t CCMR2_Output_OC4FE = 10;           // Output compare 4 fast enable
-    static const uint8_t CCMR2_Output_CC4S = 8;             // Capture/Compare 4 selection (2 bits)
-    static const uint8_t CCMR2_Output_OC3CE = 7;            // Output compare 3 clear enable
-    static const uint8_t CCMR2_Output_OC3M = 4;             // Output compare 3 mode (3 bits)
-    static const uint8_t CCMR2_Output_OC3PE = 3;            // Output compare 3 preload enable
-    static const uint8_t CCMR2_Output_OC3FE = 2;            // Output compare 3 fast enable
-    static const uint8_t CCMR2_Output_CC3S = 0;             // Capture/Compare 3 selection (2 bits)
-    static const uint32_t CCMR2_Output_RESET_VALUE = 0x0;
-
-    static const uint8_t CCMR2_Input_IC4F = 12;            // Input capture 4 filter (4 bits)
-    static const uint8_t CCMR2_Input_IC4PSC = 10;          // Input capture 4 prescaler (2 bits)
-    static const uint8_t CCMR2_Input_CC4S = 8;             // Capture/Compare 4 selection (2 bits)
-    static const uint8_t CCMR2_Input_IC3F = 4;             // Input capture 3 filter (4 bits)
-    static const uint8_t CCMR2_Input_IC3PSC = 2;           // Input capture 3 prescaler (2 bits)
-    static const uint8_t CCMR2_Input_CC3S = 0;             // Capture/Compare 3 selection (2 bits)
-    static const uint32_t CCMR2_Input_RESET_VALUE = 0x0;
+    static const uint8_t CCMR2_CC3S = 0;             // Capture/Compare 3 selection (2 bits)
+    static const uint8_t CCMR2_CC4S = 8;             // Capture/Compare 4 selection (2 bits)
+    static const uint8_t CCMR2_IC3F = 4;             // Input capture 3 filter (4 bits)
+    static const uint8_t CCMR2_IC3PSC = 2;           // Input capture 3 prescaler (2 bits)
+    static const uint8_t CCMR2_IC4F = 12;            // Input capture 4 filter (4 bits)
+    static const uint8_t CCMR2_IC4PSC = 10;          // Input capture 4 prescaler (2 bits)
+    static const uint8_t CCMR2_OC3CE = 7;            // Output compare 3 clear enable
+    static const uint8_t CCMR2_OC3FE = 2;            // Output compare 3 fast enable
+    static const uint8_t CCMR2_OC3M = 4;             // Output compare 3 mode (3 bits)
+    static const uint8_t CCMR2_OC3PE = 3;            // Output compare 3 preload enable
+    static const uint8_t CCMR2_OC4CE = 15;           // Output compare 4 clear enable
+    static const uint8_t CCMR2_OC4FE = 10;           // Output compare 4 fast enable
+    static const uint8_t CCMR2_OC4M = 12;            // Output compare 4 mode (3 bits)
+    static const uint8_t CCMR2_OC4PE = 11;           // Output compare 4 preload enable
+    static const uint32_t CCMR2_RESET_VALUE = 0x0;
 
     static const uint8_t CCER_CC4NP = 15;           // Capture/Compare 4 output Polarity
     static const uint8_t CCER_CC4P = 13;            // Capture/Compare 3 output Polarity
@@ -2332,10 +2312,8 @@ struct tim3_t
     volatile uint32_t    DIER;                 // [Read-write] DMA/Interrupt enable register
     volatile uint32_t    SR;                   // [Read-write] status register
     volatile uint32_t    EGR;                  // [Write-only] event generation register
-    volatile uint32_t    CCMR1_Output;         // [Read-write] capture/compare mode register 1 (output mode)
-    volatile uint32_t    CCMR1_Input;          // [Read-write] capture/compare mode register 1 (input mode)
-    volatile uint32_t    CCMR2_Output;         // [Read-write] capture/compare mode register 2 (output mode)
-    volatile uint32_t    CCMR2_Input;          // [Read-write] capture/compare mode register 2 (input mode)
+    volatile uint32_t    CCMR1;                // [Read-write] capture/compare mode register 1 (output mode)
+    volatile uint32_t    CCMR2;                // [Read-write] capture/compare mode register 2 (output mode)
     volatile uint32_t    CCER;                 // [Read-write] capture/compare enable register
     volatile uint32_t    CNT;                  // [Read-write] counter
     volatile uint32_t    PSC;                  // [Read-write] prescaler
@@ -2408,45 +2386,37 @@ struct tim3_t
     static const uint8_t EGR_UG = 0;               // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static const uint8_t CCMR1_Output_OC2CE = 15;           // Output compare 2 clear enable
-    static const uint8_t CCMR1_Output_OC2M = 12;            // Output compare 2 mode (3 bits)
-    static const uint8_t CCMR1_Output_OC2PE = 11;           // Output compare 2 preload enable
-    static const uint8_t CCMR1_Output_OC2FE = 10;           // Output compare 2 fast enable
-    static const uint8_t CCMR1_Output_CC2S = 8;             // Capture/Compare 2 selection (2 bits)
-    static const uint8_t CCMR1_Output_OC1CE = 7;            // Output compare 1 clear enable
-    static const uint8_t CCMR1_Output_OC1M = 4;             // Output compare 1 mode (3 bits)
-    static const uint8_t CCMR1_Output_OC1PE = 3;            // Output compare 1 preload enable
-    static const uint8_t CCMR1_Output_OC1FE = 2;            // Output compare 1 fast enable
-    static const uint8_t CCMR1_Output_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
-    static const uint32_t CCMR1_Output_RESET_VALUE = 0x0;
+    static const uint8_t CCMR1_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint8_t CCMR1_CC2S = 8;             // Capture/Compare 2 selection (2 bits)
+    static const uint8_t CCMR1_IC1F = 4;             // Input capture 1 filter (4 bits)
+    static const uint8_t CCMR1_IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
+    static const uint8_t CCMR1_IC2F = 12;            // Input capture 2 filter (4 bits)
+    static const uint8_t CCMR1_IC2PSC = 10;          // Input capture 2 prescaler (2 bits)
+    static const uint8_t CCMR1_OC1CE = 7;            // Output compare 1 clear enable
+    static const uint8_t CCMR1_OC1FE = 2;            // Output compare 1 fast enable
+    static const uint8_t CCMR1_OC1M = 4;             // Output compare 1 mode (3 bits)
+    static const uint8_t CCMR1_OC1PE = 3;            // Output compare 1 preload enable
+    static const uint8_t CCMR1_OC2CE = 15;           // Output compare 2 clear enable
+    static const uint8_t CCMR1_OC2FE = 10;           // Output compare 2 fast enable
+    static const uint8_t CCMR1_OC2M = 12;            // Output compare 2 mode (3 bits)
+    static const uint8_t CCMR1_OC2PE = 11;           // Output compare 2 preload enable
+    static const uint32_t CCMR1_RESET_VALUE = 0x0;
 
-    static const uint8_t CCMR1_Input_IC2F = 12;            // Input capture 2 filter (4 bits)
-    static const uint8_t CCMR1_Input_IC2PSC = 10;          // Input capture 2 prescaler (2 bits)
-    static const uint8_t CCMR1_Input_CC2S = 8;             // Capture/compare 2 selection (2 bits)
-    static const uint8_t CCMR1_Input_IC1F = 4;             // Input capture 1 filter (4 bits)
-    static const uint8_t CCMR1_Input_IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
-    static const uint8_t CCMR1_Input_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
-    static const uint32_t CCMR1_Input_RESET_VALUE = 0x0;
-
-    static const uint8_t CCMR2_Output_OC4CE = 15;           // Output compare 4 clear enable
-    static const uint8_t CCMR2_Output_OC4M = 12;            // Output compare 4 mode (3 bits)
-    static const uint8_t CCMR2_Output_OC4PE = 11;           // Output compare 4 preload enable
-    static const uint8_t CCMR2_Output_OC4FE = 10;           // Output compare 4 fast enable
-    static const uint8_t CCMR2_Output_CC4S = 8;             // Capture/Compare 4 selection (2 bits)
-    static const uint8_t CCMR2_Output_OC3CE = 7;            // Output compare 3 clear enable
-    static const uint8_t CCMR2_Output_OC3M = 4;             // Output compare 3 mode (3 bits)
-    static const uint8_t CCMR2_Output_OC3PE = 3;            // Output compare 3 preload enable
-    static const uint8_t CCMR2_Output_OC3FE = 2;            // Output compare 3 fast enable
-    static const uint8_t CCMR2_Output_CC3S = 0;             // Capture/Compare 3 selection (2 bits)
-    static const uint32_t CCMR2_Output_RESET_VALUE = 0x0;
-
-    static const uint8_t CCMR2_Input_IC4F = 12;            // Input capture 4 filter (4 bits)
-    static const uint8_t CCMR2_Input_IC4PSC = 10;          // Input capture 4 prescaler (2 bits)
-    static const uint8_t CCMR2_Input_CC4S = 8;             // Capture/Compare 4 selection (2 bits)
-    static const uint8_t CCMR2_Input_IC3F = 4;             // Input capture 3 filter (4 bits)
-    static const uint8_t CCMR2_Input_IC3PSC = 2;           // Input capture 3 prescaler (2 bits)
-    static const uint8_t CCMR2_Input_CC3S = 0;             // Capture/Compare 3 selection (2 bits)
-    static const uint32_t CCMR2_Input_RESET_VALUE = 0x0;
+    static const uint8_t CCMR2_CC3S = 0;             // Capture/Compare 3 selection (2 bits)
+    static const uint8_t CCMR2_CC4S = 8;             // Capture/Compare 4 selection (2 bits)
+    static const uint8_t CCMR2_IC3F = 4;             // Input capture 3 filter (4 bits)
+    static const uint8_t CCMR2_IC3PSC = 2;           // Input capture 3 prescaler (2 bits)
+    static const uint8_t CCMR2_IC4F = 12;            // Input capture 4 filter (4 bits)
+    static const uint8_t CCMR2_IC4PSC = 10;          // Input capture 4 prescaler (2 bits)
+    static const uint8_t CCMR2_OC3CE = 7;            // Output compare 3 clear enable
+    static const uint8_t CCMR2_OC3FE = 2;            // Output compare 3 fast enable
+    static const uint8_t CCMR2_OC3M = 4;             // Output compare 3 mode (3 bits)
+    static const uint8_t CCMR2_OC3PE = 3;            // Output compare 3 preload enable
+    static const uint8_t CCMR2_OC4CE = 15;           // Output compare 4 clear enable
+    static const uint8_t CCMR2_OC4FE = 10;           // Output compare 4 fast enable
+    static const uint8_t CCMR2_OC4M = 12;            // Output compare 4 mode (3 bits)
+    static const uint8_t CCMR2_OC4PE = 11;           // Output compare 4 preload enable
+    static const uint32_t CCMR2_RESET_VALUE = 0x0;
 
     static const uint8_t CCER_CC4NP = 15;           // Capture/Compare 4 output Polarity
     static const uint8_t CCER_CC4P = 13;            // Capture/Compare 3 output Polarity
@@ -2513,8 +2483,7 @@ struct tim14_t
     volatile uint32_t    DIER;                 // [Read-write] DMA/Interrupt enable register
     volatile uint32_t    SR;                   // [Read-write] status register
     volatile uint32_t    EGR;                  // [Write-only] event generation register
-    volatile uint32_t    CCMR1_Output;         // [Read-write] capture/compare mode register (output mode)
-    volatile uint32_t    CCMR1_Input;          // [Read-write] capture/compare mode register (input mode)
+    volatile uint32_t    CCMR1;                // [Read-write] capture/compare mode register (output mode)
     reserved_t<1>        _1;
     volatile uint32_t    CCER;                 // [Read-write] capture/compare enable register
     volatile uint32_t    CNT;                  // [Read-write] counter
@@ -2545,16 +2514,13 @@ struct tim14_t
     static const uint8_t EGR_UG = 0;               // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static const uint8_t CCMR1_Output_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
-    static const uint8_t CCMR1_Output_OC1FE = 2;            // Output compare 1 fast enable
-    static const uint8_t CCMR1_Output_OC1PE = 3;            // Output Compare 1 preload enable
-    static const uint8_t CCMR1_Output_OC1M = 4;             // Output Compare 1 mode (3 bits)
-    static const uint32_t CCMR1_Output_RESET_VALUE = 0x0;
-
-    static const uint8_t CCMR1_Input_IC1F = 4;             // Input capture 1 filter (4 bits)
-    static const uint8_t CCMR1_Input_IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
-    static const uint8_t CCMR1_Input_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
-    static const uint32_t CCMR1_Input_RESET_VALUE = 0x0;
+    static const uint8_t CCMR1_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint8_t CCMR1_IC1F = 4;             // Input capture 1 filter (4 bits)
+    static const uint8_t CCMR1_IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
+    static const uint8_t CCMR1_OC1FE = 2;            // Output compare 1 fast enable
+    static const uint8_t CCMR1_OC1M = 4;             // Output Compare 1 mode (3 bits)
+    static const uint8_t CCMR1_OC1PE = 3;            // Output Compare 1 preload enable
+    static const uint32_t CCMR1_RESET_VALUE = 0x0;
 
     static const uint8_t CCER_CC1NP = 3;            // Capture/Compare 1 output Polarity
     static const uint8_t CCER_CC1P = 1;             // Capture/Compare 1 output Polarity
@@ -5289,8 +5255,7 @@ struct tim15_t
     volatile uint32_t    DIER;                 // [Read-write] DMA/Interrupt enable register
     volatile uint32_t    SR;                   // [Read-write] status register
     volatile uint32_t    EGR;                  // [Write-only] event generation register
-    volatile uint32_t    CCMR1_Output;         // [Read-write] capture/compare mode register (output mode)
-    volatile uint32_t    CCMR1_Input;          // [Read-write] capture/compare mode register 1 (input mode)
+    volatile uint32_t    CCMR1;                // [Read-write] capture/compare mode register (output mode)
     reserved_t<1>        _0;
     volatile uint32_t    CCER;                 // [Read-write] capture/compare enable register
     volatile uint32_t    CNT;                  // [Read-write] counter
@@ -5356,23 +5321,19 @@ struct tim15_t
     static const uint8_t EGR_UG = 0;               // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static const uint8_t CCMR1_Output_OC2M = 12;            // Output Compare 2 mode (3 bits)
-    static const uint8_t CCMR1_Output_OC2PE = 11;           // Output Compare 2 preload enable
-    static const uint8_t CCMR1_Output_OC2FE = 10;           // Output Compare 2 fast enable
-    static const uint8_t CCMR1_Output_CC2S = 8;             // Capture/Compare 2 selection (2 bits)
-    static const uint8_t CCMR1_Output_OC1M = 4;             // Output Compare 1 mode (3 bits)
-    static const uint8_t CCMR1_Output_OC1PE = 3;            // Output Compare 1 preload enable
-    static const uint8_t CCMR1_Output_OC1FE = 2;            // Output Compare 1 fast enable
-    static const uint8_t CCMR1_Output_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
-    static const uint32_t CCMR1_Output_RESET_VALUE = 0x0;
-
-    static const uint8_t CCMR1_Input_IC2F = 12;            // Input capture 2 filter (4 bits)
-    static const uint8_t CCMR1_Input_IC2PSC = 10;          // Input capture 2 prescaler (2 bits)
-    static const uint8_t CCMR1_Input_CC2S = 8;             // Capture/Compare 2 selection (2 bits)
-    static const uint8_t CCMR1_Input_IC1F = 4;             // Input capture 1 filter (4 bits)
-    static const uint8_t CCMR1_Input_IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
-    static const uint8_t CCMR1_Input_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
-    static const uint32_t CCMR1_Input_RESET_VALUE = 0x0;
+    static const uint8_t CCMR1_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint8_t CCMR1_CC2S = 8;             // Capture/Compare 2 selection (2 bits)
+    static const uint8_t CCMR1_IC1F = 4;             // Input capture 1 filter (4 bits)
+    static const uint8_t CCMR1_IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
+    static const uint8_t CCMR1_IC2F = 12;            // Input capture 2 filter (4 bits)
+    static const uint8_t CCMR1_IC2PSC = 10;          // Input capture 2 prescaler (2 bits)
+    static const uint8_t CCMR1_OC1FE = 2;            // Output Compare 1 fast enable
+    static const uint8_t CCMR1_OC1M = 4;             // Output Compare 1 mode (3 bits)
+    static const uint8_t CCMR1_OC1PE = 3;            // Output Compare 1 preload enable
+    static const uint8_t CCMR1_OC2FE = 10;           // Output Compare 2 fast enable
+    static const uint8_t CCMR1_OC2M = 12;            // Output Compare 2 mode (3 bits)
+    static const uint8_t CCMR1_OC2PE = 11;           // Output Compare 2 preload enable
+    static const uint32_t CCMR1_RESET_VALUE = 0x0;
 
     static const uint8_t CCER_CC2NP = 7;            // Capture/Compare 2 output Polarity
     static const uint8_t CCER_CC2P = 5;             // Capture/Compare 2 output Polarity
@@ -5436,8 +5397,7 @@ struct tim16_t
     volatile uint32_t    DIER;                 // [Read-write] DMA/Interrupt enable register
     volatile uint32_t    SR;                   // [Read-write] status register
     volatile uint32_t    EGR;                  // [Write-only] event generation register
-    volatile uint32_t    CCMR1_Output;         // [Read-write] capture/compare mode register (output mode)
-    volatile uint32_t    CCMR1_Input;          // [Read-write] capture/compare mode register 1 (input mode)
+    volatile uint32_t    CCMR1;                // [Read-write] capture/compare mode register (output mode)
     reserved_t<1>        _1;
     volatile uint32_t    CCER;                 // [Read-write] capture/compare enable register
     volatile uint32_t    CNT;                  // [Read-write] counter
@@ -5490,16 +5450,13 @@ struct tim16_t
     static const uint8_t EGR_UG = 0;               // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static const uint8_t CCMR1_Output_OC1M = 4;             // Output Compare 1 mode (3 bits)
-    static const uint8_t CCMR1_Output_OC1PE = 3;            // Output Compare 1 preload enable
-    static const uint8_t CCMR1_Output_OC1FE = 2;            // Output Compare 1 fast enable
-    static const uint8_t CCMR1_Output_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
-    static const uint32_t CCMR1_Output_RESET_VALUE = 0x0;
-
-    static const uint8_t CCMR1_Input_IC1F = 4;             // Input capture 1 filter (4 bits)
-    static const uint8_t CCMR1_Input_IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
-    static const uint8_t CCMR1_Input_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
-    static const uint32_t CCMR1_Input_RESET_VALUE = 0x0;
+    static const uint8_t CCMR1_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint8_t CCMR1_IC1F = 4;             // Input capture 1 filter (4 bits)
+    static const uint8_t CCMR1_IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
+    static const uint8_t CCMR1_OC1FE = 2;            // Output Compare 1 fast enable
+    static const uint8_t CCMR1_OC1M = 4;             // Output Compare 1 mode (3 bits)
+    static const uint8_t CCMR1_OC1PE = 3;            // Output Compare 1 preload enable
+    static const uint32_t CCMR1_RESET_VALUE = 0x0;
 
     static const uint8_t CCER_CC1NP = 3;            // Capture/Compare 1 output Polarity
     static const uint8_t CCER_CC1NE = 2;            // Capture/Compare 1 complementary output enable
@@ -5557,8 +5514,7 @@ struct tim17_t
     volatile uint32_t    DIER;                 // [Read-write] DMA/Interrupt enable register
     volatile uint32_t    SR;                   // [Read-write] status register
     volatile uint32_t    EGR;                  // [Write-only] event generation register
-    volatile uint32_t    CCMR1_Output;         // [Read-write] capture/compare mode register (output mode)
-    volatile uint32_t    CCMR1_Input;          // [Read-write] capture/compare mode register 1 (input mode)
+    volatile uint32_t    CCMR1;                // [Read-write] capture/compare mode register (output mode)
     reserved_t<1>        _1;
     volatile uint32_t    CCER;                 // [Read-write] capture/compare enable register
     volatile uint32_t    CNT;                  // [Read-write] counter
@@ -5611,16 +5567,13 @@ struct tim17_t
     static const uint8_t EGR_UG = 0;               // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static const uint8_t CCMR1_Output_OC1M = 4;             // Output Compare 1 mode (3 bits)
-    static const uint8_t CCMR1_Output_OC1PE = 3;            // Output Compare 1 preload enable
-    static const uint8_t CCMR1_Output_OC1FE = 2;            // Output Compare 1 fast enable
-    static const uint8_t CCMR1_Output_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
-    static const uint32_t CCMR1_Output_RESET_VALUE = 0x0;
-
-    static const uint8_t CCMR1_Input_IC1F = 4;             // Input capture 1 filter (4 bits)
-    static const uint8_t CCMR1_Input_IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
-    static const uint8_t CCMR1_Input_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
-    static const uint32_t CCMR1_Input_RESET_VALUE = 0x0;
+    static const uint8_t CCMR1_CC1S = 0;             // Capture/Compare 1 selection (2 bits)
+    static const uint8_t CCMR1_IC1F = 4;             // Input capture 1 filter (4 bits)
+    static const uint8_t CCMR1_IC1PSC = 2;           // Input capture 1 prescaler (2 bits)
+    static const uint8_t CCMR1_OC1FE = 2;            // Output Compare 1 fast enable
+    static const uint8_t CCMR1_OC1M = 4;             // Output Compare 1 mode (3 bits)
+    static const uint8_t CCMR1_OC1PE = 3;            // Output Compare 1 preload enable
+    static const uint32_t CCMR1_RESET_VALUE = 0x0;
 
     static const uint8_t CCER_CC1NP = 3;            // Capture/Compare 1 output Polarity
     static const uint8_t CCER_CC1NE = 2;            // Capture/Compare 1 complementary output enable
@@ -8683,13 +8636,6 @@ struct dac_t
     static const uint8_t DHR8R1_DACC1DHR = 0;         // DAC channel1 8-bit right-aligned data (8 bits)
     static const uint32_t DHR8R1_RESET_VALUE = 0x0;
 
-    static const uint8_t DOR1_DACC1DOR = 0;         // DAC channel1 data output (12 bits)
-    static const uint32_t DOR1_RESET_VALUE = 0x0;
-
-    static const uint8_t SR_DMAUDR2 = 29;         // DAC channel2 DMA underrun flag
-    static const uint8_t SR_DMAUDR1 = 13;         // DAC channel1 DMA underrun flag
-    static const uint32_t SR_RESET_VALUE = 0x0;
-
     static const uint8_t DHR12R2_DACC2DHR = 0;         // DAC channel2 12-bit right-aligned data (12 bits)
     static const uint32_t DHR12R2_RESET_VALUE = 0x0;
 
@@ -8711,8 +8657,15 @@ struct dac_t
     static const uint8_t DHR8RD_DACC1DHR = 0;         // DAC channel1 8-bit right-aligned data (8 bits)
     static const uint32_t DHR8RD_RESET_VALUE = 0x0;
 
+    static const uint8_t DOR1_DACC1DOR = 0;         // DAC channel1 data output (12 bits)
+    static const uint32_t DOR1_RESET_VALUE = 0x0;
+
     static const uint8_t DOR2_DACC2DOR = 0;         // DAC channel2 data output (12 bits)
     static const uint32_t DOR2_RESET_VALUE = 0x0;
+
+    static const uint8_t SR_DMAUDR2 = 29;         // DAC channel2 DMA underrun flag
+    static const uint8_t SR_DMAUDR1 = 13;         // DAC channel1 DMA underrun flag
+    static const uint32_t SR_RESET_VALUE = 0x0;
 };
 
 static dac_t& DAC = *reinterpret_cast<dac_t*>(0x40007400);
