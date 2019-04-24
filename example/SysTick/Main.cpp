@@ -3,8 +3,8 @@
 using namespace stm32f0;
 using namespace gpio;
 
-typedef output_t<C, 8> led_a;
-typedef output_t<C, 9> led_b;
+typedef output_t<PC8> led_a;
+typedef output_t<PC9> led_b;
 
 int main()
 {

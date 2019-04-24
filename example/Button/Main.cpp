@@ -6,11 +6,11 @@ using namespace stm32f0;
 using namespace timer;
 using namespace gpio;
 
-typedef button_t<A, 0> btn;
+typedef button_t<PA0> btn;
 typedef timer_t<6> aux;
 
-typedef output_t<C, 8> led_a;
-typedef output_t<C, 9> led_b;
+typedef output_t<PC8> led_a;
+typedef output_t<PC9> led_b;
 
 extern "C" void ISR_TIM6_DAC(void)
 {

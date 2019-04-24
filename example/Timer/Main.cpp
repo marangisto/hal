@@ -8,8 +8,8 @@ using namespace gpio;
 typedef timer_t<1> tim_a;
 typedef timer_t<3> tim_b;
 
-typedef output_t<C, 8> led_a;
-typedef output_t<C, 9> led_b;
+typedef output_t<PC8> led_a;
+typedef output_t<PC9> led_b;
 
 extern "C" void ISR_TIM1_BRK_UP_TRG_COM(void)
 {

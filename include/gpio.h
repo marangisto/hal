@@ -10,34 +10,54 @@ namespace gpio
 
 using namespace device;
 
-enum port_enum_t { A, B, C, D, E, F };
+enum gpio_port_t { PA, PB, PC, PD, PE, PF };
+
+enum gpio_pin_t
+    { PA0, PA1, PA2, PA3, PA4, PA5, PA6, PA7, PA8, PA9, PA10, PA11, PA12, PA13, PA14, PA15
+    , PB0, PB1, PB2, PB3, PB4, PB5, PB6, PB7, PB8, PB9, PB10, PB11, PB12, PB13, PB14, PB15
+    , PC0, PC1, PC2, PC3, PC4, PC5, PC6, PC7, PC8, PC9, PC10, PC11, PC12, PC13, PC14, PC15
+    , PD0, PD1, PD2, PD3, PD4, PD5, PD6, PD7, PD8, PD9, PD10, PD11, PD12, PD13, PD14, PD15
+    , PE0, PE1, PE2, PE3, PE4, PE5, PE6, PE7, PE8, PE9, PE10, PE11, PE12, PE13, PE14, PE15
+    , PF0, PF1, PF2, PF3, PF4, PF5, PF6, PF7, PF8, PF9, PF10, PF11, PF12, PF13, PF14, PF15
+    };
+
+static inline constexpr gpio_port_t pin_port(gpio_pin_t p)
+{
+    return static_cast<gpio_port_t>(static_cast<int>(p) >> 4);
+}
+
+static inline constexpr int pin_bit(gpio_pin_t p)
+{
+    return static_cast<int>(p) & 0xf;
+}
+
 enum output_type_t { push_pull, open_drain };
 enum input_type_t { floating, pull_up, pull_down };
 
-template<port_enum_t PORT> struct port_traits {};
+template<gpio_port_t PORT> struct port_traits {};
 
-template<> struct port_traits<A>
+template<> struct port_traits<PA>
 {
     typedef gpioa_t gpio_t;
     static inline gpio_t& gpio() { return GPIOA; }
     static inline void setup() { RCC.AHBENR |= BV(rcc_t::AHBENR_IOPAEN); }
 };
 
-template<> struct port_traits<B>
+template<> struct port_traits<PB>
 {
     typedef gpiob_t gpio_t;
     static inline gpio_t& gpio() { return GPIOB; }
     static inline void setup() { RCC.AHBENR |= BV(rcc_t::AHBENR_IOPBEN); }
 };
 
-template<> struct port_traits<C>
+template<> struct port_traits<PC>
 {
     typedef gpioc_t gpio_t;
     static inline gpio_t& gpio() { return GPIOC; }
     static inline void setup() { RCC.AHBENR |= BV(rcc_t::AHBENR_IOPCEN); }
 };
 
-template<> struct port_traits<D>
+template<> struct port_traits<PD>
 {
     typedef gpiod_t gpio_t;
     static inline gpio_t& gpio() { return GPIOD; }
@@ -45,7 +65,7 @@ template<> struct port_traits<D>
 };
 
 #if defined(STM32F07x) || defined(STM32F09x)
-template<> struct port_traits<E>
+template<> struct port_traits<PE>
 {
     typedef gpioe_t gpio_t;
     static inline gpio_t& gpio() { return GPIOE; }
@@ -53,35 +73,35 @@ template<> struct port_traits<E>
 };
 #endif
 
-template<> struct port_traits<F>
+template<> struct port_traits<PF>
 {
     typedef gpiof_t gpio_t;
     static inline gpio_t& gpio() { return GPIOF; }
     static inline void setup() { RCC.AHBENR |= BV(rcc_t::AHBENR_IOPFEN); }
 };
 
-template<port_enum_t PORT, int BIT>
+template<gpio_pin_t PIN>
 struct pin_t
 {
     enum moder { input_mode, output_mode, alternate_mode, analog_mode };
-    static_assert(BIT < 16, "pin_t bit out of range");
-    typedef typename port_traits<PORT>::gpio_t gpio_t;
-    static inline gpio_t& gpio() { return port_traits<PORT>::gpio(); }
-    static const uint8_t bit_pos = BIT;
-    static const uint32_t bit_mask = BV(BIT);
+    static_assert(pin_bit(PIN) < 16, "pin_t bit out of range");
+    typedef typename port_traits<pin_port(PIN)>::gpio_t gpio_t;
+    static inline gpio_t& gpio() { return port_traits<pin_port(PIN)>::gpio(); }
+    static const uint8_t bit_pos = pin_bit(PIN);
+    static const uint32_t bit_mask = BV(bit_pos);
 };
 
-template<port_enum_t PORT, int BIT>
+template<gpio_pin_t PIN>
 class output_t
 {
 public:
     template<output_type_t output_type = push_pull>
     static inline void setup()
     {
-        port_traits<PORT>::setup();
-        pin::gpio().MODER |= pin::output_mode << (BIT*2);
+        port_traits<pin_port(PIN)>::setup();
+        pin::gpio().MODER |= pin::output_mode << (pin::bit_pos*2);
         if (output_type == open_drain)
-            pin::gpio().OTYPER |= BV(BIT);
+            pin::gpio().OTYPER |= pin::bit_mask;
     }
 
     static inline void set() { pin::gpio().BSRR = pin::bit_mask; }
@@ -91,26 +111,26 @@ public:
     static inline void toggle() { write(!read()); }
 
 private:
-    typedef pin_t<PORT, BIT> pin;
+    typedef pin_t<PIN> pin;
 };
 
-template<port_enum_t PORT, int BIT>
+template<gpio_pin_t PIN>
 class input_t
 {
 public:
     template<input_type_t input_type = floating>
     static inline void setup()
     {
-        port_traits<PORT>::setup();
-        pin::gpio().MODER |= pin::input_mode << (BIT*2);
+        port_traits<pin_port(PIN)>::setup();
+        pin::gpio().MODER |= pin::input_mode << (pin::bit_pos*2);
         if (input_type != floating)
-            pin::gpio().PUPDR |= input_type << (BIT*2);
+            pin::gpio().PUPDR |= input_type << (pin::bit_pos*2);
     }
 
     static inline bool read() { return (pin::gpio().IDR & pin::bit_mask) != 0; }
 
 private:
-    typedef pin_t<PORT, BIT> pin;
+    typedef pin_t<PIN> pin;
 };
 
 namespace internal
@@ -218,32 +238,32 @@ enum alternate_function_t
     , USART6_TX
     };
 
-template<port_enum_t PORT, int BIT, alternate_function_t ALT>
+template<gpio_pin_t PIN, alternate_function_t ALT>
 struct alt_fun_traits {};
 
-#define ALT_FUN_TRAIT(PORT, PIN, ALT_FUN, AFNO)         \
-template<> struct alt_fun_traits<PORT, PIN, ALT_FUN>    \
-{                                                       \
-    static inline alt_fun_t AF() { return AFNO; }       \
+#define ALT_FUN_TRAIT(PIN, ALT_FUN, AFNO)           \
+template<> struct alt_fun_traits<PIN, ALT_FUN>      \
+{                                                   \
+    static inline alt_fun_t AF() { return AFNO; }   \
 }
 
 #if defined(STM32F051)
 #include "gpio/stm32f051.h"
 #endif
 
-template<port_enum_t PORT, int BIT, alternate_function_t ALT>
+template<gpio_pin_t PIN, alternate_function_t ALT>
 class alternate_t
 {
 public:
     static inline void setup()
     {
-        port_traits<PORT>::setup();
-        pin::gpio().MODER |= pin::alternate_mode << (BIT*2);
-        static_assert(PORT != E, "FIXME: use traits to set alternative");
+        port_traits<pin_port(PIN)>::setup();
+        pin::gpio().MODER |= pin::alternate_mode << (pin::pin_pos*2);
+        static_assert(pin_port(PIN) != PE, "FIXME: use traits to set alternative");
     }
 
 private:
-    typedef pin_t<PORT, BIT> pin;
+    typedef pin_t<PIN> pin;
 };
 
 }

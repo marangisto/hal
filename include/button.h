@@ -5,7 +5,7 @@
 namespace stm32f0::gpio
 {
 
-template<port_enum_t PORT, int BIT>
+template<gpio_pin_t PIN>
 class button_t
 {
 public:
@@ -41,7 +41,7 @@ public:
     }
 
 private:
-    typedef input_t<PORT, BIT> input;
+    typedef input_t<PIN> input;
 
     static bool     m_stable_state;
     static bool     m_last_state;
@@ -50,11 +50,11 @@ private:
     static bool     m_pressed;
 };
 
-template<port_enum_t PORT, int BIT> bool button_t<PORT, BIT>::m_stable_state;
-template<port_enum_t PORT, int BIT> bool button_t<PORT, BIT>::m_last_state;
-template<port_enum_t PORT, int BIT> uint8_t button_t<PORT, BIT>::m_stable_count;
-template<port_enum_t PORT, int BIT> uint8_t button_t<PORT, BIT>::m_count;
-template<port_enum_t PORT, int BIT> bool button_t<PORT, BIT>::m_pressed;
+template<gpio_pin_t PIN> bool button_t<PIN>::m_stable_state;
+template<gpio_pin_t PIN> bool button_t<PIN>::m_last_state;
+template<gpio_pin_t PIN> uint8_t button_t<PIN>::m_stable_count;
+template<gpio_pin_t PIN> uint8_t button_t<PIN>::m_count;
+template<gpio_pin_t PIN> bool button_t<PIN>::m_pressed;
 
 }
 

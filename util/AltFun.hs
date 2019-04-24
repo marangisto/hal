@@ -15,9 +15,7 @@ process (x:xs) = mapMaybe (uncurry $ decl x) $ concatMap multi $ zip xs [0..]
 decl p "-" _ = Nothing
 decl p f i = Just $ mconcat
     [ "ALT_FUN_TRAIT("
-    , port
-    , ", "
-    , pin
+    , p
     , ", "
     , f
     , ", AF"

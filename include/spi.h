@@ -38,10 +38,10 @@ private:
     typedef typename spi_traits<NO>::T _;
 
 public:
-    template<port_enum_t PORT, int PIN>
+    template<gpio_pin_t PIN>
     static inline void setup_nss()
     {
-        typedef output_t<PORT, PIN> nss;
+        typedef output_t<PIN> nss;
 
         nss::template setup<push_pull>();
     }
