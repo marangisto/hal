@@ -21,6 +21,10 @@ template<> struct spi_traits<1>
     static inline T& SPI() { return SPI1; }
     static inline void rcc_enable() { RCC.APB2ENR |= BV(rcc_t::APB2ENR_SPI1EN); }
     static inline void nvic_enable() { NVIC.ISER |= BV(25); }
+    static const internal::alternate_function_t sck = internal::SPI1_SCK;
+    static const internal::alternate_function_t mosi = internal::SPI1_MOSI;
+    static const internal::alternate_function_t miso = internal::SPI1_MISO;
+    static const internal::alternate_function_t nss = internal::SPI1_NSS;
 };
 
 template<> struct spi_traits<2>
@@ -29,26 +33,24 @@ template<> struct spi_traits<2>
     static inline T& SPI() { return SPI2; }
     static inline void rcc_enable() { RCC.APB1ENR |= BV(rcc_t::APB1ENR_SPI2EN); }
     static inline void nvic_enable() { NVIC.ISER |= BV(26); }
+    static const internal::alternate_function_t sck = internal::SPI2_SCK;
+    static const internal::alternate_function_t mosi = internal::SPI2_MOSI;
+    static const internal::alternate_function_t miso = internal::SPI2_MISO;
+    static const internal::alternate_function_t nss = internal::SPI2_NSS;
 };
 
-template<int NO> struct spi_t
+template<int NO, gpio_pin_t SCK, gpio_pin_t MOSI> struct spi_t
 {
 private:
-    // strangely this can't sit at the bottom
     typedef typename spi_traits<NO>::T _;
 
 public:
-    template<gpio_pin_t PIN>
-    static inline void setup_nss()
-    {
-        typedef output_t<PIN> nss;
-
-        nss::template setup<push_pull>();
-    }
-
     template<spi_bit_order_t BO = msb_first>
     static inline void setup()
     {
+        internal::alternate_t<SCK, spi_traits<NO>::sck>::setup();
+        internal::alternate_t<MOSI, spi_traits<NO>::mosi>::setup();
+
         spi_traits<NO>::rcc_enable();
         SPI().CR1 = _::CR1_RESET_VALUE; 
         SPI().CR2 = _::CR2_RESET_VALUE;
