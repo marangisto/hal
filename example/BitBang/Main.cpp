@@ -9,9 +9,9 @@
 using namespace stm32f0;
 using namespace gpio;
 
-typedef output_t<PA0> srclk;
-typedef output_t<PA1> ser;
-typedef output_t<PA2> rclk;
+typedef output_t<PA5> srclk;    // sck
+typedef output_t<PA7> ser;      // mosi
+typedef output_t<PA2> rclk;     // latch
 typedef output_t<PC8> led_a;
 typedef output_t<PC9> led_b;
 
