@@ -23,6 +23,7 @@ static void send(uint8_t x)
         sys_tick::delay_ms(25);
         ser::write(x & BV(i));
         srclk::set();
+        sys_tick::delay_ms(25);
         srclk::clear();
         led_a::clear();
         sys_tick::delay_ms(25);
