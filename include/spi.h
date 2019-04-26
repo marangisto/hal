@@ -51,12 +51,30 @@ public:
         internal::alternate_t<SCK, spi_traits<NO>::sck>::setup();
         internal::alternate_t<MOSI, spi_traits<NO>::mosi>::setup();
 
-        spi_traits<NO>::rcc_enable();
-        SPI().CR1 = _::CR1_RESET_VALUE; 
-        SPI().CR2 = _::CR2_RESET_VALUE;
-        if (BO == lsb_first)
-            SPI().CR1 |= BV(_::CR1_LSBFIRST);
-        SPI().CR1 |= BV(_::CR1_SPE);
+        spi_traits<NO>::rcc_enable();           // enable spi clock
+        SPI().CR1 = _::CR1_RESET_VALUE;         // reset control register 1
+        SPI().CR2 = _::CR2_RESET_VALUE;         // reset control register 2
+        SPI().CR1 |= BV(_::CR1_MSTR);           // master mode
+        SPI().CR2 |= BV(_::CR2_SSOE);           // ss output enable
+        SPI().CR1 |= (0x7 << _::CR1_BR);        // clock divider
+        SPI().CR1 |= BV(_::CR1_BIDIMODE);       // simplex transmission
+        SPI().CR1 |= BV(_::CR1_BIDIOE);         // simplex output enabled
+        SPI().CR2 |= BV(_::CR2_FRXTH);          // fifo 1/4 (8-bit)
+        SPI().CR2 |= 0x7 << _::CR2_DS;          // 8-bit data size
+        if (BO == lsb_first)                    // choose bit order
+            SPI().CR1 |= BV(_::CR1_LSBFIRST);   // lsb first
+        SPI().CR1 |= BV(_::CR1_SPE);            // enable spi
+    }
+
+    static inline void write(uint8_t x)
+    {
+        while (!(SPI().SR & BV(_::SR_TXE)));    // wait until tx buffer is empty
+        *reinterpret_cast<volatile uint8_t*>(&SPI().DR) = x;
+    }
+
+    static inline bool busy()
+    {
+        return SPI().SR & BV(_::SR_BSY);
     }
 
     enum interrupt_t
