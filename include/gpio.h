@@ -32,6 +32,7 @@ static inline constexpr int pin_bit(gpio_pin_t p)
 }
 
 enum output_type_t { push_pull, open_drain };
+enum output_speed_t { low_speed = 0x0, medium_speed = 0x1, high_speed = 0x3 };
 enum input_type_t { floating, pull_up, pull_down };
 
 template<gpio_port_t PORT> struct port_traits {};
@@ -84,8 +85,10 @@ template<gpio_pin_t PIN>
 struct pin_t
 {
     enum moder { input_mode, output_mode, alternate_mode, analog_mode };
-    static_assert(pin_bit(PIN) < 16, "pin_t bit out of range");
     typedef typename port_traits<pin_port(PIN)>::gpio_t gpio_t;
+
+    static_assert(pin_bit(PIN) < 16, "pin_t bit out of range");
+ 
     static inline gpio_t& gpio() { return port_traits<pin_port(PIN)>::gpio(); }
     static const uint8_t bit_pos = pin_bit(PIN);
     static const uint32_t bit_mask = BV(bit_pos);
@@ -95,11 +98,13 @@ template<gpio_pin_t PIN>
 class output_t
 {
 public:
-    template<output_type_t output_type = push_pull>
+    template<output_type_t output_type = push_pull, output_speed_t speed = low_speed>
     static inline void setup()
     {
         port_traits<pin_port(PIN)>::setup();
         pin::gpio().MODER |= pin::output_mode << (pin::bit_pos*2);
+        if (speed != low_speed)
+            pin::gpio().OSPEEDR |= speed << (pin::bit_pos*2);
         if (output_type == open_drain)
             pin::gpio().OTYPER |= pin::bit_mask;
     }
@@ -255,10 +260,13 @@ template<gpio_pin_t PIN, alternate_function_t ALT>
 class alternate_t
 {
 public:
+    template<output_speed_t speed = low_speed>
     static inline void setup()
     {
         port_traits<pin_port(PIN)>::setup();
         pin::gpio().MODER |= pin::alternate_mode << (pin::bit_pos*2);
+        if (speed != low_speed)
+            pin::gpio().OSPEEDR |= speed << (pin::bit_pos*2);
         if (pin::bit_pos < 8)
             pin::gpio().AFRL |= alt_fun_traits<PIN, ALT>::AF() << (pin::bit_pos*4);
         else

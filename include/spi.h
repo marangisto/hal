@@ -45,18 +45,18 @@ private:
     typedef typename spi_traits<NO>::T _;
 
 public:
-    template<spi_bit_order_t BO = msb_first>
+    template<spi_bit_order_t BO = msb_first, output_speed_t speed = low_speed>
     static inline void setup()
     {
-        internal::alternate_t<SCK, spi_traits<NO>::sck>::setup();
-        internal::alternate_t<MOSI, spi_traits<NO>::mosi>::setup();
+        internal::alternate_t<SCK, spi_traits<NO>::sck>::template setup<speed>();
+        internal::alternate_t<MOSI, spi_traits<NO>::mosi>::template setup<speed>();
 
         spi_traits<NO>::rcc_enable();           // enable spi clock
         SPI().CR1 = _::CR1_RESET_VALUE;         // reset control register 1
         SPI().CR2 = _::CR2_RESET_VALUE;         // reset control register 2
         SPI().CR1 |= BV(_::CR1_MSTR);           // master mode
         SPI().CR2 |= BV(_::CR2_SSOE);           // ss output enable
-        SPI().CR1 |= (0x7 << _::CR1_BR);        // clock divider
+        //SPI().CR1 |= (0x7 << _::CR1_BR);        // clock divider
         SPI().CR1 |= BV(_::CR1_BIDIMODE);       // simplex transmission
         SPI().CR1 |= BV(_::CR1_BIDIOE);         // simplex output enabled
         SPI().CR2 |= BV(_::CR2_FRXTH);          // fifo 1/4 (8-bit)
