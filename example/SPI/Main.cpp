@@ -20,7 +20,7 @@ void loop();
 
 int main()
 {
-    hc595::setup<lsb_first, fpclk_8, low_speed>();
+    hc595::setup<mode_0, lsb_first, fpclk_8, low_speed>();
     latch::setup();
     led_a::setup();
     led_b::setup();
@@ -33,7 +33,7 @@ void loop()
 {
     static uint8_t i = 0;
 
-    if (i == 0)
+    if (!(i & 0x0f))
     {
         led_a::toggle();
         if (led_a::read())

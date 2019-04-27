@@ -11,7 +11,25 @@ namespace spi
 using namespace device;
 using namespace gpio;
 
+enum spi_mode_t
+    { mode_0    // CPOL=0, CPHA=0
+    , mode_1    // CPOL=0, CPHA=1
+    , mode_2    // CPOL=1, CPHA=0
+    , mode_3    // CPOL=1, CPHA=1
+    };
+
 enum spi_bit_order_t { msb_first, lsb_first };
+
+enum spi_clock_divider_t
+    { fpclk_2
+    , fpclk_4
+    , fpclk_8
+    , fpclk_16
+    , fpclk_32
+    , fpclk_64
+    , fpclk_128
+    , fpclk_256
+    };
 
 template<int NO> struct spi_traits {};
 
@@ -45,7 +63,12 @@ private:
     typedef typename spi_traits<NO>::T _;
 
 public:
-    template<spi_bit_order_t BO = msb_first, output_speed_t speed = low_speed>
+    template
+        < spi_mode_t            mode    = mode_0
+        , spi_bit_order_t       order   = msb_first
+        , spi_clock_divider_t   divider = fpclk_256
+        , output_speed_t        speed   = low_speed
+        >
     static inline void setup()
     {
         internal::alternate_t<SCK, spi_traits<NO>::sck>::template setup<speed>();
@@ -55,14 +78,16 @@ public:
         SPI().CR1 = _::CR1_RESET_VALUE;         // reset control register 1
         SPI().CR2 = _::CR2_RESET_VALUE;         // reset control register 2
         SPI().CR1 |= BV(_::CR1_MSTR);           // master mode
-        SPI().CR2 |= BV(_::CR2_SSOE);           // ss output enable
-        //SPI().CR1 |= (0x7 << _::CR1_BR);        // clock divider
+        SPI().CR1 |= (divider << _::CR1_BR);    // clock divider
+        if (mode != mode_0)                     // set spi_mode
+            SPI().CR1 |= mode <<  _::CR1_CPHA;  // bit arrangements match
+        if (order == lsb_first)                 // choose bit order
+            SPI().CR1 |= BV(_::CR1_LSBFIRST);   // lsb first
         SPI().CR1 |= BV(_::CR1_BIDIMODE);       // simplex transmission
         SPI().CR1 |= BV(_::CR1_BIDIOE);         // simplex output enabled
+        SPI().CR2 |= BV(_::CR2_SSOE);           // ss output enable
         SPI().CR2 |= BV(_::CR2_FRXTH);          // fifo 1/4 (8-bit)
-        //SPI().CR2 |= 0x7 << _::CR2_DS;          // 8-bit data size (FIXME: has no effect on 8 vs 16-bit writes!
-        if (BO == lsb_first)                    // choose bit order
-            SPI().CR1 |= BV(_::CR1_LSBFIRST);   // lsb first
+        //SPI().CR2 |= 0x7 << _::CR2_DS;          // 8-bit data size (FIXME: has no effect on 8 vs 16-bit writes!)
         SPI().CR1 |= BV(_::CR1_SPE);            // enable spi
     }
 
