@@ -60,7 +60,7 @@ public:
         SPI().CR1 |= BV(_::CR1_BIDIMODE);       // simplex transmission
         SPI().CR1 |= BV(_::CR1_BIDIOE);         // simplex output enabled
         SPI().CR2 |= BV(_::CR2_FRXTH);          // fifo 1/4 (8-bit)
-        SPI().CR2 |= 0x7 << _::CR2_DS;          // 8-bit data size
+        //SPI().CR2 |= 0x7 << _::CR2_DS;          // 8-bit data size (FIXME: has no effect on 8 vs 16-bit writes!
         if (BO == lsb_first)                    // choose bit order
             SPI().CR1 |= BV(_::CR1_LSBFIRST);   // lsb first
         SPI().CR1 |= BV(_::CR1_SPE);            // enable spi
@@ -72,9 +72,20 @@ public:
         *reinterpret_cast<volatile uint8_t*>(&SPI().DR) = x;
     }
 
+    static inline void write(uint16_t x)
+    {
+        while (!(SPI().SR & BV(_::SR_TXE)));    // wait until tx buffer is empty
+        SPI().DR = x;
+    }
+
     static inline bool busy()
     {
         return SPI().SR & BV(_::SR_BSY);
+    }
+
+    static inline void wait_idle()
+    {
+        while (busy());
     }
 
     enum interrupt_t

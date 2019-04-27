@@ -14,7 +14,7 @@ void loop();
 
 int main()
 {
-    display::setup<lsb_first, high_speed>();
+    display::setup<lsb_first, low_speed>();
     latch::setup();
     led_a::setup();
     led_b::setup();
@@ -25,7 +25,7 @@ int main()
 
 void loop()
 {
-    static uint8_t i = 0;
+    static uint16_t i = 0;
 
     if (i == 0)
     {
@@ -35,7 +35,7 @@ void loop()
     }
 
     display::write(i++);
-    while (display::busy());
+    display::wait_idle();
     latch::set();
     latch::clear();
     sys_tick::delay_ms(1);
