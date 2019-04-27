@@ -14,7 +14,7 @@ void loop();
 
 int main()
 {
-    display::setup<lsb_first, low_speed>();
+    display::setup<lsb_first, fpclk_2, low_speed>();
     latch::setup();
     led_a::setup();
     led_b::setup();
