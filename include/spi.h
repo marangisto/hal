@@ -91,23 +91,27 @@ public:
         SPI().CR1 |= BV(_::CR1_SPE);            // enable spi
     }
 
+    __attribute__((always_inline))
     static inline void write(uint8_t x)
     {
         while (!(SPI().SR & BV(_::SR_TXE)));    // wait until tx buffer is empty
         *reinterpret_cast<volatile uint8_t*>(&SPI().DR) = x;
     }
 
+    __attribute__((always_inline))
     static inline void write(uint16_t x)
     {
         while (!(SPI().SR & BV(_::SR_TXE)));    // wait until tx buffer is empty
         SPI().DR = x;
     }
 
+    __attribute__((always_inline))
     static inline bool busy()
     {
         return SPI().SR & BV(_::SR_BSY);
     }
 
+    __attribute__((always_inline))
     static inline void wait_idle()
     {
         while (busy());
