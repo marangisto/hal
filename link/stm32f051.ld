@@ -58,6 +58,7 @@ SECTIONS
         *(COMMON)
         . = ALIGN(4);
         __ebss = .;
+        end = .;
     } > RAM
 }
 
