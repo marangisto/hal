@@ -26,7 +26,7 @@ SECTIONS
         *(.text*)
         *(.glue_7)
         *(.glue_7t)
-        . = ALIGN(4);
+        . = ALIGN(8);
     } > FLASH
 
     .rodata :
