@@ -33,5 +33,44 @@ private:
     static volatile uint32_t ms_counter;
 };
 
+struct ISR
+{
+    enum POS
+      { WWDG = 0
+      , PVD_VDDIO2 = 1
+      , RTC = 2
+      , FLASH = 3
+      , RCC_CRS = 4
+      , EXTI0_1 = 5
+      , EXTI2_3 = 6
+      , EXTI4_15 = 7
+      , TSC = 8
+      , DMA_CH1 = 9
+      , DMA_CH2_3 = 10
+      , DMA_CH4_5_6_7 = 11
+      , ADC_COMP = 12
+      , TIM1_BRK_UP_TRG_COM = 13
+      , TIM1_CC = 14
+      , TIM2 = 15
+      , TIM3 = 16
+      , TIM6_DAC = 17
+      , TIM7 = 18
+      , TIM14 = 19
+      , TIM15 = 20
+      , TIM16 = 21
+      , TIM17 = 22
+      , I2C1 = 23
+      , I2C2 = 24
+      , SPI1 = 25
+      , SPI2 = 26
+      , USART1 = 27
+      , USART2 = 28
+      , USART3_4_5_6_7_8 = 29
+      , CEC_CAN = 30
+      , USB = 31
+      };
+
+};
+
 }
 

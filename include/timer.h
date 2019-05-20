@@ -17,7 +17,7 @@ template<> struct timer_traits<1>
     typedef tim1_t T;
     static inline T& TIM() { return TIM1; }
     static inline void rcc_enable() { RCC.APB2ENR |= BV(rcc_t::APB2ENR_TIM1EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(13); }
+    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM1_BRK_UP_TRG_COM); }
 };
 
 template<> struct timer_traits<2>
@@ -25,7 +25,7 @@ template<> struct timer_traits<2>
     typedef tim2_t T;
     static inline T& TIM() { return TIM2; }
     static inline void rcc_enable() { RCC.APB1ENR |= BV(rcc_t::APB1ENR_TIM2EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(15); }
+    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM2); }
 };
 
 template<> struct timer_traits<3>
@@ -33,7 +33,7 @@ template<> struct timer_traits<3>
     typedef tim3_t T;
     static inline T& TIM() { return TIM3; }
     static inline void rcc_enable() { RCC.APB1ENR |= BV(rcc_t::APB1ENR_TIM3EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(16); }
+    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM3); }
 };
 
 #if defined(STM32F05x) || defined(STM32F07x) || defined(STM32F09x)
@@ -42,7 +42,7 @@ template<> struct timer_traits<6>
     typedef tim6_t T;
     static inline T& TIM() { return TIM6; }
     static inline void rcc_enable() { RCC.APB1ENR |= BV(rcc_t::APB1ENR_TIM6EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(17); }
+    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM6_DAC); }
 };
 #endif
 
@@ -52,7 +52,7 @@ template<> struct timer_traits<7>
     typedef tim7_t T;
     static inline T& TIM() { return TIM7; }
     static inline void rcc_enable() { RCC.APB1ENR |= BV(rcc_t::APB1ENR_TIM7EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(18); }
+    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM7); }
 };
 #endif
 
@@ -61,7 +61,7 @@ template<> struct timer_traits<14>
     typedef tim14_t T;
     static inline T& TIM() { return TIM14; }
     static inline void rcc_enable() { RCC.APB1ENR |= BV(rcc_t::APB1ENR_TIM14EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(19); }
+    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM14); }
 };
 
 #if !defined(STM32F03x)
@@ -70,7 +70,7 @@ template<> struct timer_traits<15>
     typedef tim15_t T;
     static inline T& TIM() { return TIM15; }
     static inline void rcc_enable() { RCC.APB2ENR |= BV(rcc_t::APB2ENR_TIM15EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(20); }
+    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM15); }
 };
 #endif
 
@@ -79,7 +79,7 @@ template<> struct timer_traits<16>
     typedef tim16_t T;
     static inline T& TIM() { return TIM16; }
     static inline void rcc_enable() { RCC.APB2ENR |= BV(rcc_t::APB2ENR_TIM16EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(21); }
+    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM16); }
 };
 
 template<> struct timer_traits<17>
@@ -87,7 +87,7 @@ template<> struct timer_traits<17>
     typedef tim17_t T;
     static inline T& TIM() { return TIM17; }
     static inline void rcc_enable() { RCC.APB2ENR |= BV(rcc_t::APB2ENR_TIM17EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(22); }
+    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM17); }
 };
 
 template<int TN>
