@@ -209,6 +209,7 @@ enum alternate_function_t
     , TSC_G2_IO2
     , TSC_G2_IO3
     , TSC_G2_IO4
+    , TSC_G3_IO1
     , TSC_G3_IO2
     , TSC_G3_IO3
     , TSC_G3_IO4
