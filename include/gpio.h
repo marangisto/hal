@@ -274,7 +274,18 @@ public:
             pin::gpio().AFRH |= alt_fun_traits<PIN, ALT>::AF() << ((pin::bit_pos-8)*4);
     }
 
-    // FIXME: consider overloads with pull-up, open-drain, speed, etc.
+    template<input_type_t input_type = floating>
+    static inline void setup()
+    {
+        port_traits<pin_port(PIN)>::setup();
+        pin::gpio().MODER |= pin::alternate_mode << (pin::bit_pos*2);
+        if (input_type != floating)
+            pin::gpio().PUPDR |= input_type << (pin::bit_pos*2);
+        if (pin::bit_pos < 8)
+            pin::gpio().AFRL |= alt_fun_traits<PIN, ALT>::AF() << (pin::bit_pos*4);
+        else
+            pin::gpio().AFRH |= alt_fun_traits<PIN, ALT>::AF() << ((pin::bit_pos-8)*4);
+    }
 
 private:
     typedef pin_t<PIN> pin;

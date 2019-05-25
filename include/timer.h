@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stm32f0.h>
+#include <gpio.h>
 
 namespace stm32f0
 {
@@ -18,6 +19,8 @@ template<> struct timer_traits<1>
     static inline T& TIM() { return TIM1; }
     static inline void rcc_enable() { RCC.APB2ENR |= BV(rcc_t::APB2ENR_TIM1EN); }
     static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM1_BRK_UP_TRG_COM); }
+    static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM1_CH1;
+    static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM1_CH2;
 };
 
 template<> struct timer_traits<2>
@@ -26,6 +29,8 @@ template<> struct timer_traits<2>
     static inline T& TIM() { return TIM2; }
     static inline void rcc_enable() { RCC.APB1ENR |= BV(rcc_t::APB1ENR_TIM2EN); }
     static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM2); }
+    static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM2_CH1_ETR;
+    static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM2_CH2;
 };
 
 template<> struct timer_traits<3>
@@ -34,6 +39,8 @@ template<> struct timer_traits<3>
     static inline T& TIM() { return TIM3; }
     static inline void rcc_enable() { RCC.APB1ENR |= BV(rcc_t::APB1ENR_TIM3EN); }
     static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM3); }
+    static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM3_CH1;
+    static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM3_CH2;
 };
 
 #if defined(STM32F05x) || defined(STM32F07x) || defined(STM32F09x)
@@ -120,7 +127,38 @@ public:
         TIM().SR &= ~BV(_::SR_UIF);
     }
 
-    static inline volatile uint32_t cnt()
+    static inline volatile uint16_t cnt()
+    {
+        return TIM().CNT;
+    }
+
+private:
+    static inline typename timer_traits<TN>::T& TIM() { return timer_traits<TN>::TIM(); }
+    typedef typename timer_traits<TN>::T _;
+};
+
+template<int TN, gpio::gpio_pin_t CH1, gpio::gpio_pin_t CH2>
+class encoder_t
+{
+public:
+    template<gpio::input_type_t input_type>
+    static inline void setup(uint16_t arr)
+    {
+        using namespace gpio;
+
+        internal::alternate_t<CH1, timer_traits<TN>::ch1>::template setup<input_type>();
+        internal::alternate_t<CH2, timer_traits<TN>::ch2>::template setup<input_type>();
+
+        timer_traits<TN>::rcc_enable();
+        TIM().CCMR1 = _::CCMR1_RESET_VALUE | (0x1 << _::CCMR1_CC1S) | (0x1 << _::CCMR1_CC2S); // TI1 & TI2 as inputs
+        TIM().CCER = _::CCER_RESET_VALUE;   // CCER_CC1P CCER_CC2P polarity choices
+        TIM().SMCR = _::SMCR_RESET_VALUE | (0x01 << _::SMCR_SMS);
+        TIM().ARR = arr;
+        TIM().CNT = _::CNT_RESET_VALUE;;
+        TIM().CR1 = _::CR1_RESET_VALUE | BV(_::CR1_CEN);
+    }
+
+    static inline volatile uint16_t count()
     {
         return TIM().CNT;
     }
