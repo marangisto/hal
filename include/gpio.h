@@ -41,28 +41,28 @@ template<> struct port_traits<PA>
 {
     typedef gpioa_t gpio_t;
     static inline gpio_t& gpio() { return GPIOA; }
-    static inline void setup() { RCC.AHBENR |= BV(rcc_t::AHBENR_IOPAEN); }
+    static inline void setup() { RCC.AHBENR |= rcc_t::AHBENR_IOPAEN; }
 };
 
 template<> struct port_traits<PB>
 {
     typedef gpiob_t gpio_t;
     static inline gpio_t& gpio() { return GPIOB; }
-    static inline void setup() { RCC.AHBENR |= BV(rcc_t::AHBENR_IOPBEN); }
+    static inline void setup() { RCC.AHBENR |= rcc_t::AHBENR_IOPBEN; }
 };
 
 template<> struct port_traits<PC>
 {
     typedef gpioc_t gpio_t;
     static inline gpio_t& gpio() { return GPIOC; }
-    static inline void setup() { RCC.AHBENR |= BV(rcc_t::AHBENR_IOPCEN); }
+    static inline void setup() { RCC.AHBENR |= rcc_t::AHBENR_IOPCEN; }
 };
 
 template<> struct port_traits<PD>
 {
     typedef gpiod_t gpio_t;
     static inline gpio_t& gpio() { return GPIOD; }
-    static inline void setup() { RCC.AHBENR |= BV(rcc_t::AHBENR_IOPDEN); }
+    static inline void setup() { RCC.AHBENR |= rcc_t::AHBENR_IOPDEN; }
 };
 
 #if defined(STM32F07x) || defined(STM32F09x)
@@ -70,7 +70,7 @@ template<> struct port_traits<PE>
 {
     typedef gpioe_t gpio_t;
     static inline gpio_t& gpio() { return GPIOE; }
-    static inline void setup() { RCC.AHBENR |= BV(rcc_t::AHBENR_IOPEEN); }
+    static inline void setup() { RCC.AHBENR |= rcc_t::AHBENR_IOPEEN; }
 };
 #endif
 
@@ -78,7 +78,7 @@ template<> struct port_traits<PF>
 {
     typedef gpiof_t gpio_t;
     static inline gpio_t& gpio() { return GPIOF; }
-    static inline void setup() { RCC.AHBENR |= BV(rcc_t::AHBENR_IOPFEN); }
+    static inline void setup() { RCC.AHBENR |= rcc_t::AHBENR_IOPFEN; }
 };
 
 template<gpio_pin_t PIN>
@@ -91,7 +91,7 @@ struct pin_t
  
     static inline gpio_t& gpio() { return port_traits<pin_port(PIN)>::gpio(); }
     static const uint8_t bit_pos = pin_bit(PIN);
-    static const uint32_t bit_mask = BV(bit_pos);
+    static const uint32_t bit_mask = 1 << bit_pos;
 };
 
 template<gpio_pin_t PIN>

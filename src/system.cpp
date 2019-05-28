@@ -18,12 +18,12 @@ void sys_tick::init(uint32_t n)
     using namespace stm32f0;
     typedef stk_t _;
 
-    ms_counter = 0;                                     // start new epoq
-    STK.CSR = _::CSR_RESET_VALUE;                       // reset controls
-    STK.RVR = n - 1;                                    // reload value
-    STK.CVR = _::CVR_RESET_VALUE;                       // current counter value
-    STK.CSR |= BV(_::CSR_CLKSOURCE);                    // systick clock source
-    STK.CSR |= BV(_::CSR_ENABLE) | BV(_::CSR_TICKINT);  // enable counter & interrupts
+    ms_counter = 0;                             // start new epoq
+    STK.CSR = _::CSR_RESET_VALUE;               // reset controls
+    STK.RVR = n - 1;                            // reload value
+    STK.CVR = _::CVR_RESET_VALUE;               // current counter value
+    STK.CSR |= _::CSR_CLKSOURCE;                // systick clock source
+    STK.CSR |= _::CSR_ENABLE | _::CSR_TICKINT;  // enable counter & interrupts
 }
 
 volatile uint32_t sys_tick::ms_counter = 0;
@@ -53,13 +53,16 @@ extern "C" void system_init(void)
 
     // set system clock to HSI-PLL 48MHz
 
-    Flash.ACR = BV(flash_t::ACR_PRFTBE) | BV(flash_t::ACR_LATENCY);
+    Flash.ACR = flash_t::ACR_PRFTBE | flash_t::ACR_LATENCY(0x1);
 
-    RCC.CFGR |= (0xa << _::CFGR_PLLMUL);                // PLL multiplier 12
-    RCC.CR |= BV(_::CR_PLLON);                          // enable PLL
-    while (!(RCC.CR & _::CR_PLLRDY));                   // wait for PLL to be ready
-    RCC.CFGR |= (0x2 << _::CFGR_SW);                    // select PLL as system clock
-    while (((RCC.CFGR >> _::CFGR_SWS) & 0x3) != 0x2);   // wait for PLL as system clock
+    RCC.CFGR |= _::CFGR_PLLMUL(0xa);        // PLL multiplier 12
+    RCC.CR |= _::CR_PLLON;                  // enable PLL
+    while (!(RCC.CR & _::CR_PLLRDY));       // wait for PLL to be ready
+    RCC.CFGR |= _::CFGR_SW(0x2);            // select PLL as system clock
+
+    // wait for PLL as system clock
+
+    while ((RCC.CFGR & _::CFGR_SWS(0x3)) != _::CFGR_SWS(0x2));
 
     // initialize sys-tick for milli-second counts
 

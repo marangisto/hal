@@ -10,10 +10,6 @@ namespace device = stm32f0x1;
 namespace stm32f0
 {
 
-template<int N> class reserved_t { private: uint32_t m_pad[N]; };
-
-static constexpr uint32_t BV(uint8_t x) { return 1 << x; }
-
 static inline void cpsid(void) { __asm volatile ("cpsid i"); }
 static inline void cpsie(void) { __asm volatile ("cpsie i"); }
 
