@@ -18,8 +18,8 @@ template<> struct timer_traits<1>
     typedef tim1_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM1; }
-    static inline void rcc_enable() { RCC.APB2ENR |= BV(rcc_t::APB2ENR_TIM1EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM1_BRK_UP_TRG_COM); }
+    static inline void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM1EN; }
+    static inline void nvic_enable() { ISR::enable<ISR::TIM1_BRK_UP_TRG_COM>(); }
     static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM1_CH1;
     static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM1_CH2;
 };
@@ -29,8 +29,8 @@ template<> struct timer_traits<2>
     typedef tim2_t T;
     typedef uint32_t count_t;
     static inline T& TIM() { return TIM2; }
-    static inline void rcc_enable() { RCC.APB1ENR |= BV(rcc_t::APB1ENR_TIM2EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM2); }
+    static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM2EN; }
+    static inline void nvic_enable() { ISR::enable<ISR::TIM2>(); }
     static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM2_CH1_ETR;
     static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM2_CH2;
 };
@@ -40,8 +40,8 @@ template<> struct timer_traits<3>
     typedef tim3_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM3; }
-    static inline void rcc_enable() { RCC.APB1ENR |= BV(rcc_t::APB1ENR_TIM3EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM3); }
+    static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM3EN; }
+    static inline void nvic_enable() { ISR::enable<ISR::TIM3>(); }
     static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM3_CH1;
     static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM3_CH2;
 };
@@ -52,8 +52,8 @@ template<> struct timer_traits<6>
     typedef tim6_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM6; }
-    static inline void rcc_enable() { RCC.APB1ENR |= BV(rcc_t::APB1ENR_TIM6EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM6_DAC); }
+    static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM6EN; }
+    static inline void nvic_enable() { ISR::enable<ISR::TIM6_DAC>(); }
 };
 #endif
 
@@ -63,8 +63,8 @@ template<> struct timer_traits<7>
     typedef tim7_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM7; }
-    static inline void rcc_enable() { RCC.APB1ENR |= BV(rcc_t::APB1ENR_TIM7EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM7); }
+    static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM7EN; }
+    static inline void nvic_enable() { ISR::enable<ISR::TIM7>(); }
 };
 #endif
 
@@ -73,8 +73,8 @@ template<> struct timer_traits<14>
     typedef tim14_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM14; }
-    static inline void rcc_enable() { RCC.APB1ENR |= BV(rcc_t::APB1ENR_TIM14EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM14); }
+    static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM14EN; }
+    static inline void nvic_enable() { ISR::enable<ISR::TIM14>(); }
 };
 
 #if !defined(STM32F03x)
@@ -83,8 +83,8 @@ template<> struct timer_traits<15>
     typedef tim15_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM15; }
-    static inline void rcc_enable() { RCC.APB2ENR |= BV(rcc_t::APB2ENR_TIM15EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM15); }
+    static inline void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM15EN; }
+    static inline void nvic_enable() { ISR::enable<ISR::TIM15>(); }
 };
 #endif
 
@@ -93,8 +93,8 @@ template<> struct timer_traits<16>
     typedef tim16_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM16; }
-    static inline void rcc_enable() { RCC.APB2ENR |= BV(rcc_t::APB2ENR_TIM16EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM16); }
+    static inline void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM16EN; }
+    static inline void nvic_enable() { ISR::enable<ISR::TIM16>(); }
 };
 
 template<> struct timer_traits<17>
@@ -102,8 +102,8 @@ template<> struct timer_traits<17>
     typedef tim17_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM17; }
-    static inline void rcc_enable() { RCC.APB2ENR |= BV(rcc_t::APB2ENR_TIM17EN); }
-    static inline void nvic_enable() { NVIC.ISER |= BV(ISR::TIM17); }
+    static inline void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM17EN; }
+    static inline void nvic_enable() { ISR::enable<ISR::TIM17>(); }
 };
 
 template<int TN>
@@ -118,24 +118,24 @@ public:
         TIM().CR1 = _::CR1_RESET_VALUE;
         TIM().PSC = psc;
         TIM().ARR = arr;
-        TIM().CR1 |= BV(_::CR1_ARPE);
-        TIM().CR1 |= BV(_::CR1_CEN);
+        TIM().CR1 |= _::CR1_ARPE;
+        TIM().CR1 |= _::CR1_CEN;
     }
 
     static inline void update_interrupt_enable()
     {
-        TIM().DIER |= BV(_::DIER_UIE);
+        TIM().DIER |= _::DIER_UIE;
         timer_traits<TN>::nvic_enable();
     }
 
     static inline volatile bool uif()
     {
-        return (TIM().SR & BV(_::SR_UIF)) != 0;
+        return (TIM().SR & _::SR_UIF) != 0;
     }
 
     static inline volatile void clear_uif()
     {
-        TIM().SR &= ~BV(_::SR_UIF);
+        TIM().SR &= ~_::SR_UIF;
     }
 
     static inline volatile count_t cnt()
@@ -168,7 +168,7 @@ public:
         TIM().SMCR = _::SMCR_RESET_VALUE | (0x1 << _::SMCR_SMS);
         TIM().ARR = arr;
         TIM().CNT = _::CNT_RESET_VALUE;;
-        TIM().CR1 = _::CR1_RESET_VALUE | BV(_::CR1_CEN);
+        TIM().CR1 = _::CR1_RESET_VALUE | _::CR1_CEN;
     }
 
     static inline volatile count_t count()

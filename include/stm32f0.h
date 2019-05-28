@@ -31,7 +31,7 @@ private:
 
 struct ISR
 {
-    enum POS
+    enum pos_t
       { WWDG = 0
       , PVD_VDDIO2 = 1
       , RTC = 2
@@ -66,6 +66,11 @@ struct ISR
       , USB = 31
       };
 
+    template<pos_t POS>
+    static void enable()
+    {
+        device::NVIC.ISER |= 1 << POS;
+    }
 };
 
 }
