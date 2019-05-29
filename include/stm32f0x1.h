@@ -21,6 +21,17 @@ namespace stm32f0x1
 
 template<int N> class reserved_t { private: uint32_t m_pad[N]; };
 
+template<uint8_t POS, uint32_t MASK>
+struct bit_field_t
+{
+    template <uint32_t X>
+    static constexpr uint32_t value()
+    {
+        static_assert((X & ~MASK) == 0, "field value too large");
+        return X << POS;
+    }
+};
+
 ////
 //
 //    cyclic redundancy check calculation unit
@@ -37,12 +48,12 @@ struct crc_t
 
     static const uint32_t DR_RESET_VALUE = 0xffffffff;
 
-    static constexpr uint32_t IDR_IDR(uint32_t x) { return (x & 0xff) << 0; } // General-purpose 8-bit data register bits (8 bits)
+    typedef bit_field_t<0, 0xff> IDR_IDR;  // General-purpose 8-bit data register bits (8 bits)
     static const uint32_t IDR_RESET_VALUE = 0x0;
 
     static const uint32_t CR_RESET = 0x1;          // reset bit
-    static constexpr uint32_t CR_POLYSIZE(uint32_t x) { return (x & 0x3) << 3; } // Polynomial size (2 bits)
-    static constexpr uint32_t CR_REV_IN(uint32_t x) { return (x & 0x3) << 5; } // Reverse input data (2 bits)
+    typedef bit_field_t<3, 0x3> CR_POLYSIZE;  // Polynomial size (2 bits)
+    typedef bit_field_t<5, 0x3> CR_REV_IN;  // Reverse input data (2 bits)
     static const uint32_t CR_REV_OUT = 0x80;       // Reverse output data
     static const uint32_t CR_RESET_VALUE = 0x0;
 
@@ -73,22 +84,22 @@ struct gpiof_t
     volatile uint32_t    AFRH;                 // [Read-write] GPIO alternate function high register
     volatile uint32_t    BRR;                  // [Write-only] Port bit reset register
 
-    static constexpr uint32_t MODER_MODER15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> MODER_MODER15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> MODER_MODER14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> MODER_MODER13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> MODER_MODER12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> MODER_MODER11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> MODER_MODER10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> MODER_MODER9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> MODER_MODER8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> MODER_MODER7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> MODER_MODER6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> MODER_MODER5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> MODER_MODER4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> MODER_MODER3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> MODER_MODER2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> MODER_MODER1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> MODER_MODER0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t MODER_RESET_VALUE = 0x0;
 
     static const uint32_t OTYPER_OT15 = 0x8000;        // Port x configuration bit 15
@@ -109,40 +120,40 @@ struct gpiof_t
     static const uint32_t OTYPER_OT0 = 0x1;            // Port x configuration bit 0
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t OSPEEDR_OSPEEDR15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> OSPEEDR_OSPEEDR15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> OSPEEDR_OSPEEDR14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> OSPEEDR_OSPEEDR13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> OSPEEDR_OSPEEDR12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> OSPEEDR_OSPEEDR11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> OSPEEDR_OSPEEDR10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> OSPEEDR_OSPEEDR9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> OSPEEDR_OSPEEDR8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> OSPEEDR_OSPEEDR7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> OSPEEDR_OSPEEDR6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> OSPEEDR_OSPEEDR5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> OSPEEDR_OSPEEDR4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> OSPEEDR_OSPEEDR3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> OSPEEDR_OSPEEDR2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> OSPEEDR_OSPEEDR1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> OSPEEDR_OSPEEDR0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PUPDR_PUPDR15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> PUPDR_PUPDR15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> PUPDR_PUPDR14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> PUPDR_PUPDR13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> PUPDR_PUPDR12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> PUPDR_PUPDR11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> PUPDR_PUPDR10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> PUPDR_PUPDR9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> PUPDR_PUPDR8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> PUPDR_PUPDR7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> PUPDR_PUPDR6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> PUPDR_PUPDR5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> PUPDR_PUPDR4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> PUPDR_PUPDR3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> PUPDR_PUPDR2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> PUPDR_PUPDR1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> PUPDR_PUPDR0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t PUPDR_RESET_VALUE = 0x0;
 
     static const uint32_t IDR_IDR15 = 0x8000;       // Port input data (y = 0..15)
@@ -234,24 +245,24 @@ struct gpiof_t
     static const uint32_t LCKR_LCK0 = 0x1;           // Port x lock bit y (y= 0..15)
     static const uint32_t LCKR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t AFRL_AFRL7(uint32_t x) { return (x & 0xf) << 28; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL6(uint32_t x) { return (x & 0xf) << 24; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL5(uint32_t x) { return (x & 0xf) << 20; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL4(uint32_t x) { return (x & 0xf) << 16; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL3(uint32_t x) { return (x & 0xf) << 12; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL2(uint32_t x) { return (x & 0xf) << 8; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL1(uint32_t x) { return (x & 0xf) << 4; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL0(uint32_t x) { return (x & 0xf) << 0; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<28, 0xf> AFRL_AFRL7;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<24, 0xf> AFRL_AFRL6;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<20, 0xf> AFRL_AFRL5;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<16, 0xf> AFRL_AFRL4;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<12, 0xf> AFRL_AFRL3;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<8, 0xf> AFRL_AFRL2;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<4, 0xf> AFRL_AFRL1;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<0, 0xf> AFRL_AFRL0;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint32_t AFRL_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t AFRH_AFRH15(uint32_t x) { return (x & 0xf) << 28; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH14(uint32_t x) { return (x & 0xf) << 24; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH13(uint32_t x) { return (x & 0xf) << 20; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH12(uint32_t x) { return (x & 0xf) << 16; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH11(uint32_t x) { return (x & 0xf) << 12; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH10(uint32_t x) { return (x & 0xf) << 8; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH9(uint32_t x) { return (x & 0xf) << 4; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH8(uint32_t x) { return (x & 0xf) << 0; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<28, 0xf> AFRH_AFRH15;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<24, 0xf> AFRH_AFRH14;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<20, 0xf> AFRH_AFRH13;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<16, 0xf> AFRH_AFRH12;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<12, 0xf> AFRH_AFRH11;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<8, 0xf> AFRH_AFRH10;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<4, 0xf> AFRH_AFRH9;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<0, 0xf> AFRH_AFRH8;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint32_t AFRH_RESET_VALUE = 0x0;
 
     static const uint32_t BRR_BR0 = 0x1;            // Port x Reset bit y
@@ -296,22 +307,22 @@ struct gpiod_t
     volatile uint32_t    AFRH;                 // [Read-write] GPIO alternate function high register
     volatile uint32_t    BRR;                  // [Write-only] Port bit reset register
 
-    static constexpr uint32_t MODER_MODER15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> MODER_MODER15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> MODER_MODER14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> MODER_MODER13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> MODER_MODER12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> MODER_MODER11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> MODER_MODER10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> MODER_MODER9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> MODER_MODER8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> MODER_MODER7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> MODER_MODER6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> MODER_MODER5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> MODER_MODER4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> MODER_MODER3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> MODER_MODER2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> MODER_MODER1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> MODER_MODER0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t MODER_RESET_VALUE = 0x0;
 
     static const uint32_t OTYPER_OT15 = 0x8000;        // Port x configuration bit 15
@@ -332,40 +343,40 @@ struct gpiod_t
     static const uint32_t OTYPER_OT0 = 0x1;            // Port x configuration bit 0
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t OSPEEDR_OSPEEDR15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> OSPEEDR_OSPEEDR15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> OSPEEDR_OSPEEDR14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> OSPEEDR_OSPEEDR13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> OSPEEDR_OSPEEDR12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> OSPEEDR_OSPEEDR11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> OSPEEDR_OSPEEDR10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> OSPEEDR_OSPEEDR9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> OSPEEDR_OSPEEDR8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> OSPEEDR_OSPEEDR7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> OSPEEDR_OSPEEDR6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> OSPEEDR_OSPEEDR5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> OSPEEDR_OSPEEDR4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> OSPEEDR_OSPEEDR3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> OSPEEDR_OSPEEDR2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> OSPEEDR_OSPEEDR1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> OSPEEDR_OSPEEDR0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PUPDR_PUPDR15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> PUPDR_PUPDR15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> PUPDR_PUPDR14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> PUPDR_PUPDR13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> PUPDR_PUPDR12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> PUPDR_PUPDR11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> PUPDR_PUPDR10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> PUPDR_PUPDR9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> PUPDR_PUPDR8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> PUPDR_PUPDR7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> PUPDR_PUPDR6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> PUPDR_PUPDR5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> PUPDR_PUPDR4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> PUPDR_PUPDR3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> PUPDR_PUPDR2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> PUPDR_PUPDR1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> PUPDR_PUPDR0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t PUPDR_RESET_VALUE = 0x0;
 
     static const uint32_t IDR_IDR15 = 0x8000;       // Port input data (y = 0..15)
@@ -457,24 +468,24 @@ struct gpiod_t
     static const uint32_t LCKR_LCK0 = 0x1;           // Port x lock bit y (y= 0..15)
     static const uint32_t LCKR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t AFRL_AFRL7(uint32_t x) { return (x & 0xf) << 28; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL6(uint32_t x) { return (x & 0xf) << 24; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL5(uint32_t x) { return (x & 0xf) << 20; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL4(uint32_t x) { return (x & 0xf) << 16; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL3(uint32_t x) { return (x & 0xf) << 12; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL2(uint32_t x) { return (x & 0xf) << 8; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL1(uint32_t x) { return (x & 0xf) << 4; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL0(uint32_t x) { return (x & 0xf) << 0; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<28, 0xf> AFRL_AFRL7;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<24, 0xf> AFRL_AFRL6;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<20, 0xf> AFRL_AFRL5;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<16, 0xf> AFRL_AFRL4;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<12, 0xf> AFRL_AFRL3;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<8, 0xf> AFRL_AFRL2;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<4, 0xf> AFRL_AFRL1;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<0, 0xf> AFRL_AFRL0;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint32_t AFRL_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t AFRH_AFRH15(uint32_t x) { return (x & 0xf) << 28; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH14(uint32_t x) { return (x & 0xf) << 24; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH13(uint32_t x) { return (x & 0xf) << 20; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH12(uint32_t x) { return (x & 0xf) << 16; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH11(uint32_t x) { return (x & 0xf) << 12; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH10(uint32_t x) { return (x & 0xf) << 8; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH9(uint32_t x) { return (x & 0xf) << 4; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH8(uint32_t x) { return (x & 0xf) << 0; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<28, 0xf> AFRH_AFRH15;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<24, 0xf> AFRH_AFRH14;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<20, 0xf> AFRH_AFRH13;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<16, 0xf> AFRH_AFRH12;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<12, 0xf> AFRH_AFRH11;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<8, 0xf> AFRH_AFRH10;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<4, 0xf> AFRH_AFRH9;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<0, 0xf> AFRH_AFRH8;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint32_t AFRH_RESET_VALUE = 0x0;
 
     static const uint32_t BRR_BR0 = 0x1;            // Port x Reset bit y
@@ -519,22 +530,22 @@ struct gpioc_t
     volatile uint32_t    AFRH;                 // [Read-write] GPIO alternate function high register
     volatile uint32_t    BRR;                  // [Write-only] Port bit reset register
 
-    static constexpr uint32_t MODER_MODER15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> MODER_MODER15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> MODER_MODER14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> MODER_MODER13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> MODER_MODER12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> MODER_MODER11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> MODER_MODER10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> MODER_MODER9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> MODER_MODER8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> MODER_MODER7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> MODER_MODER6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> MODER_MODER5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> MODER_MODER4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> MODER_MODER3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> MODER_MODER2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> MODER_MODER1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> MODER_MODER0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t MODER_RESET_VALUE = 0x0;
 
     static const uint32_t OTYPER_OT15 = 0x8000;        // Port x configuration bit 15
@@ -555,40 +566,40 @@ struct gpioc_t
     static const uint32_t OTYPER_OT0 = 0x1;            // Port x configuration bit 0
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t OSPEEDR_OSPEEDR15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> OSPEEDR_OSPEEDR15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> OSPEEDR_OSPEEDR14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> OSPEEDR_OSPEEDR13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> OSPEEDR_OSPEEDR12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> OSPEEDR_OSPEEDR11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> OSPEEDR_OSPEEDR10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> OSPEEDR_OSPEEDR9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> OSPEEDR_OSPEEDR8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> OSPEEDR_OSPEEDR7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> OSPEEDR_OSPEEDR6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> OSPEEDR_OSPEEDR5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> OSPEEDR_OSPEEDR4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> OSPEEDR_OSPEEDR3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> OSPEEDR_OSPEEDR2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> OSPEEDR_OSPEEDR1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> OSPEEDR_OSPEEDR0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PUPDR_PUPDR15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> PUPDR_PUPDR15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> PUPDR_PUPDR14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> PUPDR_PUPDR13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> PUPDR_PUPDR12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> PUPDR_PUPDR11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> PUPDR_PUPDR10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> PUPDR_PUPDR9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> PUPDR_PUPDR8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> PUPDR_PUPDR7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> PUPDR_PUPDR6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> PUPDR_PUPDR5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> PUPDR_PUPDR4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> PUPDR_PUPDR3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> PUPDR_PUPDR2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> PUPDR_PUPDR1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> PUPDR_PUPDR0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t PUPDR_RESET_VALUE = 0x0;
 
     static const uint32_t IDR_IDR15 = 0x8000;       // Port input data (y = 0..15)
@@ -680,24 +691,24 @@ struct gpioc_t
     static const uint32_t LCKR_LCK0 = 0x1;           // Port x lock bit y (y= 0..15)
     static const uint32_t LCKR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t AFRL_AFRL7(uint32_t x) { return (x & 0xf) << 28; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL6(uint32_t x) { return (x & 0xf) << 24; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL5(uint32_t x) { return (x & 0xf) << 20; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL4(uint32_t x) { return (x & 0xf) << 16; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL3(uint32_t x) { return (x & 0xf) << 12; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL2(uint32_t x) { return (x & 0xf) << 8; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL1(uint32_t x) { return (x & 0xf) << 4; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL0(uint32_t x) { return (x & 0xf) << 0; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<28, 0xf> AFRL_AFRL7;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<24, 0xf> AFRL_AFRL6;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<20, 0xf> AFRL_AFRL5;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<16, 0xf> AFRL_AFRL4;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<12, 0xf> AFRL_AFRL3;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<8, 0xf> AFRL_AFRL2;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<4, 0xf> AFRL_AFRL1;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<0, 0xf> AFRL_AFRL0;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint32_t AFRL_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t AFRH_AFRH15(uint32_t x) { return (x & 0xf) << 28; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH14(uint32_t x) { return (x & 0xf) << 24; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH13(uint32_t x) { return (x & 0xf) << 20; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH12(uint32_t x) { return (x & 0xf) << 16; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH11(uint32_t x) { return (x & 0xf) << 12; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH10(uint32_t x) { return (x & 0xf) << 8; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH9(uint32_t x) { return (x & 0xf) << 4; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH8(uint32_t x) { return (x & 0xf) << 0; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<28, 0xf> AFRH_AFRH15;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<24, 0xf> AFRH_AFRH14;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<20, 0xf> AFRH_AFRH13;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<16, 0xf> AFRH_AFRH12;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<12, 0xf> AFRH_AFRH11;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<8, 0xf> AFRH_AFRH10;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<4, 0xf> AFRH_AFRH9;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<0, 0xf> AFRH_AFRH8;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint32_t AFRH_RESET_VALUE = 0x0;
 
     static const uint32_t BRR_BR0 = 0x1;            // Port x Reset bit y
@@ -742,22 +753,22 @@ struct gpiob_t
     volatile uint32_t    AFRH;                 // [Read-write] GPIO alternate function high register
     volatile uint32_t    BRR;                  // [Write-only] Port bit reset register
 
-    static constexpr uint32_t MODER_MODER15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> MODER_MODER15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> MODER_MODER14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> MODER_MODER13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> MODER_MODER12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> MODER_MODER11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> MODER_MODER10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> MODER_MODER9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> MODER_MODER8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> MODER_MODER7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> MODER_MODER6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> MODER_MODER5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> MODER_MODER4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> MODER_MODER3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> MODER_MODER2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> MODER_MODER1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> MODER_MODER0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t MODER_RESET_VALUE = 0x0;
 
     static const uint32_t OTYPER_OT15 = 0x8000;        // Port x configuration bit 15
@@ -778,40 +789,40 @@ struct gpiob_t
     static const uint32_t OTYPER_OT0 = 0x1;            // Port x configuration bit 0
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t OSPEEDR_OSPEEDR15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> OSPEEDR_OSPEEDR15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> OSPEEDR_OSPEEDR14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> OSPEEDR_OSPEEDR13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> OSPEEDR_OSPEEDR12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> OSPEEDR_OSPEEDR11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> OSPEEDR_OSPEEDR10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> OSPEEDR_OSPEEDR9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> OSPEEDR_OSPEEDR8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> OSPEEDR_OSPEEDR7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> OSPEEDR_OSPEEDR6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> OSPEEDR_OSPEEDR5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> OSPEEDR_OSPEEDR4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> OSPEEDR_OSPEEDR3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> OSPEEDR_OSPEEDR2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> OSPEEDR_OSPEEDR1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> OSPEEDR_OSPEEDR0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PUPDR_PUPDR15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> PUPDR_PUPDR15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> PUPDR_PUPDR14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> PUPDR_PUPDR13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> PUPDR_PUPDR12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> PUPDR_PUPDR11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> PUPDR_PUPDR10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> PUPDR_PUPDR9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> PUPDR_PUPDR8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> PUPDR_PUPDR7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> PUPDR_PUPDR6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> PUPDR_PUPDR5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> PUPDR_PUPDR4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> PUPDR_PUPDR3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> PUPDR_PUPDR2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> PUPDR_PUPDR1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> PUPDR_PUPDR0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t PUPDR_RESET_VALUE = 0x0;
 
     static const uint32_t IDR_IDR15 = 0x8000;       // Port input data (y = 0..15)
@@ -903,24 +914,24 @@ struct gpiob_t
     static const uint32_t LCKR_LCK0 = 0x1;           // Port x lock bit y (y= 0..15)
     static const uint32_t LCKR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t AFRL_AFRL7(uint32_t x) { return (x & 0xf) << 28; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL6(uint32_t x) { return (x & 0xf) << 24; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL5(uint32_t x) { return (x & 0xf) << 20; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL4(uint32_t x) { return (x & 0xf) << 16; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL3(uint32_t x) { return (x & 0xf) << 12; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL2(uint32_t x) { return (x & 0xf) << 8; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL1(uint32_t x) { return (x & 0xf) << 4; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL0(uint32_t x) { return (x & 0xf) << 0; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<28, 0xf> AFRL_AFRL7;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<24, 0xf> AFRL_AFRL6;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<20, 0xf> AFRL_AFRL5;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<16, 0xf> AFRL_AFRL4;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<12, 0xf> AFRL_AFRL3;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<8, 0xf> AFRL_AFRL2;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<4, 0xf> AFRL_AFRL1;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<0, 0xf> AFRL_AFRL0;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint32_t AFRL_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t AFRH_AFRH15(uint32_t x) { return (x & 0xf) << 28; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH14(uint32_t x) { return (x & 0xf) << 24; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH13(uint32_t x) { return (x & 0xf) << 20; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH12(uint32_t x) { return (x & 0xf) << 16; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH11(uint32_t x) { return (x & 0xf) << 12; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH10(uint32_t x) { return (x & 0xf) << 8; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH9(uint32_t x) { return (x & 0xf) << 4; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH8(uint32_t x) { return (x & 0xf) << 0; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<28, 0xf> AFRH_AFRH15;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<24, 0xf> AFRH_AFRH14;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<20, 0xf> AFRH_AFRH13;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<16, 0xf> AFRH_AFRH12;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<12, 0xf> AFRH_AFRH11;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<8, 0xf> AFRH_AFRH10;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<4, 0xf> AFRH_AFRH9;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<0, 0xf> AFRH_AFRH8;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint32_t AFRH_RESET_VALUE = 0x0;
 
     static const uint32_t BRR_BR0 = 0x1;            // Port x Reset bit y
@@ -965,22 +976,22 @@ struct gpioe_t
     volatile uint32_t    AFRH;                 // [Read-write] GPIO alternate function high register
     volatile uint32_t    BRR;                  // [Write-only] Port bit reset register
 
-    static constexpr uint32_t MODER_MODER15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> MODER_MODER15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> MODER_MODER14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> MODER_MODER13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> MODER_MODER12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> MODER_MODER11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> MODER_MODER10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> MODER_MODER9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> MODER_MODER8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> MODER_MODER7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> MODER_MODER6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> MODER_MODER5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> MODER_MODER4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> MODER_MODER3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> MODER_MODER2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> MODER_MODER1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> MODER_MODER0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t MODER_RESET_VALUE = 0x0;
 
     static const uint32_t OTYPER_OT15 = 0x8000;        // Port x configuration bit 15
@@ -1001,40 +1012,40 @@ struct gpioe_t
     static const uint32_t OTYPER_OT0 = 0x1;            // Port x configuration bit 0
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t OSPEEDR_OSPEEDR15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> OSPEEDR_OSPEEDR15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> OSPEEDR_OSPEEDR14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> OSPEEDR_OSPEEDR13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> OSPEEDR_OSPEEDR12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> OSPEEDR_OSPEEDR11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> OSPEEDR_OSPEEDR10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> OSPEEDR_OSPEEDR9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> OSPEEDR_OSPEEDR8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> OSPEEDR_OSPEEDR7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> OSPEEDR_OSPEEDR6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> OSPEEDR_OSPEEDR5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> OSPEEDR_OSPEEDR4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> OSPEEDR_OSPEEDR3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> OSPEEDR_OSPEEDR2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> OSPEEDR_OSPEEDR1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> OSPEEDR_OSPEEDR0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PUPDR_PUPDR15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> PUPDR_PUPDR15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> PUPDR_PUPDR14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> PUPDR_PUPDR13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> PUPDR_PUPDR12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> PUPDR_PUPDR11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> PUPDR_PUPDR10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> PUPDR_PUPDR9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> PUPDR_PUPDR8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> PUPDR_PUPDR7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> PUPDR_PUPDR6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> PUPDR_PUPDR5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> PUPDR_PUPDR4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> PUPDR_PUPDR3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> PUPDR_PUPDR2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> PUPDR_PUPDR1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> PUPDR_PUPDR0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t PUPDR_RESET_VALUE = 0x0;
 
     static const uint32_t IDR_IDR15 = 0x8000;       // Port input data (y = 0..15)
@@ -1126,24 +1137,24 @@ struct gpioe_t
     static const uint32_t LCKR_LCK0 = 0x1;           // Port x lock bit y (y= 0..15)
     static const uint32_t LCKR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t AFRL_AFRL7(uint32_t x) { return (x & 0xf) << 28; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL6(uint32_t x) { return (x & 0xf) << 24; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL5(uint32_t x) { return (x & 0xf) << 20; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL4(uint32_t x) { return (x & 0xf) << 16; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL3(uint32_t x) { return (x & 0xf) << 12; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL2(uint32_t x) { return (x & 0xf) << 8; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL1(uint32_t x) { return (x & 0xf) << 4; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL0(uint32_t x) { return (x & 0xf) << 0; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<28, 0xf> AFRL_AFRL7;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<24, 0xf> AFRL_AFRL6;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<20, 0xf> AFRL_AFRL5;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<16, 0xf> AFRL_AFRL4;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<12, 0xf> AFRL_AFRL3;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<8, 0xf> AFRL_AFRL2;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<4, 0xf> AFRL_AFRL1;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<0, 0xf> AFRL_AFRL0;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint32_t AFRL_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t AFRH_AFRH15(uint32_t x) { return (x & 0xf) << 28; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH14(uint32_t x) { return (x & 0xf) << 24; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH13(uint32_t x) { return (x & 0xf) << 20; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH12(uint32_t x) { return (x & 0xf) << 16; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH11(uint32_t x) { return (x & 0xf) << 12; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH10(uint32_t x) { return (x & 0xf) << 8; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH9(uint32_t x) { return (x & 0xf) << 4; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH8(uint32_t x) { return (x & 0xf) << 0; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<28, 0xf> AFRH_AFRH15;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<24, 0xf> AFRH_AFRH14;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<20, 0xf> AFRH_AFRH13;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<16, 0xf> AFRH_AFRH12;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<12, 0xf> AFRH_AFRH11;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<8, 0xf> AFRH_AFRH10;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<4, 0xf> AFRH_AFRH9;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<0, 0xf> AFRH_AFRH8;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint32_t AFRH_RESET_VALUE = 0x0;
 
     static const uint32_t BRR_BR0 = 0x1;            // Port x Reset bit y
@@ -1188,22 +1199,22 @@ struct gpioa_t
     volatile uint32_t    AFRH;                 // [Read-write] GPIO alternate function high register
     volatile uint32_t    BRR;                  // [Write-only] Port bit reset register
 
-    static constexpr uint32_t MODER_MODER15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t MODER_MODER0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> MODER_MODER15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> MODER_MODER14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> MODER_MODER13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> MODER_MODER12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> MODER_MODER11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> MODER_MODER10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> MODER_MODER9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> MODER_MODER8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> MODER_MODER7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> MODER_MODER6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> MODER_MODER5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> MODER_MODER4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> MODER_MODER3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> MODER_MODER2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> MODER_MODER1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> MODER_MODER0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t MODER_RESET_VALUE = 0x28000000;
 
     static const uint32_t OTYPER_OT15 = 0x8000;        // Port x configuration bits (y = 0..15)
@@ -1224,40 +1235,40 @@ struct gpioa_t
     static const uint32_t OTYPER_OT0 = 0x1;            // Port x configuration bits (y = 0..15)
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t OSPEEDR_OSPEEDR15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t OSPEEDR_OSPEEDR0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> OSPEEDR_OSPEEDR15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> OSPEEDR_OSPEEDR14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> OSPEEDR_OSPEEDR13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> OSPEEDR_OSPEEDR12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> OSPEEDR_OSPEEDR11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> OSPEEDR_OSPEEDR10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> OSPEEDR_OSPEEDR9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> OSPEEDR_OSPEEDR8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> OSPEEDR_OSPEEDR7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> OSPEEDR_OSPEEDR6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> OSPEEDR_OSPEEDR5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> OSPEEDR_OSPEEDR4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> OSPEEDR_OSPEEDR3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> OSPEEDR_OSPEEDR2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> OSPEEDR_OSPEEDR1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> OSPEEDR_OSPEEDR0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PUPDR_PUPDR15(uint32_t x) { return (x & 0x3) << 30; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR14(uint32_t x) { return (x & 0x3) << 28; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR13(uint32_t x) { return (x & 0x3) << 26; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR12(uint32_t x) { return (x & 0x3) << 24; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR11(uint32_t x) { return (x & 0x3) << 22; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR10(uint32_t x) { return (x & 0x3) << 20; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR9(uint32_t x) { return (x & 0x3) << 18; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR8(uint32_t x) { return (x & 0x3) << 16; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR7(uint32_t x) { return (x & 0x3) << 14; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR6(uint32_t x) { return (x & 0x3) << 12; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR5(uint32_t x) { return (x & 0x3) << 10; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR4(uint32_t x) { return (x & 0x3) << 8; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR3(uint32_t x) { return (x & 0x3) << 6; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR2(uint32_t x) { return (x & 0x3) << 4; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR1(uint32_t x) { return (x & 0x3) << 2; } // Port x configuration bits (y = 0..15) (2 bits)
-    static constexpr uint32_t PUPDR_PUPDR0(uint32_t x) { return (x & 0x3) << 0; } // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<30, 0x3> PUPDR_PUPDR15;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<28, 0x3> PUPDR_PUPDR14;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<26, 0x3> PUPDR_PUPDR13;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<24, 0x3> PUPDR_PUPDR12;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<22, 0x3> PUPDR_PUPDR11;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<20, 0x3> PUPDR_PUPDR10;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<18, 0x3> PUPDR_PUPDR9;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<16, 0x3> PUPDR_PUPDR8;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<14, 0x3> PUPDR_PUPDR7;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<12, 0x3> PUPDR_PUPDR6;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<10, 0x3> PUPDR_PUPDR5;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<8, 0x3> PUPDR_PUPDR4;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<6, 0x3> PUPDR_PUPDR3;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<4, 0x3> PUPDR_PUPDR2;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<2, 0x3> PUPDR_PUPDR1;  // Port x configuration bits (y = 0..15) (2 bits)
+    typedef bit_field_t<0, 0x3> PUPDR_PUPDR0;  // Port x configuration bits (y = 0..15) (2 bits)
     static const uint32_t PUPDR_RESET_VALUE = 0x24000000;
 
     static const uint32_t IDR_IDR15 = 0x8000;       // Port input data (y = 0..15)
@@ -1349,24 +1360,24 @@ struct gpioa_t
     static const uint32_t LCKR_LCK0 = 0x1;           // Port x lock bit y (y= 0..15)
     static const uint32_t LCKR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t AFRL_AFRL7(uint32_t x) { return (x & 0xf) << 28; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL6(uint32_t x) { return (x & 0xf) << 24; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL5(uint32_t x) { return (x & 0xf) << 20; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL4(uint32_t x) { return (x & 0xf) << 16; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL3(uint32_t x) { return (x & 0xf) << 12; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL2(uint32_t x) { return (x & 0xf) << 8; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL1(uint32_t x) { return (x & 0xf) << 4; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
-    static constexpr uint32_t AFRL_AFRL0(uint32_t x) { return (x & 0xf) << 0; } // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<28, 0xf> AFRL_AFRL7;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<24, 0xf> AFRL_AFRL6;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<20, 0xf> AFRL_AFRL5;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<16, 0xf> AFRL_AFRL4;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<12, 0xf> AFRL_AFRL3;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<8, 0xf> AFRL_AFRL2;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<4, 0xf> AFRL_AFRL1;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
+    typedef bit_field_t<0, 0xf> AFRL_AFRL0;  // Alternate function selection for port x bit y (y = 0..7) (4 bits)
     static const uint32_t AFRL_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t AFRH_AFRH15(uint32_t x) { return (x & 0xf) << 28; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH14(uint32_t x) { return (x & 0xf) << 24; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH13(uint32_t x) { return (x & 0xf) << 20; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH12(uint32_t x) { return (x & 0xf) << 16; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH11(uint32_t x) { return (x & 0xf) << 12; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH10(uint32_t x) { return (x & 0xf) << 8; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH9(uint32_t x) { return (x & 0xf) << 4; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
-    static constexpr uint32_t AFRH_AFRH8(uint32_t x) { return (x & 0xf) << 0; } // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<28, 0xf> AFRH_AFRH15;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<24, 0xf> AFRH_AFRH14;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<20, 0xf> AFRH_AFRH13;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<16, 0xf> AFRH_AFRH12;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<12, 0xf> AFRH_AFRH11;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<8, 0xf> AFRH_AFRH10;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<4, 0xf> AFRH_AFRH9;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
+    typedef bit_field_t<0, 0xf> AFRH_AFRH8;  // Alternate function selection for port x bit y (y = 8..15) (4 bits)
     static const uint32_t AFRH_RESET_VALUE = 0x0;
 
     static const uint32_t BRR_BR0 = 0x1;            // Port x Reset bit y
@@ -1419,7 +1430,7 @@ struct spi1_t
     static const uint32_t CR1_SSI = 0x100;          // Internal slave select
     static const uint32_t CR1_LSBFIRST = 0x80;      // Frame format
     static const uint32_t CR1_SPE = 0x40;           // SPI enable
-    static constexpr uint32_t CR1_BR(uint32_t x) { return (x & 0x7) << 3; } // Baud rate control (3 bits)
+    typedef bit_field_t<3, 0x7> CR1_BR;  // Baud rate control (3 bits)
     static const uint32_t CR1_MSTR = 0x4;           // Master selection
     static const uint32_t CR1_CPOL = 0x2;           // Clock polarity
     static const uint32_t CR1_CPHA = 0x1;           // Clock phase
@@ -1433,7 +1444,7 @@ struct spi1_t
     static const uint32_t CR2_ERRIE = 0x20;         // Error interrupt enable
     static const uint32_t CR2_RXNEIE = 0x40;        // RX buffer not empty interrupt enable
     static const uint32_t CR2_TXEIE = 0x80;         // Tx buffer empty interrupt enable
-    static constexpr uint32_t CR2_DS(uint32_t x) { return (x & 0xf) << 8; } // Data size (4 bits)
+    typedef bit_field_t<8, 0xf> CR2_DS;  // Data size (4 bits)
     static const uint32_t CR2_FRXTH = 0x1000;       // FIFO reception threshold
     static const uint32_t CR2_LDMA_RX = 0x2000;     // Last DMA transfer for reception
     static const uint32_t CR2_LDMA_TX = 0x4000;     // Last DMA transfer for transmission
@@ -1448,35 +1459,35 @@ struct spi1_t
     static const uint32_t SR_OVR = 0x40;           // Overrun flag, Read-only
     static const uint32_t SR_BSY = 0x80;           // Busy flag, Read-only
     static const uint32_t SR_TIFRFE = 0x100;       // TI frame format error, Read-only
-    static constexpr uint32_t SR_FRLVL(uint32_t x) { return (x & 0x3) << 9; } // FIFO reception level (2 bits), Read-only
-    static constexpr uint32_t SR_FTLVL(uint32_t x) { return (x & 0x3) << 11; } // FIFO transmission level (2 bits), Read-only
+    typedef bit_field_t<9, 0x3> SR_FRLVL;  // FIFO reception level (2 bits), Read-only
+    typedef bit_field_t<11, 0x3> SR_FTLVL;  // FIFO transmission level (2 bits), Read-only
     static const uint32_t SR_RESET_VALUE = 0x2;
 
-    static constexpr uint32_t DR_DR(uint32_t x) { return (x & 0xffff) << 0; } // Data register (16 bits)
+    typedef bit_field_t<0, 0xffff> DR_DR;  // Data register (16 bits)
     static const uint32_t DR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CRCPR_CRCPOLY(uint32_t x) { return (x & 0xffff) << 0; } // CRC polynomial register (16 bits)
+    typedef bit_field_t<0, 0xffff> CRCPR_CRCPOLY;  // CRC polynomial register (16 bits)
     static const uint32_t CRCPR_RESET_VALUE = 0x7;
 
-    static constexpr uint32_t RXCRCR_RxCRC(uint32_t x) { return (x & 0xffff) << 0; } // Rx CRC register (16 bits)
+    typedef bit_field_t<0, 0xffff> RXCRCR_RxCRC;  // Rx CRC register (16 bits)
     static const uint32_t RXCRCR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TXCRCR_TxCRC(uint32_t x) { return (x & 0xffff) << 0; } // Tx CRC register (16 bits)
+    typedef bit_field_t<0, 0xffff> TXCRCR_TxCRC;  // Tx CRC register (16 bits)
     static const uint32_t TXCRCR_RESET_VALUE = 0x0;
 
     static const uint32_t I2SCFGR_I2SMOD = 0x800;       // I2S mode selection
     static const uint32_t I2SCFGR_I2SE = 0x400;         // I2S Enable
-    static constexpr uint32_t I2SCFGR_I2SCFG(uint32_t x) { return (x & 0x3) << 8; } // I2S configuration mode (2 bits)
+    typedef bit_field_t<8, 0x3> I2SCFGR_I2SCFG;  // I2S configuration mode (2 bits)
     static const uint32_t I2SCFGR_PCMSYNC = 0x80;       // PCM frame synchronization
-    static constexpr uint32_t I2SCFGR_I2SSTD(uint32_t x) { return (x & 0x3) << 4; } // I2S standard selection (2 bits)
+    typedef bit_field_t<4, 0x3> I2SCFGR_I2SSTD;  // I2S standard selection (2 bits)
     static const uint32_t I2SCFGR_CKPOL = 0x8;          // Steady state clock polarity
-    static constexpr uint32_t I2SCFGR_DATLEN(uint32_t x) { return (x & 0x3) << 1; } // Data length to be transferred (2 bits)
+    typedef bit_field_t<1, 0x3> I2SCFGR_DATLEN;  // Data length to be transferred (2 bits)
     static const uint32_t I2SCFGR_CHLEN = 0x1;          // Channel length (number of bits per audio channel)
     static const uint32_t I2SCFGR_RESET_VALUE = 0x0;
 
     static const uint32_t I2SPR_MCKOE = 0x200;        // Master clock output enable
     static const uint32_t I2SPR_ODD = 0x100;          // Odd factor for the prescaler
-    static constexpr uint32_t I2SPR_I2SDIV(uint32_t x) { return (x & 0xff) << 0; } // I2S Linear prescaler (8 bits)
+    typedef bit_field_t<0, 0xff> I2SPR_I2SDIV;  // I2S Linear prescaler (8 bits)
     static const uint32_t I2SPR_RESET_VALUE = 0x10;
 };
 
@@ -1511,7 +1522,7 @@ struct spi2_t
     static const uint32_t CR1_SSI = 0x100;          // Internal slave select
     static const uint32_t CR1_LSBFIRST = 0x80;      // Frame format
     static const uint32_t CR1_SPE = 0x40;           // SPI enable
-    static constexpr uint32_t CR1_BR(uint32_t x) { return (x & 0x7) << 3; } // Baud rate control (3 bits)
+    typedef bit_field_t<3, 0x7> CR1_BR;  // Baud rate control (3 bits)
     static const uint32_t CR1_MSTR = 0x4;           // Master selection
     static const uint32_t CR1_CPOL = 0x2;           // Clock polarity
     static const uint32_t CR1_CPHA = 0x1;           // Clock phase
@@ -1525,7 +1536,7 @@ struct spi2_t
     static const uint32_t CR2_ERRIE = 0x20;         // Error interrupt enable
     static const uint32_t CR2_RXNEIE = 0x40;        // RX buffer not empty interrupt enable
     static const uint32_t CR2_TXEIE = 0x80;         // Tx buffer empty interrupt enable
-    static constexpr uint32_t CR2_DS(uint32_t x) { return (x & 0xf) << 8; } // Data size (4 bits)
+    typedef bit_field_t<8, 0xf> CR2_DS;  // Data size (4 bits)
     static const uint32_t CR2_FRXTH = 0x1000;       // FIFO reception threshold
     static const uint32_t CR2_LDMA_RX = 0x2000;     // Last DMA transfer for reception
     static const uint32_t CR2_LDMA_TX = 0x4000;     // Last DMA transfer for transmission
@@ -1540,35 +1551,35 @@ struct spi2_t
     static const uint32_t SR_OVR = 0x40;           // Overrun flag, Read-only
     static const uint32_t SR_BSY = 0x80;           // Busy flag, Read-only
     static const uint32_t SR_TIFRFE = 0x100;       // TI frame format error, Read-only
-    static constexpr uint32_t SR_FRLVL(uint32_t x) { return (x & 0x3) << 9; } // FIFO reception level (2 bits), Read-only
-    static constexpr uint32_t SR_FTLVL(uint32_t x) { return (x & 0x3) << 11; } // FIFO transmission level (2 bits), Read-only
+    typedef bit_field_t<9, 0x3> SR_FRLVL;  // FIFO reception level (2 bits), Read-only
+    typedef bit_field_t<11, 0x3> SR_FTLVL;  // FIFO transmission level (2 bits), Read-only
     static const uint32_t SR_RESET_VALUE = 0x2;
 
-    static constexpr uint32_t DR_DR(uint32_t x) { return (x & 0xffff) << 0; } // Data register (16 bits)
+    typedef bit_field_t<0, 0xffff> DR_DR;  // Data register (16 bits)
     static const uint32_t DR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CRCPR_CRCPOLY(uint32_t x) { return (x & 0xffff) << 0; } // CRC polynomial register (16 bits)
+    typedef bit_field_t<0, 0xffff> CRCPR_CRCPOLY;  // CRC polynomial register (16 bits)
     static const uint32_t CRCPR_RESET_VALUE = 0x7;
 
-    static constexpr uint32_t RXCRCR_RxCRC(uint32_t x) { return (x & 0xffff) << 0; } // Rx CRC register (16 bits)
+    typedef bit_field_t<0, 0xffff> RXCRCR_RxCRC;  // Rx CRC register (16 bits)
     static const uint32_t RXCRCR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TXCRCR_TxCRC(uint32_t x) { return (x & 0xffff) << 0; } // Tx CRC register (16 bits)
+    typedef bit_field_t<0, 0xffff> TXCRCR_TxCRC;  // Tx CRC register (16 bits)
     static const uint32_t TXCRCR_RESET_VALUE = 0x0;
 
     static const uint32_t I2SCFGR_I2SMOD = 0x800;       // I2S mode selection
     static const uint32_t I2SCFGR_I2SE = 0x400;         // I2S Enable
-    static constexpr uint32_t I2SCFGR_I2SCFG(uint32_t x) { return (x & 0x3) << 8; } // I2S configuration mode (2 bits)
+    typedef bit_field_t<8, 0x3> I2SCFGR_I2SCFG;  // I2S configuration mode (2 bits)
     static const uint32_t I2SCFGR_PCMSYNC = 0x80;       // PCM frame synchronization
-    static constexpr uint32_t I2SCFGR_I2SSTD(uint32_t x) { return (x & 0x3) << 4; } // I2S standard selection (2 bits)
+    typedef bit_field_t<4, 0x3> I2SCFGR_I2SSTD;  // I2S standard selection (2 bits)
     static const uint32_t I2SCFGR_CKPOL = 0x8;          // Steady state clock polarity
-    static constexpr uint32_t I2SCFGR_DATLEN(uint32_t x) { return (x & 0x3) << 1; } // Data length to be transferred (2 bits)
+    typedef bit_field_t<1, 0x3> I2SCFGR_DATLEN;  // Data length to be transferred (2 bits)
     static const uint32_t I2SCFGR_CHLEN = 0x1;          // Channel length (number of bits per audio channel)
     static const uint32_t I2SCFGR_RESET_VALUE = 0x0;
 
     static const uint32_t I2SPR_MCKOE = 0x200;        // Master clock output enable
     static const uint32_t I2SPR_ODD = 0x100;          // Odd factor for the prescaler
-    static constexpr uint32_t I2SPR_I2SDIV(uint32_t x) { return (x & 0xff) << 0; } // I2S Linear prescaler (8 bits)
+    typedef bit_field_t<0, 0xff> I2SPR_I2SDIV;  // I2S Linear prescaler (8 bits)
     static const uint32_t I2SPR_RESET_VALUE = 0x10;
 };
 
@@ -1587,7 +1598,7 @@ struct pwr_t
     volatile uint32_t    CSR;                  // power control/status register
 
     static const uint32_t CR_DBP = 0x100;          // Disable backup domain write protection
-    static constexpr uint32_t CR_PLS(uint32_t x) { return (x & 0x7) << 5; } // PVD level selection (3 bits)
+    typedef bit_field_t<5, 0x7> CR_PLS;  // PVD level selection (3 bits)
     static const uint32_t CR_PVDE = 0x10;          // Power voltage detector enable
     static const uint32_t CR_CSBF = 0x8;           // Clear standby flag
     static const uint32_t CR_CWUF = 0x4;           // Clear wakeup flag
@@ -1641,7 +1652,7 @@ struct i2c1_t
     static const uint32_t CR1_STOPIE = 0x20;        // STOP detection Interrupt enable, Read-write
     static const uint32_t CR1_TCIE = 0x40;          // Transfer Complete interrupt enable, Read-write
     static const uint32_t CR1_ERRIE = 0x80;         // Error interrupts enable, Read-write
-    static constexpr uint32_t CR1_DNF(uint32_t x) { return (x & 0xf) << 8; } // Digital noise filter (4 bits), Read-write
+    typedef bit_field_t<8, 0xf> CR1_DNF;  // Digital noise filter (4 bits), Read-write
     static const uint32_t CR1_ANFOFF = 0x1000;      // Analog noise filter OFF, Read-write
     static const uint32_t CR1_SWRST = 0x2000;       // Software reset, Write-only
     static const uint32_t CR1_TXDMAEN = 0x4000;     // DMA transmission requests enable, Read-write
@@ -1659,45 +1670,45 @@ struct i2c1_t
     static const uint32_t CR2_PECBYTE = 0x4000000;  // Packet error checking byte
     static const uint32_t CR2_AUTOEND = 0x2000000;  // Automatic end mode (master mode)
     static const uint32_t CR2_RELOAD = 0x1000000;   // NBYTES reload mode
-    static constexpr uint32_t CR2_NBYTES(uint32_t x) { return (x & 0xff) << 16; } // Number of bytes (8 bits)
+    typedef bit_field_t<16, 0xff> CR2_NBYTES;  // Number of bytes (8 bits)
     static const uint32_t CR2_NACK = 0x8000;        // NACK generation (slave mode)
     static const uint32_t CR2_STOP = 0x4000;        // Stop generation (master mode)
     static const uint32_t CR2_START = 0x2000;       // Start generation
     static const uint32_t CR2_HEAD10R = 0x1000;     // 10-bit address header only read direction (master receiver mode)
     static const uint32_t CR2_ADD10 = 0x800;        // 10-bit addressing mode (master mode)
     static const uint32_t CR2_RD_WRN = 0x400;       // Transfer direction (master mode)
-    static constexpr uint32_t CR2_SADD8(uint32_t x) { return (x & 0x3) << 8; } // Slave address bit 9:8 (master mode) (2 bits)
-    static constexpr uint32_t CR2_SADD1(uint32_t x) { return (x & 0x7f) << 1; } // Slave address bit 7:1 (master mode) (7 bits)
+    typedef bit_field_t<8, 0x3> CR2_SADD8;  // Slave address bit 9:8 (master mode) (2 bits)
+    typedef bit_field_t<1, 0x7f> CR2_SADD1;  // Slave address bit 7:1 (master mode) (7 bits)
     static const uint32_t CR2_SADD0 = 0x1;          // Slave address bit 0 (master mode)
     static const uint32_t CR2_RESET_VALUE = 0x0;
 
     static const uint32_t OAR1_OA1_0 = 0x1;          // Interface address
-    static constexpr uint32_t OAR1_OA1_1(uint32_t x) { return (x & 0x7f) << 1; } // Interface address (7 bits)
-    static constexpr uint32_t OAR1_OA1_8(uint32_t x) { return (x & 0x3) << 8; } // Interface address (2 bits)
+    typedef bit_field_t<1, 0x7f> OAR1_OA1_1;  // Interface address (7 bits)
+    typedef bit_field_t<8, 0x3> OAR1_OA1_8;  // Interface address (2 bits)
     static const uint32_t OAR1_OA1MODE = 0x400;      // Own Address 1 10-bit mode
     static const uint32_t OAR1_OA1EN = 0x8000;       // Own Address 1 enable
     static const uint32_t OAR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t OAR2_OA2(uint32_t x) { return (x & 0x7f) << 1; } // Interface address (7 bits)
-    static constexpr uint32_t OAR2_OA2MSK(uint32_t x) { return (x & 0x7) << 8; } // Own Address 2 masks (3 bits)
+    typedef bit_field_t<1, 0x7f> OAR2_OA2;  // Interface address (7 bits)
+    typedef bit_field_t<8, 0x7> OAR2_OA2MSK;  // Own Address 2 masks (3 bits)
     static const uint32_t OAR2_OA2EN = 0x8000;       // Own Address 2 enable
     static const uint32_t OAR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TIMINGR_SCLL(uint32_t x) { return (x & 0xff) << 0; } // SCL low period (master mode) (8 bits)
-    static constexpr uint32_t TIMINGR_SCLH(uint32_t x) { return (x & 0xff) << 8; } // SCL high period (master mode) (8 bits)
-    static constexpr uint32_t TIMINGR_SDADEL(uint32_t x) { return (x & 0xf) << 16; } // Data hold time (4 bits)
-    static constexpr uint32_t TIMINGR_SCLDEL(uint32_t x) { return (x & 0xf) << 20; } // Data setup time (4 bits)
-    static constexpr uint32_t TIMINGR_PRESC(uint32_t x) { return (x & 0xf) << 28; } // Timing prescaler (4 bits)
+    typedef bit_field_t<0, 0xff> TIMINGR_SCLL;  // SCL low period (master mode) (8 bits)
+    typedef bit_field_t<8, 0xff> TIMINGR_SCLH;  // SCL high period (master mode) (8 bits)
+    typedef bit_field_t<16, 0xf> TIMINGR_SDADEL;  // Data hold time (4 bits)
+    typedef bit_field_t<20, 0xf> TIMINGR_SCLDEL;  // Data setup time (4 bits)
+    typedef bit_field_t<28, 0xf> TIMINGR_PRESC;  // Timing prescaler (4 bits)
     static const uint32_t TIMINGR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TIMEOUTR_TIMEOUTA(uint32_t x) { return (x & 0xfff) << 0; } // Bus timeout A (12 bits)
+    typedef bit_field_t<0, 0xfff> TIMEOUTR_TIMEOUTA;  // Bus timeout A (12 bits)
     static const uint32_t TIMEOUTR_TIDLE = 0x1000;       // Idle clock timeout detection
     static const uint32_t TIMEOUTR_TIMOUTEN = 0x8000;    // Clock timeout enable
-    static constexpr uint32_t TIMEOUTR_TIMEOUTB(uint32_t x) { return (x & 0xfff) << 16; } // Bus timeout B (12 bits)
+    typedef bit_field_t<16, 0xfff> TIMEOUTR_TIMEOUTB;  // Bus timeout B (12 bits)
     static const uint32_t TIMEOUTR_TEXTEN = 0x80000000;  // Extended clock timeout enable
     static const uint32_t TIMEOUTR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t ISR_ADDCODE(uint32_t x) { return (x & 0x7f) << 17; } // Address match code (Slave mode) (7 bits), Read-only
+    typedef bit_field_t<17, 0x7f> ISR_ADDCODE;  // Address match code (Slave mode) (7 bits), Read-only
     static const uint32_t ISR_DIR = 0x10000;        // Transfer direction (Slave mode), Read-only
     static const uint32_t ISR_BUSY = 0x8000;        // Bus busy, Read-only
     static const uint32_t ISR_ALERT = 0x2000;       // SMBus alert, Read-only
@@ -1727,13 +1738,13 @@ struct i2c1_t
     static const uint32_t ICR_ADDRCF = 0x8;         // Address Matched flag clear
     static const uint32_t ICR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PECR_PEC(uint32_t x) { return (x & 0xff) << 0; } // Packet error checking register (8 bits)
+    typedef bit_field_t<0, 0xff> PECR_PEC;  // Packet error checking register (8 bits)
     static const uint32_t PECR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RXDR_RXDATA(uint32_t x) { return (x & 0xff) << 0; } // 8-bit receive data (8 bits)
+    typedef bit_field_t<0, 0xff> RXDR_RXDATA;  // 8-bit receive data (8 bits)
     static const uint32_t RXDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TXDR_TXDATA(uint32_t x) { return (x & 0xff) << 0; } // 8-bit transmit data (8 bits)
+    typedef bit_field_t<0, 0xff> TXDR_TXDATA;  // 8-bit transmit data (8 bits)
     static const uint32_t TXDR_RESET_VALUE = 0x0;
 };
 
@@ -1768,7 +1779,7 @@ struct i2c2_t
     static const uint32_t CR1_STOPIE = 0x20;        // STOP detection Interrupt enable, Read-write
     static const uint32_t CR1_TCIE = 0x40;          // Transfer Complete interrupt enable, Read-write
     static const uint32_t CR1_ERRIE = 0x80;         // Error interrupts enable, Read-write
-    static constexpr uint32_t CR1_DNF(uint32_t x) { return (x & 0xf) << 8; } // Digital noise filter (4 bits), Read-write
+    typedef bit_field_t<8, 0xf> CR1_DNF;  // Digital noise filter (4 bits), Read-write
     static const uint32_t CR1_ANFOFF = 0x1000;      // Analog noise filter OFF, Read-write
     static const uint32_t CR1_SWRST = 0x2000;       // Software reset, Write-only
     static const uint32_t CR1_TXDMAEN = 0x4000;     // DMA transmission requests enable, Read-write
@@ -1786,45 +1797,45 @@ struct i2c2_t
     static const uint32_t CR2_PECBYTE = 0x4000000;  // Packet error checking byte
     static const uint32_t CR2_AUTOEND = 0x2000000;  // Automatic end mode (master mode)
     static const uint32_t CR2_RELOAD = 0x1000000;   // NBYTES reload mode
-    static constexpr uint32_t CR2_NBYTES(uint32_t x) { return (x & 0xff) << 16; } // Number of bytes (8 bits)
+    typedef bit_field_t<16, 0xff> CR2_NBYTES;  // Number of bytes (8 bits)
     static const uint32_t CR2_NACK = 0x8000;        // NACK generation (slave mode)
     static const uint32_t CR2_STOP = 0x4000;        // Stop generation (master mode)
     static const uint32_t CR2_START = 0x2000;       // Start generation
     static const uint32_t CR2_HEAD10R = 0x1000;     // 10-bit address header only read direction (master receiver mode)
     static const uint32_t CR2_ADD10 = 0x800;        // 10-bit addressing mode (master mode)
     static const uint32_t CR2_RD_WRN = 0x400;       // Transfer direction (master mode)
-    static constexpr uint32_t CR2_SADD8(uint32_t x) { return (x & 0x3) << 8; } // Slave address bit 9:8 (master mode) (2 bits)
-    static constexpr uint32_t CR2_SADD1(uint32_t x) { return (x & 0x7f) << 1; } // Slave address bit 7:1 (master mode) (7 bits)
+    typedef bit_field_t<8, 0x3> CR2_SADD8;  // Slave address bit 9:8 (master mode) (2 bits)
+    typedef bit_field_t<1, 0x7f> CR2_SADD1;  // Slave address bit 7:1 (master mode) (7 bits)
     static const uint32_t CR2_SADD0 = 0x1;          // Slave address bit 0 (master mode)
     static const uint32_t CR2_RESET_VALUE = 0x0;
 
     static const uint32_t OAR1_OA1_0 = 0x1;          // Interface address
-    static constexpr uint32_t OAR1_OA1_1(uint32_t x) { return (x & 0x7f) << 1; } // Interface address (7 bits)
-    static constexpr uint32_t OAR1_OA1_8(uint32_t x) { return (x & 0x3) << 8; } // Interface address (2 bits)
+    typedef bit_field_t<1, 0x7f> OAR1_OA1_1;  // Interface address (7 bits)
+    typedef bit_field_t<8, 0x3> OAR1_OA1_8;  // Interface address (2 bits)
     static const uint32_t OAR1_OA1MODE = 0x400;      // Own Address 1 10-bit mode
     static const uint32_t OAR1_OA1EN = 0x8000;       // Own Address 1 enable
     static const uint32_t OAR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t OAR2_OA2(uint32_t x) { return (x & 0x7f) << 1; } // Interface address (7 bits)
-    static constexpr uint32_t OAR2_OA2MSK(uint32_t x) { return (x & 0x7) << 8; } // Own Address 2 masks (3 bits)
+    typedef bit_field_t<1, 0x7f> OAR2_OA2;  // Interface address (7 bits)
+    typedef bit_field_t<8, 0x7> OAR2_OA2MSK;  // Own Address 2 masks (3 bits)
     static const uint32_t OAR2_OA2EN = 0x8000;       // Own Address 2 enable
     static const uint32_t OAR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TIMINGR_SCLL(uint32_t x) { return (x & 0xff) << 0; } // SCL low period (master mode) (8 bits)
-    static constexpr uint32_t TIMINGR_SCLH(uint32_t x) { return (x & 0xff) << 8; } // SCL high period (master mode) (8 bits)
-    static constexpr uint32_t TIMINGR_SDADEL(uint32_t x) { return (x & 0xf) << 16; } // Data hold time (4 bits)
-    static constexpr uint32_t TIMINGR_SCLDEL(uint32_t x) { return (x & 0xf) << 20; } // Data setup time (4 bits)
-    static constexpr uint32_t TIMINGR_PRESC(uint32_t x) { return (x & 0xf) << 28; } // Timing prescaler (4 bits)
+    typedef bit_field_t<0, 0xff> TIMINGR_SCLL;  // SCL low period (master mode) (8 bits)
+    typedef bit_field_t<8, 0xff> TIMINGR_SCLH;  // SCL high period (master mode) (8 bits)
+    typedef bit_field_t<16, 0xf> TIMINGR_SDADEL;  // Data hold time (4 bits)
+    typedef bit_field_t<20, 0xf> TIMINGR_SCLDEL;  // Data setup time (4 bits)
+    typedef bit_field_t<28, 0xf> TIMINGR_PRESC;  // Timing prescaler (4 bits)
     static const uint32_t TIMINGR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TIMEOUTR_TIMEOUTA(uint32_t x) { return (x & 0xfff) << 0; } // Bus timeout A (12 bits)
+    typedef bit_field_t<0, 0xfff> TIMEOUTR_TIMEOUTA;  // Bus timeout A (12 bits)
     static const uint32_t TIMEOUTR_TIDLE = 0x1000;       // Idle clock timeout detection
     static const uint32_t TIMEOUTR_TIMOUTEN = 0x8000;    // Clock timeout enable
-    static constexpr uint32_t TIMEOUTR_TIMEOUTB(uint32_t x) { return (x & 0xfff) << 16; } // Bus timeout B (12 bits)
+    typedef bit_field_t<16, 0xfff> TIMEOUTR_TIMEOUTB;  // Bus timeout B (12 bits)
     static const uint32_t TIMEOUTR_TEXTEN = 0x80000000;  // Extended clock timeout enable
     static const uint32_t TIMEOUTR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t ISR_ADDCODE(uint32_t x) { return (x & 0x7f) << 17; } // Address match code (Slave mode) (7 bits), Read-only
+    typedef bit_field_t<17, 0x7f> ISR_ADDCODE;  // Address match code (Slave mode) (7 bits), Read-only
     static const uint32_t ISR_DIR = 0x10000;        // Transfer direction (Slave mode), Read-only
     static const uint32_t ISR_BUSY = 0x8000;        // Bus busy, Read-only
     static const uint32_t ISR_ALERT = 0x2000;       // SMBus alert, Read-only
@@ -1854,13 +1865,13 @@ struct i2c2_t
     static const uint32_t ICR_ADDRCF = 0x8;         // Address Matched flag clear
     static const uint32_t ICR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PECR_PEC(uint32_t x) { return (x & 0xff) << 0; } // Packet error checking register (8 bits)
+    typedef bit_field_t<0, 0xff> PECR_PEC;  // Packet error checking register (8 bits)
     static const uint32_t PECR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RXDR_RXDATA(uint32_t x) { return (x & 0xff) << 0; } // 8-bit receive data (8 bits)
+    typedef bit_field_t<0, 0xff> RXDR_RXDATA;  // 8-bit receive data (8 bits)
     static const uint32_t RXDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TXDR_TXDATA(uint32_t x) { return (x & 0xff) << 0; } // 8-bit transmit data (8 bits)
+    typedef bit_field_t<0, 0xff> TXDR_TXDATA;  // 8-bit transmit data (8 bits)
     static const uint32_t TXDR_RESET_VALUE = 0x0;
 };
 
@@ -1881,13 +1892,13 @@ struct iwdg_t
     volatile uint32_t    SR;                   // [Read-only] Status register
     volatile uint32_t    WINR;                 // [Read-write] Window register
 
-    static constexpr uint32_t KR_KEY(uint32_t x) { return (x & 0xffff) << 0; } // Key value (16 bits)
+    typedef bit_field_t<0, 0xffff> KR_KEY;  // Key value (16 bits)
     static const uint32_t KR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PR_PR(uint32_t x) { return (x & 0x7) << 0; } // Prescaler divider (3 bits)
+    typedef bit_field_t<0, 0x7> PR_PR;  // Prescaler divider (3 bits)
     static const uint32_t PR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RLR_RL(uint32_t x) { return (x & 0xfff) << 0; } // Watchdog counter reload value (12 bits)
+    typedef bit_field_t<0, 0xfff> RLR_RL;  // Watchdog counter reload value (12 bits)
     static const uint32_t RLR_RESET_VALUE = 0xfff;
 
     static const uint32_t SR_PVU = 0x1;            // Watchdog prescaler value update
@@ -1895,7 +1906,7 @@ struct iwdg_t
     static const uint32_t SR_WVU = 0x4;            // Watchdog counter window value update
     static const uint32_t SR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t WINR_WIN(uint32_t x) { return (x & 0xfff) << 0; } // Watchdog counter window value (12 bits)
+    typedef bit_field_t<0, 0xfff> WINR_WIN;  // Watchdog counter window value (12 bits)
     static const uint32_t WINR_RESET_VALUE = 0xfff;
 };
 
@@ -1915,12 +1926,12 @@ struct wwdg_t
     volatile uint32_t    SR;                   // [Read-write] Status register
 
     static const uint32_t CR_WDGA = 0x80;          // Activation bit
-    static constexpr uint32_t CR_T(uint32_t x) { return (x & 0x7f) << 0; } // 7-bit counter (7 bits)
+    typedef bit_field_t<0, 0x7f> CR_T;  // 7-bit counter (7 bits)
     static const uint32_t CR_RESET_VALUE = 0x7f;
 
     static const uint32_t CFR_EWI = 0x200;          // Early wakeup interrupt
-    static constexpr uint32_t CFR_WDGTB(uint32_t x) { return (x & 0x3) << 7; } // Timer base (2 bits)
-    static constexpr uint32_t CFR_W(uint32_t x) { return (x & 0x7f) << 0; } // 7-bit window value (7 bits)
+    typedef bit_field_t<7, 0x3> CFR_WDGTB;  // Timer base (2 bits)
+    typedef bit_field_t<0, 0x7f> CFR_W;  // 7-bit window value (7 bits)
     static const uint32_t CFR_RESET_VALUE = 0x7f;
 
     static const uint32_t SR_EWIF = 0x1;           // Early wakeup interrupt flag
@@ -1959,9 +1970,9 @@ struct tim1_t
     volatile uint32_t    DCR;                  // [Read-write] DMA control register
     volatile uint32_t    DMAR;                 // [Read-write] DMA address for full transfer
 
-    static constexpr uint32_t CR1_CKD(uint32_t x) { return (x & 0x3) << 8; } // Clock division (2 bits)
+    typedef bit_field_t<8, 0x3> CR1_CKD;  // Clock division (2 bits)
     static const uint32_t CR1_ARPE = 0x80;          // Auto-reload preload enable
-    static constexpr uint32_t CR1_CMS(uint32_t x) { return (x & 0x3) << 5; } // Center-aligned mode selection (2 bits)
+    typedef bit_field_t<5, 0x3> CR1_CMS;  // Center-aligned mode selection (2 bits)
     static const uint32_t CR1_DIR = 0x10;           // Direction
     static const uint32_t CR1_OPM = 0x8;            // One-pulse mode
     static const uint32_t CR1_URS = 0x4;            // Update request source
@@ -1977,7 +1988,7 @@ struct tim1_t
     static const uint32_t CR2_OIS1N = 0x200;        // Output Idle state 1
     static const uint32_t CR2_OIS1 = 0x100;         // Output Idle state 1
     static const uint32_t CR2_TI1S = 0x80;          // TI1 selection
-    static constexpr uint32_t CR2_MMS(uint32_t x) { return (x & 0x7) << 4; } // Master mode selection (3 bits)
+    typedef bit_field_t<4, 0x7> CR2_MMS;  // Master mode selection (3 bits)
     static const uint32_t CR2_CCDS = 0x8;           // Capture/compare DMA selection
     static const uint32_t CR2_CCUS = 0x4;           // Capture/compare control update selection
     static const uint32_t CR2_CCPC = 0x1;           // Capture/compare preloaded control
@@ -1985,11 +1996,11 @@ struct tim1_t
 
     static const uint32_t SMCR_ETP = 0x8000;         // External trigger polarity
     static const uint32_t SMCR_ECE = 0x4000;         // External clock enable
-    static constexpr uint32_t SMCR_ETPS(uint32_t x) { return (x & 0x3) << 12; } // External trigger prescaler (2 bits)
-    static constexpr uint32_t SMCR_ETF(uint32_t x) { return (x & 0xf) << 8; } // External trigger filter (4 bits)
+    typedef bit_field_t<12, 0x3> SMCR_ETPS;  // External trigger prescaler (2 bits)
+    typedef bit_field_t<8, 0xf> SMCR_ETF;  // External trigger filter (4 bits)
     static const uint32_t SMCR_MSM = 0x80;           // Master/Slave mode
-    static constexpr uint32_t SMCR_TS(uint32_t x) { return (x & 0x7) << 4; } // Trigger selection (3 bits)
-    static constexpr uint32_t SMCR_SMS(uint32_t x) { return (x & 0x7) << 0; } // Slave mode selection (3 bits)
+    typedef bit_field_t<4, 0x7> SMCR_TS;  // Trigger selection (3 bits)
+    typedef bit_field_t<0, 0x7> SMCR_SMS;  // Slave mode selection (3 bits)
     static const uint32_t SMCR_RESET_VALUE = 0x0;
 
     static const uint32_t DIER_TDE = 0x4000;         // Trigger DMA request enable
@@ -2033,35 +2044,35 @@ struct tim1_t
     static const uint32_t EGR_UG = 0x1;             // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCMR1_CC1S(uint32_t x) { return (x & 0x3) << 0; } // Capture/Compare 1 selection (2 bits)
-    static constexpr uint32_t CCMR1_CC2S(uint32_t x) { return (x & 0x3) << 8; } // Capture/Compare 2 selection (2 bits)
-    static constexpr uint32_t CCMR1_IC1F(uint32_t x) { return (x & 0xf) << 4; } // Input capture 1 filter (4 bits)
-    static constexpr uint32_t CCMR1_IC1PCS(uint32_t x) { return (x & 0x3) << 2; } // Input capture 1 prescaler (2 bits)
-    static constexpr uint32_t CCMR1_IC2F(uint32_t x) { return (x & 0xf) << 12; } // Input capture 2 filter (4 bits)
-    static constexpr uint32_t CCMR1_IC2PCS(uint32_t x) { return (x & 0x3) << 10; } // Input capture 2 prescaler (2 bits)
+    typedef bit_field_t<0, 0x3> CCMR1_CC1S;  // Capture/Compare 1 selection (2 bits)
+    typedef bit_field_t<8, 0x3> CCMR1_CC2S;  // Capture/Compare 2 selection (2 bits)
+    typedef bit_field_t<4, 0xf> CCMR1_IC1F;  // Input capture 1 filter (4 bits)
+    typedef bit_field_t<2, 0x3> CCMR1_IC1PCS;  // Input capture 1 prescaler (2 bits)
+    typedef bit_field_t<12, 0xf> CCMR1_IC2F;  // Input capture 2 filter (4 bits)
+    typedef bit_field_t<10, 0x3> CCMR1_IC2PCS;  // Input capture 2 prescaler (2 bits)
     static const uint32_t CCMR1_OC1CE = 0x80;         // Output Compare 1 clear enable
     static const uint32_t CCMR1_OC1FE = 0x4;          // Output Compare 1 fast enable
-    static constexpr uint32_t CCMR1_OC1M(uint32_t x) { return (x & 0x7) << 4; } // Output Compare 1 mode (3 bits)
+    typedef bit_field_t<4, 0x7> CCMR1_OC1M;  // Output Compare 1 mode (3 bits)
     static const uint32_t CCMR1_OC1PE = 0x8;          // Output Compare 1 preload enable
     static const uint32_t CCMR1_OC2CE = 0x8000;       // Output Compare 2 clear enable
     static const uint32_t CCMR1_OC2FE = 0x400;        // Output Compare 2 fast enable
-    static constexpr uint32_t CCMR1_OC2M(uint32_t x) { return (x & 0x7) << 12; } // Output Compare 2 mode (3 bits)
+    typedef bit_field_t<12, 0x7> CCMR1_OC2M;  // Output Compare 2 mode (3 bits)
     static const uint32_t CCMR1_OC2PE = 0x800;        // Output Compare 2 preload enable
     static const uint32_t CCMR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCMR2_CC3S(uint32_t x) { return (x & 0x3) << 0; } // Capture/Compare 3 selection (2 bits)
-    static constexpr uint32_t CCMR2_CC4S(uint32_t x) { return (x & 0x3) << 8; } // Capture/Compare 4 selection (2 bits)
-    static constexpr uint32_t CCMR2_IC3F(uint32_t x) { return (x & 0xf) << 4; } // Input capture 3 filter (4 bits)
-    static constexpr uint32_t CCMR2_IC3PSC(uint32_t x) { return (x & 0x3) << 2; } // Input capture 3 prescaler (2 bits)
-    static constexpr uint32_t CCMR2_IC4F(uint32_t x) { return (x & 0xf) << 12; } // Input capture 4 filter (4 bits)
-    static constexpr uint32_t CCMR2_IC4PSC(uint32_t x) { return (x & 0x3) << 10; } // Input capture 4 prescaler (2 bits)
+    typedef bit_field_t<0, 0x3> CCMR2_CC3S;  // Capture/Compare 3 selection (2 bits)
+    typedef bit_field_t<8, 0x3> CCMR2_CC4S;  // Capture/Compare 4 selection (2 bits)
+    typedef bit_field_t<4, 0xf> CCMR2_IC3F;  // Input capture 3 filter (4 bits)
+    typedef bit_field_t<2, 0x3> CCMR2_IC3PSC;  // Input capture 3 prescaler (2 bits)
+    typedef bit_field_t<12, 0xf> CCMR2_IC4F;  // Input capture 4 filter (4 bits)
+    typedef bit_field_t<10, 0x3> CCMR2_IC4PSC;  // Input capture 4 prescaler (2 bits)
     static const uint32_t CCMR2_OC3CE = 0x80;         // Output compare 3 clear enable
     static const uint32_t CCMR2_OC3FE = 0x4;          // Output compare 3 fast enable
-    static constexpr uint32_t CCMR2_OC3M(uint32_t x) { return (x & 0x7) << 4; } // Output compare 3 mode (3 bits)
+    typedef bit_field_t<4, 0x7> CCMR2_OC3M;  // Output compare 3 mode (3 bits)
     static const uint32_t CCMR2_OC3PE = 0x8;          // Output compare 3 preload enable
     static const uint32_t CCMR2_OC4CE = 0x8000;       // Output compare 4 clear enable
     static const uint32_t CCMR2_OC4FE = 0x400;        // Output compare 4 fast enable
-    static constexpr uint32_t CCMR2_OC4M(uint32_t x) { return (x & 0x7) << 12; } // Output compare 4 mode (3 bits)
+    typedef bit_field_t<12, 0x7> CCMR2_OC4M;  // Output compare 4 mode (3 bits)
     static const uint32_t CCMR2_OC4PE = 0x800;        // Output compare 4 preload enable
     static const uint32_t CCMR2_RESET_VALUE = 0x0;
 
@@ -2081,28 +2092,28 @@ struct tim1_t
     static const uint32_t CCER_CC1E = 0x1;           // Capture/Compare 1 output enable
     static const uint32_t CCER_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNT_CNT(uint32_t x) { return (x & 0xffff) << 0; } // counter value (16 bits)
+    typedef bit_field_t<0, 0xffff> CNT_CNT;  // counter value (16 bits)
     static const uint32_t CNT_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PSC_PSC(uint32_t x) { return (x & 0xffff) << 0; } // Prescaler value (16 bits)
+    typedef bit_field_t<0, 0xffff> PSC_PSC;  // Prescaler value (16 bits)
     static const uint32_t PSC_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t ARR_ARR(uint32_t x) { return (x & 0xffff) << 0; } // Auto-reload value (16 bits)
+    typedef bit_field_t<0, 0xffff> ARR_ARR;  // Auto-reload value (16 bits)
     static const uint32_t ARR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RCR_REP(uint32_t x) { return (x & 0xff) << 0; } // Repetition counter value (8 bits)
+    typedef bit_field_t<0, 0xff> RCR_REP;  // Repetition counter value (8 bits)
     static const uint32_t RCR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR1_CCR1(uint32_t x) { return (x & 0xffff) << 0; } // Capture/Compare 1 value (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR1_CCR1;  // Capture/Compare 1 value (16 bits)
     static const uint32_t CCR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR2_CCR2(uint32_t x) { return (x & 0xffff) << 0; } // Capture/Compare 2 value (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR2_CCR2;  // Capture/Compare 2 value (16 bits)
     static const uint32_t CCR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR3_CCR3(uint32_t x) { return (x & 0xffff) << 0; } // Capture/Compare 3 value (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR3_CCR3;  // Capture/Compare 3 value (16 bits)
     static const uint32_t CCR3_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR4_CCR4(uint32_t x) { return (x & 0xffff) << 0; } // Capture/Compare 3 value (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR4_CCR4;  // Capture/Compare 3 value (16 bits)
     static const uint32_t CCR4_RESET_VALUE = 0x0;
 
     static const uint32_t BDTR_MOE = 0x8000;         // Main output enable
@@ -2111,15 +2122,15 @@ struct tim1_t
     static const uint32_t BDTR_BKE = 0x1000;         // Break enable
     static const uint32_t BDTR_OSSR = 0x800;         // Off-state selection for Run mode
     static const uint32_t BDTR_OSSI = 0x400;         // Off-state selection for Idle mode
-    static constexpr uint32_t BDTR_LOCK(uint32_t x) { return (x & 0x3) << 8; } // Lock configuration (2 bits)
-    static constexpr uint32_t BDTR_DTG(uint32_t x) { return (x & 0xff) << 0; } // Dead-time generator setup (8 bits)
+    typedef bit_field_t<8, 0x3> BDTR_LOCK;  // Lock configuration (2 bits)
+    typedef bit_field_t<0, 0xff> BDTR_DTG;  // Dead-time generator setup (8 bits)
     static const uint32_t BDTR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DCR_DBL(uint32_t x) { return (x & 0x1f) << 8; } // DMA burst length (5 bits)
-    static constexpr uint32_t DCR_DBA(uint32_t x) { return (x & 0x1f) << 0; } // DMA base address (5 bits)
+    typedef bit_field_t<8, 0x1f> DCR_DBL;  // DMA burst length (5 bits)
+    typedef bit_field_t<0, 0x1f> DCR_DBA;  // DMA base address (5 bits)
     static const uint32_t DCR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DMAR_DMAB(uint32_t x) { return (x & 0xffff) << 0; } // DMA register for burst accesses (16 bits)
+    typedef bit_field_t<0, 0xffff> DMAR_DMAB;  // DMA register for burst accesses (16 bits)
     static const uint32_t DMAR_RESET_VALUE = 0x0;
 };
 
@@ -2155,9 +2166,9 @@ struct tim2_t
     volatile uint32_t    DCR;                  // [Read-write] DMA control register
     volatile uint32_t    DMAR;                 // [Read-write] DMA address for full transfer
 
-    static constexpr uint32_t CR1_CKD(uint32_t x) { return (x & 0x3) << 8; } // Clock division (2 bits)
+    typedef bit_field_t<8, 0x3> CR1_CKD;  // Clock division (2 bits)
     static const uint32_t CR1_ARPE = 0x80;          // Auto-reload preload enable
-    static constexpr uint32_t CR1_CMS(uint32_t x) { return (x & 0x3) << 5; } // Center-aligned mode selection (2 bits)
+    typedef bit_field_t<5, 0x3> CR1_CMS;  // Center-aligned mode selection (2 bits)
     static const uint32_t CR1_DIR = 0x10;           // Direction
     static const uint32_t CR1_OPM = 0x8;            // One-pulse mode
     static const uint32_t CR1_URS = 0x4;            // Update request source
@@ -2166,17 +2177,17 @@ struct tim2_t
     static const uint32_t CR1_RESET_VALUE = 0x0;
 
     static const uint32_t CR2_TI1S = 0x80;          // TI1 selection
-    static constexpr uint32_t CR2_MMS(uint32_t x) { return (x & 0x7) << 4; } // Master mode selection (3 bits)
+    typedef bit_field_t<4, 0x7> CR2_MMS;  // Master mode selection (3 bits)
     static const uint32_t CR2_CCDS = 0x8;           // Capture/compare DMA selection
     static const uint32_t CR2_RESET_VALUE = 0x0;
 
     static const uint32_t SMCR_ETP = 0x8000;         // External trigger polarity
     static const uint32_t SMCR_ECE = 0x4000;         // External clock enable
-    static constexpr uint32_t SMCR_ETPS(uint32_t x) { return (x & 0x3) << 12; } // External trigger prescaler (2 bits)
-    static constexpr uint32_t SMCR_ETF(uint32_t x) { return (x & 0xf) << 8; } // External trigger filter (4 bits)
+    typedef bit_field_t<12, 0x3> SMCR_ETPS;  // External trigger prescaler (2 bits)
+    typedef bit_field_t<8, 0xf> SMCR_ETF;  // External trigger filter (4 bits)
     static const uint32_t SMCR_MSM = 0x80;           // Master/Slave mode
-    static constexpr uint32_t SMCR_TS(uint32_t x) { return (x & 0x7) << 4; } // Trigger selection (3 bits)
-    static constexpr uint32_t SMCR_SMS(uint32_t x) { return (x & 0x7) << 0; } // Slave mode selection (3 bits)
+    typedef bit_field_t<4, 0x7> SMCR_TS;  // Trigger selection (3 bits)
+    typedef bit_field_t<0, 0x7> SMCR_SMS;  // Slave mode selection (3 bits)
     static const uint32_t SMCR_RESET_VALUE = 0x0;
 
     static const uint32_t DIER_TDE = 0x4000;         // Trigger DMA request enable
@@ -2214,35 +2225,35 @@ struct tim2_t
     static const uint32_t EGR_UG = 0x1;             // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCMR1_CC1S(uint32_t x) { return (x & 0x3) << 0; } // Capture/Compare 1 selection (2 bits)
-    static constexpr uint32_t CCMR1_CC2S(uint32_t x) { return (x & 0x3) << 8; } // Capture/Compare 2 selection (2 bits)
-    static constexpr uint32_t CCMR1_IC1F(uint32_t x) { return (x & 0xf) << 4; } // Input capture 1 filter (4 bits)
-    static constexpr uint32_t CCMR1_IC1PSC(uint32_t x) { return (x & 0x3) << 2; } // Input capture 1 prescaler (2 bits)
-    static constexpr uint32_t CCMR1_IC2F(uint32_t x) { return (x & 0xf) << 12; } // Input capture 2 filter (4 bits)
-    static constexpr uint32_t CCMR1_IC2PSC(uint32_t x) { return (x & 0x3) << 10; } // Input capture 2 prescaler (2 bits)
+    typedef bit_field_t<0, 0x3> CCMR1_CC1S;  // Capture/Compare 1 selection (2 bits)
+    typedef bit_field_t<8, 0x3> CCMR1_CC2S;  // Capture/Compare 2 selection (2 bits)
+    typedef bit_field_t<4, 0xf> CCMR1_IC1F;  // Input capture 1 filter (4 bits)
+    typedef bit_field_t<2, 0x3> CCMR1_IC1PSC;  // Input capture 1 prescaler (2 bits)
+    typedef bit_field_t<12, 0xf> CCMR1_IC2F;  // Input capture 2 filter (4 bits)
+    typedef bit_field_t<10, 0x3> CCMR1_IC2PSC;  // Input capture 2 prescaler (2 bits)
     static const uint32_t CCMR1_OC1CE = 0x80;         // Output compare 1 clear enable
     static const uint32_t CCMR1_OC1FE = 0x4;          // Output compare 1 fast enable
-    static constexpr uint32_t CCMR1_OC1M(uint32_t x) { return (x & 0x7) << 4; } // Output compare 1 mode (3 bits)
+    typedef bit_field_t<4, 0x7> CCMR1_OC1M;  // Output compare 1 mode (3 bits)
     static const uint32_t CCMR1_OC1PE = 0x8;          // Output compare 1 preload enable
     static const uint32_t CCMR1_OC2CE = 0x8000;       // Output compare 2 clear enable
     static const uint32_t CCMR1_OC2FE = 0x400;        // Output compare 2 fast enable
-    static constexpr uint32_t CCMR1_OC2M(uint32_t x) { return (x & 0x7) << 12; } // Output compare 2 mode (3 bits)
+    typedef bit_field_t<12, 0x7> CCMR1_OC2M;  // Output compare 2 mode (3 bits)
     static const uint32_t CCMR1_OC2PE = 0x800;        // Output compare 2 preload enable
     static const uint32_t CCMR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCMR2_CC3S(uint32_t x) { return (x & 0x3) << 0; } // Capture/Compare 3 selection (2 bits)
-    static constexpr uint32_t CCMR2_CC4S(uint32_t x) { return (x & 0x3) << 8; } // Capture/Compare 4 selection (2 bits)
-    static constexpr uint32_t CCMR2_IC3F(uint32_t x) { return (x & 0xf) << 4; } // Input capture 3 filter (4 bits)
-    static constexpr uint32_t CCMR2_IC3PSC(uint32_t x) { return (x & 0x3) << 2; } // Input capture 3 prescaler (2 bits)
-    static constexpr uint32_t CCMR2_IC4F(uint32_t x) { return (x & 0xf) << 12; } // Input capture 4 filter (4 bits)
-    static constexpr uint32_t CCMR2_IC4PSC(uint32_t x) { return (x & 0x3) << 10; } // Input capture 4 prescaler (2 bits)
+    typedef bit_field_t<0, 0x3> CCMR2_CC3S;  // Capture/Compare 3 selection (2 bits)
+    typedef bit_field_t<8, 0x3> CCMR2_CC4S;  // Capture/Compare 4 selection (2 bits)
+    typedef bit_field_t<4, 0xf> CCMR2_IC3F;  // Input capture 3 filter (4 bits)
+    typedef bit_field_t<2, 0x3> CCMR2_IC3PSC;  // Input capture 3 prescaler (2 bits)
+    typedef bit_field_t<12, 0xf> CCMR2_IC4F;  // Input capture 4 filter (4 bits)
+    typedef bit_field_t<10, 0x3> CCMR2_IC4PSC;  // Input capture 4 prescaler (2 bits)
     static const uint32_t CCMR2_OC3CE = 0x80;         // Output compare 3 clear enable
     static const uint32_t CCMR2_OC3FE = 0x4;          // Output compare 3 fast enable
-    static constexpr uint32_t CCMR2_OC3M(uint32_t x) { return (x & 0x7) << 4; } // Output compare 3 mode (3 bits)
+    typedef bit_field_t<4, 0x7> CCMR2_OC3M;  // Output compare 3 mode (3 bits)
     static const uint32_t CCMR2_OC3PE = 0x8;          // Output compare 3 preload enable
     static const uint32_t CCMR2_OC4CE = 0x8000;       // Output compare 4 clear enable
     static const uint32_t CCMR2_OC4FE = 0x400;        // Output compare 4 fast enable
-    static constexpr uint32_t CCMR2_OC4M(uint32_t x) { return (x & 0x7) << 12; } // Output compare 4 mode (3 bits)
+    typedef bit_field_t<12, 0x7> CCMR2_OC4M;  // Output compare 4 mode (3 bits)
     static const uint32_t CCMR2_OC4PE = 0x800;        // Output compare 4 preload enable
     static const uint32_t CCMR2_RESET_VALUE = 0x0;
 
@@ -2260,38 +2271,38 @@ struct tim2_t
     static const uint32_t CCER_CC1E = 0x1;           // Capture/Compare 1 output enable
     static const uint32_t CCER_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNT_CNT_H(uint32_t x) { return (x & 0xffff) << 16; } // High counter value (TIM2 only) (16 bits)
-    static constexpr uint32_t CNT_CNT_L(uint32_t x) { return (x & 0xffff) << 0; } // Low counter value (16 bits)
+    typedef bit_field_t<16, 0xffff> CNT_CNT_H;  // High counter value (TIM2 only) (16 bits)
+    typedef bit_field_t<0, 0xffff> CNT_CNT_L;  // Low counter value (16 bits)
     static const uint32_t CNT_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PSC_PSC(uint32_t x) { return (x & 0xffff) << 0; } // Prescaler value (16 bits)
+    typedef bit_field_t<0, 0xffff> PSC_PSC;  // Prescaler value (16 bits)
     static const uint32_t PSC_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t ARR_ARR_H(uint32_t x) { return (x & 0xffff) << 16; } // High Auto-reload value (TIM2 only) (16 bits)
-    static constexpr uint32_t ARR_ARR_L(uint32_t x) { return (x & 0xffff) << 0; } // Low Auto-reload value (16 bits)
+    typedef bit_field_t<16, 0xffff> ARR_ARR_H;  // High Auto-reload value (TIM2 only) (16 bits)
+    typedef bit_field_t<0, 0xffff> ARR_ARR_L;  // Low Auto-reload value (16 bits)
     static const uint32_t ARR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR1_CCR1_H(uint32_t x) { return (x & 0xffff) << 16; } // High Capture/Compare 1 value (TIM2 only) (16 bits)
-    static constexpr uint32_t CCR1_CCR1_L(uint32_t x) { return (x & 0xffff) << 0; } // Low Capture/Compare 1 value (16 bits)
+    typedef bit_field_t<16, 0xffff> CCR1_CCR1_H;  // High Capture/Compare 1 value (TIM2 only) (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR1_CCR1_L;  // Low Capture/Compare 1 value (16 bits)
     static const uint32_t CCR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR2_CCR2_H(uint32_t x) { return (x & 0xffff) << 16; } // High Capture/Compare 2 value (TIM2 only) (16 bits)
-    static constexpr uint32_t CCR2_CCR2_L(uint32_t x) { return (x & 0xffff) << 0; } // Low Capture/Compare 2 value (16 bits)
+    typedef bit_field_t<16, 0xffff> CCR2_CCR2_H;  // High Capture/Compare 2 value (TIM2 only) (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR2_CCR2_L;  // Low Capture/Compare 2 value (16 bits)
     static const uint32_t CCR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR3_CCR3_H(uint32_t x) { return (x & 0xffff) << 16; } // High Capture/Compare value (TIM2 only) (16 bits)
-    static constexpr uint32_t CCR3_CCR3_L(uint32_t x) { return (x & 0xffff) << 0; } // Low Capture/Compare value (16 bits)
+    typedef bit_field_t<16, 0xffff> CCR3_CCR3_H;  // High Capture/Compare value (TIM2 only) (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR3_CCR3_L;  // Low Capture/Compare value (16 bits)
     static const uint32_t CCR3_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR4_CCR4_H(uint32_t x) { return (x & 0xffff) << 16; } // High Capture/Compare value (TIM2 only) (16 bits)
-    static constexpr uint32_t CCR4_CCR4_L(uint32_t x) { return (x & 0xffff) << 0; } // Low Capture/Compare value (16 bits)
+    typedef bit_field_t<16, 0xffff> CCR4_CCR4_H;  // High Capture/Compare value (TIM2 only) (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR4_CCR4_L;  // Low Capture/Compare value (16 bits)
     static const uint32_t CCR4_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DCR_DBL(uint32_t x) { return (x & 0x1f) << 8; } // DMA burst length (5 bits)
-    static constexpr uint32_t DCR_DBA(uint32_t x) { return (x & 0x1f) << 0; } // DMA base address (5 bits)
+    typedef bit_field_t<8, 0x1f> DCR_DBL;  // DMA burst length (5 bits)
+    typedef bit_field_t<0, 0x1f> DCR_DBA;  // DMA base address (5 bits)
     static const uint32_t DCR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DMAR_DMAR(uint32_t x) { return (x & 0xffff) << 0; } // DMA register for burst accesses (16 bits)
+    typedef bit_field_t<0, 0xffff> DMAR_DMAR;  // DMA register for burst accesses (16 bits)
     static const uint32_t DMAR_RESET_VALUE = 0x0;
 };
 
@@ -2327,9 +2338,9 @@ struct tim3_t
     volatile uint32_t    DCR;                  // [Read-write] DMA control register
     volatile uint32_t    DMAR;                 // [Read-write] DMA address for full transfer
 
-    static constexpr uint32_t CR1_CKD(uint32_t x) { return (x & 0x3) << 8; } // Clock division (2 bits)
+    typedef bit_field_t<8, 0x3> CR1_CKD;  // Clock division (2 bits)
     static const uint32_t CR1_ARPE = 0x80;          // Auto-reload preload enable
-    static constexpr uint32_t CR1_CMS(uint32_t x) { return (x & 0x3) << 5; } // Center-aligned mode selection (2 bits)
+    typedef bit_field_t<5, 0x3> CR1_CMS;  // Center-aligned mode selection (2 bits)
     static const uint32_t CR1_DIR = 0x10;           // Direction
     static const uint32_t CR1_OPM = 0x8;            // One-pulse mode
     static const uint32_t CR1_URS = 0x4;            // Update request source
@@ -2338,17 +2349,17 @@ struct tim3_t
     static const uint32_t CR1_RESET_VALUE = 0x0;
 
     static const uint32_t CR2_TI1S = 0x80;          // TI1 selection
-    static constexpr uint32_t CR2_MMS(uint32_t x) { return (x & 0x7) << 4; } // Master mode selection (3 bits)
+    typedef bit_field_t<4, 0x7> CR2_MMS;  // Master mode selection (3 bits)
     static const uint32_t CR2_CCDS = 0x8;           // Capture/compare DMA selection
     static const uint32_t CR2_RESET_VALUE = 0x0;
 
     static const uint32_t SMCR_ETP = 0x8000;         // External trigger polarity
     static const uint32_t SMCR_ECE = 0x4000;         // External clock enable
-    static constexpr uint32_t SMCR_ETPS(uint32_t x) { return (x & 0x3) << 12; } // External trigger prescaler (2 bits)
-    static constexpr uint32_t SMCR_ETF(uint32_t x) { return (x & 0xf) << 8; } // External trigger filter (4 bits)
+    typedef bit_field_t<12, 0x3> SMCR_ETPS;  // External trigger prescaler (2 bits)
+    typedef bit_field_t<8, 0xf> SMCR_ETF;  // External trigger filter (4 bits)
     static const uint32_t SMCR_MSM = 0x80;           // Master/Slave mode
-    static constexpr uint32_t SMCR_TS(uint32_t x) { return (x & 0x7) << 4; } // Trigger selection (3 bits)
-    static constexpr uint32_t SMCR_SMS(uint32_t x) { return (x & 0x7) << 0; } // Slave mode selection (3 bits)
+    typedef bit_field_t<4, 0x7> SMCR_TS;  // Trigger selection (3 bits)
+    typedef bit_field_t<0, 0x7> SMCR_SMS;  // Slave mode selection (3 bits)
     static const uint32_t SMCR_RESET_VALUE = 0x0;
 
     static const uint32_t DIER_TDE = 0x4000;         // Trigger DMA request enable
@@ -2386,35 +2397,35 @@ struct tim3_t
     static const uint32_t EGR_UG = 0x1;             // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCMR1_CC1S(uint32_t x) { return (x & 0x3) << 0; } // Capture/Compare 1 selection (2 bits)
-    static constexpr uint32_t CCMR1_CC2S(uint32_t x) { return (x & 0x3) << 8; } // Capture/Compare 2 selection (2 bits)
-    static constexpr uint32_t CCMR1_IC1F(uint32_t x) { return (x & 0xf) << 4; } // Input capture 1 filter (4 bits)
-    static constexpr uint32_t CCMR1_IC1PSC(uint32_t x) { return (x & 0x3) << 2; } // Input capture 1 prescaler (2 bits)
-    static constexpr uint32_t CCMR1_IC2F(uint32_t x) { return (x & 0xf) << 12; } // Input capture 2 filter (4 bits)
-    static constexpr uint32_t CCMR1_IC2PSC(uint32_t x) { return (x & 0x3) << 10; } // Input capture 2 prescaler (2 bits)
+    typedef bit_field_t<0, 0x3> CCMR1_CC1S;  // Capture/Compare 1 selection (2 bits)
+    typedef bit_field_t<8, 0x3> CCMR1_CC2S;  // Capture/Compare 2 selection (2 bits)
+    typedef bit_field_t<4, 0xf> CCMR1_IC1F;  // Input capture 1 filter (4 bits)
+    typedef bit_field_t<2, 0x3> CCMR1_IC1PSC;  // Input capture 1 prescaler (2 bits)
+    typedef bit_field_t<12, 0xf> CCMR1_IC2F;  // Input capture 2 filter (4 bits)
+    typedef bit_field_t<10, 0x3> CCMR1_IC2PSC;  // Input capture 2 prescaler (2 bits)
     static const uint32_t CCMR1_OC1CE = 0x80;         // Output compare 1 clear enable
     static const uint32_t CCMR1_OC1FE = 0x4;          // Output compare 1 fast enable
-    static constexpr uint32_t CCMR1_OC1M(uint32_t x) { return (x & 0x7) << 4; } // Output compare 1 mode (3 bits)
+    typedef bit_field_t<4, 0x7> CCMR1_OC1M;  // Output compare 1 mode (3 bits)
     static const uint32_t CCMR1_OC1PE = 0x8;          // Output compare 1 preload enable
     static const uint32_t CCMR1_OC2CE = 0x8000;       // Output compare 2 clear enable
     static const uint32_t CCMR1_OC2FE = 0x400;        // Output compare 2 fast enable
-    static constexpr uint32_t CCMR1_OC2M(uint32_t x) { return (x & 0x7) << 12; } // Output compare 2 mode (3 bits)
+    typedef bit_field_t<12, 0x7> CCMR1_OC2M;  // Output compare 2 mode (3 bits)
     static const uint32_t CCMR1_OC2PE = 0x800;        // Output compare 2 preload enable
     static const uint32_t CCMR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCMR2_CC3S(uint32_t x) { return (x & 0x3) << 0; } // Capture/Compare 3 selection (2 bits)
-    static constexpr uint32_t CCMR2_CC4S(uint32_t x) { return (x & 0x3) << 8; } // Capture/Compare 4 selection (2 bits)
-    static constexpr uint32_t CCMR2_IC3F(uint32_t x) { return (x & 0xf) << 4; } // Input capture 3 filter (4 bits)
-    static constexpr uint32_t CCMR2_IC3PSC(uint32_t x) { return (x & 0x3) << 2; } // Input capture 3 prescaler (2 bits)
-    static constexpr uint32_t CCMR2_IC4F(uint32_t x) { return (x & 0xf) << 12; } // Input capture 4 filter (4 bits)
-    static constexpr uint32_t CCMR2_IC4PSC(uint32_t x) { return (x & 0x3) << 10; } // Input capture 4 prescaler (2 bits)
+    typedef bit_field_t<0, 0x3> CCMR2_CC3S;  // Capture/Compare 3 selection (2 bits)
+    typedef bit_field_t<8, 0x3> CCMR2_CC4S;  // Capture/Compare 4 selection (2 bits)
+    typedef bit_field_t<4, 0xf> CCMR2_IC3F;  // Input capture 3 filter (4 bits)
+    typedef bit_field_t<2, 0x3> CCMR2_IC3PSC;  // Input capture 3 prescaler (2 bits)
+    typedef bit_field_t<12, 0xf> CCMR2_IC4F;  // Input capture 4 filter (4 bits)
+    typedef bit_field_t<10, 0x3> CCMR2_IC4PSC;  // Input capture 4 prescaler (2 bits)
     static const uint32_t CCMR2_OC3CE = 0x80;         // Output compare 3 clear enable
     static const uint32_t CCMR2_OC3FE = 0x4;          // Output compare 3 fast enable
-    static constexpr uint32_t CCMR2_OC3M(uint32_t x) { return (x & 0x7) << 4; } // Output compare 3 mode (3 bits)
+    typedef bit_field_t<4, 0x7> CCMR2_OC3M;  // Output compare 3 mode (3 bits)
     static const uint32_t CCMR2_OC3PE = 0x8;          // Output compare 3 preload enable
     static const uint32_t CCMR2_OC4CE = 0x8000;       // Output compare 4 clear enable
     static const uint32_t CCMR2_OC4FE = 0x400;        // Output compare 4 fast enable
-    static constexpr uint32_t CCMR2_OC4M(uint32_t x) { return (x & 0x7) << 12; } // Output compare 4 mode (3 bits)
+    typedef bit_field_t<12, 0x7> CCMR2_OC4M;  // Output compare 4 mode (3 bits)
     static const uint32_t CCMR2_OC4PE = 0x800;        // Output compare 4 preload enable
     static const uint32_t CCMR2_RESET_VALUE = 0x0;
 
@@ -2432,38 +2443,38 @@ struct tim3_t
     static const uint32_t CCER_CC1E = 0x1;           // Capture/Compare 1 output enable
     static const uint32_t CCER_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNT_CNT_H(uint32_t x) { return (x & 0xffff) << 16; } // High counter value (TIM2 only) (16 bits)
-    static constexpr uint32_t CNT_CNT_L(uint32_t x) { return (x & 0xffff) << 0; } // Low counter value (16 bits)
+    typedef bit_field_t<16, 0xffff> CNT_CNT_H;  // High counter value (TIM2 only) (16 bits)
+    typedef bit_field_t<0, 0xffff> CNT_CNT_L;  // Low counter value (16 bits)
     static const uint32_t CNT_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PSC_PSC(uint32_t x) { return (x & 0xffff) << 0; } // Prescaler value (16 bits)
+    typedef bit_field_t<0, 0xffff> PSC_PSC;  // Prescaler value (16 bits)
     static const uint32_t PSC_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t ARR_ARR_H(uint32_t x) { return (x & 0xffff) << 16; } // High Auto-reload value (TIM2 only) (16 bits)
-    static constexpr uint32_t ARR_ARR_L(uint32_t x) { return (x & 0xffff) << 0; } // Low Auto-reload value (16 bits)
+    typedef bit_field_t<16, 0xffff> ARR_ARR_H;  // High Auto-reload value (TIM2 only) (16 bits)
+    typedef bit_field_t<0, 0xffff> ARR_ARR_L;  // Low Auto-reload value (16 bits)
     static const uint32_t ARR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR1_CCR1_H(uint32_t x) { return (x & 0xffff) << 16; } // High Capture/Compare 1 value (TIM2 only) (16 bits)
-    static constexpr uint32_t CCR1_CCR1_L(uint32_t x) { return (x & 0xffff) << 0; } // Low Capture/Compare 1 value (16 bits)
+    typedef bit_field_t<16, 0xffff> CCR1_CCR1_H;  // High Capture/Compare 1 value (TIM2 only) (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR1_CCR1_L;  // Low Capture/Compare 1 value (16 bits)
     static const uint32_t CCR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR2_CCR2_H(uint32_t x) { return (x & 0xffff) << 16; } // High Capture/Compare 2 value (TIM2 only) (16 bits)
-    static constexpr uint32_t CCR2_CCR2_L(uint32_t x) { return (x & 0xffff) << 0; } // Low Capture/Compare 2 value (16 bits)
+    typedef bit_field_t<16, 0xffff> CCR2_CCR2_H;  // High Capture/Compare 2 value (TIM2 only) (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR2_CCR2_L;  // Low Capture/Compare 2 value (16 bits)
     static const uint32_t CCR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR3_CCR3_H(uint32_t x) { return (x & 0xffff) << 16; } // High Capture/Compare value (TIM2 only) (16 bits)
-    static constexpr uint32_t CCR3_CCR3_L(uint32_t x) { return (x & 0xffff) << 0; } // Low Capture/Compare value (16 bits)
+    typedef bit_field_t<16, 0xffff> CCR3_CCR3_H;  // High Capture/Compare value (TIM2 only) (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR3_CCR3_L;  // Low Capture/Compare value (16 bits)
     static const uint32_t CCR3_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR4_CCR4_H(uint32_t x) { return (x & 0xffff) << 16; } // High Capture/Compare value (TIM2 only) (16 bits)
-    static constexpr uint32_t CCR4_CCR4_L(uint32_t x) { return (x & 0xffff) << 0; } // Low Capture/Compare value (16 bits)
+    typedef bit_field_t<16, 0xffff> CCR4_CCR4_H;  // High Capture/Compare value (TIM2 only) (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR4_CCR4_L;  // Low Capture/Compare value (16 bits)
     static const uint32_t CCR4_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DCR_DBL(uint32_t x) { return (x & 0x1f) << 8; } // DMA burst length (5 bits)
-    static constexpr uint32_t DCR_DBA(uint32_t x) { return (x & 0x1f) << 0; } // DMA base address (5 bits)
+    typedef bit_field_t<8, 0x1f> DCR_DBL;  // DMA burst length (5 bits)
+    typedef bit_field_t<0, 0x1f> DCR_DBA;  // DMA base address (5 bits)
     static const uint32_t DCR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DMAR_DMAR(uint32_t x) { return (x & 0xffff) << 0; } // DMA register for burst accesses (16 bits)
+    typedef bit_field_t<0, 0xffff> DMAR_DMAR;  // DMA register for burst accesses (16 bits)
     static const uint32_t DMAR_RESET_VALUE = 0x0;
 };
 
@@ -2494,7 +2505,7 @@ struct tim14_t
     reserved_t<6>        _3;
     volatile uint32_t    OR;                   // [Read-write] option register
 
-    static constexpr uint32_t CR1_CKD(uint32_t x) { return (x & 0x3) << 8; } // Clock division (2 bits)
+    typedef bit_field_t<8, 0x3> CR1_CKD;  // Clock division (2 bits)
     static const uint32_t CR1_ARPE = 0x80;          // Auto-reload preload enable
     static const uint32_t CR1_URS = 0x4;            // Update request source
     static const uint32_t CR1_UDIS = 0x2;           // Update disable
@@ -2514,11 +2525,11 @@ struct tim14_t
     static const uint32_t EGR_UG = 0x1;             // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCMR1_CC1S(uint32_t x) { return (x & 0x3) << 0; } // Capture/Compare 1 selection (2 bits)
-    static constexpr uint32_t CCMR1_IC1F(uint32_t x) { return (x & 0xf) << 4; } // Input capture 1 filter (4 bits)
-    static constexpr uint32_t CCMR1_IC1PSC(uint32_t x) { return (x & 0x3) << 2; } // Input capture 1 prescaler (2 bits)
+    typedef bit_field_t<0, 0x3> CCMR1_CC1S;  // Capture/Compare 1 selection (2 bits)
+    typedef bit_field_t<4, 0xf> CCMR1_IC1F;  // Input capture 1 filter (4 bits)
+    typedef bit_field_t<2, 0x3> CCMR1_IC1PSC;  // Input capture 1 prescaler (2 bits)
     static const uint32_t CCMR1_OC1FE = 0x4;          // Output compare 1 fast enable
-    static constexpr uint32_t CCMR1_OC1M(uint32_t x) { return (x & 0x7) << 4; } // Output Compare 1 mode (3 bits)
+    typedef bit_field_t<4, 0x7> CCMR1_OC1M;  // Output Compare 1 mode (3 bits)
     static const uint32_t CCMR1_OC1PE = 0x8;          // Output Compare 1 preload enable
     static const uint32_t CCMR1_RESET_VALUE = 0x0;
 
@@ -2527,19 +2538,19 @@ struct tim14_t
     static const uint32_t CCER_CC1E = 0x1;           // Capture/Compare 1 output enable
     static const uint32_t CCER_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNT_CNT(uint32_t x) { return (x & 0xffff) << 0; } // counter value (16 bits)
+    typedef bit_field_t<0, 0xffff> CNT_CNT;  // counter value (16 bits)
     static const uint32_t CNT_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PSC_PSC(uint32_t x) { return (x & 0xffff) << 0; } // Prescaler value (16 bits)
+    typedef bit_field_t<0, 0xffff> PSC_PSC;  // Prescaler value (16 bits)
     static const uint32_t PSC_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t ARR_ARR(uint32_t x) { return (x & 0xffff) << 0; } // Auto-reload value (16 bits)
+    typedef bit_field_t<0, 0xffff> ARR_ARR;  // Auto-reload value (16 bits)
     static const uint32_t ARR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR1_CCR1(uint32_t x) { return (x & 0xffff) << 0; } // Capture/Compare 1 value (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR1_CCR1;  // Capture/Compare 1 value (16 bits)
     static const uint32_t CCR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t OR_RMP(uint32_t x) { return (x & 0x3) << 0; } // Timer input 1 remap (2 bits)
+    typedef bit_field_t<0, 0x3> OR_RMP;  // Timer input 1 remap (2 bits)
     static const uint32_t OR_RESET_VALUE = 0x0;
 };
 
@@ -2572,7 +2583,7 @@ struct tim6_t
     static const uint32_t CR1_CEN = 0x1;            // Counter enable
     static const uint32_t CR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CR2_MMS(uint32_t x) { return (x & 0x7) << 4; } // Master mode selection (3 bits)
+    typedef bit_field_t<4, 0x7> CR2_MMS;  // Master mode selection (3 bits)
     static const uint32_t CR2_RESET_VALUE = 0x0;
 
     static const uint32_t DIER_UDE = 0x100;          // Update DMA request enable
@@ -2585,13 +2596,13 @@ struct tim6_t
     static const uint32_t EGR_UG = 0x1;             // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNT_CNT(uint32_t x) { return (x & 0xffff) << 0; } // Low counter value (16 bits)
+    typedef bit_field_t<0, 0xffff> CNT_CNT;  // Low counter value (16 bits)
     static const uint32_t CNT_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PSC_PSC(uint32_t x) { return (x & 0xffff) << 0; } // Prescaler value (16 bits)
+    typedef bit_field_t<0, 0xffff> PSC_PSC;  // Prescaler value (16 bits)
     static const uint32_t PSC_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t ARR_ARR(uint32_t x) { return (x & 0xffff) << 0; } // Low Auto-reload value (16 bits)
+    typedef bit_field_t<0, 0xffff> ARR_ARR;  // Low Auto-reload value (16 bits)
     static const uint32_t ARR_RESET_VALUE = 0x0;
 };
 
@@ -2624,7 +2635,7 @@ struct tim7_t
     static const uint32_t CR1_CEN = 0x1;            // Counter enable
     static const uint32_t CR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CR2_MMS(uint32_t x) { return (x & 0x7) << 4; } // Master mode selection (3 bits)
+    typedef bit_field_t<4, 0x7> CR2_MMS;  // Master mode selection (3 bits)
     static const uint32_t CR2_RESET_VALUE = 0x0;
 
     static const uint32_t DIER_UDE = 0x100;          // Update DMA request enable
@@ -2637,13 +2648,13 @@ struct tim7_t
     static const uint32_t EGR_UG = 0x1;             // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNT_CNT(uint32_t x) { return (x & 0xffff) << 0; } // Low counter value (16 bits)
+    typedef bit_field_t<0, 0xffff> CNT_CNT;  // Low counter value (16 bits)
     static const uint32_t CNT_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PSC_PSC(uint32_t x) { return (x & 0xffff) << 0; } // Prescaler value (16 bits)
+    typedef bit_field_t<0, 0xffff> PSC_PSC;  // Prescaler value (16 bits)
     static const uint32_t PSC_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t ARR_ARR(uint32_t x) { return (x & 0xffff) << 0; } // Low Auto-reload value (16 bits)
+    typedef bit_field_t<0, 0xffff> ARR_ARR;  // Low Auto-reload value (16 bits)
     static const uint32_t ARR_RESET_VALUE = 0x0;
 };
 
@@ -2850,52 +2861,52 @@ struct nvic_t
 
     static const uint32_t ICPR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t IPR0_PRI_00(uint32_t x) { return (x & 0x3) << 6; } // PRI_00 (2 bits)
-    static constexpr uint32_t IPR0_PRI_01(uint32_t x) { return (x & 0x3) << 14; } // PRI_01 (2 bits)
-    static constexpr uint32_t IPR0_PRI_02(uint32_t x) { return (x & 0x3) << 22; } // PRI_02 (2 bits)
-    static constexpr uint32_t IPR0_PRI_03(uint32_t x) { return (x & 0x3) << 30; } // PRI_03 (2 bits)
+    typedef bit_field_t<6, 0x3> IPR0_PRI_00;  // PRI_00 (2 bits)
+    typedef bit_field_t<14, 0x3> IPR0_PRI_01;  // PRI_01 (2 bits)
+    typedef bit_field_t<22, 0x3> IPR0_PRI_02;  // PRI_02 (2 bits)
+    typedef bit_field_t<30, 0x3> IPR0_PRI_03;  // PRI_03 (2 bits)
     static const uint32_t IPR0_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t IPR1_PRI_40(uint32_t x) { return (x & 0x3) << 6; } // PRI_40 (2 bits)
-    static constexpr uint32_t IPR1_PRI_41(uint32_t x) { return (x & 0x3) << 14; } // PRI_41 (2 bits)
-    static constexpr uint32_t IPR1_PRI_42(uint32_t x) { return (x & 0x3) << 22; } // PRI_42 (2 bits)
-    static constexpr uint32_t IPR1_PRI_43(uint32_t x) { return (x & 0x3) << 30; } // PRI_43 (2 bits)
+    typedef bit_field_t<6, 0x3> IPR1_PRI_40;  // PRI_40 (2 bits)
+    typedef bit_field_t<14, 0x3> IPR1_PRI_41;  // PRI_41 (2 bits)
+    typedef bit_field_t<22, 0x3> IPR1_PRI_42;  // PRI_42 (2 bits)
+    typedef bit_field_t<30, 0x3> IPR1_PRI_43;  // PRI_43 (2 bits)
     static const uint32_t IPR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t IPR2_PRI_80(uint32_t x) { return (x & 0x3) << 6; } // PRI_80 (2 bits)
-    static constexpr uint32_t IPR2_PRI_81(uint32_t x) { return (x & 0x3) << 14; } // PRI_81 (2 bits)
-    static constexpr uint32_t IPR2_PRI_82(uint32_t x) { return (x & 0x3) << 22; } // PRI_82 (2 bits)
-    static constexpr uint32_t IPR2_PRI_83(uint32_t x) { return (x & 0x3) << 30; } // PRI_83 (2 bits)
+    typedef bit_field_t<6, 0x3> IPR2_PRI_80;  // PRI_80 (2 bits)
+    typedef bit_field_t<14, 0x3> IPR2_PRI_81;  // PRI_81 (2 bits)
+    typedef bit_field_t<22, 0x3> IPR2_PRI_82;  // PRI_82 (2 bits)
+    typedef bit_field_t<30, 0x3> IPR2_PRI_83;  // PRI_83 (2 bits)
     static const uint32_t IPR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t IPR3_PRI_120(uint32_t x) { return (x & 0x3) << 6; } // PRI_120 (2 bits)
-    static constexpr uint32_t IPR3_PRI_121(uint32_t x) { return (x & 0x3) << 14; } // PRI_121 (2 bits)
-    static constexpr uint32_t IPR3_PRI_122(uint32_t x) { return (x & 0x3) << 22; } // PRI_122 (2 bits)
-    static constexpr uint32_t IPR3_PRI_123(uint32_t x) { return (x & 0x3) << 30; } // PRI_123 (2 bits)
+    typedef bit_field_t<6, 0x3> IPR3_PRI_120;  // PRI_120 (2 bits)
+    typedef bit_field_t<14, 0x3> IPR3_PRI_121;  // PRI_121 (2 bits)
+    typedef bit_field_t<22, 0x3> IPR3_PRI_122;  // PRI_122 (2 bits)
+    typedef bit_field_t<30, 0x3> IPR3_PRI_123;  // PRI_123 (2 bits)
     static const uint32_t IPR3_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t IPR4_PRI_160(uint32_t x) { return (x & 0x3) << 6; } // PRI_160 (2 bits)
-    static constexpr uint32_t IPR4_PRI_161(uint32_t x) { return (x & 0x3) << 14; } // PRI_161 (2 bits)
-    static constexpr uint32_t IPR4_PRI_162(uint32_t x) { return (x & 0x3) << 22; } // PRI_162 (2 bits)
-    static constexpr uint32_t IPR4_PRI_163(uint32_t x) { return (x & 0x3) << 30; } // PRI_163 (2 bits)
+    typedef bit_field_t<6, 0x3> IPR4_PRI_160;  // PRI_160 (2 bits)
+    typedef bit_field_t<14, 0x3> IPR4_PRI_161;  // PRI_161 (2 bits)
+    typedef bit_field_t<22, 0x3> IPR4_PRI_162;  // PRI_162 (2 bits)
+    typedef bit_field_t<30, 0x3> IPR4_PRI_163;  // PRI_163 (2 bits)
     static const uint32_t IPR4_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t IPR5_PRI_200(uint32_t x) { return (x & 0x3) << 6; } // PRI_200 (2 bits)
-    static constexpr uint32_t IPR5_PRI_201(uint32_t x) { return (x & 0x3) << 14; } // PRI_201 (2 bits)
-    static constexpr uint32_t IPR5_PRI_202(uint32_t x) { return (x & 0x3) << 22; } // PRI_202 (2 bits)
-    static constexpr uint32_t IPR5_PRI_203(uint32_t x) { return (x & 0x3) << 30; } // PRI_203 (2 bits)
+    typedef bit_field_t<6, 0x3> IPR5_PRI_200;  // PRI_200 (2 bits)
+    typedef bit_field_t<14, 0x3> IPR5_PRI_201;  // PRI_201 (2 bits)
+    typedef bit_field_t<22, 0x3> IPR5_PRI_202;  // PRI_202 (2 bits)
+    typedef bit_field_t<30, 0x3> IPR5_PRI_203;  // PRI_203 (2 bits)
     static const uint32_t IPR5_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t IPR6_PRI_240(uint32_t x) { return (x & 0x3) << 6; } // PRI_240 (2 bits)
-    static constexpr uint32_t IPR6_PRI_241(uint32_t x) { return (x & 0x3) << 14; } // PRI_241 (2 bits)
-    static constexpr uint32_t IPR6_PRI_242(uint32_t x) { return (x & 0x3) << 22; } // PRI_242 (2 bits)
-    static constexpr uint32_t IPR6_PRI_243(uint32_t x) { return (x & 0x3) << 30; } // PRI_243 (2 bits)
+    typedef bit_field_t<6, 0x3> IPR6_PRI_240;  // PRI_240 (2 bits)
+    typedef bit_field_t<14, 0x3> IPR6_PRI_241;  // PRI_241 (2 bits)
+    typedef bit_field_t<22, 0x3> IPR6_PRI_242;  // PRI_242 (2 bits)
+    typedef bit_field_t<30, 0x3> IPR6_PRI_243;  // PRI_243 (2 bits)
     static const uint32_t IPR6_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t IPR7_PRI_280(uint32_t x) { return (x & 0x3) << 6; } // PRI_280 (2 bits)
-    static constexpr uint32_t IPR7_PRI_281(uint32_t x) { return (x & 0x3) << 14; } // PRI_281 (2 bits)
-    static constexpr uint32_t IPR7_PRI_282(uint32_t x) { return (x & 0x3) << 22; } // PRI_282 (2 bits)
-    static constexpr uint32_t IPR7_PRI_283(uint32_t x) { return (x & 0x3) << 30; } // PRI_283 (2 bits)
+    typedef bit_field_t<6, 0x3> IPR7_PRI_280;  // PRI_280 (2 bits)
+    typedef bit_field_t<14, 0x3> IPR7_PRI_281;  // PRI_281 (2 bits)
+    typedef bit_field_t<22, 0x3> IPR7_PRI_282;  // PRI_282 (2 bits)
+    typedef bit_field_t<30, 0x3> IPR7_PRI_283;  // PRI_283 (2 bits)
     static const uint32_t IPR7_RESET_VALUE = 0x0;
 };
 
@@ -3015,13 +3026,13 @@ struct dma1_t
     static const uint32_t CCR1_CIRC = 0x20;          // Circular mode
     static const uint32_t CCR1_PINC = 0x40;          // Peripheral increment mode
     static const uint32_t CCR1_MINC = 0x80;          // Memory increment mode
-    static constexpr uint32_t CCR1_PSIZE(uint32_t x) { return (x & 0x3) << 8; } // Peripheral size (2 bits)
-    static constexpr uint32_t CCR1_MSIZE(uint32_t x) { return (x & 0x3) << 10; } // Memory size (2 bits)
-    static constexpr uint32_t CCR1_PL(uint32_t x) { return (x & 0x3) << 12; } // Channel Priority level (2 bits)
+    typedef bit_field_t<8, 0x3> CCR1_PSIZE;  // Peripheral size (2 bits)
+    typedef bit_field_t<10, 0x3> CCR1_MSIZE;  // Memory size (2 bits)
+    typedef bit_field_t<12, 0x3> CCR1_PL;  // Channel Priority level (2 bits)
     static const uint32_t CCR1_MEM2MEM = 0x4000;     // Memory to memory mode
     static const uint32_t CCR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNDTR1_NDT(uint32_t x) { return (x & 0xffff) << 0; } // Number of data to transfer (16 bits)
+    typedef bit_field_t<0, 0xffff> CNDTR1_NDT;  // Number of data to transfer (16 bits)
     static const uint32_t CNDTR1_RESET_VALUE = 0x0;
 
 
@@ -3038,13 +3049,13 @@ struct dma1_t
     static const uint32_t CCR2_CIRC = 0x20;          // Circular mode
     static const uint32_t CCR2_PINC = 0x40;          // Peripheral increment mode
     static const uint32_t CCR2_MINC = 0x80;          // Memory increment mode
-    static constexpr uint32_t CCR2_PSIZE(uint32_t x) { return (x & 0x3) << 8; } // Peripheral size (2 bits)
-    static constexpr uint32_t CCR2_MSIZE(uint32_t x) { return (x & 0x3) << 10; } // Memory size (2 bits)
-    static constexpr uint32_t CCR2_PL(uint32_t x) { return (x & 0x3) << 12; } // Channel Priority level (2 bits)
+    typedef bit_field_t<8, 0x3> CCR2_PSIZE;  // Peripheral size (2 bits)
+    typedef bit_field_t<10, 0x3> CCR2_MSIZE;  // Memory size (2 bits)
+    typedef bit_field_t<12, 0x3> CCR2_PL;  // Channel Priority level (2 bits)
     static const uint32_t CCR2_MEM2MEM = 0x4000;     // Memory to memory mode
     static const uint32_t CCR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNDTR2_NDT(uint32_t x) { return (x & 0xffff) << 0; } // Number of data to transfer (16 bits)
+    typedef bit_field_t<0, 0xffff> CNDTR2_NDT;  // Number of data to transfer (16 bits)
     static const uint32_t CNDTR2_RESET_VALUE = 0x0;
 
 
@@ -3061,13 +3072,13 @@ struct dma1_t
     static const uint32_t CCR3_CIRC = 0x20;          // Circular mode
     static const uint32_t CCR3_PINC = 0x40;          // Peripheral increment mode
     static const uint32_t CCR3_MINC = 0x80;          // Memory increment mode
-    static constexpr uint32_t CCR3_PSIZE(uint32_t x) { return (x & 0x3) << 8; } // Peripheral size (2 bits)
-    static constexpr uint32_t CCR3_MSIZE(uint32_t x) { return (x & 0x3) << 10; } // Memory size (2 bits)
-    static constexpr uint32_t CCR3_PL(uint32_t x) { return (x & 0x3) << 12; } // Channel Priority level (2 bits)
+    typedef bit_field_t<8, 0x3> CCR3_PSIZE;  // Peripheral size (2 bits)
+    typedef bit_field_t<10, 0x3> CCR3_MSIZE;  // Memory size (2 bits)
+    typedef bit_field_t<12, 0x3> CCR3_PL;  // Channel Priority level (2 bits)
     static const uint32_t CCR3_MEM2MEM = 0x4000;     // Memory to memory mode
     static const uint32_t CCR3_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNDTR3_NDT(uint32_t x) { return (x & 0xffff) << 0; } // Number of data to transfer (16 bits)
+    typedef bit_field_t<0, 0xffff> CNDTR3_NDT;  // Number of data to transfer (16 bits)
     static const uint32_t CNDTR3_RESET_VALUE = 0x0;
 
 
@@ -3084,13 +3095,13 @@ struct dma1_t
     static const uint32_t CCR4_CIRC = 0x20;          // Circular mode
     static const uint32_t CCR4_PINC = 0x40;          // Peripheral increment mode
     static const uint32_t CCR4_MINC = 0x80;          // Memory increment mode
-    static constexpr uint32_t CCR4_PSIZE(uint32_t x) { return (x & 0x3) << 8; } // Peripheral size (2 bits)
-    static constexpr uint32_t CCR4_MSIZE(uint32_t x) { return (x & 0x3) << 10; } // Memory size (2 bits)
-    static constexpr uint32_t CCR4_PL(uint32_t x) { return (x & 0x3) << 12; } // Channel Priority level (2 bits)
+    typedef bit_field_t<8, 0x3> CCR4_PSIZE;  // Peripheral size (2 bits)
+    typedef bit_field_t<10, 0x3> CCR4_MSIZE;  // Memory size (2 bits)
+    typedef bit_field_t<12, 0x3> CCR4_PL;  // Channel Priority level (2 bits)
     static const uint32_t CCR4_MEM2MEM = 0x4000;     // Memory to memory mode
     static const uint32_t CCR4_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNDTR4_NDT(uint32_t x) { return (x & 0xffff) << 0; } // Number of data to transfer (16 bits)
+    typedef bit_field_t<0, 0xffff> CNDTR4_NDT;  // Number of data to transfer (16 bits)
     static const uint32_t CNDTR4_RESET_VALUE = 0x0;
 
 
@@ -3107,13 +3118,13 @@ struct dma1_t
     static const uint32_t CCR5_CIRC = 0x20;          // Circular mode
     static const uint32_t CCR5_PINC = 0x40;          // Peripheral increment mode
     static const uint32_t CCR5_MINC = 0x80;          // Memory increment mode
-    static constexpr uint32_t CCR5_PSIZE(uint32_t x) { return (x & 0x3) << 8; } // Peripheral size (2 bits)
-    static constexpr uint32_t CCR5_MSIZE(uint32_t x) { return (x & 0x3) << 10; } // Memory size (2 bits)
-    static constexpr uint32_t CCR5_PL(uint32_t x) { return (x & 0x3) << 12; } // Channel Priority level (2 bits)
+    typedef bit_field_t<8, 0x3> CCR5_PSIZE;  // Peripheral size (2 bits)
+    typedef bit_field_t<10, 0x3> CCR5_MSIZE;  // Memory size (2 bits)
+    typedef bit_field_t<12, 0x3> CCR5_PL;  // Channel Priority level (2 bits)
     static const uint32_t CCR5_MEM2MEM = 0x4000;     // Memory to memory mode
     static const uint32_t CCR5_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNDTR5_NDT(uint32_t x) { return (x & 0xffff) << 0; } // Number of data to transfer (16 bits)
+    typedef bit_field_t<0, 0xffff> CNDTR5_NDT;  // Number of data to transfer (16 bits)
     static const uint32_t CNDTR5_RESET_VALUE = 0x0;
 
 
@@ -3130,13 +3141,13 @@ struct dma1_t
     static const uint32_t CCR6_CIRC = 0x20;          // Circular mode
     static const uint32_t CCR6_PINC = 0x40;          // Peripheral increment mode
     static const uint32_t CCR6_MINC = 0x80;          // Memory increment mode
-    static constexpr uint32_t CCR6_PSIZE(uint32_t x) { return (x & 0x3) << 8; } // Peripheral size (2 bits)
-    static constexpr uint32_t CCR6_MSIZE(uint32_t x) { return (x & 0x3) << 10; } // Memory size (2 bits)
-    static constexpr uint32_t CCR6_PL(uint32_t x) { return (x & 0x3) << 12; } // Channel Priority level (2 bits)
+    typedef bit_field_t<8, 0x3> CCR6_PSIZE;  // Peripheral size (2 bits)
+    typedef bit_field_t<10, 0x3> CCR6_MSIZE;  // Memory size (2 bits)
+    typedef bit_field_t<12, 0x3> CCR6_PL;  // Channel Priority level (2 bits)
     static const uint32_t CCR6_MEM2MEM = 0x4000;     // Memory to memory mode
     static const uint32_t CCR6_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNDTR6_NDT(uint32_t x) { return (x & 0xffff) << 0; } // Number of data to transfer (16 bits)
+    typedef bit_field_t<0, 0xffff> CNDTR6_NDT;  // Number of data to transfer (16 bits)
     static const uint32_t CNDTR6_RESET_VALUE = 0x0;
 
 
@@ -3153,13 +3164,13 @@ struct dma1_t
     static const uint32_t CCR7_CIRC = 0x20;          // Circular mode
     static const uint32_t CCR7_PINC = 0x40;          // Peripheral increment mode
     static const uint32_t CCR7_MINC = 0x80;          // Memory increment mode
-    static constexpr uint32_t CCR7_PSIZE(uint32_t x) { return (x & 0x3) << 8; } // Peripheral size (2 bits)
-    static constexpr uint32_t CCR7_MSIZE(uint32_t x) { return (x & 0x3) << 10; } // Memory size (2 bits)
-    static constexpr uint32_t CCR7_PL(uint32_t x) { return (x & 0x3) << 12; } // Channel Priority level (2 bits)
+    typedef bit_field_t<8, 0x3> CCR7_PSIZE;  // Peripheral size (2 bits)
+    typedef bit_field_t<10, 0x3> CCR7_MSIZE;  // Memory size (2 bits)
+    typedef bit_field_t<12, 0x3> CCR7_PL;  // Channel Priority level (2 bits)
     static const uint32_t CCR7_MEM2MEM = 0x4000;     // Memory to memory mode
     static const uint32_t CCR7_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNDTR7_NDT(uint32_t x) { return (x & 0xffff) << 0; } // Number of data to transfer (16 bits)
+    typedef bit_field_t<0, 0xffff> CNDTR7_NDT;  // Number of data to transfer (16 bits)
     static const uint32_t CNDTR7_RESET_VALUE = 0x0;
 
 
@@ -3285,13 +3296,13 @@ struct dma2_t
     static const uint32_t CCR1_CIRC = 0x20;          // Circular mode
     static const uint32_t CCR1_PINC = 0x40;          // Peripheral increment mode
     static const uint32_t CCR1_MINC = 0x80;          // Memory increment mode
-    static constexpr uint32_t CCR1_PSIZE(uint32_t x) { return (x & 0x3) << 8; } // Peripheral size (2 bits)
-    static constexpr uint32_t CCR1_MSIZE(uint32_t x) { return (x & 0x3) << 10; } // Memory size (2 bits)
-    static constexpr uint32_t CCR1_PL(uint32_t x) { return (x & 0x3) << 12; } // Channel Priority level (2 bits)
+    typedef bit_field_t<8, 0x3> CCR1_PSIZE;  // Peripheral size (2 bits)
+    typedef bit_field_t<10, 0x3> CCR1_MSIZE;  // Memory size (2 bits)
+    typedef bit_field_t<12, 0x3> CCR1_PL;  // Channel Priority level (2 bits)
     static const uint32_t CCR1_MEM2MEM = 0x4000;     // Memory to memory mode
     static const uint32_t CCR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNDTR1_NDT(uint32_t x) { return (x & 0xffff) << 0; } // Number of data to transfer (16 bits)
+    typedef bit_field_t<0, 0xffff> CNDTR1_NDT;  // Number of data to transfer (16 bits)
     static const uint32_t CNDTR1_RESET_VALUE = 0x0;
 
 
@@ -3308,13 +3319,13 @@ struct dma2_t
     static const uint32_t CCR2_CIRC = 0x20;          // Circular mode
     static const uint32_t CCR2_PINC = 0x40;          // Peripheral increment mode
     static const uint32_t CCR2_MINC = 0x80;          // Memory increment mode
-    static constexpr uint32_t CCR2_PSIZE(uint32_t x) { return (x & 0x3) << 8; } // Peripheral size (2 bits)
-    static constexpr uint32_t CCR2_MSIZE(uint32_t x) { return (x & 0x3) << 10; } // Memory size (2 bits)
-    static constexpr uint32_t CCR2_PL(uint32_t x) { return (x & 0x3) << 12; } // Channel Priority level (2 bits)
+    typedef bit_field_t<8, 0x3> CCR2_PSIZE;  // Peripheral size (2 bits)
+    typedef bit_field_t<10, 0x3> CCR2_MSIZE;  // Memory size (2 bits)
+    typedef bit_field_t<12, 0x3> CCR2_PL;  // Channel Priority level (2 bits)
     static const uint32_t CCR2_MEM2MEM = 0x4000;     // Memory to memory mode
     static const uint32_t CCR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNDTR2_NDT(uint32_t x) { return (x & 0xffff) << 0; } // Number of data to transfer (16 bits)
+    typedef bit_field_t<0, 0xffff> CNDTR2_NDT;  // Number of data to transfer (16 bits)
     static const uint32_t CNDTR2_RESET_VALUE = 0x0;
 
 
@@ -3331,13 +3342,13 @@ struct dma2_t
     static const uint32_t CCR3_CIRC = 0x20;          // Circular mode
     static const uint32_t CCR3_PINC = 0x40;          // Peripheral increment mode
     static const uint32_t CCR3_MINC = 0x80;          // Memory increment mode
-    static constexpr uint32_t CCR3_PSIZE(uint32_t x) { return (x & 0x3) << 8; } // Peripheral size (2 bits)
-    static constexpr uint32_t CCR3_MSIZE(uint32_t x) { return (x & 0x3) << 10; } // Memory size (2 bits)
-    static constexpr uint32_t CCR3_PL(uint32_t x) { return (x & 0x3) << 12; } // Channel Priority level (2 bits)
+    typedef bit_field_t<8, 0x3> CCR3_PSIZE;  // Peripheral size (2 bits)
+    typedef bit_field_t<10, 0x3> CCR3_MSIZE;  // Memory size (2 bits)
+    typedef bit_field_t<12, 0x3> CCR3_PL;  // Channel Priority level (2 bits)
     static const uint32_t CCR3_MEM2MEM = 0x4000;     // Memory to memory mode
     static const uint32_t CCR3_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNDTR3_NDT(uint32_t x) { return (x & 0xffff) << 0; } // Number of data to transfer (16 bits)
+    typedef bit_field_t<0, 0xffff> CNDTR3_NDT;  // Number of data to transfer (16 bits)
     static const uint32_t CNDTR3_RESET_VALUE = 0x0;
 
 
@@ -3354,13 +3365,13 @@ struct dma2_t
     static const uint32_t CCR4_CIRC = 0x20;          // Circular mode
     static const uint32_t CCR4_PINC = 0x40;          // Peripheral increment mode
     static const uint32_t CCR4_MINC = 0x80;          // Memory increment mode
-    static constexpr uint32_t CCR4_PSIZE(uint32_t x) { return (x & 0x3) << 8; } // Peripheral size (2 bits)
-    static constexpr uint32_t CCR4_MSIZE(uint32_t x) { return (x & 0x3) << 10; } // Memory size (2 bits)
-    static constexpr uint32_t CCR4_PL(uint32_t x) { return (x & 0x3) << 12; } // Channel Priority level (2 bits)
+    typedef bit_field_t<8, 0x3> CCR4_PSIZE;  // Peripheral size (2 bits)
+    typedef bit_field_t<10, 0x3> CCR4_MSIZE;  // Memory size (2 bits)
+    typedef bit_field_t<12, 0x3> CCR4_PL;  // Channel Priority level (2 bits)
     static const uint32_t CCR4_MEM2MEM = 0x4000;     // Memory to memory mode
     static const uint32_t CCR4_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNDTR4_NDT(uint32_t x) { return (x & 0xffff) << 0; } // Number of data to transfer (16 bits)
+    typedef bit_field_t<0, 0xffff> CNDTR4_NDT;  // Number of data to transfer (16 bits)
     static const uint32_t CNDTR4_RESET_VALUE = 0x0;
 
 
@@ -3377,13 +3388,13 @@ struct dma2_t
     static const uint32_t CCR5_CIRC = 0x20;          // Circular mode
     static const uint32_t CCR5_PINC = 0x40;          // Peripheral increment mode
     static const uint32_t CCR5_MINC = 0x80;          // Memory increment mode
-    static constexpr uint32_t CCR5_PSIZE(uint32_t x) { return (x & 0x3) << 8; } // Peripheral size (2 bits)
-    static constexpr uint32_t CCR5_MSIZE(uint32_t x) { return (x & 0x3) << 10; } // Memory size (2 bits)
-    static constexpr uint32_t CCR5_PL(uint32_t x) { return (x & 0x3) << 12; } // Channel Priority level (2 bits)
+    typedef bit_field_t<8, 0x3> CCR5_PSIZE;  // Peripheral size (2 bits)
+    typedef bit_field_t<10, 0x3> CCR5_MSIZE;  // Memory size (2 bits)
+    typedef bit_field_t<12, 0x3> CCR5_PL;  // Channel Priority level (2 bits)
     static const uint32_t CCR5_MEM2MEM = 0x4000;     // Memory to memory mode
     static const uint32_t CCR5_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNDTR5_NDT(uint32_t x) { return (x & 0xffff) << 0; } // Number of data to transfer (16 bits)
+    typedef bit_field_t<0, 0xffff> CNDTR5_NDT;  // Number of data to transfer (16 bits)
     static const uint32_t CNDTR5_RESET_VALUE = 0x0;
 
 
@@ -3400,13 +3411,13 @@ struct dma2_t
     static const uint32_t CCR6_CIRC = 0x20;          // Circular mode
     static const uint32_t CCR6_PINC = 0x40;          // Peripheral increment mode
     static const uint32_t CCR6_MINC = 0x80;          // Memory increment mode
-    static constexpr uint32_t CCR6_PSIZE(uint32_t x) { return (x & 0x3) << 8; } // Peripheral size (2 bits)
-    static constexpr uint32_t CCR6_MSIZE(uint32_t x) { return (x & 0x3) << 10; } // Memory size (2 bits)
-    static constexpr uint32_t CCR6_PL(uint32_t x) { return (x & 0x3) << 12; } // Channel Priority level (2 bits)
+    typedef bit_field_t<8, 0x3> CCR6_PSIZE;  // Peripheral size (2 bits)
+    typedef bit_field_t<10, 0x3> CCR6_MSIZE;  // Memory size (2 bits)
+    typedef bit_field_t<12, 0x3> CCR6_PL;  // Channel Priority level (2 bits)
     static const uint32_t CCR6_MEM2MEM = 0x4000;     // Memory to memory mode
     static const uint32_t CCR6_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNDTR6_NDT(uint32_t x) { return (x & 0xffff) << 0; } // Number of data to transfer (16 bits)
+    typedef bit_field_t<0, 0xffff> CNDTR6_NDT;  // Number of data to transfer (16 bits)
     static const uint32_t CNDTR6_RESET_VALUE = 0x0;
 
 
@@ -3423,13 +3434,13 @@ struct dma2_t
     static const uint32_t CCR7_CIRC = 0x20;          // Circular mode
     static const uint32_t CCR7_PINC = 0x40;          // Peripheral increment mode
     static const uint32_t CCR7_MINC = 0x80;          // Memory increment mode
-    static constexpr uint32_t CCR7_PSIZE(uint32_t x) { return (x & 0x3) << 8; } // Peripheral size (2 bits)
-    static constexpr uint32_t CCR7_MSIZE(uint32_t x) { return (x & 0x3) << 10; } // Memory size (2 bits)
-    static constexpr uint32_t CCR7_PL(uint32_t x) { return (x & 0x3) << 12; } // Channel Priority level (2 bits)
+    typedef bit_field_t<8, 0x3> CCR7_PSIZE;  // Peripheral size (2 bits)
+    typedef bit_field_t<10, 0x3> CCR7_MSIZE;  // Memory size (2 bits)
+    typedef bit_field_t<12, 0x3> CCR7_PL;  // Channel Priority level (2 bits)
     static const uint32_t CCR7_MEM2MEM = 0x4000;     // Memory to memory mode
     static const uint32_t CCR7_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNDTR7_NDT(uint32_t x) { return (x & 0xffff) << 0; } // Number of data to transfer (16 bits)
+    typedef bit_field_t<0, 0xffff> CNDTR7_NDT;  // Number of data to transfer (16 bits)
     static const uint32_t CNDTR7_RESET_VALUE = 0x0;
 
 
@@ -3467,8 +3478,8 @@ struct rcc_t
 
     static const uint32_t CR_HSION = 0x1;          // Internal High Speed clock enable, Read-write
     static const uint32_t CR_HSIRDY = 0x2;         // Internal High Speed clock ready flag, Read-only
-    static constexpr uint32_t CR_HSITRIM(uint32_t x) { return (x & 0x1f) << 3; } // Internal High Speed clock trimming (5 bits), Read-write
-    static constexpr uint32_t CR_HSICAL(uint32_t x) { return (x & 0xff) << 8; } // Internal High Speed clock Calibration (8 bits), Read-only
+    typedef bit_field_t<3, 0x1f> CR_HSITRIM;  // Internal High Speed clock trimming (5 bits), Read-write
+    typedef bit_field_t<8, 0xff> CR_HSICAL;  // Internal High Speed clock Calibration (8 bits), Read-only
     static const uint32_t CR_HSEON = 0x10000;      // External High Speed clock enable, Read-write
     static const uint32_t CR_HSERDY = 0x20000;     // External High Speed clock ready flag, Read-only
     static const uint32_t CR_HSEBYP = 0x40000;     // External High Speed clock Bypass, Read-write
@@ -3477,16 +3488,16 @@ struct rcc_t
     static const uint32_t CR_PLLRDY = 0x2000000;   // PLL clock ready flag, Read-only
     static const uint32_t CR_RESET_VALUE = 0x83;
 
-    static constexpr uint32_t CFGR_SW(uint32_t x) { return (x & 0x3) << 0; } // System clock Switch (2 bits), Read-write
-    static constexpr uint32_t CFGR_SWS(uint32_t x) { return (x & 0x3) << 2; } // System Clock Switch Status (2 bits), Read-only
-    static constexpr uint32_t CFGR_HPRE(uint32_t x) { return (x & 0xf) << 4; } // AHB prescaler (4 bits), Read-write
-    static constexpr uint32_t CFGR_PPRE(uint32_t x) { return (x & 0x7) << 8; } // APB Low speed prescaler (APB1) (3 bits), Read-write
+    typedef bit_field_t<0, 0x3> CFGR_SW;  // System clock Switch (2 bits), Read-write
+    typedef bit_field_t<2, 0x3> CFGR_SWS;  // System Clock Switch Status (2 bits), Read-only
+    typedef bit_field_t<4, 0xf> CFGR_HPRE;  // AHB prescaler (4 bits), Read-write
+    typedef bit_field_t<8, 0x7> CFGR_PPRE;  // APB Low speed prescaler (APB1) (3 bits), Read-write
     static const uint32_t CFGR_ADCPRE = 0x4000;      // ADC prescaler, Read-write
-    static constexpr uint32_t CFGR_PLLSRC(uint32_t x) { return (x & 0x3) << 15; } // PLL input clock source (2 bits), Read-write
+    typedef bit_field_t<15, 0x3> CFGR_PLLSRC;  // PLL input clock source (2 bits), Read-write
     static const uint32_t CFGR_PLLXTPRE = 0x20000;   // HSE divider for PLL entry, Read-write
-    static constexpr uint32_t CFGR_PLLMUL(uint32_t x) { return (x & 0xf) << 18; } // PLL Multiplication Factor (4 bits), Read-write
-    static constexpr uint32_t CFGR_MCO(uint32_t x) { return (x & 0x7) << 24; } // Microcontroller clock output (3 bits), Read-write
-    static constexpr uint32_t CFGR_MCOPRE(uint32_t x) { return (x & 0x7) << 28; } // Microcontroller Clock Output Prescaler (3 bits), Read-write
+    typedef bit_field_t<18, 0xf> CFGR_PLLMUL;  // PLL Multiplication Factor (4 bits), Read-write
+    typedef bit_field_t<24, 0x7> CFGR_MCO;  // Microcontroller clock output (3 bits), Read-write
+    typedef bit_field_t<28, 0x7> CFGR_MCOPRE;  // Microcontroller Clock Output Prescaler (3 bits), Read-write
     static const uint32_t CFGR_PLLNODIV = 0x80000000;// PLL clock not divided for MCO, Read-write
     static const uint32_t CFGR_RESET_VALUE = 0x0;
 
@@ -3598,8 +3609,8 @@ struct rcc_t
     static const uint32_t BDCR_LSEON = 0x1;          // External Low Speed oscillator enable, Read-write
     static const uint32_t BDCR_LSERDY = 0x2;         // External Low Speed oscillator ready, Read-only
     static const uint32_t BDCR_LSEBYP = 0x4;         // External Low Speed oscillator bypass, Read-write
-    static constexpr uint32_t BDCR_LSEDRV(uint32_t x) { return (x & 0x3) << 3; } // LSE oscillator drive capability (2 bits), Read-write
-    static constexpr uint32_t BDCR_RTCSEL(uint32_t x) { return (x & 0x3) << 8; } // RTC clock source selection (2 bits), Read-write
+    typedef bit_field_t<3, 0x3> BDCR_LSEDRV;  // LSE oscillator drive capability (2 bits), Read-write
+    typedef bit_field_t<8, 0x3> BDCR_RTCSEL;  // RTC clock source selection (2 bits), Read-write
     static const uint32_t BDCR_RTCEN = 0x8000;       // RTC clock enable, Read-write
     static const uint32_t BDCR_BDRST = 0x10000;      // Backup domain software reset, Read-write
     static const uint32_t BDCR_RESET_VALUE = 0x0;
@@ -3624,22 +3635,22 @@ struct rcc_t
     static const uint32_t AHBRSTR_TSCRST = 0x1000000;   // Touch sensing controller reset
     static const uint32_t AHBRSTR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CFGR2_PREDIV(uint32_t x) { return (x & 0xf) << 0; } // PREDIV division factor (4 bits)
+    typedef bit_field_t<0, 0xf> CFGR2_PREDIV;  // PREDIV division factor (4 bits)
     static const uint32_t CFGR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CFGR3_USART1SW(uint32_t x) { return (x & 0x3) << 0; } // USART1 clock source selection (2 bits)
+    typedef bit_field_t<0, 0x3> CFGR3_USART1SW;  // USART1 clock source selection (2 bits)
     static const uint32_t CFGR3_I2C1SW = 0x10;        // I2C1 clock source selection
     static const uint32_t CFGR3_CECSW = 0x40;         // HDMI CEC clock source selection
     static const uint32_t CFGR3_USBSW = 0x80;         // USB clock source selection
     static const uint32_t CFGR3_ADCSW = 0x100;        // ADC clock source selection
-    static constexpr uint32_t CFGR3_USART2SW(uint32_t x) { return (x & 0x3) << 16; } // USART2 clock source selection (2 bits)
+    typedef bit_field_t<16, 0x3> CFGR3_USART2SW;  // USART2 clock source selection (2 bits)
     static const uint32_t CFGR3_RESET_VALUE = 0x0;
 
     static const uint32_t CR2_HSI14ON = 0x1;        // HSI14 clock enable, Read-write
     static const uint32_t CR2_HSI14RDY = 0x2;       // HR14 clock ready flag, Read-only
     static const uint32_t CR2_HSI14DIS = 0x4;       // HSI14 clock request from ADC disable, Read-write
-    static constexpr uint32_t CR2_HSI14TRIM(uint32_t x) { return (x & 0x1f) << 3; } // HSI14 clock trimming (5 bits), Read-write
-    static constexpr uint32_t CR2_HSI14CAL(uint32_t x) { return (x & 0xff) << 8; } // HSI14 clock calibration (8 bits), Read-only
+    typedef bit_field_t<3, 0x1f> CR2_HSI14TRIM;  // HSI14 clock trimming (5 bits), Read-write
+    typedef bit_field_t<8, 0xff> CR2_HSI14CAL;  // HSI14 clock calibration (8 bits), Read-only
     static const uint32_t CR2_HSI48ON = 0x10000;    // HSI48 clock enable, Read-write
     static const uint32_t CR2_HSI48RDY = 0x20000;   // HSI48 clock ready flag, Read-only
     static const uint32_t CR2_HSI48CAL = 0x1000000; // HSI48 factory clock calibration, Read-only
@@ -3666,7 +3677,7 @@ struct syscfg_comp_t
     volatile uint32_t    SYSCFG_CFGR2;         // [Read-write] configuration register 2
     volatile uint32_t    COMP_CSR;             // control and status register
 
-    static constexpr uint32_t SYSCFG_CFGR1_MEM_MODE(uint32_t x) { return (x & 0x3) << 0; } // Memory mapping selection bits (2 bits)
+    typedef bit_field_t<0, 0x3> SYSCFG_CFGR1_MEM_MODE;  // Memory mapping selection bits (2 bits)
     static const uint32_t SYSCFG_CFGR1_ADC_DMA_RMP = 0x100;  // ADC DMA remapping bit
     static const uint32_t SYSCFG_CFGR1_USART1_TX_DMA_RMP = 0x200;// USART1_TX DMA remapping bit
     static const uint32_t SYSCFG_CFGR1_USART1_RX_DMA_RMP = 0x400;// USART1_RX DMA request remapping bit
@@ -3687,28 +3698,28 @@ struct syscfg_comp_t
     static const uint32_t SYSCFG_CFGR1_TIM3_DMA_RMP = 0x40000000;// TIM3 DMA request remapping bit
     static const uint32_t SYSCFG_CFGR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t SYSCFG_EXTICR1_EXTI3(uint32_t x) { return (x & 0xf) << 12; } // EXTI 3 configuration bits (4 bits)
-    static constexpr uint32_t SYSCFG_EXTICR1_EXTI2(uint32_t x) { return (x & 0xf) << 8; } // EXTI 2 configuration bits (4 bits)
-    static constexpr uint32_t SYSCFG_EXTICR1_EXTI1(uint32_t x) { return (x & 0xf) << 4; } // EXTI 1 configuration bits (4 bits)
-    static constexpr uint32_t SYSCFG_EXTICR1_EXTI0(uint32_t x) { return (x & 0xf) << 0; } // EXTI 0 configuration bits (4 bits)
+    typedef bit_field_t<12, 0xf> SYSCFG_EXTICR1_EXTI3;  // EXTI 3 configuration bits (4 bits)
+    typedef bit_field_t<8, 0xf> SYSCFG_EXTICR1_EXTI2;  // EXTI 2 configuration bits (4 bits)
+    typedef bit_field_t<4, 0xf> SYSCFG_EXTICR1_EXTI1;  // EXTI 1 configuration bits (4 bits)
+    typedef bit_field_t<0, 0xf> SYSCFG_EXTICR1_EXTI0;  // EXTI 0 configuration bits (4 bits)
     static const uint32_t SYSCFG_EXTICR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t SYSCFG_EXTICR2_EXTI7(uint32_t x) { return (x & 0xf) << 12; } // EXTI 7 configuration bits (4 bits)
-    static constexpr uint32_t SYSCFG_EXTICR2_EXTI6(uint32_t x) { return (x & 0xf) << 8; } // EXTI 6 configuration bits (4 bits)
-    static constexpr uint32_t SYSCFG_EXTICR2_EXTI5(uint32_t x) { return (x & 0xf) << 4; } // EXTI 5 configuration bits (4 bits)
-    static constexpr uint32_t SYSCFG_EXTICR2_EXTI4(uint32_t x) { return (x & 0xf) << 0; } // EXTI 4 configuration bits (4 bits)
+    typedef bit_field_t<12, 0xf> SYSCFG_EXTICR2_EXTI7;  // EXTI 7 configuration bits (4 bits)
+    typedef bit_field_t<8, 0xf> SYSCFG_EXTICR2_EXTI6;  // EXTI 6 configuration bits (4 bits)
+    typedef bit_field_t<4, 0xf> SYSCFG_EXTICR2_EXTI5;  // EXTI 5 configuration bits (4 bits)
+    typedef bit_field_t<0, 0xf> SYSCFG_EXTICR2_EXTI4;  // EXTI 4 configuration bits (4 bits)
     static const uint32_t SYSCFG_EXTICR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t SYSCFG_EXTICR3_EXTI11(uint32_t x) { return (x & 0xf) << 12; } // EXTI 11 configuration bits (4 bits)
-    static constexpr uint32_t SYSCFG_EXTICR3_EXTI10(uint32_t x) { return (x & 0xf) << 8; } // EXTI 10 configuration bits (4 bits)
-    static constexpr uint32_t SYSCFG_EXTICR3_EXTI9(uint32_t x) { return (x & 0xf) << 4; } // EXTI 9 configuration bits (4 bits)
-    static constexpr uint32_t SYSCFG_EXTICR3_EXTI8(uint32_t x) { return (x & 0xf) << 0; } // EXTI 8 configuration bits (4 bits)
+    typedef bit_field_t<12, 0xf> SYSCFG_EXTICR3_EXTI11;  // EXTI 11 configuration bits (4 bits)
+    typedef bit_field_t<8, 0xf> SYSCFG_EXTICR3_EXTI10;  // EXTI 10 configuration bits (4 bits)
+    typedef bit_field_t<4, 0xf> SYSCFG_EXTICR3_EXTI9;  // EXTI 9 configuration bits (4 bits)
+    typedef bit_field_t<0, 0xf> SYSCFG_EXTICR3_EXTI8;  // EXTI 8 configuration bits (4 bits)
     static const uint32_t SYSCFG_EXTICR3_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t SYSCFG_EXTICR4_EXTI15(uint32_t x) { return (x & 0xf) << 12; } // EXTI 15 configuration bits (4 bits)
-    static constexpr uint32_t SYSCFG_EXTICR4_EXTI14(uint32_t x) { return (x & 0xf) << 8; } // EXTI 14 configuration bits (4 bits)
-    static constexpr uint32_t SYSCFG_EXTICR4_EXTI13(uint32_t x) { return (x & 0xf) << 4; } // EXTI 13 configuration bits (4 bits)
-    static constexpr uint32_t SYSCFG_EXTICR4_EXTI12(uint32_t x) { return (x & 0xf) << 0; } // EXTI 12 configuration bits (4 bits)
+    typedef bit_field_t<12, 0xf> SYSCFG_EXTICR4_EXTI15;  // EXTI 15 configuration bits (4 bits)
+    typedef bit_field_t<8, 0xf> SYSCFG_EXTICR4_EXTI14;  // EXTI 14 configuration bits (4 bits)
+    typedef bit_field_t<4, 0xf> SYSCFG_EXTICR4_EXTI13;  // EXTI 13 configuration bits (4 bits)
+    typedef bit_field_t<0, 0xf> SYSCFG_EXTICR4_EXTI12;  // EXTI 12 configuration bits (4 bits)
     static const uint32_t SYSCFG_EXTICR4_RESET_VALUE = 0x0;
 
     static const uint32_t SYSCFG_CFGR2_SRAM_PEF = 0x100;     // SRAM parity flag
@@ -3719,20 +3730,20 @@ struct syscfg_comp_t
 
     static const uint32_t COMP_CSR_COMP1EN = 0x1;        // Comparator 1 enable, Read-write
     static const uint32_t COMP_CSR_COMP1_INP_DAC = 0x2;  // COMP1_INP_DAC, Read-write
-    static constexpr uint32_t COMP_CSR_COMP1MODE(uint32_t x) { return (x & 0x3) << 2; } // Comparator 1 mode (2 bits), Read-write
-    static constexpr uint32_t COMP_CSR_COMP1INSEL(uint32_t x) { return (x & 0x7) << 4; } // Comparator 1 inverting input selection (3 bits), Read-write
-    static constexpr uint32_t COMP_CSR_COMP1OUTSEL(uint32_t x) { return (x & 0x7) << 8; } // Comparator 1 output selection (3 bits), Read-write
+    typedef bit_field_t<2, 0x3> COMP_CSR_COMP1MODE;  // Comparator 1 mode (2 bits), Read-write
+    typedef bit_field_t<4, 0x7> COMP_CSR_COMP1INSEL;  // Comparator 1 inverting input selection (3 bits), Read-write
+    typedef bit_field_t<8, 0x7> COMP_CSR_COMP1OUTSEL;  // Comparator 1 output selection (3 bits), Read-write
     static const uint32_t COMP_CSR_COMP1POL = 0x800;     // Comparator 1 output polarity, Read-write
-    static constexpr uint32_t COMP_CSR_COMP1HYST(uint32_t x) { return (x & 0x3) << 12; } // Comparator 1 hysteresis (2 bits), Read-write
+    typedef bit_field_t<12, 0x3> COMP_CSR_COMP1HYST;  // Comparator 1 hysteresis (2 bits), Read-write
     static const uint32_t COMP_CSR_COMP1OUT = 0x4000;    // Comparator 1 output, Read-only
     static const uint32_t COMP_CSR_COMP1LOCK = 0x8000;   // Comparator 1 lock, Read-write
     static const uint32_t COMP_CSR_COMP2EN = 0x10000;    // Comparator 2 enable, Read-write
-    static constexpr uint32_t COMP_CSR_COMP2MODE(uint32_t x) { return (x & 0x3) << 18; } // Comparator 2 mode (2 bits), Read-write
-    static constexpr uint32_t COMP_CSR_COMP2INSEL(uint32_t x) { return (x & 0x7) << 20; } // Comparator 2 inverting input selection (3 bits), Read-write
+    typedef bit_field_t<18, 0x3> COMP_CSR_COMP2MODE;  // Comparator 2 mode (2 bits), Read-write
+    typedef bit_field_t<20, 0x7> COMP_CSR_COMP2INSEL;  // Comparator 2 inverting input selection (3 bits), Read-write
     static const uint32_t COMP_CSR_WNDWEN = 0x800000;    // Window mode enable, Read-write
-    static constexpr uint32_t COMP_CSR_COMP2OUTSEL(uint32_t x) { return (x & 0x7) << 24; } // Comparator 2 output selection (3 bits), Read-write
+    typedef bit_field_t<24, 0x7> COMP_CSR_COMP2OUTSEL;  // Comparator 2 output selection (3 bits), Read-write
     static const uint32_t COMP_CSR_COMP2POL = 0x8000000; // Comparator 2 output polarity, Read-write
-    static constexpr uint32_t COMP_CSR_COMP2HYST(uint32_t x) { return (x & 0x3) << 28; } // Comparator 2 hysteresis (2 bits), Read-write
+    typedef bit_field_t<28, 0x3> COMP_CSR_COMP2HYST;  // Comparator 2 hysteresis (2 bits), Read-write
     static const uint32_t COMP_CSR_COMP2OUT = 0x40000000;// Comparator 2 output, Read-only
     static const uint32_t COMP_CSR_COMP2LOCK = 0x80000000;// Comparator 2 lock, Read-write
     static const uint32_t COMP_CSR_RESET_VALUE = 0x0;
@@ -3787,7 +3798,7 @@ struct adc_t
     static const uint32_t CR_ADEN = 0x1;           // ADC enable command
     static const uint32_t CR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CFGR1_AWDCH(uint32_t x) { return (x & 0x1f) << 26; } // Analog watchdog channel selection (5 bits)
+    typedef bit_field_t<26, 0x1f> CFGR1_AWDCH;  // Analog watchdog channel selection (5 bits)
     static const uint32_t CFGR1_AWDEN = 0x800000;     // Analog watchdog enable
     static const uint32_t CFGR1_AWDSGL = 0x400000;    // Enable the watchdog on a single channel or on all channels
     static const uint32_t CFGR1_DISCEN = 0x10000;     // Discontinuous mode
@@ -3795,10 +3806,10 @@ struct adc_t
     static const uint32_t CFGR1_AUTDLY = 0x4000;      // Auto-delayed conversion mode
     static const uint32_t CFGR1_CONT = 0x2000;        // Single / continuous conversion mode
     static const uint32_t CFGR1_OVRMOD = 0x1000;      // Overrun management mode
-    static constexpr uint32_t CFGR1_EXTEN(uint32_t x) { return (x & 0x3) << 10; } // External trigger enable and polarity selection (2 bits)
-    static constexpr uint32_t CFGR1_EXTSEL(uint32_t x) { return (x & 0x7) << 6; } // External trigger selection (3 bits)
+    typedef bit_field_t<10, 0x3> CFGR1_EXTEN;  // External trigger enable and polarity selection (2 bits)
+    typedef bit_field_t<6, 0x7> CFGR1_EXTSEL;  // External trigger selection (3 bits)
     static const uint32_t CFGR1_ALIGN = 0x20;         // Data alignment
-    static constexpr uint32_t CFGR1_RES(uint32_t x) { return (x & 0x3) << 3; } // Data resolution (2 bits)
+    typedef bit_field_t<3, 0x3> CFGR1_RES;  // Data resolution (2 bits)
     static const uint32_t CFGR1_SCANDIR = 0x4;        // Scan sequence direction
     static const uint32_t CFGR1_DMACFG = 0x2;         // Direct memery access configuration
     static const uint32_t CFGR1_DMAEN = 0x1;          // Direct memory access enable
@@ -3808,11 +3819,11 @@ struct adc_t
     static const uint32_t CFGR2_JITOFF_D2 = 0x40000000;// JITOFF_D2
     static const uint32_t CFGR2_RESET_VALUE = 0x8000;
 
-    static constexpr uint32_t SMPR_SMPR(uint32_t x) { return (x & 0x7) << 0; } // Sampling time selection (3 bits)
+    typedef bit_field_t<0, 0x7> SMPR_SMPR;  // Sampling time selection (3 bits)
     static const uint32_t SMPR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TR_HT(uint32_t x) { return (x & 0xfff) << 16; } // Analog watchdog higher threshold (12 bits)
-    static constexpr uint32_t TR_LT(uint32_t x) { return (x & 0xfff) << 0; } // Analog watchdog lower threshold (12 bits)
+    typedef bit_field_t<16, 0xfff> TR_HT;  // Analog watchdog higher threshold (12 bits)
+    typedef bit_field_t<0, 0xfff> TR_LT;  // Analog watchdog lower threshold (12 bits)
     static const uint32_t TR_RESET_VALUE = 0xfff;
 
     static const uint32_t CHSELR_CHSEL18 = 0x40000;    // Channel-x selection
@@ -3836,7 +3847,7 @@ struct adc_t
     static const uint32_t CHSELR_CHSEL0 = 0x1;         // Channel-x selection
     static const uint32_t CHSELR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DR_DATA(uint32_t x) { return (x & 0xffff) << 0; } // Converted data (16 bits)
+    typedef bit_field_t<0, 0xffff> DR_DATA;  // Converted data (16 bits)
     static const uint32_t DR_RESET_VALUE = 0x0;
 
     static const uint32_t CCR_VBATEN = 0x1000000;   // VBAT enable
@@ -3884,17 +3895,17 @@ struct usart1_t
     static const uint32_t CR1_MME = 0x2000;         // Mute mode enable
     static const uint32_t CR1_CMIE = 0x4000;        // Character match interrupt enable
     static const uint32_t CR1_OVER8 = 0x8000;       // Oversampling mode
-    static constexpr uint32_t CR1_DEDT(uint32_t x) { return (x & 0x1f) << 16; } // Driver Enable deassertion time (5 bits)
-    static constexpr uint32_t CR1_DEAT(uint32_t x) { return (x & 0x1f) << 21; } // Driver Enable assertion time (5 bits)
+    typedef bit_field_t<16, 0x1f> CR1_DEDT;  // Driver Enable deassertion time (5 bits)
+    typedef bit_field_t<21, 0x1f> CR1_DEAT;  // Driver Enable assertion time (5 bits)
     static const uint32_t CR1_RTOIE = 0x4000000;    // Receiver timeout interrupt enable
     static const uint32_t CR1_EOBIE = 0x8000000;    // End of Block interrupt enable
     static const uint32_t CR1_M1 = 0x10000000;      // Word length
     static const uint32_t CR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CR2_ADD4(uint32_t x) { return (x & 0xf) << 28; } // Address of the USART node (4 bits)
-    static constexpr uint32_t CR2_ADD0(uint32_t x) { return (x & 0xf) << 24; } // Address of the USART node (4 bits)
+    typedef bit_field_t<28, 0xf> CR2_ADD4;  // Address of the USART node (4 bits)
+    typedef bit_field_t<24, 0xf> CR2_ADD0;  // Address of the USART node (4 bits)
     static const uint32_t CR2_RTOEN = 0x800000;     // Receiver timeout enable
-    static constexpr uint32_t CR2_ABRMOD(uint32_t x) { return (x & 0x3) << 21; } // Auto baud rate mode (2 bits)
+    typedef bit_field_t<21, 0x3> CR2_ABRMOD;  // Auto baud rate mode (2 bits)
     static const uint32_t CR2_ABREN = 0x100000;     // Auto baud rate enable
     static const uint32_t CR2_MSBFIRST = 0x80000;   // Most significant bit first
     static const uint32_t CR2_DATAINV = 0x40000;    // Binary data inversion
@@ -3902,7 +3913,7 @@ struct usart1_t
     static const uint32_t CR2_RXINV = 0x10000;      // RX pin active level inversion
     static const uint32_t CR2_SWAP = 0x8000;        // Swap TX/RX pins
     static const uint32_t CR2_LINEN = 0x4000;       // LIN mode enable
-    static constexpr uint32_t CR2_STOP(uint32_t x) { return (x & 0x3) << 12; } // STOP bits (2 bits)
+    typedef bit_field_t<12, 0x3> CR2_STOP;  // STOP bits (2 bits)
     static const uint32_t CR2_CLKEN = 0x800;        // Clock enable
     static const uint32_t CR2_CPOL = 0x400;         // Clock polarity
     static const uint32_t CR2_CPHA = 0x200;         // Clock phase
@@ -3913,8 +3924,8 @@ struct usart1_t
     static const uint32_t CR2_RESET_VALUE = 0x0;
 
     static const uint32_t CR3_WUFIE = 0x400000;     // Wakeup from Stop mode interrupt enable
-    static constexpr uint32_t CR3_WUS(uint32_t x) { return (x & 0x3) << 20; } // Wakeup from Stop mode interrupt flag selection (2 bits)
-    static constexpr uint32_t CR3_SCARCNT(uint32_t x) { return (x & 0x7) << 17; } // Smartcard auto-retry count (3 bits)
+    typedef bit_field_t<20, 0x3> CR3_WUS;  // Wakeup from Stop mode interrupt flag selection (2 bits)
+    typedef bit_field_t<17, 0x7> CR3_SCARCNT;  // Smartcard auto-retry count (3 bits)
     static const uint32_t CR3_DEP = 0x8000;         // Driver enable polarity selection
     static const uint32_t CR3_DEM = 0x4000;         // Driver enable mode
     static const uint32_t CR3_DDRE = 0x2000;        // DMA Disable on Reception Error
@@ -3933,16 +3944,16 @@ struct usart1_t
     static const uint32_t CR3_EIE = 0x1;            // Error interrupt enable
     static const uint32_t CR3_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t BRR_DIV_Mantissa(uint32_t x) { return (x & 0xfff) << 4; } // mantissa of USARTDIV (12 bits)
-    static constexpr uint32_t BRR_DIV_Fraction(uint32_t x) { return (x & 0xf) << 0; } // fraction of USARTDIV (4 bits)
+    typedef bit_field_t<4, 0xfff> BRR_DIV_Mantissa;  // mantissa of USARTDIV (12 bits)
+    typedef bit_field_t<0, 0xf> BRR_DIV_Fraction;  // fraction of USARTDIV (4 bits)
     static const uint32_t BRR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t GTPR_GT(uint32_t x) { return (x & 0xff) << 8; } // Guard time value (8 bits)
-    static constexpr uint32_t GTPR_PSC(uint32_t x) { return (x & 0xff) << 0; } // Prescaler value (8 bits)
+    typedef bit_field_t<8, 0xff> GTPR_GT;  // Guard time value (8 bits)
+    typedef bit_field_t<0, 0xff> GTPR_PSC;  // Prescaler value (8 bits)
     static const uint32_t GTPR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RTOR_BLEN(uint32_t x) { return (x & 0xff) << 24; } // Block Length (8 bits)
-    static constexpr uint32_t RTOR_RTO(uint32_t x) { return (x & 0xffffff) << 0; } // Receiver timeout value (24 bits)
+    typedef bit_field_t<24, 0xff> RTOR_BLEN;  // Block Length (8 bits)
+    typedef bit_field_t<0, 0xffffff> RTOR_RTO;  // Receiver timeout value (24 bits)
     static const uint32_t RTOR_RESET_VALUE = 0x0;
 
     static const uint32_t RQR_TXFRQ = 0x10;         // Transmit data flush request
@@ -3990,10 +4001,10 @@ struct usart1_t
     static const uint32_t ICR_PECF = 0x1;           // Parity error clear flag
     static const uint32_t ICR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RDR_RDR(uint32_t x) { return (x & 0x1ff) << 0; } // Receive data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> RDR_RDR;  // Receive data value (9 bits)
     static const uint32_t RDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TDR_TDR(uint32_t x) { return (x & 0x1ff) << 0; } // Transmit data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> TDR_TDR;  // Transmit data value (9 bits)
     static const uint32_t TDR_RESET_VALUE = 0x0;
 };
 
@@ -4036,17 +4047,17 @@ struct usart2_t
     static const uint32_t CR1_MME = 0x2000;         // Mute mode enable
     static const uint32_t CR1_CMIE = 0x4000;        // Character match interrupt enable
     static const uint32_t CR1_OVER8 = 0x8000;       // Oversampling mode
-    static constexpr uint32_t CR1_DEDT(uint32_t x) { return (x & 0x1f) << 16; } // Driver Enable deassertion time (5 bits)
-    static constexpr uint32_t CR1_DEAT(uint32_t x) { return (x & 0x1f) << 21; } // Driver Enable assertion time (5 bits)
+    typedef bit_field_t<16, 0x1f> CR1_DEDT;  // Driver Enable deassertion time (5 bits)
+    typedef bit_field_t<21, 0x1f> CR1_DEAT;  // Driver Enable assertion time (5 bits)
     static const uint32_t CR1_RTOIE = 0x4000000;    // Receiver timeout interrupt enable
     static const uint32_t CR1_EOBIE = 0x8000000;    // End of Block interrupt enable
     static const uint32_t CR1_M1 = 0x10000000;      // Word length
     static const uint32_t CR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CR2_ADD4(uint32_t x) { return (x & 0xf) << 28; } // Address of the USART node (4 bits)
-    static constexpr uint32_t CR2_ADD0(uint32_t x) { return (x & 0xf) << 24; } // Address of the USART node (4 bits)
+    typedef bit_field_t<28, 0xf> CR2_ADD4;  // Address of the USART node (4 bits)
+    typedef bit_field_t<24, 0xf> CR2_ADD0;  // Address of the USART node (4 bits)
     static const uint32_t CR2_RTOEN = 0x800000;     // Receiver timeout enable
-    static constexpr uint32_t CR2_ABRMOD(uint32_t x) { return (x & 0x3) << 21; } // Auto baud rate mode (2 bits)
+    typedef bit_field_t<21, 0x3> CR2_ABRMOD;  // Auto baud rate mode (2 bits)
     static const uint32_t CR2_ABREN = 0x100000;     // Auto baud rate enable
     static const uint32_t CR2_MSBFIRST = 0x80000;   // Most significant bit first
     static const uint32_t CR2_DATAINV = 0x40000;    // Binary data inversion
@@ -4054,7 +4065,7 @@ struct usart2_t
     static const uint32_t CR2_RXINV = 0x10000;      // RX pin active level inversion
     static const uint32_t CR2_SWAP = 0x8000;        // Swap TX/RX pins
     static const uint32_t CR2_LINEN = 0x4000;       // LIN mode enable
-    static constexpr uint32_t CR2_STOP(uint32_t x) { return (x & 0x3) << 12; } // STOP bits (2 bits)
+    typedef bit_field_t<12, 0x3> CR2_STOP;  // STOP bits (2 bits)
     static const uint32_t CR2_CLKEN = 0x800;        // Clock enable
     static const uint32_t CR2_CPOL = 0x400;         // Clock polarity
     static const uint32_t CR2_CPHA = 0x200;         // Clock phase
@@ -4065,8 +4076,8 @@ struct usart2_t
     static const uint32_t CR2_RESET_VALUE = 0x0;
 
     static const uint32_t CR3_WUFIE = 0x400000;     // Wakeup from Stop mode interrupt enable
-    static constexpr uint32_t CR3_WUS(uint32_t x) { return (x & 0x3) << 20; } // Wakeup from Stop mode interrupt flag selection (2 bits)
-    static constexpr uint32_t CR3_SCARCNT(uint32_t x) { return (x & 0x7) << 17; } // Smartcard auto-retry count (3 bits)
+    typedef bit_field_t<20, 0x3> CR3_WUS;  // Wakeup from Stop mode interrupt flag selection (2 bits)
+    typedef bit_field_t<17, 0x7> CR3_SCARCNT;  // Smartcard auto-retry count (3 bits)
     static const uint32_t CR3_DEP = 0x8000;         // Driver enable polarity selection
     static const uint32_t CR3_DEM = 0x4000;         // Driver enable mode
     static const uint32_t CR3_DDRE = 0x2000;        // DMA Disable on Reception Error
@@ -4085,16 +4096,16 @@ struct usart2_t
     static const uint32_t CR3_EIE = 0x1;            // Error interrupt enable
     static const uint32_t CR3_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t BRR_DIV_Mantissa(uint32_t x) { return (x & 0xfff) << 4; } // mantissa of USARTDIV (12 bits)
-    static constexpr uint32_t BRR_DIV_Fraction(uint32_t x) { return (x & 0xf) << 0; } // fraction of USARTDIV (4 bits)
+    typedef bit_field_t<4, 0xfff> BRR_DIV_Mantissa;  // mantissa of USARTDIV (12 bits)
+    typedef bit_field_t<0, 0xf> BRR_DIV_Fraction;  // fraction of USARTDIV (4 bits)
     static const uint32_t BRR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t GTPR_GT(uint32_t x) { return (x & 0xff) << 8; } // Guard time value (8 bits)
-    static constexpr uint32_t GTPR_PSC(uint32_t x) { return (x & 0xff) << 0; } // Prescaler value (8 bits)
+    typedef bit_field_t<8, 0xff> GTPR_GT;  // Guard time value (8 bits)
+    typedef bit_field_t<0, 0xff> GTPR_PSC;  // Prescaler value (8 bits)
     static const uint32_t GTPR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RTOR_BLEN(uint32_t x) { return (x & 0xff) << 24; } // Block Length (8 bits)
-    static constexpr uint32_t RTOR_RTO(uint32_t x) { return (x & 0xffffff) << 0; } // Receiver timeout value (24 bits)
+    typedef bit_field_t<24, 0xff> RTOR_BLEN;  // Block Length (8 bits)
+    typedef bit_field_t<0, 0xffffff> RTOR_RTO;  // Receiver timeout value (24 bits)
     static const uint32_t RTOR_RESET_VALUE = 0x0;
 
     static const uint32_t RQR_TXFRQ = 0x10;         // Transmit data flush request
@@ -4142,10 +4153,10 @@ struct usart2_t
     static const uint32_t ICR_PECF = 0x1;           // Parity error clear flag
     static const uint32_t ICR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RDR_RDR(uint32_t x) { return (x & 0x1ff) << 0; } // Receive data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> RDR_RDR;  // Receive data value (9 bits)
     static const uint32_t RDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TDR_TDR(uint32_t x) { return (x & 0x1ff) << 0; } // Transmit data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> TDR_TDR;  // Transmit data value (9 bits)
     static const uint32_t TDR_RESET_VALUE = 0x0;
 };
 
@@ -4188,17 +4199,17 @@ struct usart3_t
     static const uint32_t CR1_MME = 0x2000;         // Mute mode enable
     static const uint32_t CR1_CMIE = 0x4000;        // Character match interrupt enable
     static const uint32_t CR1_OVER8 = 0x8000;       // Oversampling mode
-    static constexpr uint32_t CR1_DEDT(uint32_t x) { return (x & 0x1f) << 16; } // Driver Enable deassertion time (5 bits)
-    static constexpr uint32_t CR1_DEAT(uint32_t x) { return (x & 0x1f) << 21; } // Driver Enable assertion time (5 bits)
+    typedef bit_field_t<16, 0x1f> CR1_DEDT;  // Driver Enable deassertion time (5 bits)
+    typedef bit_field_t<21, 0x1f> CR1_DEAT;  // Driver Enable assertion time (5 bits)
     static const uint32_t CR1_RTOIE = 0x4000000;    // Receiver timeout interrupt enable
     static const uint32_t CR1_EOBIE = 0x8000000;    // End of Block interrupt enable
     static const uint32_t CR1_M1 = 0x10000000;      // Word length
     static const uint32_t CR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CR2_ADD4(uint32_t x) { return (x & 0xf) << 28; } // Address of the USART node (4 bits)
-    static constexpr uint32_t CR2_ADD0(uint32_t x) { return (x & 0xf) << 24; } // Address of the USART node (4 bits)
+    typedef bit_field_t<28, 0xf> CR2_ADD4;  // Address of the USART node (4 bits)
+    typedef bit_field_t<24, 0xf> CR2_ADD0;  // Address of the USART node (4 bits)
     static const uint32_t CR2_RTOEN = 0x800000;     // Receiver timeout enable
-    static constexpr uint32_t CR2_ABRMOD(uint32_t x) { return (x & 0x3) << 21; } // Auto baud rate mode (2 bits)
+    typedef bit_field_t<21, 0x3> CR2_ABRMOD;  // Auto baud rate mode (2 bits)
     static const uint32_t CR2_ABREN = 0x100000;     // Auto baud rate enable
     static const uint32_t CR2_MSBFIRST = 0x80000;   // Most significant bit first
     static const uint32_t CR2_DATAINV = 0x40000;    // Binary data inversion
@@ -4206,7 +4217,7 @@ struct usart3_t
     static const uint32_t CR2_RXINV = 0x10000;      // RX pin active level inversion
     static const uint32_t CR2_SWAP = 0x8000;        // Swap TX/RX pins
     static const uint32_t CR2_LINEN = 0x4000;       // LIN mode enable
-    static constexpr uint32_t CR2_STOP(uint32_t x) { return (x & 0x3) << 12; } // STOP bits (2 bits)
+    typedef bit_field_t<12, 0x3> CR2_STOP;  // STOP bits (2 bits)
     static const uint32_t CR2_CLKEN = 0x800;        // Clock enable
     static const uint32_t CR2_CPOL = 0x400;         // Clock polarity
     static const uint32_t CR2_CPHA = 0x200;         // Clock phase
@@ -4217,8 +4228,8 @@ struct usart3_t
     static const uint32_t CR2_RESET_VALUE = 0x0;
 
     static const uint32_t CR3_WUFIE = 0x400000;     // Wakeup from Stop mode interrupt enable
-    static constexpr uint32_t CR3_WUS(uint32_t x) { return (x & 0x3) << 20; } // Wakeup from Stop mode interrupt flag selection (2 bits)
-    static constexpr uint32_t CR3_SCARCNT(uint32_t x) { return (x & 0x7) << 17; } // Smartcard auto-retry count (3 bits)
+    typedef bit_field_t<20, 0x3> CR3_WUS;  // Wakeup from Stop mode interrupt flag selection (2 bits)
+    typedef bit_field_t<17, 0x7> CR3_SCARCNT;  // Smartcard auto-retry count (3 bits)
     static const uint32_t CR3_DEP = 0x8000;         // Driver enable polarity selection
     static const uint32_t CR3_DEM = 0x4000;         // Driver enable mode
     static const uint32_t CR3_DDRE = 0x2000;        // DMA Disable on Reception Error
@@ -4237,16 +4248,16 @@ struct usart3_t
     static const uint32_t CR3_EIE = 0x1;            // Error interrupt enable
     static const uint32_t CR3_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t BRR_DIV_Mantissa(uint32_t x) { return (x & 0xfff) << 4; } // mantissa of USARTDIV (12 bits)
-    static constexpr uint32_t BRR_DIV_Fraction(uint32_t x) { return (x & 0xf) << 0; } // fraction of USARTDIV (4 bits)
+    typedef bit_field_t<4, 0xfff> BRR_DIV_Mantissa;  // mantissa of USARTDIV (12 bits)
+    typedef bit_field_t<0, 0xf> BRR_DIV_Fraction;  // fraction of USARTDIV (4 bits)
     static const uint32_t BRR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t GTPR_GT(uint32_t x) { return (x & 0xff) << 8; } // Guard time value (8 bits)
-    static constexpr uint32_t GTPR_PSC(uint32_t x) { return (x & 0xff) << 0; } // Prescaler value (8 bits)
+    typedef bit_field_t<8, 0xff> GTPR_GT;  // Guard time value (8 bits)
+    typedef bit_field_t<0, 0xff> GTPR_PSC;  // Prescaler value (8 bits)
     static const uint32_t GTPR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RTOR_BLEN(uint32_t x) { return (x & 0xff) << 24; } // Block Length (8 bits)
-    static constexpr uint32_t RTOR_RTO(uint32_t x) { return (x & 0xffffff) << 0; } // Receiver timeout value (24 bits)
+    typedef bit_field_t<24, 0xff> RTOR_BLEN;  // Block Length (8 bits)
+    typedef bit_field_t<0, 0xffffff> RTOR_RTO;  // Receiver timeout value (24 bits)
     static const uint32_t RTOR_RESET_VALUE = 0x0;
 
     static const uint32_t RQR_TXFRQ = 0x10;         // Transmit data flush request
@@ -4294,10 +4305,10 @@ struct usart3_t
     static const uint32_t ICR_PECF = 0x1;           // Parity error clear flag
     static const uint32_t ICR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RDR_RDR(uint32_t x) { return (x & 0x1ff) << 0; } // Receive data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> RDR_RDR;  // Receive data value (9 bits)
     static const uint32_t RDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TDR_TDR(uint32_t x) { return (x & 0x1ff) << 0; } // Transmit data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> TDR_TDR;  // Transmit data value (9 bits)
     static const uint32_t TDR_RESET_VALUE = 0x0;
 };
 
@@ -4340,17 +4351,17 @@ struct usart4_t
     static const uint32_t CR1_MME = 0x2000;         // Mute mode enable
     static const uint32_t CR1_CMIE = 0x4000;        // Character match interrupt enable
     static const uint32_t CR1_OVER8 = 0x8000;       // Oversampling mode
-    static constexpr uint32_t CR1_DEDT(uint32_t x) { return (x & 0x1f) << 16; } // Driver Enable deassertion time (5 bits)
-    static constexpr uint32_t CR1_DEAT(uint32_t x) { return (x & 0x1f) << 21; } // Driver Enable assertion time (5 bits)
+    typedef bit_field_t<16, 0x1f> CR1_DEDT;  // Driver Enable deassertion time (5 bits)
+    typedef bit_field_t<21, 0x1f> CR1_DEAT;  // Driver Enable assertion time (5 bits)
     static const uint32_t CR1_RTOIE = 0x4000000;    // Receiver timeout interrupt enable
     static const uint32_t CR1_EOBIE = 0x8000000;    // End of Block interrupt enable
     static const uint32_t CR1_M1 = 0x10000000;      // Word length
     static const uint32_t CR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CR2_ADD4(uint32_t x) { return (x & 0xf) << 28; } // Address of the USART node (4 bits)
-    static constexpr uint32_t CR2_ADD0(uint32_t x) { return (x & 0xf) << 24; } // Address of the USART node (4 bits)
+    typedef bit_field_t<28, 0xf> CR2_ADD4;  // Address of the USART node (4 bits)
+    typedef bit_field_t<24, 0xf> CR2_ADD0;  // Address of the USART node (4 bits)
     static const uint32_t CR2_RTOEN = 0x800000;     // Receiver timeout enable
-    static constexpr uint32_t CR2_ABRMOD(uint32_t x) { return (x & 0x3) << 21; } // Auto baud rate mode (2 bits)
+    typedef bit_field_t<21, 0x3> CR2_ABRMOD;  // Auto baud rate mode (2 bits)
     static const uint32_t CR2_ABREN = 0x100000;     // Auto baud rate enable
     static const uint32_t CR2_MSBFIRST = 0x80000;   // Most significant bit first
     static const uint32_t CR2_DATAINV = 0x40000;    // Binary data inversion
@@ -4358,7 +4369,7 @@ struct usart4_t
     static const uint32_t CR2_RXINV = 0x10000;      // RX pin active level inversion
     static const uint32_t CR2_SWAP = 0x8000;        // Swap TX/RX pins
     static const uint32_t CR2_LINEN = 0x4000;       // LIN mode enable
-    static constexpr uint32_t CR2_STOP(uint32_t x) { return (x & 0x3) << 12; } // STOP bits (2 bits)
+    typedef bit_field_t<12, 0x3> CR2_STOP;  // STOP bits (2 bits)
     static const uint32_t CR2_CLKEN = 0x800;        // Clock enable
     static const uint32_t CR2_CPOL = 0x400;         // Clock polarity
     static const uint32_t CR2_CPHA = 0x200;         // Clock phase
@@ -4369,8 +4380,8 @@ struct usart4_t
     static const uint32_t CR2_RESET_VALUE = 0x0;
 
     static const uint32_t CR3_WUFIE = 0x400000;     // Wakeup from Stop mode interrupt enable
-    static constexpr uint32_t CR3_WUS(uint32_t x) { return (x & 0x3) << 20; } // Wakeup from Stop mode interrupt flag selection (2 bits)
-    static constexpr uint32_t CR3_SCARCNT(uint32_t x) { return (x & 0x7) << 17; } // Smartcard auto-retry count (3 bits)
+    typedef bit_field_t<20, 0x3> CR3_WUS;  // Wakeup from Stop mode interrupt flag selection (2 bits)
+    typedef bit_field_t<17, 0x7> CR3_SCARCNT;  // Smartcard auto-retry count (3 bits)
     static const uint32_t CR3_DEP = 0x8000;         // Driver enable polarity selection
     static const uint32_t CR3_DEM = 0x4000;         // Driver enable mode
     static const uint32_t CR3_DDRE = 0x2000;        // DMA Disable on Reception Error
@@ -4389,16 +4400,16 @@ struct usart4_t
     static const uint32_t CR3_EIE = 0x1;            // Error interrupt enable
     static const uint32_t CR3_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t BRR_DIV_Mantissa(uint32_t x) { return (x & 0xfff) << 4; } // mantissa of USARTDIV (12 bits)
-    static constexpr uint32_t BRR_DIV_Fraction(uint32_t x) { return (x & 0xf) << 0; } // fraction of USARTDIV (4 bits)
+    typedef bit_field_t<4, 0xfff> BRR_DIV_Mantissa;  // mantissa of USARTDIV (12 bits)
+    typedef bit_field_t<0, 0xf> BRR_DIV_Fraction;  // fraction of USARTDIV (4 bits)
     static const uint32_t BRR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t GTPR_GT(uint32_t x) { return (x & 0xff) << 8; } // Guard time value (8 bits)
-    static constexpr uint32_t GTPR_PSC(uint32_t x) { return (x & 0xff) << 0; } // Prescaler value (8 bits)
+    typedef bit_field_t<8, 0xff> GTPR_GT;  // Guard time value (8 bits)
+    typedef bit_field_t<0, 0xff> GTPR_PSC;  // Prescaler value (8 bits)
     static const uint32_t GTPR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RTOR_BLEN(uint32_t x) { return (x & 0xff) << 24; } // Block Length (8 bits)
-    static constexpr uint32_t RTOR_RTO(uint32_t x) { return (x & 0xffffff) << 0; } // Receiver timeout value (24 bits)
+    typedef bit_field_t<24, 0xff> RTOR_BLEN;  // Block Length (8 bits)
+    typedef bit_field_t<0, 0xffffff> RTOR_RTO;  // Receiver timeout value (24 bits)
     static const uint32_t RTOR_RESET_VALUE = 0x0;
 
     static const uint32_t RQR_TXFRQ = 0x10;         // Transmit data flush request
@@ -4446,10 +4457,10 @@ struct usart4_t
     static const uint32_t ICR_PECF = 0x1;           // Parity error clear flag
     static const uint32_t ICR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RDR_RDR(uint32_t x) { return (x & 0x1ff) << 0; } // Receive data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> RDR_RDR;  // Receive data value (9 bits)
     static const uint32_t RDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TDR_TDR(uint32_t x) { return (x & 0x1ff) << 0; } // Transmit data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> TDR_TDR;  // Transmit data value (9 bits)
     static const uint32_t TDR_RESET_VALUE = 0x0;
 };
 
@@ -4492,17 +4503,17 @@ struct usart6_t
     static const uint32_t CR1_MME = 0x2000;         // Mute mode enable
     static const uint32_t CR1_CMIE = 0x4000;        // Character match interrupt enable
     static const uint32_t CR1_OVER8 = 0x8000;       // Oversampling mode
-    static constexpr uint32_t CR1_DEDT(uint32_t x) { return (x & 0x1f) << 16; } // Driver Enable deassertion time (5 bits)
-    static constexpr uint32_t CR1_DEAT(uint32_t x) { return (x & 0x1f) << 21; } // Driver Enable assertion time (5 bits)
+    typedef bit_field_t<16, 0x1f> CR1_DEDT;  // Driver Enable deassertion time (5 bits)
+    typedef bit_field_t<21, 0x1f> CR1_DEAT;  // Driver Enable assertion time (5 bits)
     static const uint32_t CR1_RTOIE = 0x4000000;    // Receiver timeout interrupt enable
     static const uint32_t CR1_EOBIE = 0x8000000;    // End of Block interrupt enable
     static const uint32_t CR1_M1 = 0x10000000;      // Word length
     static const uint32_t CR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CR2_ADD4(uint32_t x) { return (x & 0xf) << 28; } // Address of the USART node (4 bits)
-    static constexpr uint32_t CR2_ADD0(uint32_t x) { return (x & 0xf) << 24; } // Address of the USART node (4 bits)
+    typedef bit_field_t<28, 0xf> CR2_ADD4;  // Address of the USART node (4 bits)
+    typedef bit_field_t<24, 0xf> CR2_ADD0;  // Address of the USART node (4 bits)
     static const uint32_t CR2_RTOEN = 0x800000;     // Receiver timeout enable
-    static constexpr uint32_t CR2_ABRMOD(uint32_t x) { return (x & 0x3) << 21; } // Auto baud rate mode (2 bits)
+    typedef bit_field_t<21, 0x3> CR2_ABRMOD;  // Auto baud rate mode (2 bits)
     static const uint32_t CR2_ABREN = 0x100000;     // Auto baud rate enable
     static const uint32_t CR2_MSBFIRST = 0x80000;   // Most significant bit first
     static const uint32_t CR2_DATAINV = 0x40000;    // Binary data inversion
@@ -4510,7 +4521,7 @@ struct usart6_t
     static const uint32_t CR2_RXINV = 0x10000;      // RX pin active level inversion
     static const uint32_t CR2_SWAP = 0x8000;        // Swap TX/RX pins
     static const uint32_t CR2_LINEN = 0x4000;       // LIN mode enable
-    static constexpr uint32_t CR2_STOP(uint32_t x) { return (x & 0x3) << 12; } // STOP bits (2 bits)
+    typedef bit_field_t<12, 0x3> CR2_STOP;  // STOP bits (2 bits)
     static const uint32_t CR2_CLKEN = 0x800;        // Clock enable
     static const uint32_t CR2_CPOL = 0x400;         // Clock polarity
     static const uint32_t CR2_CPHA = 0x200;         // Clock phase
@@ -4521,8 +4532,8 @@ struct usart6_t
     static const uint32_t CR2_RESET_VALUE = 0x0;
 
     static const uint32_t CR3_WUFIE = 0x400000;     // Wakeup from Stop mode interrupt enable
-    static constexpr uint32_t CR3_WUS(uint32_t x) { return (x & 0x3) << 20; } // Wakeup from Stop mode interrupt flag selection (2 bits)
-    static constexpr uint32_t CR3_SCARCNT(uint32_t x) { return (x & 0x7) << 17; } // Smartcard auto-retry count (3 bits)
+    typedef bit_field_t<20, 0x3> CR3_WUS;  // Wakeup from Stop mode interrupt flag selection (2 bits)
+    typedef bit_field_t<17, 0x7> CR3_SCARCNT;  // Smartcard auto-retry count (3 bits)
     static const uint32_t CR3_DEP = 0x8000;         // Driver enable polarity selection
     static const uint32_t CR3_DEM = 0x4000;         // Driver enable mode
     static const uint32_t CR3_DDRE = 0x2000;        // DMA Disable on Reception Error
@@ -4541,16 +4552,16 @@ struct usart6_t
     static const uint32_t CR3_EIE = 0x1;            // Error interrupt enable
     static const uint32_t CR3_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t BRR_DIV_Mantissa(uint32_t x) { return (x & 0xfff) << 4; } // mantissa of USARTDIV (12 bits)
-    static constexpr uint32_t BRR_DIV_Fraction(uint32_t x) { return (x & 0xf) << 0; } // fraction of USARTDIV (4 bits)
+    typedef bit_field_t<4, 0xfff> BRR_DIV_Mantissa;  // mantissa of USARTDIV (12 bits)
+    typedef bit_field_t<0, 0xf> BRR_DIV_Fraction;  // fraction of USARTDIV (4 bits)
     static const uint32_t BRR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t GTPR_GT(uint32_t x) { return (x & 0xff) << 8; } // Guard time value (8 bits)
-    static constexpr uint32_t GTPR_PSC(uint32_t x) { return (x & 0xff) << 0; } // Prescaler value (8 bits)
+    typedef bit_field_t<8, 0xff> GTPR_GT;  // Guard time value (8 bits)
+    typedef bit_field_t<0, 0xff> GTPR_PSC;  // Prescaler value (8 bits)
     static const uint32_t GTPR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RTOR_BLEN(uint32_t x) { return (x & 0xff) << 24; } // Block Length (8 bits)
-    static constexpr uint32_t RTOR_RTO(uint32_t x) { return (x & 0xffffff) << 0; } // Receiver timeout value (24 bits)
+    typedef bit_field_t<24, 0xff> RTOR_BLEN;  // Block Length (8 bits)
+    typedef bit_field_t<0, 0xffffff> RTOR_RTO;  // Receiver timeout value (24 bits)
     static const uint32_t RTOR_RESET_VALUE = 0x0;
 
     static const uint32_t RQR_TXFRQ = 0x10;         // Transmit data flush request
@@ -4598,10 +4609,10 @@ struct usart6_t
     static const uint32_t ICR_PECF = 0x1;           // Parity error clear flag
     static const uint32_t ICR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RDR_RDR(uint32_t x) { return (x & 0x1ff) << 0; } // Receive data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> RDR_RDR;  // Receive data value (9 bits)
     static const uint32_t RDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TDR_TDR(uint32_t x) { return (x & 0x1ff) << 0; } // Transmit data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> TDR_TDR;  // Transmit data value (9 bits)
     static const uint32_t TDR_RESET_VALUE = 0x0;
 };
 
@@ -4644,17 +4655,17 @@ struct usart7_t
     static const uint32_t CR1_MME = 0x2000;         // Mute mode enable
     static const uint32_t CR1_CMIE = 0x4000;        // Character match interrupt enable
     static const uint32_t CR1_OVER8 = 0x8000;       // Oversampling mode
-    static constexpr uint32_t CR1_DEDT(uint32_t x) { return (x & 0x1f) << 16; } // Driver Enable deassertion time (5 bits)
-    static constexpr uint32_t CR1_DEAT(uint32_t x) { return (x & 0x1f) << 21; } // Driver Enable assertion time (5 bits)
+    typedef bit_field_t<16, 0x1f> CR1_DEDT;  // Driver Enable deassertion time (5 bits)
+    typedef bit_field_t<21, 0x1f> CR1_DEAT;  // Driver Enable assertion time (5 bits)
     static const uint32_t CR1_RTOIE = 0x4000000;    // Receiver timeout interrupt enable
     static const uint32_t CR1_EOBIE = 0x8000000;    // End of Block interrupt enable
     static const uint32_t CR1_M1 = 0x10000000;      // Word length
     static const uint32_t CR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CR2_ADD4(uint32_t x) { return (x & 0xf) << 28; } // Address of the USART node (4 bits)
-    static constexpr uint32_t CR2_ADD0(uint32_t x) { return (x & 0xf) << 24; } // Address of the USART node (4 bits)
+    typedef bit_field_t<28, 0xf> CR2_ADD4;  // Address of the USART node (4 bits)
+    typedef bit_field_t<24, 0xf> CR2_ADD0;  // Address of the USART node (4 bits)
     static const uint32_t CR2_RTOEN = 0x800000;     // Receiver timeout enable
-    static constexpr uint32_t CR2_ABRMOD(uint32_t x) { return (x & 0x3) << 21; } // Auto baud rate mode (2 bits)
+    typedef bit_field_t<21, 0x3> CR2_ABRMOD;  // Auto baud rate mode (2 bits)
     static const uint32_t CR2_ABREN = 0x100000;     // Auto baud rate enable
     static const uint32_t CR2_MSBFIRST = 0x80000;   // Most significant bit first
     static const uint32_t CR2_DATAINV = 0x40000;    // Binary data inversion
@@ -4662,7 +4673,7 @@ struct usart7_t
     static const uint32_t CR2_RXINV = 0x10000;      // RX pin active level inversion
     static const uint32_t CR2_SWAP = 0x8000;        // Swap TX/RX pins
     static const uint32_t CR2_LINEN = 0x4000;       // LIN mode enable
-    static constexpr uint32_t CR2_STOP(uint32_t x) { return (x & 0x3) << 12; } // STOP bits (2 bits)
+    typedef bit_field_t<12, 0x3> CR2_STOP;  // STOP bits (2 bits)
     static const uint32_t CR2_CLKEN = 0x800;        // Clock enable
     static const uint32_t CR2_CPOL = 0x400;         // Clock polarity
     static const uint32_t CR2_CPHA = 0x200;         // Clock phase
@@ -4673,8 +4684,8 @@ struct usart7_t
     static const uint32_t CR2_RESET_VALUE = 0x0;
 
     static const uint32_t CR3_WUFIE = 0x400000;     // Wakeup from Stop mode interrupt enable
-    static constexpr uint32_t CR3_WUS(uint32_t x) { return (x & 0x3) << 20; } // Wakeup from Stop mode interrupt flag selection (2 bits)
-    static constexpr uint32_t CR3_SCARCNT(uint32_t x) { return (x & 0x7) << 17; } // Smartcard auto-retry count (3 bits)
+    typedef bit_field_t<20, 0x3> CR3_WUS;  // Wakeup from Stop mode interrupt flag selection (2 bits)
+    typedef bit_field_t<17, 0x7> CR3_SCARCNT;  // Smartcard auto-retry count (3 bits)
     static const uint32_t CR3_DEP = 0x8000;         // Driver enable polarity selection
     static const uint32_t CR3_DEM = 0x4000;         // Driver enable mode
     static const uint32_t CR3_DDRE = 0x2000;        // DMA Disable on Reception Error
@@ -4693,16 +4704,16 @@ struct usart7_t
     static const uint32_t CR3_EIE = 0x1;            // Error interrupt enable
     static const uint32_t CR3_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t BRR_DIV_Mantissa(uint32_t x) { return (x & 0xfff) << 4; } // mantissa of USARTDIV (12 bits)
-    static constexpr uint32_t BRR_DIV_Fraction(uint32_t x) { return (x & 0xf) << 0; } // fraction of USARTDIV (4 bits)
+    typedef bit_field_t<4, 0xfff> BRR_DIV_Mantissa;  // mantissa of USARTDIV (12 bits)
+    typedef bit_field_t<0, 0xf> BRR_DIV_Fraction;  // fraction of USARTDIV (4 bits)
     static const uint32_t BRR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t GTPR_GT(uint32_t x) { return (x & 0xff) << 8; } // Guard time value (8 bits)
-    static constexpr uint32_t GTPR_PSC(uint32_t x) { return (x & 0xff) << 0; } // Prescaler value (8 bits)
+    typedef bit_field_t<8, 0xff> GTPR_GT;  // Guard time value (8 bits)
+    typedef bit_field_t<0, 0xff> GTPR_PSC;  // Prescaler value (8 bits)
     static const uint32_t GTPR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RTOR_BLEN(uint32_t x) { return (x & 0xff) << 24; } // Block Length (8 bits)
-    static constexpr uint32_t RTOR_RTO(uint32_t x) { return (x & 0xffffff) << 0; } // Receiver timeout value (24 bits)
+    typedef bit_field_t<24, 0xff> RTOR_BLEN;  // Block Length (8 bits)
+    typedef bit_field_t<0, 0xffffff> RTOR_RTO;  // Receiver timeout value (24 bits)
     static const uint32_t RTOR_RESET_VALUE = 0x0;
 
     static const uint32_t RQR_TXFRQ = 0x10;         // Transmit data flush request
@@ -4750,10 +4761,10 @@ struct usart7_t
     static const uint32_t ICR_PECF = 0x1;           // Parity error clear flag
     static const uint32_t ICR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RDR_RDR(uint32_t x) { return (x & 0x1ff) << 0; } // Receive data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> RDR_RDR;  // Receive data value (9 bits)
     static const uint32_t RDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TDR_TDR(uint32_t x) { return (x & 0x1ff) << 0; } // Transmit data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> TDR_TDR;  // Transmit data value (9 bits)
     static const uint32_t TDR_RESET_VALUE = 0x0;
 };
 
@@ -4796,17 +4807,17 @@ struct usart8_t
     static const uint32_t CR1_MME = 0x2000;         // Mute mode enable
     static const uint32_t CR1_CMIE = 0x4000;        // Character match interrupt enable
     static const uint32_t CR1_OVER8 = 0x8000;       // Oversampling mode
-    static constexpr uint32_t CR1_DEDT(uint32_t x) { return (x & 0x1f) << 16; } // Driver Enable deassertion time (5 bits)
-    static constexpr uint32_t CR1_DEAT(uint32_t x) { return (x & 0x1f) << 21; } // Driver Enable assertion time (5 bits)
+    typedef bit_field_t<16, 0x1f> CR1_DEDT;  // Driver Enable deassertion time (5 bits)
+    typedef bit_field_t<21, 0x1f> CR1_DEAT;  // Driver Enable assertion time (5 bits)
     static const uint32_t CR1_RTOIE = 0x4000000;    // Receiver timeout interrupt enable
     static const uint32_t CR1_EOBIE = 0x8000000;    // End of Block interrupt enable
     static const uint32_t CR1_M1 = 0x10000000;      // Word length
     static const uint32_t CR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CR2_ADD4(uint32_t x) { return (x & 0xf) << 28; } // Address of the USART node (4 bits)
-    static constexpr uint32_t CR2_ADD0(uint32_t x) { return (x & 0xf) << 24; } // Address of the USART node (4 bits)
+    typedef bit_field_t<28, 0xf> CR2_ADD4;  // Address of the USART node (4 bits)
+    typedef bit_field_t<24, 0xf> CR2_ADD0;  // Address of the USART node (4 bits)
     static const uint32_t CR2_RTOEN = 0x800000;     // Receiver timeout enable
-    static constexpr uint32_t CR2_ABRMOD(uint32_t x) { return (x & 0x3) << 21; } // Auto baud rate mode (2 bits)
+    typedef bit_field_t<21, 0x3> CR2_ABRMOD;  // Auto baud rate mode (2 bits)
     static const uint32_t CR2_ABREN = 0x100000;     // Auto baud rate enable
     static const uint32_t CR2_MSBFIRST = 0x80000;   // Most significant bit first
     static const uint32_t CR2_DATAINV = 0x40000;    // Binary data inversion
@@ -4814,7 +4825,7 @@ struct usart8_t
     static const uint32_t CR2_RXINV = 0x10000;      // RX pin active level inversion
     static const uint32_t CR2_SWAP = 0x8000;        // Swap TX/RX pins
     static const uint32_t CR2_LINEN = 0x4000;       // LIN mode enable
-    static constexpr uint32_t CR2_STOP(uint32_t x) { return (x & 0x3) << 12; } // STOP bits (2 bits)
+    typedef bit_field_t<12, 0x3> CR2_STOP;  // STOP bits (2 bits)
     static const uint32_t CR2_CLKEN = 0x800;        // Clock enable
     static const uint32_t CR2_CPOL = 0x400;         // Clock polarity
     static const uint32_t CR2_CPHA = 0x200;         // Clock phase
@@ -4825,8 +4836,8 @@ struct usart8_t
     static const uint32_t CR2_RESET_VALUE = 0x0;
 
     static const uint32_t CR3_WUFIE = 0x400000;     // Wakeup from Stop mode interrupt enable
-    static constexpr uint32_t CR3_WUS(uint32_t x) { return (x & 0x3) << 20; } // Wakeup from Stop mode interrupt flag selection (2 bits)
-    static constexpr uint32_t CR3_SCARCNT(uint32_t x) { return (x & 0x7) << 17; } // Smartcard auto-retry count (3 bits)
+    typedef bit_field_t<20, 0x3> CR3_WUS;  // Wakeup from Stop mode interrupt flag selection (2 bits)
+    typedef bit_field_t<17, 0x7> CR3_SCARCNT;  // Smartcard auto-retry count (3 bits)
     static const uint32_t CR3_DEP = 0x8000;         // Driver enable polarity selection
     static const uint32_t CR3_DEM = 0x4000;         // Driver enable mode
     static const uint32_t CR3_DDRE = 0x2000;        // DMA Disable on Reception Error
@@ -4845,16 +4856,16 @@ struct usart8_t
     static const uint32_t CR3_EIE = 0x1;            // Error interrupt enable
     static const uint32_t CR3_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t BRR_DIV_Mantissa(uint32_t x) { return (x & 0xfff) << 4; } // mantissa of USARTDIV (12 bits)
-    static constexpr uint32_t BRR_DIV_Fraction(uint32_t x) { return (x & 0xf) << 0; } // fraction of USARTDIV (4 bits)
+    typedef bit_field_t<4, 0xfff> BRR_DIV_Mantissa;  // mantissa of USARTDIV (12 bits)
+    typedef bit_field_t<0, 0xf> BRR_DIV_Fraction;  // fraction of USARTDIV (4 bits)
     static const uint32_t BRR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t GTPR_GT(uint32_t x) { return (x & 0xff) << 8; } // Guard time value (8 bits)
-    static constexpr uint32_t GTPR_PSC(uint32_t x) { return (x & 0xff) << 0; } // Prescaler value (8 bits)
+    typedef bit_field_t<8, 0xff> GTPR_GT;  // Guard time value (8 bits)
+    typedef bit_field_t<0, 0xff> GTPR_PSC;  // Prescaler value (8 bits)
     static const uint32_t GTPR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RTOR_BLEN(uint32_t x) { return (x & 0xff) << 24; } // Block Length (8 bits)
-    static constexpr uint32_t RTOR_RTO(uint32_t x) { return (x & 0xffffff) << 0; } // Receiver timeout value (24 bits)
+    typedef bit_field_t<24, 0xff> RTOR_BLEN;  // Block Length (8 bits)
+    typedef bit_field_t<0, 0xffffff> RTOR_RTO;  // Receiver timeout value (24 bits)
     static const uint32_t RTOR_RESET_VALUE = 0x0;
 
     static const uint32_t RQR_TXFRQ = 0x10;         // Transmit data flush request
@@ -4902,10 +4913,10 @@ struct usart8_t
     static const uint32_t ICR_PECF = 0x1;           // Parity error clear flag
     static const uint32_t ICR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RDR_RDR(uint32_t x) { return (x & 0x1ff) << 0; } // Receive data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> RDR_RDR;  // Receive data value (9 bits)
     static const uint32_t RDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TDR_TDR(uint32_t x) { return (x & 0x1ff) << 0; } // Transmit data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> TDR_TDR;  // Transmit data value (9 bits)
     static const uint32_t TDR_RESET_VALUE = 0x0;
 };
 
@@ -4948,17 +4959,17 @@ struct usart5_t
     static const uint32_t CR1_MME = 0x2000;         // Mute mode enable
     static const uint32_t CR1_CMIE = 0x4000;        // Character match interrupt enable
     static const uint32_t CR1_OVER8 = 0x8000;       // Oversampling mode
-    static constexpr uint32_t CR1_DEDT(uint32_t x) { return (x & 0x1f) << 16; } // Driver Enable deassertion time (5 bits)
-    static constexpr uint32_t CR1_DEAT(uint32_t x) { return (x & 0x1f) << 21; } // Driver Enable assertion time (5 bits)
+    typedef bit_field_t<16, 0x1f> CR1_DEDT;  // Driver Enable deassertion time (5 bits)
+    typedef bit_field_t<21, 0x1f> CR1_DEAT;  // Driver Enable assertion time (5 bits)
     static const uint32_t CR1_RTOIE = 0x4000000;    // Receiver timeout interrupt enable
     static const uint32_t CR1_EOBIE = 0x8000000;    // End of Block interrupt enable
     static const uint32_t CR1_M1 = 0x10000000;      // Word length
     static const uint32_t CR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CR2_ADD4(uint32_t x) { return (x & 0xf) << 28; } // Address of the USART node (4 bits)
-    static constexpr uint32_t CR2_ADD0(uint32_t x) { return (x & 0xf) << 24; } // Address of the USART node (4 bits)
+    typedef bit_field_t<28, 0xf> CR2_ADD4;  // Address of the USART node (4 bits)
+    typedef bit_field_t<24, 0xf> CR2_ADD0;  // Address of the USART node (4 bits)
     static const uint32_t CR2_RTOEN = 0x800000;     // Receiver timeout enable
-    static constexpr uint32_t CR2_ABRMOD(uint32_t x) { return (x & 0x3) << 21; } // Auto baud rate mode (2 bits)
+    typedef bit_field_t<21, 0x3> CR2_ABRMOD;  // Auto baud rate mode (2 bits)
     static const uint32_t CR2_ABREN = 0x100000;     // Auto baud rate enable
     static const uint32_t CR2_MSBFIRST = 0x80000;   // Most significant bit first
     static const uint32_t CR2_DATAINV = 0x40000;    // Binary data inversion
@@ -4966,7 +4977,7 @@ struct usart5_t
     static const uint32_t CR2_RXINV = 0x10000;      // RX pin active level inversion
     static const uint32_t CR2_SWAP = 0x8000;        // Swap TX/RX pins
     static const uint32_t CR2_LINEN = 0x4000;       // LIN mode enable
-    static constexpr uint32_t CR2_STOP(uint32_t x) { return (x & 0x3) << 12; } // STOP bits (2 bits)
+    typedef bit_field_t<12, 0x3> CR2_STOP;  // STOP bits (2 bits)
     static const uint32_t CR2_CLKEN = 0x800;        // Clock enable
     static const uint32_t CR2_CPOL = 0x400;         // Clock polarity
     static const uint32_t CR2_CPHA = 0x200;         // Clock phase
@@ -4977,8 +4988,8 @@ struct usart5_t
     static const uint32_t CR2_RESET_VALUE = 0x0;
 
     static const uint32_t CR3_WUFIE = 0x400000;     // Wakeup from Stop mode interrupt enable
-    static constexpr uint32_t CR3_WUS(uint32_t x) { return (x & 0x3) << 20; } // Wakeup from Stop mode interrupt flag selection (2 bits)
-    static constexpr uint32_t CR3_SCARCNT(uint32_t x) { return (x & 0x7) << 17; } // Smartcard auto-retry count (3 bits)
+    typedef bit_field_t<20, 0x3> CR3_WUS;  // Wakeup from Stop mode interrupt flag selection (2 bits)
+    typedef bit_field_t<17, 0x7> CR3_SCARCNT;  // Smartcard auto-retry count (3 bits)
     static const uint32_t CR3_DEP = 0x8000;         // Driver enable polarity selection
     static const uint32_t CR3_DEM = 0x4000;         // Driver enable mode
     static const uint32_t CR3_DDRE = 0x2000;        // DMA Disable on Reception Error
@@ -4997,16 +5008,16 @@ struct usart5_t
     static const uint32_t CR3_EIE = 0x1;            // Error interrupt enable
     static const uint32_t CR3_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t BRR_DIV_Mantissa(uint32_t x) { return (x & 0xfff) << 4; } // mantissa of USARTDIV (12 bits)
-    static constexpr uint32_t BRR_DIV_Fraction(uint32_t x) { return (x & 0xf) << 0; } // fraction of USARTDIV (4 bits)
+    typedef bit_field_t<4, 0xfff> BRR_DIV_Mantissa;  // mantissa of USARTDIV (12 bits)
+    typedef bit_field_t<0, 0xf> BRR_DIV_Fraction;  // fraction of USARTDIV (4 bits)
     static const uint32_t BRR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t GTPR_GT(uint32_t x) { return (x & 0xff) << 8; } // Guard time value (8 bits)
-    static constexpr uint32_t GTPR_PSC(uint32_t x) { return (x & 0xff) << 0; } // Prescaler value (8 bits)
+    typedef bit_field_t<8, 0xff> GTPR_GT;  // Guard time value (8 bits)
+    typedef bit_field_t<0, 0xff> GTPR_PSC;  // Prescaler value (8 bits)
     static const uint32_t GTPR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RTOR_BLEN(uint32_t x) { return (x & 0xff) << 24; } // Block Length (8 bits)
-    static constexpr uint32_t RTOR_RTO(uint32_t x) { return (x & 0xffffff) << 0; } // Receiver timeout value (24 bits)
+    typedef bit_field_t<24, 0xff> RTOR_BLEN;  // Block Length (8 bits)
+    typedef bit_field_t<0, 0xffffff> RTOR_RTO;  // Receiver timeout value (24 bits)
     static const uint32_t RTOR_RESET_VALUE = 0x0;
 
     static const uint32_t RQR_TXFRQ = 0x10;         // Transmit data flush request
@@ -5054,10 +5065,10 @@ struct usart5_t
     static const uint32_t ICR_PECF = 0x1;           // Parity error clear flag
     static const uint32_t ICR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RDR_RDR(uint32_t x) { return (x & 0x1ff) << 0; } // Receive data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> RDR_RDR;  // Receive data value (9 bits)
     static const uint32_t RDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TDR_TDR(uint32_t x) { return (x & 0x1ff) << 0; } // Transmit data value (9 bits)
+    typedef bit_field_t<0, 0x1ff> TDR_TDR;  // Transmit data value (9 bits)
     static const uint32_t TDR_RESET_VALUE = 0x0;
 };
 
@@ -5097,21 +5108,21 @@ struct rtc_t
     volatile uint32_t    BKP4R;                // [Read-write] backup register
 
     static const uint32_t TR_PM = 0x400000;        // AM/PM notation
-    static constexpr uint32_t TR_HT(uint32_t x) { return (x & 0x3) << 20; } // Hour tens in BCD format (2 bits)
-    static constexpr uint32_t TR_HU(uint32_t x) { return (x & 0xf) << 16; } // Hour units in BCD format (4 bits)
-    static constexpr uint32_t TR_MNT(uint32_t x) { return (x & 0x7) << 12; } // Minute tens in BCD format (3 bits)
-    static constexpr uint32_t TR_MNU(uint32_t x) { return (x & 0xf) << 8; } // Minute units in BCD format (4 bits)
-    static constexpr uint32_t TR_ST(uint32_t x) { return (x & 0x7) << 4; } // Second tens in BCD format (3 bits)
-    static constexpr uint32_t TR_SU(uint32_t x) { return (x & 0xf) << 0; } // Second units in BCD format (4 bits)
+    typedef bit_field_t<20, 0x3> TR_HT;  // Hour tens in BCD format (2 bits)
+    typedef bit_field_t<16, 0xf> TR_HU;  // Hour units in BCD format (4 bits)
+    typedef bit_field_t<12, 0x7> TR_MNT;  // Minute tens in BCD format (3 bits)
+    typedef bit_field_t<8, 0xf> TR_MNU;  // Minute units in BCD format (4 bits)
+    typedef bit_field_t<4, 0x7> TR_ST;  // Second tens in BCD format (3 bits)
+    typedef bit_field_t<0, 0xf> TR_SU;  // Second units in BCD format (4 bits)
     static const uint32_t TR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DR_YT(uint32_t x) { return (x & 0xf) << 20; } // Year tens in BCD format (4 bits)
-    static constexpr uint32_t DR_YU(uint32_t x) { return (x & 0xf) << 16; } // Year units in BCD format (4 bits)
-    static constexpr uint32_t DR_WDU(uint32_t x) { return (x & 0x7) << 13; } // Week day units (3 bits)
+    typedef bit_field_t<20, 0xf> DR_YT;  // Year tens in BCD format (4 bits)
+    typedef bit_field_t<16, 0xf> DR_YU;  // Year units in BCD format (4 bits)
+    typedef bit_field_t<13, 0x7> DR_WDU;  // Week day units (3 bits)
     static const uint32_t DR_MT = 0x1000;          // Month tens in BCD format
-    static constexpr uint32_t DR_MU(uint32_t x) { return (x & 0xf) << 8; } // Month units in BCD format (4 bits)
-    static constexpr uint32_t DR_DT(uint32_t x) { return (x & 0x3) << 4; } // Date tens in BCD format (2 bits)
-    static constexpr uint32_t DR_DU(uint32_t x) { return (x & 0xf) << 0; } // Date units in BCD format (4 bits)
+    typedef bit_field_t<8, 0xf> DR_MU;  // Month units in BCD format (4 bits)
+    typedef bit_field_t<4, 0x3> DR_DT;  // Date tens in BCD format (2 bits)
+    typedef bit_field_t<0, 0xf> DR_DU;  // Date units in BCD format (4 bits)
     static const uint32_t DR_RESET_VALUE = 0x2101;
 
     static const uint32_t CR_TSEDGE = 0x8;         // Time-stamp event active edge, Read-write
@@ -5127,7 +5138,7 @@ struct rtc_t
     static const uint32_t CR_BKP = 0x40000;        // Backup, Read-write
     static const uint32_t CR_COSEL = 0x80000;      // Calibration output selection, Read-write
     static const uint32_t CR_POL = 0x100000;       // Output polarity, Read-write
-    static constexpr uint32_t CR_OSEL(uint32_t x) { return (x & 0x3) << 21; } // Output selection (2 bits), Read-write
+    typedef bit_field_t<21, 0x3> CR_OSEL;  // Output selection (2 bits), Read-write
     static const uint32_t CR_COE = 0x800000;       // Calibration output enable, Read-write
     static const uint32_t CR_RESET_VALUE = 0x0;
 
@@ -5145,59 +5156,59 @@ struct rtc_t
     static const uint32_t ISR_RECALPF = 0x10000;    // Recalibration pending Flag, Read-only
     static const uint32_t ISR_RESET_VALUE = 0x7;
 
-    static constexpr uint32_t PRER_PREDIV_A(uint32_t x) { return (x & 0x7f) << 16; } // Asynchronous prescaler factor (7 bits)
-    static constexpr uint32_t PRER_PREDIV_S(uint32_t x) { return (x & 0x7fff) << 0; } // Synchronous prescaler factor (15 bits)
+    typedef bit_field_t<16, 0x7f> PRER_PREDIV_A;  // Asynchronous prescaler factor (7 bits)
+    typedef bit_field_t<0, 0x7fff> PRER_PREDIV_S;  // Synchronous prescaler factor (15 bits)
     static const uint32_t PRER_RESET_VALUE = 0x7f00ff;
 
     static const uint32_t ALRMAR_MSK4 = 0x80000000;    // Alarm A date mask
     static const uint32_t ALRMAR_WDSEL = 0x40000000;   // Week day selection
-    static constexpr uint32_t ALRMAR_DT(uint32_t x) { return (x & 0x3) << 28; } // Date tens in BCD format. (2 bits)
-    static constexpr uint32_t ALRMAR_DU(uint32_t x) { return (x & 0xf) << 24; } // Date units or day in BCD format. (4 bits)
+    typedef bit_field_t<28, 0x3> ALRMAR_DT;  // Date tens in BCD format. (2 bits)
+    typedef bit_field_t<24, 0xf> ALRMAR_DU;  // Date units or day in BCD format. (4 bits)
     static const uint32_t ALRMAR_MSK3 = 0x800000;      // Alarm A hours mask
     static const uint32_t ALRMAR_PM = 0x400000;        // AM/PM notation
-    static constexpr uint32_t ALRMAR_HT(uint32_t x) { return (x & 0x3) << 20; } // Hour tens in BCD format. (2 bits)
-    static constexpr uint32_t ALRMAR_HU(uint32_t x) { return (x & 0xf) << 16; } // Hour units in BCD format. (4 bits)
+    typedef bit_field_t<20, 0x3> ALRMAR_HT;  // Hour tens in BCD format. (2 bits)
+    typedef bit_field_t<16, 0xf> ALRMAR_HU;  // Hour units in BCD format. (4 bits)
     static const uint32_t ALRMAR_MSK2 = 0x8000;        // Alarm A minutes mask
-    static constexpr uint32_t ALRMAR_MNT(uint32_t x) { return (x & 0x7) << 12; } // Minute tens in BCD format. (3 bits)
-    static constexpr uint32_t ALRMAR_MNU(uint32_t x) { return (x & 0xf) << 8; } // Minute units in BCD format. (4 bits)
+    typedef bit_field_t<12, 0x7> ALRMAR_MNT;  // Minute tens in BCD format. (3 bits)
+    typedef bit_field_t<8, 0xf> ALRMAR_MNU;  // Minute units in BCD format. (4 bits)
     static const uint32_t ALRMAR_MSK1 = 0x80;          // Alarm A seconds mask
-    static constexpr uint32_t ALRMAR_ST(uint32_t x) { return (x & 0x7) << 4; } // Second tens in BCD format. (3 bits)
-    static constexpr uint32_t ALRMAR_SU(uint32_t x) { return (x & 0xf) << 0; } // Second units in BCD format. (4 bits)
+    typedef bit_field_t<4, 0x7> ALRMAR_ST;  // Second tens in BCD format. (3 bits)
+    typedef bit_field_t<0, 0xf> ALRMAR_SU;  // Second units in BCD format. (4 bits)
     static const uint32_t ALRMAR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t WPR_KEY(uint32_t x) { return (x & 0xff) << 0; } // Write protection key (8 bits)
+    typedef bit_field_t<0, 0xff> WPR_KEY;  // Write protection key (8 bits)
     static const uint32_t WPR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t SSR_SS(uint32_t x) { return (x & 0xffff) << 0; } // Sub second value (16 bits)
+    typedef bit_field_t<0, 0xffff> SSR_SS;  // Sub second value (16 bits)
     static const uint32_t SSR_RESET_VALUE = 0x0;
 
     static const uint32_t SHIFTR_ADD1S = 0x80000000;   // Add one second
-    static constexpr uint32_t SHIFTR_SUBFS(uint32_t x) { return (x & 0x7fff) << 0; } // Subtract a fraction of a second (15 bits)
+    typedef bit_field_t<0, 0x7fff> SHIFTR_SUBFS;  // Subtract a fraction of a second (15 bits)
     static const uint32_t SHIFTR_RESET_VALUE = 0x0;
 
     static const uint32_t TSTR_PM = 0x400000;        // AM/PM notation
-    static constexpr uint32_t TSTR_HT(uint32_t x) { return (x & 0x3) << 20; } // Hour tens in BCD format. (2 bits)
-    static constexpr uint32_t TSTR_HU(uint32_t x) { return (x & 0xf) << 16; } // Hour units in BCD format. (4 bits)
-    static constexpr uint32_t TSTR_MNT(uint32_t x) { return (x & 0x7) << 12; } // Minute tens in BCD format. (3 bits)
-    static constexpr uint32_t TSTR_MNU(uint32_t x) { return (x & 0xf) << 8; } // Minute units in BCD format. (4 bits)
-    static constexpr uint32_t TSTR_ST(uint32_t x) { return (x & 0x7) << 4; } // Second tens in BCD format. (3 bits)
-    static constexpr uint32_t TSTR_SU(uint32_t x) { return (x & 0xf) << 0; } // Second units in BCD format. (4 bits)
+    typedef bit_field_t<20, 0x3> TSTR_HT;  // Hour tens in BCD format. (2 bits)
+    typedef bit_field_t<16, 0xf> TSTR_HU;  // Hour units in BCD format. (4 bits)
+    typedef bit_field_t<12, 0x7> TSTR_MNT;  // Minute tens in BCD format. (3 bits)
+    typedef bit_field_t<8, 0xf> TSTR_MNU;  // Minute units in BCD format. (4 bits)
+    typedef bit_field_t<4, 0x7> TSTR_ST;  // Second tens in BCD format. (3 bits)
+    typedef bit_field_t<0, 0xf> TSTR_SU;  // Second units in BCD format. (4 bits)
     static const uint32_t TSTR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TSDR_WDU(uint32_t x) { return (x & 0x7) << 13; } // Week day units (3 bits)
+    typedef bit_field_t<13, 0x7> TSDR_WDU;  // Week day units (3 bits)
     static const uint32_t TSDR_MT = 0x1000;          // Month tens in BCD format
-    static constexpr uint32_t TSDR_MU(uint32_t x) { return (x & 0xf) << 8; } // Month units in BCD format (4 bits)
-    static constexpr uint32_t TSDR_DT(uint32_t x) { return (x & 0x3) << 4; } // Date tens in BCD format (2 bits)
-    static constexpr uint32_t TSDR_DU(uint32_t x) { return (x & 0xf) << 0; } // Date units in BCD format (4 bits)
+    typedef bit_field_t<8, 0xf> TSDR_MU;  // Month units in BCD format (4 bits)
+    typedef bit_field_t<4, 0x3> TSDR_DT;  // Date tens in BCD format (2 bits)
+    typedef bit_field_t<0, 0xf> TSDR_DU;  // Date units in BCD format (4 bits)
     static const uint32_t TSDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TSSSR_SS(uint32_t x) { return (x & 0xffff) << 0; } // Sub second value (16 bits)
+    typedef bit_field_t<0, 0xffff> TSSSR_SS;  // Sub second value (16 bits)
     static const uint32_t TSSSR_RESET_VALUE = 0x0;
 
     static const uint32_t CALR_CALP = 0x8000;        // Increase frequency of RTC by 488.5 ppm
     static const uint32_t CALR_CALW8 = 0x4000;       // Use an 8-second calibration cycle period
     static const uint32_t CALR_CALW16 = 0x2000;      // Use a 16-second calibration cycle period
-    static constexpr uint32_t CALR_CALM(uint32_t x) { return (x & 0x1ff) << 0; } // Calibration minus (9 bits)
+    typedef bit_field_t<0, 0x1ff> CALR_CALM;  // Calibration minus (9 bits)
     static const uint32_t CALR_RESET_VALUE = 0x0;
 
     static const uint32_t TAFCR_PC15MODE = 0x800000;  // PC15 mode
@@ -5207,9 +5218,9 @@ struct rtc_t
     static const uint32_t TAFCR_PC13MODE = 0x80000;   // PC13 mode
     static const uint32_t TAFCR_PC13VALUE = 0x40000;  // RTC_ALARM output type/PC13 value
     static const uint32_t TAFCR_TAMP_PUDIS = 0x8000;  // RTC_TAMPx pull-up disable
-    static constexpr uint32_t TAFCR_TAMP_PRCH(uint32_t x) { return (x & 0x3) << 13; } // RTC_TAMPx precharge duration (2 bits)
-    static constexpr uint32_t TAFCR_TAMPFLT(uint32_t x) { return (x & 0x3) << 11; } // RTC_TAMPx filter count (2 bits)
-    static constexpr uint32_t TAFCR_TAMPFREQ(uint32_t x) { return (x & 0x7) << 8; } // Tamper sampling frequency (3 bits)
+    typedef bit_field_t<13, 0x3> TAFCR_TAMP_PRCH;  // RTC_TAMPx precharge duration (2 bits)
+    typedef bit_field_t<11, 0x3> TAFCR_TAMPFLT;  // RTC_TAMPx filter count (2 bits)
+    typedef bit_field_t<8, 0x7> TAFCR_TAMPFREQ;  // Tamper sampling frequency (3 bits)
     static const uint32_t TAFCR_TAMPTS = 0x80;        // Activate timestamp on tamper detection event
     static const uint32_t TAFCR_TAMP2_TRG = 0x10;     // Active level for RTC_TAMP2 input
     static const uint32_t TAFCR_TAMP2E = 0x8;         // RTC_TAMP2 input detection enable
@@ -5218,8 +5229,8 @@ struct rtc_t
     static const uint32_t TAFCR_TAMP1E = 0x1;         // RTC_TAMP1 input detection enable
     static const uint32_t TAFCR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t ALRMASSR_MASKSS(uint32_t x) { return (x & 0xf) << 24; } // Mask the most-significant bits starting at this bit (4 bits)
-    static constexpr uint32_t ALRMASSR_SS(uint32_t x) { return (x & 0x7fff) << 0; } // Sub seconds value (15 bits)
+    typedef bit_field_t<24, 0xf> ALRMASSR_MASKSS;  // Mask the most-significant bits starting at this bit (4 bits)
+    typedef bit_field_t<0, 0x7fff> ALRMASSR_SS;  // Sub seconds value (15 bits)
     static const uint32_t ALRMASSR_RESET_VALUE = 0x0;
 
 
@@ -5269,7 +5280,7 @@ struct tim15_t
     volatile uint32_t    DCR;                  // [Read-write] DMA control register
     volatile uint32_t    DMAR;                 // [Read-write] DMA address for full transfer
 
-    static constexpr uint32_t CR1_CKD(uint32_t x) { return (x & 0x3) << 8; } // Clock division (2 bits)
+    typedef bit_field_t<8, 0x3> CR1_CKD;  // Clock division (2 bits)
     static const uint32_t CR1_ARPE = 0x80;          // Auto-reload preload enable
     static const uint32_t CR1_OPM = 0x8;            // One-pulse mode
     static const uint32_t CR1_URS = 0x4;            // Update request source
@@ -5280,15 +5291,15 @@ struct tim15_t
     static const uint32_t CR2_OIS2 = 0x400;         // Output Idle state 2
     static const uint32_t CR2_OIS1N = 0x200;        // Output Idle state 1
     static const uint32_t CR2_OIS1 = 0x100;         // Output Idle state 1
-    static constexpr uint32_t CR2_MMS(uint32_t x) { return (x & 0x7) << 4; } // Master mode selection (3 bits)
+    typedef bit_field_t<4, 0x7> CR2_MMS;  // Master mode selection (3 bits)
     static const uint32_t CR2_CCDS = 0x8;           // Capture/compare DMA selection
     static const uint32_t CR2_CCUS = 0x4;           // Capture/compare control update selection
     static const uint32_t CR2_CCPC = 0x1;           // Capture/compare preloaded control
     static const uint32_t CR2_RESET_VALUE = 0x0;
 
     static const uint32_t SMCR_MSM = 0x80;           // Master/Slave mode
-    static constexpr uint32_t SMCR_TS(uint32_t x) { return (x & 0x7) << 4; } // Trigger selection (3 bits)
-    static constexpr uint32_t SMCR_SMS(uint32_t x) { return (x & 0x7) << 0; } // Slave mode selection (3 bits)
+    typedef bit_field_t<4, 0x7> SMCR_TS;  // Trigger selection (3 bits)
+    typedef bit_field_t<0, 0x7> SMCR_SMS;  // Slave mode selection (3 bits)
     static const uint32_t SMCR_RESET_VALUE = 0x0;
 
     static const uint32_t DIER_TDE = 0x4000;         // Trigger DMA request enable
@@ -5321,17 +5332,17 @@ struct tim15_t
     static const uint32_t EGR_UG = 0x1;             // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCMR1_CC1S(uint32_t x) { return (x & 0x3) << 0; } // Capture/Compare 1 selection (2 bits)
-    static constexpr uint32_t CCMR1_CC2S(uint32_t x) { return (x & 0x3) << 8; } // Capture/Compare 2 selection (2 bits)
-    static constexpr uint32_t CCMR1_IC1F(uint32_t x) { return (x & 0xf) << 4; } // Input capture 1 filter (4 bits)
-    static constexpr uint32_t CCMR1_IC1PSC(uint32_t x) { return (x & 0x3) << 2; } // Input capture 1 prescaler (2 bits)
-    static constexpr uint32_t CCMR1_IC2F(uint32_t x) { return (x & 0xf) << 12; } // Input capture 2 filter (4 bits)
-    static constexpr uint32_t CCMR1_IC2PSC(uint32_t x) { return (x & 0x3) << 10; } // Input capture 2 prescaler (2 bits)
+    typedef bit_field_t<0, 0x3> CCMR1_CC1S;  // Capture/Compare 1 selection (2 bits)
+    typedef bit_field_t<8, 0x3> CCMR1_CC2S;  // Capture/Compare 2 selection (2 bits)
+    typedef bit_field_t<4, 0xf> CCMR1_IC1F;  // Input capture 1 filter (4 bits)
+    typedef bit_field_t<2, 0x3> CCMR1_IC1PSC;  // Input capture 1 prescaler (2 bits)
+    typedef bit_field_t<12, 0xf> CCMR1_IC2F;  // Input capture 2 filter (4 bits)
+    typedef bit_field_t<10, 0x3> CCMR1_IC2PSC;  // Input capture 2 prescaler (2 bits)
     static const uint32_t CCMR1_OC1FE = 0x4;          // Output Compare 1 fast enable
-    static constexpr uint32_t CCMR1_OC1M(uint32_t x) { return (x & 0x7) << 4; } // Output Compare 1 mode (3 bits)
+    typedef bit_field_t<4, 0x7> CCMR1_OC1M;  // Output Compare 1 mode (3 bits)
     static const uint32_t CCMR1_OC1PE = 0x8;          // Output Compare 1 preload enable
     static const uint32_t CCMR1_OC2FE = 0x400;        // Output Compare 2 fast enable
-    static constexpr uint32_t CCMR1_OC2M(uint32_t x) { return (x & 0x7) << 12; } // Output Compare 2 mode (3 bits)
+    typedef bit_field_t<12, 0x7> CCMR1_OC2M;  // Output Compare 2 mode (3 bits)
     static const uint32_t CCMR1_OC2PE = 0x800;        // Output Compare 2 preload enable
     static const uint32_t CCMR1_RESET_VALUE = 0x0;
 
@@ -5344,22 +5355,22 @@ struct tim15_t
     static const uint32_t CCER_CC1E = 0x1;           // Capture/Compare 1 output enable
     static const uint32_t CCER_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNT_CNT(uint32_t x) { return (x & 0xffff) << 0; } // counter value (16 bits)
+    typedef bit_field_t<0, 0xffff> CNT_CNT;  // counter value (16 bits)
     static const uint32_t CNT_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PSC_PSC(uint32_t x) { return (x & 0xffff) << 0; } // Prescaler value (16 bits)
+    typedef bit_field_t<0, 0xffff> PSC_PSC;  // Prescaler value (16 bits)
     static const uint32_t PSC_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t ARR_ARR(uint32_t x) { return (x & 0xffff) << 0; } // Auto-reload value (16 bits)
+    typedef bit_field_t<0, 0xffff> ARR_ARR;  // Auto-reload value (16 bits)
     static const uint32_t ARR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RCR_REP(uint32_t x) { return (x & 0xff) << 0; } // Repetition counter value (8 bits)
+    typedef bit_field_t<0, 0xff> RCR_REP;  // Repetition counter value (8 bits)
     static const uint32_t RCR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR1_CCR1(uint32_t x) { return (x & 0xffff) << 0; } // Capture/Compare 1 value (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR1_CCR1;  // Capture/Compare 1 value (16 bits)
     static const uint32_t CCR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR2_CCR2(uint32_t x) { return (x & 0xffff) << 0; } // Capture/Compare 2 value (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR2_CCR2;  // Capture/Compare 2 value (16 bits)
     static const uint32_t CCR2_RESET_VALUE = 0x0;
 
     static const uint32_t BDTR_MOE = 0x8000;         // Main output enable
@@ -5368,15 +5379,15 @@ struct tim15_t
     static const uint32_t BDTR_BKE = 0x1000;         // Break enable
     static const uint32_t BDTR_OSSR = 0x800;         // Off-state selection for Run mode
     static const uint32_t BDTR_OSSI = 0x400;         // Off-state selection for Idle mode
-    static constexpr uint32_t BDTR_LOCK(uint32_t x) { return (x & 0x3) << 8; } // Lock configuration (2 bits)
-    static constexpr uint32_t BDTR_DTG(uint32_t x) { return (x & 0xff) << 0; } // Dead-time generator setup (8 bits)
+    typedef bit_field_t<8, 0x3> BDTR_LOCK;  // Lock configuration (2 bits)
+    typedef bit_field_t<0, 0xff> BDTR_DTG;  // Dead-time generator setup (8 bits)
     static const uint32_t BDTR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DCR_DBL(uint32_t x) { return (x & 0x1f) << 8; } // DMA burst length (5 bits)
-    static constexpr uint32_t DCR_DBA(uint32_t x) { return (x & 0x1f) << 0; } // DMA base address (5 bits)
+    typedef bit_field_t<8, 0x1f> DCR_DBL;  // DMA burst length (5 bits)
+    typedef bit_field_t<0, 0x1f> DCR_DBA;  // DMA base address (5 bits)
     static const uint32_t DCR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DMAR_DMAB(uint32_t x) { return (x & 0xffff) << 0; } // DMA register for burst accesses (16 bits)
+    typedef bit_field_t<0, 0xffff> DMAR_DMAB;  // DMA register for burst accesses (16 bits)
     static const uint32_t DMAR_RESET_VALUE = 0x0;
 };
 
@@ -5410,7 +5421,7 @@ struct tim16_t
     volatile uint32_t    DCR;                  // [Read-write] DMA control register
     volatile uint32_t    DMAR;                 // [Read-write] DMA address for full transfer
 
-    static constexpr uint32_t CR1_CKD(uint32_t x) { return (x & 0x3) << 8; } // Clock division (2 bits)
+    typedef bit_field_t<8, 0x3> CR1_CKD;  // Clock division (2 bits)
     static const uint32_t CR1_ARPE = 0x80;          // Auto-reload preload enable
     static const uint32_t CR1_OPM = 0x8;            // One-pulse mode
     static const uint32_t CR1_URS = 0x4;            // Update request source
@@ -5450,11 +5461,11 @@ struct tim16_t
     static const uint32_t EGR_UG = 0x1;             // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCMR1_CC1S(uint32_t x) { return (x & 0x3) << 0; } // Capture/Compare 1 selection (2 bits)
-    static constexpr uint32_t CCMR1_IC1F(uint32_t x) { return (x & 0xf) << 4; } // Input capture 1 filter (4 bits)
-    static constexpr uint32_t CCMR1_IC1PSC(uint32_t x) { return (x & 0x3) << 2; } // Input capture 1 prescaler (2 bits)
+    typedef bit_field_t<0, 0x3> CCMR1_CC1S;  // Capture/Compare 1 selection (2 bits)
+    typedef bit_field_t<4, 0xf> CCMR1_IC1F;  // Input capture 1 filter (4 bits)
+    typedef bit_field_t<2, 0x3> CCMR1_IC1PSC;  // Input capture 1 prescaler (2 bits)
     static const uint32_t CCMR1_OC1FE = 0x4;          // Output Compare 1 fast enable
-    static constexpr uint32_t CCMR1_OC1M(uint32_t x) { return (x & 0x7) << 4; } // Output Compare 1 mode (3 bits)
+    typedef bit_field_t<4, 0x7> CCMR1_OC1M;  // Output Compare 1 mode (3 bits)
     static const uint32_t CCMR1_OC1PE = 0x8;          // Output Compare 1 preload enable
     static const uint32_t CCMR1_RESET_VALUE = 0x0;
 
@@ -5464,19 +5475,19 @@ struct tim16_t
     static const uint32_t CCER_CC1E = 0x1;           // Capture/Compare 1 output enable
     static const uint32_t CCER_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNT_CNT(uint32_t x) { return (x & 0xffff) << 0; } // counter value (16 bits)
+    typedef bit_field_t<0, 0xffff> CNT_CNT;  // counter value (16 bits)
     static const uint32_t CNT_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PSC_PSC(uint32_t x) { return (x & 0xffff) << 0; } // Prescaler value (16 bits)
+    typedef bit_field_t<0, 0xffff> PSC_PSC;  // Prescaler value (16 bits)
     static const uint32_t PSC_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t ARR_ARR(uint32_t x) { return (x & 0xffff) << 0; } // Auto-reload value (16 bits)
+    typedef bit_field_t<0, 0xffff> ARR_ARR;  // Auto-reload value (16 bits)
     static const uint32_t ARR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RCR_REP(uint32_t x) { return (x & 0xff) << 0; } // Repetition counter value (8 bits)
+    typedef bit_field_t<0, 0xff> RCR_REP;  // Repetition counter value (8 bits)
     static const uint32_t RCR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR1_CCR1(uint32_t x) { return (x & 0xffff) << 0; } // Capture/Compare 1 value (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR1_CCR1;  // Capture/Compare 1 value (16 bits)
     static const uint32_t CCR1_RESET_VALUE = 0x0;
 
     static const uint32_t BDTR_MOE = 0x8000;         // Main output enable
@@ -5485,15 +5496,15 @@ struct tim16_t
     static const uint32_t BDTR_BKE = 0x1000;         // Break enable
     static const uint32_t BDTR_OSSR = 0x800;         // Off-state selection for Run mode
     static const uint32_t BDTR_OSSI = 0x400;         // Off-state selection for Idle mode
-    static constexpr uint32_t BDTR_LOCK(uint32_t x) { return (x & 0x3) << 8; } // Lock configuration (2 bits)
-    static constexpr uint32_t BDTR_DTG(uint32_t x) { return (x & 0xff) << 0; } // Dead-time generator setup (8 bits)
+    typedef bit_field_t<8, 0x3> BDTR_LOCK;  // Lock configuration (2 bits)
+    typedef bit_field_t<0, 0xff> BDTR_DTG;  // Dead-time generator setup (8 bits)
     static const uint32_t BDTR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DCR_DBL(uint32_t x) { return (x & 0x1f) << 8; } // DMA burst length (5 bits)
-    static constexpr uint32_t DCR_DBA(uint32_t x) { return (x & 0x1f) << 0; } // DMA base address (5 bits)
+    typedef bit_field_t<8, 0x1f> DCR_DBL;  // DMA burst length (5 bits)
+    typedef bit_field_t<0, 0x1f> DCR_DBA;  // DMA base address (5 bits)
     static const uint32_t DCR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DMAR_DMAB(uint32_t x) { return (x & 0xffff) << 0; } // DMA register for burst accesses (16 bits)
+    typedef bit_field_t<0, 0xffff> DMAR_DMAB;  // DMA register for burst accesses (16 bits)
     static const uint32_t DMAR_RESET_VALUE = 0x0;
 };
 
@@ -5527,7 +5538,7 @@ struct tim17_t
     volatile uint32_t    DCR;                  // [Read-write] DMA control register
     volatile uint32_t    DMAR;                 // [Read-write] DMA address for full transfer
 
-    static constexpr uint32_t CR1_CKD(uint32_t x) { return (x & 0x3) << 8; } // Clock division (2 bits)
+    typedef bit_field_t<8, 0x3> CR1_CKD;  // Clock division (2 bits)
     static const uint32_t CR1_ARPE = 0x80;          // Auto-reload preload enable
     static const uint32_t CR1_OPM = 0x8;            // One-pulse mode
     static const uint32_t CR1_URS = 0x4;            // Update request source
@@ -5567,11 +5578,11 @@ struct tim17_t
     static const uint32_t EGR_UG = 0x1;             // Update generation
     static const uint32_t EGR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCMR1_CC1S(uint32_t x) { return (x & 0x3) << 0; } // Capture/Compare 1 selection (2 bits)
-    static constexpr uint32_t CCMR1_IC1F(uint32_t x) { return (x & 0xf) << 4; } // Input capture 1 filter (4 bits)
-    static constexpr uint32_t CCMR1_IC1PSC(uint32_t x) { return (x & 0x3) << 2; } // Input capture 1 prescaler (2 bits)
+    typedef bit_field_t<0, 0x3> CCMR1_CC1S;  // Capture/Compare 1 selection (2 bits)
+    typedef bit_field_t<4, 0xf> CCMR1_IC1F;  // Input capture 1 filter (4 bits)
+    typedef bit_field_t<2, 0x3> CCMR1_IC1PSC;  // Input capture 1 prescaler (2 bits)
     static const uint32_t CCMR1_OC1FE = 0x4;          // Output Compare 1 fast enable
-    static constexpr uint32_t CCMR1_OC1M(uint32_t x) { return (x & 0x7) << 4; } // Output Compare 1 mode (3 bits)
+    typedef bit_field_t<4, 0x7> CCMR1_OC1M;  // Output Compare 1 mode (3 bits)
     static const uint32_t CCMR1_OC1PE = 0x8;          // Output Compare 1 preload enable
     static const uint32_t CCMR1_RESET_VALUE = 0x0;
 
@@ -5581,19 +5592,19 @@ struct tim17_t
     static const uint32_t CCER_CC1E = 0x1;           // Capture/Compare 1 output enable
     static const uint32_t CCER_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CNT_CNT(uint32_t x) { return (x & 0xffff) << 0; } // counter value (16 bits)
+    typedef bit_field_t<0, 0xffff> CNT_CNT;  // counter value (16 bits)
     static const uint32_t CNT_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t PSC_PSC(uint32_t x) { return (x & 0xffff) << 0; } // Prescaler value (16 bits)
+    typedef bit_field_t<0, 0xffff> PSC_PSC;  // Prescaler value (16 bits)
     static const uint32_t PSC_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t ARR_ARR(uint32_t x) { return (x & 0xffff) << 0; } // Auto-reload value (16 bits)
+    typedef bit_field_t<0, 0xffff> ARR_ARR;  // Auto-reload value (16 bits)
     static const uint32_t ARR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RCR_REP(uint32_t x) { return (x & 0xff) << 0; } // Repetition counter value (8 bits)
+    typedef bit_field_t<0, 0xff> RCR_REP;  // Repetition counter value (8 bits)
     static const uint32_t RCR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CCR1_CCR1(uint32_t x) { return (x & 0xffff) << 0; } // Capture/Compare 1 value (16 bits)
+    typedef bit_field_t<0, 0xffff> CCR1_CCR1;  // Capture/Compare 1 value (16 bits)
     static const uint32_t CCR1_RESET_VALUE = 0x0;
 
     static const uint32_t BDTR_MOE = 0x8000;         // Main output enable
@@ -5602,15 +5613,15 @@ struct tim17_t
     static const uint32_t BDTR_BKE = 0x1000;         // Break enable
     static const uint32_t BDTR_OSSR = 0x800;         // Off-state selection for Run mode
     static const uint32_t BDTR_OSSI = 0x400;         // Off-state selection for Idle mode
-    static constexpr uint32_t BDTR_LOCK(uint32_t x) { return (x & 0x3) << 8; } // Lock configuration (2 bits)
-    static constexpr uint32_t BDTR_DTG(uint32_t x) { return (x & 0xff) << 0; } // Dead-time generator setup (8 bits)
+    typedef bit_field_t<8, 0x3> BDTR_LOCK;  // Lock configuration (2 bits)
+    typedef bit_field_t<0, 0xff> BDTR_DTG;  // Dead-time generator setup (8 bits)
     static const uint32_t BDTR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DCR_DBL(uint32_t x) { return (x & 0x1f) << 8; } // DMA burst length (5 bits)
-    static constexpr uint32_t DCR_DBA(uint32_t x) { return (x & 0x1f) << 0; } // DMA base address (5 bits)
+    typedef bit_field_t<8, 0x1f> DCR_DBL;  // DMA burst length (5 bits)
+    typedef bit_field_t<0, 0x1f> DCR_DBA;  // DMA base address (5 bits)
     static const uint32_t DCR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DMAR_DMAB(uint32_t x) { return (x & 0xffff) << 0; } // DMA register for burst accesses (16 bits)
+    typedef bit_field_t<0, 0xffff> DMAR_DMAB;  // DMA register for burst accesses (16 bits)
     static const uint32_t DMAR_RESET_VALUE = 0x0;
 };
 
@@ -5645,13 +5656,13 @@ struct tsc_t
     volatile uint32_t    IOG5CR;               // [Read-only] I/O group x counter register
     volatile uint32_t    IOG6CR;               // [Read-only] I/O group x counter register
 
-    static constexpr uint32_t CR_CTPH(uint32_t x) { return (x & 0xf) << 28; } // Charge transfer pulse high (4 bits)
-    static constexpr uint32_t CR_CTPL(uint32_t x) { return (x & 0xf) << 24; } // Charge transfer pulse low (4 bits)
-    static constexpr uint32_t CR_SSD(uint32_t x) { return (x & 0x7f) << 17; } // Spread spectrum deviation (7 bits)
+    typedef bit_field_t<28, 0xf> CR_CTPH;  // Charge transfer pulse high (4 bits)
+    typedef bit_field_t<24, 0xf> CR_CTPL;  // Charge transfer pulse low (4 bits)
+    typedef bit_field_t<17, 0x7f> CR_SSD;  // Spread spectrum deviation (7 bits)
     static const uint32_t CR_SSE = 0x10000;        // Spread spectrum enable
     static const uint32_t CR_SSPSC = 0x8000;       // Spread spectrum prescaler
-    static constexpr uint32_t CR_PGPSC(uint32_t x) { return (x & 0x7) << 12; } // pulse generator prescaler (3 bits)
-    static constexpr uint32_t CR_MCV(uint32_t x) { return (x & 0x7) << 5; } // Max count value (3 bits)
+    typedef bit_field_t<12, 0x7> CR_PGPSC;  // pulse generator prescaler (3 bits)
+    typedef bit_field_t<5, 0x7> CR_MCV;  // Max count value (3 bits)
     static const uint32_t CR_IODEF = 0x10;         // I/O Default mode
     static const uint32_t CR_SYNCPOL = 0x8;        // Synchronization pin polarity
     static const uint32_t CR_AM = 0x4;             // Acquisition mode
@@ -5793,22 +5804,22 @@ struct tsc_t
     static const uint32_t IOGCSR_G1E = 0x1;            // Analog I/O group x enable, Read-write
     static const uint32_t IOGCSR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t IOG1CR_CNT(uint32_t x) { return (x & 0x3fff) << 0; } // Counter value (14 bits)
+    typedef bit_field_t<0, 0x3fff> IOG1CR_CNT;  // Counter value (14 bits)
     static const uint32_t IOG1CR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t IOG2CR_CNT(uint32_t x) { return (x & 0x3fff) << 0; } // Counter value (14 bits)
+    typedef bit_field_t<0, 0x3fff> IOG2CR_CNT;  // Counter value (14 bits)
     static const uint32_t IOG2CR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t IOG3CR_CNT(uint32_t x) { return (x & 0x3fff) << 0; } // Counter value (14 bits)
+    typedef bit_field_t<0, 0x3fff> IOG3CR_CNT;  // Counter value (14 bits)
     static const uint32_t IOG3CR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t IOG4CR_CNT(uint32_t x) { return (x & 0x3fff) << 0; } // Counter value (14 bits)
+    typedef bit_field_t<0, 0x3fff> IOG4CR_CNT;  // Counter value (14 bits)
     static const uint32_t IOG4CR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t IOG5CR_CNT(uint32_t x) { return (x & 0x3fff) << 0; } // Counter value (14 bits)
+    typedef bit_field_t<0, 0x3fff> IOG5CR_CNT;  // Counter value (14 bits)
     static const uint32_t IOG5CR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t IOG6CR_CNT(uint32_t x) { return (x & 0x3fff) << 0; } // Counter value (14 bits)
+    typedef bit_field_t<0, 0x3fff> IOG6CR_CNT;  // Counter value (14 bits)
     static const uint32_t IOG6CR_RESET_VALUE = 0x0;
 };
 
@@ -5839,15 +5850,15 @@ struct cec_t
     static const uint32_t CFGR_BREGEN = 0x400;       // Generate error-bit on bit rising error
     static const uint32_t CFGR_BRESTP = 0x200;       // Rx-stop on bit rising error
     static const uint32_t CFGR_RXTOL = 0x100;        // Rx-Tolerance
-    static constexpr uint32_t CFGR_SFT(uint32_t x) { return (x & 0x7) << 5; } // Signal Free Time (3 bits)
+    typedef bit_field_t<5, 0x7> CFGR_SFT;  // Signal Free Time (3 bits)
     static const uint32_t CFGR_LSTN = 0x10;          // Listen mode
-    static constexpr uint32_t CFGR_OAR(uint32_t x) { return (x & 0xf) << 0; } // Own Address (4 bits)
+    typedef bit_field_t<0, 0xf> CFGR_OAR;  // Own Address (4 bits)
     static const uint32_t CFGR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t TXDR_TXD(uint32_t x) { return (x & 0xff) << 0; } // Tx Data register (8 bits)
+    typedef bit_field_t<0, 0xff> TXDR_TXD;  // Tx Data register (8 bits)
     static const uint32_t TXDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RXDR_RXDR(uint32_t x) { return (x & 0xff) << 0; } // CEC Rx Data Register (8 bits)
+    typedef bit_field_t<0, 0xff> RXDR_RXDR;  // CEC Rx Data Register (8 bits)
     static const uint32_t RXDR_RESET_VALUE = 0x0;
 
     static const uint32_t ISR_TXACKE = 0x1000;      // Tx-Missing acknowledge error
@@ -5902,7 +5913,7 @@ struct flash_t
     volatile uint32_t    OBR;                  // [Read-only] Option byte register
     volatile uint32_t    WRPR;                 // [Read-only] Write protection register
 
-    static constexpr uint32_t ACR_LATENCY(uint32_t x) { return (x & 0x7) << 0; } // LATENCY (3 bits), Read-write
+    typedef bit_field_t<0, 0x7> ACR_LATENCY;  // LATENCY (3 bits), Read-write
     static const uint32_t ACR_PRFTBE = 0x10;        // PRFTBE, Read-write
     static const uint32_t ACR_PRFTBS = 0x20;        // PRFTBS, Read-only
     static const uint32_t ACR_RESET_VALUE = 0x30;
@@ -5936,7 +5947,7 @@ struct flash_t
     static const uint32_t AR_RESET_VALUE = 0x0;
 
     static const uint32_t OBR_OPTERR = 0x1;         // Option byte error
-    static constexpr uint32_t OBR_RDPRT(uint32_t x) { return (x & 0x3) << 1; } // Read protection level status (2 bits)
+    typedef bit_field_t<1, 0x3> OBR_RDPRT;  // Read protection level status (2 bits)
     static const uint32_t OBR_WDG_SW = 0x100;       // WDG_SW
     static const uint32_t OBR_nRST_STOP = 0x200;    // nRST_STOP
     static const uint32_t OBR_nRST_STDBY = 0x400;   // nRST_STDBY
@@ -5945,8 +5956,8 @@ struct flash_t
     static const uint32_t OBR_VDDA_MONITOR = 0x2000;// VDDA_MONITOR
     static const uint32_t OBR_RAM_PARITY_CHECK = 0x4000;// RAM_PARITY_CHECK (0 bits)
     static const uint32_t OBR_BOOT_SEL = 0x8000;    // BOOT_SEL
-    static constexpr uint32_t OBR_Data0(uint32_t x) { return (x & 0xff) << 16; } // Data0 (8 bits)
-    static constexpr uint32_t OBR_Data1(uint32_t x) { return (x & 0xff) << 24; } // Data1 (8 bits)
+    typedef bit_field_t<16, 0xff> OBR_Data0;  // Data0 (8 bits)
+    typedef bit_field_t<24, 0xff> OBR_Data1;  // Data1 (8 bits)
     static const uint32_t OBR_RESET_VALUE = 0x3fffff2;
 
 
@@ -5969,9 +5980,9 @@ struct dbgmcu_t
     volatile uint32_t    APB1_FZ;              // [Read-write] Debug MCU APB1 freeze register
     volatile uint32_t    APB2_FZ;              // [Read-write] Debug MCU APB2 freeze register
 
-    static constexpr uint32_t IDCODE_DEV_ID(uint32_t x) { return (x & 0xfff) << 0; } // Device Identifier (12 bits)
-    static constexpr uint32_t IDCODE_DIV_ID(uint32_t x) { return (x & 0xf) << 12; } // Division Identifier (4 bits)
-    static constexpr uint32_t IDCODE_REV_ID(uint32_t x) { return (x & 0xffff) << 16; } // Revision Identifier (16 bits)
+    typedef bit_field_t<0, 0xfff> IDCODE_DEV_ID;  // Device Identifier (12 bits)
+    typedef bit_field_t<12, 0xf> IDCODE_DIV_ID;  // Division Identifier (4 bits)
+    typedef bit_field_t<16, 0xffff> IDCODE_REV_ID;  // Revision Identifier (16 bits)
     static const uint32_t IDCODE_RESET_VALUE = 0x0;
 
     static const uint32_t CR_DBG_STOP = 0x2;       // Debug Stop Mode
@@ -6025,98 +6036,98 @@ struct usb_t
     volatile uint32_t    LPMCSR;               // LPM control and status register
     volatile uint32_t    BCDR;                 // Battery charging detector
 
-    static constexpr uint32_t EP0R_EA(uint32_t x) { return (x & 0xf) << 0; } // Endpoint address (4 bits)
-    static constexpr uint32_t EP0R_STAT_TX(uint32_t x) { return (x & 0x3) << 4; } // Status bits, for transmission transfers (2 bits)
+    typedef bit_field_t<0, 0xf> EP0R_EA;  // Endpoint address (4 bits)
+    typedef bit_field_t<4, 0x3> EP0R_STAT_TX;  // Status bits, for transmission transfers (2 bits)
     static const uint32_t EP0R_DTOG_TX = 0x40;       // Data Toggle, for transmission transfers
     static const uint32_t EP0R_CTR_TX = 0x80;        // Correct Transfer for transmission
     static const uint32_t EP0R_EP_KIND = 0x100;      // Endpoint kind
-    static constexpr uint32_t EP0R_EP_TYPE(uint32_t x) { return (x & 0x3) << 9; } // Endpoint type (2 bits)
+    typedef bit_field_t<9, 0x3> EP0R_EP_TYPE;  // Endpoint type (2 bits)
     static const uint32_t EP0R_SETUP = 0x800;        // Setup transaction completed
-    static constexpr uint32_t EP0R_STAT_RX(uint32_t x) { return (x & 0x3) << 12; } // Status bits, for reception transfers (2 bits)
+    typedef bit_field_t<12, 0x3> EP0R_STAT_RX;  // Status bits, for reception transfers (2 bits)
     static const uint32_t EP0R_DTOG_RX = 0x4000;     // Data Toggle, for reception transfers
     static const uint32_t EP0R_CTR_RX = 0x8000;      // Correct transfer for reception
     static const uint32_t EP0R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t EP1R_EA(uint32_t x) { return (x & 0xf) << 0; } // Endpoint address (4 bits)
-    static constexpr uint32_t EP1R_STAT_TX(uint32_t x) { return (x & 0x3) << 4; } // Status bits, for transmission transfers (2 bits)
+    typedef bit_field_t<0, 0xf> EP1R_EA;  // Endpoint address (4 bits)
+    typedef bit_field_t<4, 0x3> EP1R_STAT_TX;  // Status bits, for transmission transfers (2 bits)
     static const uint32_t EP1R_DTOG_TX = 0x40;       // Data Toggle, for transmission transfers
     static const uint32_t EP1R_CTR_TX = 0x80;        // Correct Transfer for transmission
     static const uint32_t EP1R_EP_KIND = 0x100;      // Endpoint kind
-    static constexpr uint32_t EP1R_EP_TYPE(uint32_t x) { return (x & 0x3) << 9; } // Endpoint type (2 bits)
+    typedef bit_field_t<9, 0x3> EP1R_EP_TYPE;  // Endpoint type (2 bits)
     static const uint32_t EP1R_SETUP = 0x800;        // Setup transaction completed
-    static constexpr uint32_t EP1R_STAT_RX(uint32_t x) { return (x & 0x3) << 12; } // Status bits, for reception transfers (2 bits)
+    typedef bit_field_t<12, 0x3> EP1R_STAT_RX;  // Status bits, for reception transfers (2 bits)
     static const uint32_t EP1R_DTOG_RX = 0x4000;     // Data Toggle, for reception transfers
     static const uint32_t EP1R_CTR_RX = 0x8000;      // Correct transfer for reception
     static const uint32_t EP1R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t EP2R_EA(uint32_t x) { return (x & 0xf) << 0; } // Endpoint address (4 bits)
-    static constexpr uint32_t EP2R_STAT_TX(uint32_t x) { return (x & 0x3) << 4; } // Status bits, for transmission transfers (2 bits)
+    typedef bit_field_t<0, 0xf> EP2R_EA;  // Endpoint address (4 bits)
+    typedef bit_field_t<4, 0x3> EP2R_STAT_TX;  // Status bits, for transmission transfers (2 bits)
     static const uint32_t EP2R_DTOG_TX = 0x40;       // Data Toggle, for transmission transfers
     static const uint32_t EP2R_CTR_TX = 0x80;        // Correct Transfer for transmission
     static const uint32_t EP2R_EP_KIND = 0x100;      // Endpoint kind
-    static constexpr uint32_t EP2R_EP_TYPE(uint32_t x) { return (x & 0x3) << 9; } // Endpoint type (2 bits)
+    typedef bit_field_t<9, 0x3> EP2R_EP_TYPE;  // Endpoint type (2 bits)
     static const uint32_t EP2R_SETUP = 0x800;        // Setup transaction completed
-    static constexpr uint32_t EP2R_STAT_RX(uint32_t x) { return (x & 0x3) << 12; } // Status bits, for reception transfers (2 bits)
+    typedef bit_field_t<12, 0x3> EP2R_STAT_RX;  // Status bits, for reception transfers (2 bits)
     static const uint32_t EP2R_DTOG_RX = 0x4000;     // Data Toggle, for reception transfers
     static const uint32_t EP2R_CTR_RX = 0x8000;      // Correct transfer for reception
     static const uint32_t EP2R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t EP3R_EA(uint32_t x) { return (x & 0xf) << 0; } // Endpoint address (4 bits)
-    static constexpr uint32_t EP3R_STAT_TX(uint32_t x) { return (x & 0x3) << 4; } // Status bits, for transmission transfers (2 bits)
+    typedef bit_field_t<0, 0xf> EP3R_EA;  // Endpoint address (4 bits)
+    typedef bit_field_t<4, 0x3> EP3R_STAT_TX;  // Status bits, for transmission transfers (2 bits)
     static const uint32_t EP3R_DTOG_TX = 0x40;       // Data Toggle, for transmission transfers
     static const uint32_t EP3R_CTR_TX = 0x80;        // Correct Transfer for transmission
     static const uint32_t EP3R_EP_KIND = 0x100;      // Endpoint kind
-    static constexpr uint32_t EP3R_EP_TYPE(uint32_t x) { return (x & 0x3) << 9; } // Endpoint type (2 bits)
+    typedef bit_field_t<9, 0x3> EP3R_EP_TYPE;  // Endpoint type (2 bits)
     static const uint32_t EP3R_SETUP = 0x800;        // Setup transaction completed
-    static constexpr uint32_t EP3R_STAT_RX(uint32_t x) { return (x & 0x3) << 12; } // Status bits, for reception transfers (2 bits)
+    typedef bit_field_t<12, 0x3> EP3R_STAT_RX;  // Status bits, for reception transfers (2 bits)
     static const uint32_t EP3R_DTOG_RX = 0x4000;     // Data Toggle, for reception transfers
     static const uint32_t EP3R_CTR_RX = 0x8000;      // Correct transfer for reception
     static const uint32_t EP3R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t EP4R_EA(uint32_t x) { return (x & 0xf) << 0; } // Endpoint address (4 bits)
-    static constexpr uint32_t EP4R_STAT_TX(uint32_t x) { return (x & 0x3) << 4; } // Status bits, for transmission transfers (2 bits)
+    typedef bit_field_t<0, 0xf> EP4R_EA;  // Endpoint address (4 bits)
+    typedef bit_field_t<4, 0x3> EP4R_STAT_TX;  // Status bits, for transmission transfers (2 bits)
     static const uint32_t EP4R_DTOG_TX = 0x40;       // Data Toggle, for transmission transfers
     static const uint32_t EP4R_CTR_TX = 0x80;        // Correct Transfer for transmission
     static const uint32_t EP4R_EP_KIND = 0x100;      // Endpoint kind
-    static constexpr uint32_t EP4R_EP_TYPE(uint32_t x) { return (x & 0x3) << 9; } // Endpoint type (2 bits)
+    typedef bit_field_t<9, 0x3> EP4R_EP_TYPE;  // Endpoint type (2 bits)
     static const uint32_t EP4R_SETUP = 0x800;        // Setup transaction completed
-    static constexpr uint32_t EP4R_STAT_RX(uint32_t x) { return (x & 0x3) << 12; } // Status bits, for reception transfers (2 bits)
+    typedef bit_field_t<12, 0x3> EP4R_STAT_RX;  // Status bits, for reception transfers (2 bits)
     static const uint32_t EP4R_DTOG_RX = 0x4000;     // Data Toggle, for reception transfers
     static const uint32_t EP4R_CTR_RX = 0x8000;      // Correct transfer for reception
     static const uint32_t EP4R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t EP5R_EA(uint32_t x) { return (x & 0xf) << 0; } // Endpoint address (4 bits)
-    static constexpr uint32_t EP5R_STAT_TX(uint32_t x) { return (x & 0x3) << 4; } // Status bits, for transmission transfers (2 bits)
+    typedef bit_field_t<0, 0xf> EP5R_EA;  // Endpoint address (4 bits)
+    typedef bit_field_t<4, 0x3> EP5R_STAT_TX;  // Status bits, for transmission transfers (2 bits)
     static const uint32_t EP5R_DTOG_TX = 0x40;       // Data Toggle, for transmission transfers
     static const uint32_t EP5R_CTR_TX = 0x80;        // Correct Transfer for transmission
     static const uint32_t EP5R_EP_KIND = 0x100;      // Endpoint kind
-    static constexpr uint32_t EP5R_EP_TYPE(uint32_t x) { return (x & 0x3) << 9; } // Endpoint type (2 bits)
+    typedef bit_field_t<9, 0x3> EP5R_EP_TYPE;  // Endpoint type (2 bits)
     static const uint32_t EP5R_SETUP = 0x800;        // Setup transaction completed
-    static constexpr uint32_t EP5R_STAT_RX(uint32_t x) { return (x & 0x3) << 12; } // Status bits, for reception transfers (2 bits)
+    typedef bit_field_t<12, 0x3> EP5R_STAT_RX;  // Status bits, for reception transfers (2 bits)
     static const uint32_t EP5R_DTOG_RX = 0x4000;     // Data Toggle, for reception transfers
     static const uint32_t EP5R_CTR_RX = 0x8000;      // Correct transfer for reception
     static const uint32_t EP5R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t EP6R_EA(uint32_t x) { return (x & 0xf) << 0; } // Endpoint address (4 bits)
-    static constexpr uint32_t EP6R_STAT_TX(uint32_t x) { return (x & 0x3) << 4; } // Status bits, for transmission transfers (2 bits)
+    typedef bit_field_t<0, 0xf> EP6R_EA;  // Endpoint address (4 bits)
+    typedef bit_field_t<4, 0x3> EP6R_STAT_TX;  // Status bits, for transmission transfers (2 bits)
     static const uint32_t EP6R_DTOG_TX = 0x40;       // Data Toggle, for transmission transfers
     static const uint32_t EP6R_CTR_TX = 0x80;        // Correct Transfer for transmission
     static const uint32_t EP6R_EP_KIND = 0x100;      // Endpoint kind
-    static constexpr uint32_t EP6R_EP_TYPE(uint32_t x) { return (x & 0x3) << 9; } // Endpoint type (2 bits)
+    typedef bit_field_t<9, 0x3> EP6R_EP_TYPE;  // Endpoint type (2 bits)
     static const uint32_t EP6R_SETUP = 0x800;        // Setup transaction completed
-    static constexpr uint32_t EP6R_STAT_RX(uint32_t x) { return (x & 0x3) << 12; } // Status bits, for reception transfers (2 bits)
+    typedef bit_field_t<12, 0x3> EP6R_STAT_RX;  // Status bits, for reception transfers (2 bits)
     static const uint32_t EP6R_DTOG_RX = 0x4000;     // Data Toggle, for reception transfers
     static const uint32_t EP6R_CTR_RX = 0x8000;      // Correct transfer for reception
     static const uint32_t EP6R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t EP7R_EA(uint32_t x) { return (x & 0xf) << 0; } // Endpoint address (4 bits)
-    static constexpr uint32_t EP7R_STAT_TX(uint32_t x) { return (x & 0x3) << 4; } // Status bits, for transmission transfers (2 bits)
+    typedef bit_field_t<0, 0xf> EP7R_EA;  // Endpoint address (4 bits)
+    typedef bit_field_t<4, 0x3> EP7R_STAT_TX;  // Status bits, for transmission transfers (2 bits)
     static const uint32_t EP7R_DTOG_TX = 0x40;       // Data Toggle, for transmission transfers
     static const uint32_t EP7R_CTR_TX = 0x80;        // Correct Transfer for transmission
     static const uint32_t EP7R_EP_KIND = 0x100;      // Endpoint kind
-    static constexpr uint32_t EP7R_EP_TYPE(uint32_t x) { return (x & 0x3) << 9; } // Endpoint type (2 bits)
+    typedef bit_field_t<9, 0x3> EP7R_EP_TYPE;  // Endpoint type (2 bits)
     static const uint32_t EP7R_SETUP = 0x800;        // Setup transaction completed
-    static constexpr uint32_t EP7R_STAT_RX(uint32_t x) { return (x & 0x3) << 12; } // Status bits, for reception transfers (2 bits)
+    typedef bit_field_t<12, 0x3> EP7R_STAT_RX;  // Status bits, for reception transfers (2 bits)
     static const uint32_t EP7R_DTOG_RX = 0x4000;     // Data Toggle, for reception transfers
     static const uint32_t EP7R_CTR_RX = 0x8000;      // Correct transfer for reception
     static const uint32_t EP7R_RESET_VALUE = 0x0;
@@ -6138,7 +6149,7 @@ struct usb_t
     static const uint32_t CNTR_CTRM = 0x8000;        // Correct transfer interrupt mask
     static const uint32_t CNTR_RESET_VALUE = 0x3;
 
-    static constexpr uint32_t ISTR_EP_ID(uint32_t x) { return (x & 0xf) << 0; } // Endpoint Identifier (4 bits), Read-only
+    typedef bit_field_t<0, 0xf> ISTR_EP_ID;  // Endpoint Identifier (4 bits), Read-only
     static const uint32_t ISTR_DIR = 0x10;           // Direction of transaction, Read-only
     static const uint32_t ISTR_L1REQ = 0x80;         // LPM L1 state request, Read-write
     static const uint32_t ISTR_ESOF = 0x100;         // Expected start frame, Read-write
@@ -6151,24 +6162,24 @@ struct usb_t
     static const uint32_t ISTR_CTR = 0x8000;         // Correct transfer, Read-only
     static const uint32_t ISTR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t FNR_FN(uint32_t x) { return (x & 0x7ff) << 0; } // Frame number (11 bits)
-    static constexpr uint32_t FNR_LSOF(uint32_t x) { return (x & 0x3) << 11; } // Lost SOF (2 bits)
+    typedef bit_field_t<0, 0x7ff> FNR_FN;  // Frame number (11 bits)
+    typedef bit_field_t<11, 0x3> FNR_LSOF;  // Lost SOF (2 bits)
     static const uint32_t FNR_LCK = 0x2000;         // Locked
     static const uint32_t FNR_RXDM = 0x4000;        // Receive data - line status
     static const uint32_t FNR_RXDP = 0x8000;        // Receive data + line status
     static const uint32_t FNR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DADDR_ADD(uint32_t x) { return (x & 0x7f) << 0; } // Device address (7 bits)
+    typedef bit_field_t<0, 0x7f> DADDR_ADD;  // Device address (7 bits)
     static const uint32_t DADDR_EF = 0x80;            // Enable function
     static const uint32_t DADDR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t BTABLE_BTABLE(uint32_t x) { return (x & 0x1fff) << 3; } // Buffer table (13 bits)
+    typedef bit_field_t<3, 0x1fff> BTABLE_BTABLE;  // Buffer table (13 bits)
     static const uint32_t BTABLE_RESET_VALUE = 0x0;
 
     static const uint32_t LPMCSR_LPMEN = 0x1;          // LPM support enable, Read-write
     static const uint32_t LPMCSR_LPMACK = 0x2;         // LPM Token acknowledge enable, Read-write
     static const uint32_t LPMCSR_REMWAKE = 0x8;        // bRemoteWake value, Read-only
-    static constexpr uint32_t LPMCSR_BESL(uint32_t x) { return (x & 0xf) << 4; } // BESL value (4 bits), Read-only
+    typedef bit_field_t<4, 0xf> LPMCSR_BESL;  // BESL value (4 bits), Read-only
     static const uint32_t LPMCSR_RESET_VALUE = 0x0;
 
     static const uint32_t BCDR_BCDEN = 0x1;          // Battery charging detector (BCD) enable, Read-write
@@ -6199,7 +6210,7 @@ struct crs_t
     volatile uint32_t    ISR;                  // [Read-only] interrupt and status register
     volatile uint32_t    ICR;                  // [Read-write] interrupt flag clear register
 
-    static constexpr uint32_t CR_TRIM(uint32_t x) { return (x & 0x3f) << 8; } // HSI48 oscillator smooth trimming (6 bits)
+    typedef bit_field_t<8, 0x3f> CR_TRIM;  // HSI48 oscillator smooth trimming (6 bits)
     static const uint32_t CR_SWSYNC = 0x80;        // Generate software SYNC event
     static const uint32_t CR_AUTOTRIMEN = 0x40;    // Automatic trimming enable
     static const uint32_t CR_CEN = 0x20;           // Frequency error counter enable
@@ -6210,13 +6221,13 @@ struct crs_t
     static const uint32_t CR_RESET_VALUE = 0x2000;
 
     static const uint32_t CFGR_SYNCPOL = 0x80000000; // SYNC polarity selection
-    static constexpr uint32_t CFGR_SYNCSRC(uint32_t x) { return (x & 0x3) << 28; } // SYNC signal source selection (2 bits)
-    static constexpr uint32_t CFGR_SYNCDIV(uint32_t x) { return (x & 0x7) << 24; } // SYNC divider (3 bits)
-    static constexpr uint32_t CFGR_FELIM(uint32_t x) { return (x & 0xff) << 16; } // Frequency error limit (8 bits)
-    static constexpr uint32_t CFGR_RELOAD(uint32_t x) { return (x & 0xffff) << 0; } // Counter reload value (16 bits)
+    typedef bit_field_t<28, 0x3> CFGR_SYNCSRC;  // SYNC signal source selection (2 bits)
+    typedef bit_field_t<24, 0x7> CFGR_SYNCDIV;  // SYNC divider (3 bits)
+    typedef bit_field_t<16, 0xff> CFGR_FELIM;  // Frequency error limit (8 bits)
+    typedef bit_field_t<0, 0xffff> CFGR_RELOAD;  // Counter reload value (16 bits)
     static const uint32_t CFGR_RESET_VALUE = 0x2022bb7f;
 
-    static constexpr uint32_t ISR_FECAP(uint32_t x) { return (x & 0xffff) << 16; } // Frequency error capture (16 bits)
+    typedef bit_field_t<16, 0xffff> ISR_FECAP;  // Frequency error capture (16 bits)
     static const uint32_t ISR_FEDIR = 0x8000;       // Frequency error direction
     static const uint32_t ISR_TRIMOVF = 0x400;      // Trimming overflow or underflow
     static const uint32_t ISR_SYNCMISS = 0x200;     // SYNC missed
@@ -6370,7 +6381,7 @@ struct can_t
     static const uint32_t CAN_TSR_TME2 = 0x10000000;    // Lowest priority flag for mailbox 2, Read-only
     static const uint32_t CAN_TSR_TME1 = 0x8000000;     // Lowest priority flag for mailbox 1, Read-only
     static const uint32_t CAN_TSR_TME0 = 0x4000000;     // Lowest priority flag for mailbox 0, Read-only
-    static constexpr uint32_t CAN_TSR_CODE(uint32_t x) { return (x & 0x3) << 24; } // CODE (2 bits), Read-only
+    typedef bit_field_t<24, 0x3> CAN_TSR_CODE;  // CODE (2 bits), Read-only
     static const uint32_t CAN_TSR_ABRQ2 = 0x800000;     // ABRQ2, Read-write
     static const uint32_t CAN_TSR_TERR2 = 0x80000;      // TERR2, Read-write
     static const uint32_t CAN_TSR_ALST2 = 0x40000;      // ALST2, Read-write
@@ -6391,13 +6402,13 @@ struct can_t
     static const uint32_t CAN_RF0R_RFOM0 = 0x20;         // RFOM0, Read-write
     static const uint32_t CAN_RF0R_FOVR0 = 0x10;         // FOVR0, Read-write
     static const uint32_t CAN_RF0R_FULL0 = 0x8;          // FULL0, Read-write
-    static constexpr uint32_t CAN_RF0R_FMP0(uint32_t x) { return (x & 0x3) << 0; } // FMP0 (2 bits), Read-only
+    typedef bit_field_t<0, 0x3> CAN_RF0R_FMP0;  // FMP0 (2 bits), Read-only
     static const uint32_t CAN_RF0R_RESET_VALUE = 0x0;
 
     static const uint32_t CAN_RF1R_RFOM1 = 0x20;         // RFOM1, Read-write
     static const uint32_t CAN_RF1R_FOVR1 = 0x10;         // FOVR1, Read-write
     static const uint32_t CAN_RF1R_FULL1 = 0x8;          // FULL1, Read-write
-    static constexpr uint32_t CAN_RF1R_FMP1(uint32_t x) { return (x & 0x3) << 0; } // FMP1 (2 bits), Read-only
+    typedef bit_field_t<0, 0x3> CAN_RF1R_FMP1;  // FMP1 (2 bits), Read-only
     static const uint32_t CAN_RF1R_RESET_VALUE = 0x0;
 
     static const uint32_t CAN_IER_SLKIE = 0x20000;      // SLKIE
@@ -6416,9 +6427,9 @@ struct can_t
     static const uint32_t CAN_IER_TMEIE = 0x1;          // TMEIE
     static const uint32_t CAN_IER_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_ESR_REC(uint32_t x) { return (x & 0xff) << 24; } // REC (8 bits), Read-only
-    static constexpr uint32_t CAN_ESR_TEC(uint32_t x) { return (x & 0xff) << 16; } // TEC (8 bits), Read-only
-    static constexpr uint32_t CAN_ESR_LEC(uint32_t x) { return (x & 0x7) << 4; } // LEC (3 bits), Read-write
+    typedef bit_field_t<24, 0xff> CAN_ESR_REC;  // REC (8 bits), Read-only
+    typedef bit_field_t<16, 0xff> CAN_ESR_TEC;  // TEC (8 bits), Read-only
+    typedef bit_field_t<4, 0x7> CAN_ESR_LEC;  // LEC (3 bits), Read-write
     static const uint32_t CAN_ESR_BOFF = 0x4;           // BOFF, Read-only
     static const uint32_t CAN_ESR_EPVF = 0x2;           // EPVF, Read-only
     static const uint32_t CAN_ESR_EWGF = 0x1;           // EWGF, Read-only
@@ -6426,131 +6437,131 @@ struct can_t
 
     static const uint32_t CAN_BTR_SILM = 0x80000000;    // SILM
     static const uint32_t CAN_BTR_LBKM = 0x40000000;    // LBKM
-    static constexpr uint32_t CAN_BTR_SJW(uint32_t x) { return (x & 0x3) << 24; } // SJW (2 bits)
-    static constexpr uint32_t CAN_BTR_TS2(uint32_t x) { return (x & 0x7) << 20; } // TS2 (3 bits)
-    static constexpr uint32_t CAN_BTR_TS1(uint32_t x) { return (x & 0xf) << 16; } // TS1 (4 bits)
-    static constexpr uint32_t CAN_BTR_BRP(uint32_t x) { return (x & 0x3ff) << 0; } // BRP (10 bits)
+    typedef bit_field_t<24, 0x3> CAN_BTR_SJW;  // SJW (2 bits)
+    typedef bit_field_t<20, 0x7> CAN_BTR_TS2;  // TS2 (3 bits)
+    typedef bit_field_t<16, 0xf> CAN_BTR_TS1;  // TS1 (4 bits)
+    typedef bit_field_t<0, 0x3ff> CAN_BTR_BRP;  // BRP (10 bits)
     static const uint32_t CAN_BTR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_TI0R_STID(uint32_t x) { return (x & 0x7ff) << 21; } // STID (11 bits)
-    static constexpr uint32_t CAN_TI0R_EXID(uint32_t x) { return (x & 0x3ffff) << 3; } // EXID (18 bits)
+    typedef bit_field_t<21, 0x7ff> CAN_TI0R_STID;  // STID (11 bits)
+    typedef bit_field_t<3, 0x3ffff> CAN_TI0R_EXID;  // EXID (18 bits)
     static const uint32_t CAN_TI0R_IDE = 0x4;            // IDE
     static const uint32_t CAN_TI0R_RTR = 0x2;            // RTR
     static const uint32_t CAN_TI0R_TXRQ = 0x1;           // TXRQ
     static const uint32_t CAN_TI0R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_TDT0R_TIME(uint32_t x) { return (x & 0xffff) << 16; } // TIME (16 bits)
+    typedef bit_field_t<16, 0xffff> CAN_TDT0R_TIME;  // TIME (16 bits)
     static const uint32_t CAN_TDT0R_TGT = 0x100;          // TGT
-    static constexpr uint32_t CAN_TDT0R_DLC(uint32_t x) { return (x & 0xf) << 0; } // DLC (4 bits)
+    typedef bit_field_t<0, 0xf> CAN_TDT0R_DLC;  // DLC (4 bits)
     static const uint32_t CAN_TDT0R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_TDL0R_DATA3(uint32_t x) { return (x & 0xff) << 24; } // DATA3 (8 bits)
-    static constexpr uint32_t CAN_TDL0R_DATA2(uint32_t x) { return (x & 0xff) << 16; } // DATA2 (8 bits)
-    static constexpr uint32_t CAN_TDL0R_DATA1(uint32_t x) { return (x & 0xff) << 8; } // DATA1 (8 bits)
-    static constexpr uint32_t CAN_TDL0R_DATA0(uint32_t x) { return (x & 0xff) << 0; } // DATA0 (8 bits)
+    typedef bit_field_t<24, 0xff> CAN_TDL0R_DATA3;  // DATA3 (8 bits)
+    typedef bit_field_t<16, 0xff> CAN_TDL0R_DATA2;  // DATA2 (8 bits)
+    typedef bit_field_t<8, 0xff> CAN_TDL0R_DATA1;  // DATA1 (8 bits)
+    typedef bit_field_t<0, 0xff> CAN_TDL0R_DATA0;  // DATA0 (8 bits)
     static const uint32_t CAN_TDL0R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_TDH0R_DATA7(uint32_t x) { return (x & 0xff) << 24; } // DATA7 (8 bits)
-    static constexpr uint32_t CAN_TDH0R_DATA6(uint32_t x) { return (x & 0xff) << 16; } // DATA6 (8 bits)
-    static constexpr uint32_t CAN_TDH0R_DATA5(uint32_t x) { return (x & 0xff) << 8; } // DATA5 (8 bits)
-    static constexpr uint32_t CAN_TDH0R_DATA4(uint32_t x) { return (x & 0xff) << 0; } // DATA4 (8 bits)
+    typedef bit_field_t<24, 0xff> CAN_TDH0R_DATA7;  // DATA7 (8 bits)
+    typedef bit_field_t<16, 0xff> CAN_TDH0R_DATA6;  // DATA6 (8 bits)
+    typedef bit_field_t<8, 0xff> CAN_TDH0R_DATA5;  // DATA5 (8 bits)
+    typedef bit_field_t<0, 0xff> CAN_TDH0R_DATA4;  // DATA4 (8 bits)
     static const uint32_t CAN_TDH0R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_TI1R_STID(uint32_t x) { return (x & 0x7ff) << 21; } // STID (11 bits)
-    static constexpr uint32_t CAN_TI1R_EXID(uint32_t x) { return (x & 0x3ffff) << 3; } // EXID (18 bits)
+    typedef bit_field_t<21, 0x7ff> CAN_TI1R_STID;  // STID (11 bits)
+    typedef bit_field_t<3, 0x3ffff> CAN_TI1R_EXID;  // EXID (18 bits)
     static const uint32_t CAN_TI1R_IDE = 0x4;            // IDE
     static const uint32_t CAN_TI1R_RTR = 0x2;            // RTR
     static const uint32_t CAN_TI1R_TXRQ = 0x1;           // TXRQ
     static const uint32_t CAN_TI1R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_TDT1R_TIME(uint32_t x) { return (x & 0xffff) << 16; } // TIME (16 bits)
+    typedef bit_field_t<16, 0xffff> CAN_TDT1R_TIME;  // TIME (16 bits)
     static const uint32_t CAN_TDT1R_TGT = 0x100;          // TGT
-    static constexpr uint32_t CAN_TDT1R_DLC(uint32_t x) { return (x & 0xf) << 0; } // DLC (4 bits)
+    typedef bit_field_t<0, 0xf> CAN_TDT1R_DLC;  // DLC (4 bits)
     static const uint32_t CAN_TDT1R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_TDL1R_DATA3(uint32_t x) { return (x & 0xff) << 24; } // DATA3 (8 bits)
-    static constexpr uint32_t CAN_TDL1R_DATA2(uint32_t x) { return (x & 0xff) << 16; } // DATA2 (8 bits)
-    static constexpr uint32_t CAN_TDL1R_DATA1(uint32_t x) { return (x & 0xff) << 8; } // DATA1 (8 bits)
-    static constexpr uint32_t CAN_TDL1R_DATA0(uint32_t x) { return (x & 0xff) << 0; } // DATA0 (8 bits)
+    typedef bit_field_t<24, 0xff> CAN_TDL1R_DATA3;  // DATA3 (8 bits)
+    typedef bit_field_t<16, 0xff> CAN_TDL1R_DATA2;  // DATA2 (8 bits)
+    typedef bit_field_t<8, 0xff> CAN_TDL1R_DATA1;  // DATA1 (8 bits)
+    typedef bit_field_t<0, 0xff> CAN_TDL1R_DATA0;  // DATA0 (8 bits)
     static const uint32_t CAN_TDL1R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_TDH1R_DATA7(uint32_t x) { return (x & 0xff) << 24; } // DATA7 (8 bits)
-    static constexpr uint32_t CAN_TDH1R_DATA6(uint32_t x) { return (x & 0xff) << 16; } // DATA6 (8 bits)
-    static constexpr uint32_t CAN_TDH1R_DATA5(uint32_t x) { return (x & 0xff) << 8; } // DATA5 (8 bits)
-    static constexpr uint32_t CAN_TDH1R_DATA4(uint32_t x) { return (x & 0xff) << 0; } // DATA4 (8 bits)
+    typedef bit_field_t<24, 0xff> CAN_TDH1R_DATA7;  // DATA7 (8 bits)
+    typedef bit_field_t<16, 0xff> CAN_TDH1R_DATA6;  // DATA6 (8 bits)
+    typedef bit_field_t<8, 0xff> CAN_TDH1R_DATA5;  // DATA5 (8 bits)
+    typedef bit_field_t<0, 0xff> CAN_TDH1R_DATA4;  // DATA4 (8 bits)
     static const uint32_t CAN_TDH1R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_TI2R_STID(uint32_t x) { return (x & 0x7ff) << 21; } // STID (11 bits)
-    static constexpr uint32_t CAN_TI2R_EXID(uint32_t x) { return (x & 0x3ffff) << 3; } // EXID (18 bits)
+    typedef bit_field_t<21, 0x7ff> CAN_TI2R_STID;  // STID (11 bits)
+    typedef bit_field_t<3, 0x3ffff> CAN_TI2R_EXID;  // EXID (18 bits)
     static const uint32_t CAN_TI2R_IDE = 0x4;            // IDE
     static const uint32_t CAN_TI2R_RTR = 0x2;            // RTR
     static const uint32_t CAN_TI2R_TXRQ = 0x1;           // TXRQ
     static const uint32_t CAN_TI2R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_TDT2R_TIME(uint32_t x) { return (x & 0xffff) << 16; } // TIME (16 bits)
+    typedef bit_field_t<16, 0xffff> CAN_TDT2R_TIME;  // TIME (16 bits)
     static const uint32_t CAN_TDT2R_TGT = 0x100;          // TGT
-    static constexpr uint32_t CAN_TDT2R_DLC(uint32_t x) { return (x & 0xf) << 0; } // DLC (4 bits)
+    typedef bit_field_t<0, 0xf> CAN_TDT2R_DLC;  // DLC (4 bits)
     static const uint32_t CAN_TDT2R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_TDL2R_DATA3(uint32_t x) { return (x & 0xff) << 24; } // DATA3 (8 bits)
-    static constexpr uint32_t CAN_TDL2R_DATA2(uint32_t x) { return (x & 0xff) << 16; } // DATA2 (8 bits)
-    static constexpr uint32_t CAN_TDL2R_DATA1(uint32_t x) { return (x & 0xff) << 8; } // DATA1 (8 bits)
-    static constexpr uint32_t CAN_TDL2R_DATA0(uint32_t x) { return (x & 0xff) << 0; } // DATA0 (8 bits)
+    typedef bit_field_t<24, 0xff> CAN_TDL2R_DATA3;  // DATA3 (8 bits)
+    typedef bit_field_t<16, 0xff> CAN_TDL2R_DATA2;  // DATA2 (8 bits)
+    typedef bit_field_t<8, 0xff> CAN_TDL2R_DATA1;  // DATA1 (8 bits)
+    typedef bit_field_t<0, 0xff> CAN_TDL2R_DATA0;  // DATA0 (8 bits)
     static const uint32_t CAN_TDL2R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_TDH2R_DATA7(uint32_t x) { return (x & 0xff) << 24; } // DATA7 (8 bits)
-    static constexpr uint32_t CAN_TDH2R_DATA6(uint32_t x) { return (x & 0xff) << 16; } // DATA6 (8 bits)
-    static constexpr uint32_t CAN_TDH2R_DATA5(uint32_t x) { return (x & 0xff) << 8; } // DATA5 (8 bits)
-    static constexpr uint32_t CAN_TDH2R_DATA4(uint32_t x) { return (x & 0xff) << 0; } // DATA4 (8 bits)
+    typedef bit_field_t<24, 0xff> CAN_TDH2R_DATA7;  // DATA7 (8 bits)
+    typedef bit_field_t<16, 0xff> CAN_TDH2R_DATA6;  // DATA6 (8 bits)
+    typedef bit_field_t<8, 0xff> CAN_TDH2R_DATA5;  // DATA5 (8 bits)
+    typedef bit_field_t<0, 0xff> CAN_TDH2R_DATA4;  // DATA4 (8 bits)
     static const uint32_t CAN_TDH2R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_RI0R_STID(uint32_t x) { return (x & 0x7ff) << 21; } // STID (11 bits)
-    static constexpr uint32_t CAN_RI0R_EXID(uint32_t x) { return (x & 0x3ffff) << 3; } // EXID (18 bits)
+    typedef bit_field_t<21, 0x7ff> CAN_RI0R_STID;  // STID (11 bits)
+    typedef bit_field_t<3, 0x3ffff> CAN_RI0R_EXID;  // EXID (18 bits)
     static const uint32_t CAN_RI0R_IDE = 0x4;            // IDE
     static const uint32_t CAN_RI0R_RTR = 0x2;            // RTR
     static const uint32_t CAN_RI0R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_RDT0R_TIME(uint32_t x) { return (x & 0xffff) << 16; } // TIME (16 bits)
-    static constexpr uint32_t CAN_RDT0R_FMI(uint32_t x) { return (x & 0xff) << 8; } // FMI (8 bits)
-    static constexpr uint32_t CAN_RDT0R_DLC(uint32_t x) { return (x & 0xf) << 0; } // DLC (4 bits)
+    typedef bit_field_t<16, 0xffff> CAN_RDT0R_TIME;  // TIME (16 bits)
+    typedef bit_field_t<8, 0xff> CAN_RDT0R_FMI;  // FMI (8 bits)
+    typedef bit_field_t<0, 0xf> CAN_RDT0R_DLC;  // DLC (4 bits)
     static const uint32_t CAN_RDT0R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_RDL0R_DATA3(uint32_t x) { return (x & 0xff) << 24; } // DATA3 (8 bits)
-    static constexpr uint32_t CAN_RDL0R_DATA2(uint32_t x) { return (x & 0xff) << 16; } // DATA2 (8 bits)
-    static constexpr uint32_t CAN_RDL0R_DATA1(uint32_t x) { return (x & 0xff) << 8; } // DATA1 (8 bits)
-    static constexpr uint32_t CAN_RDL0R_DATA0(uint32_t x) { return (x & 0xff) << 0; } // DATA0 (8 bits)
+    typedef bit_field_t<24, 0xff> CAN_RDL0R_DATA3;  // DATA3 (8 bits)
+    typedef bit_field_t<16, 0xff> CAN_RDL0R_DATA2;  // DATA2 (8 bits)
+    typedef bit_field_t<8, 0xff> CAN_RDL0R_DATA1;  // DATA1 (8 bits)
+    typedef bit_field_t<0, 0xff> CAN_RDL0R_DATA0;  // DATA0 (8 bits)
     static const uint32_t CAN_RDL0R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_RDH0R_DATA7(uint32_t x) { return (x & 0xff) << 24; } // DATA7 (8 bits)
-    static constexpr uint32_t CAN_RDH0R_DATA6(uint32_t x) { return (x & 0xff) << 16; } // DATA6 (8 bits)
-    static constexpr uint32_t CAN_RDH0R_DATA5(uint32_t x) { return (x & 0xff) << 8; } // DATA5 (8 bits)
-    static constexpr uint32_t CAN_RDH0R_DATA4(uint32_t x) { return (x & 0xff) << 0; } // DATA4 (8 bits)
+    typedef bit_field_t<24, 0xff> CAN_RDH0R_DATA7;  // DATA7 (8 bits)
+    typedef bit_field_t<16, 0xff> CAN_RDH0R_DATA6;  // DATA6 (8 bits)
+    typedef bit_field_t<8, 0xff> CAN_RDH0R_DATA5;  // DATA5 (8 bits)
+    typedef bit_field_t<0, 0xff> CAN_RDH0R_DATA4;  // DATA4 (8 bits)
     static const uint32_t CAN_RDH0R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_RI1R_STID(uint32_t x) { return (x & 0x7ff) << 21; } // STID (11 bits)
-    static constexpr uint32_t CAN_RI1R_EXID(uint32_t x) { return (x & 0x3ffff) << 3; } // EXID (18 bits)
+    typedef bit_field_t<21, 0x7ff> CAN_RI1R_STID;  // STID (11 bits)
+    typedef bit_field_t<3, 0x3ffff> CAN_RI1R_EXID;  // EXID (18 bits)
     static const uint32_t CAN_RI1R_IDE = 0x4;            // IDE
     static const uint32_t CAN_RI1R_RTR = 0x2;            // RTR
     static const uint32_t CAN_RI1R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_RDT1R_TIME(uint32_t x) { return (x & 0xffff) << 16; } // TIME (16 bits)
-    static constexpr uint32_t CAN_RDT1R_FMI(uint32_t x) { return (x & 0xff) << 8; } // FMI (8 bits)
-    static constexpr uint32_t CAN_RDT1R_DLC(uint32_t x) { return (x & 0xf) << 0; } // DLC (4 bits)
+    typedef bit_field_t<16, 0xffff> CAN_RDT1R_TIME;  // TIME (16 bits)
+    typedef bit_field_t<8, 0xff> CAN_RDT1R_FMI;  // FMI (8 bits)
+    typedef bit_field_t<0, 0xf> CAN_RDT1R_DLC;  // DLC (4 bits)
     static const uint32_t CAN_RDT1R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_RDL1R_DATA3(uint32_t x) { return (x & 0xff) << 24; } // DATA3 (8 bits)
-    static constexpr uint32_t CAN_RDL1R_DATA2(uint32_t x) { return (x & 0xff) << 16; } // DATA2 (8 bits)
-    static constexpr uint32_t CAN_RDL1R_DATA1(uint32_t x) { return (x & 0xff) << 8; } // DATA1 (8 bits)
-    static constexpr uint32_t CAN_RDL1R_DATA0(uint32_t x) { return (x & 0xff) << 0; } // DATA0 (8 bits)
+    typedef bit_field_t<24, 0xff> CAN_RDL1R_DATA3;  // DATA3 (8 bits)
+    typedef bit_field_t<16, 0xff> CAN_RDL1R_DATA2;  // DATA2 (8 bits)
+    typedef bit_field_t<8, 0xff> CAN_RDL1R_DATA1;  // DATA1 (8 bits)
+    typedef bit_field_t<0, 0xff> CAN_RDL1R_DATA0;  // DATA0 (8 bits)
     static const uint32_t CAN_RDL1R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_RDH1R_DATA7(uint32_t x) { return (x & 0xff) << 24; } // DATA7 (8 bits)
-    static constexpr uint32_t CAN_RDH1R_DATA6(uint32_t x) { return (x & 0xff) << 16; } // DATA6 (8 bits)
-    static constexpr uint32_t CAN_RDH1R_DATA5(uint32_t x) { return (x & 0xff) << 8; } // DATA5 (8 bits)
-    static constexpr uint32_t CAN_RDH1R_DATA4(uint32_t x) { return (x & 0xff) << 0; } // DATA4 (8 bits)
+    typedef bit_field_t<24, 0xff> CAN_RDH1R_DATA7;  // DATA7 (8 bits)
+    typedef bit_field_t<16, 0xff> CAN_RDH1R_DATA6;  // DATA6 (8 bits)
+    typedef bit_field_t<8, 0xff> CAN_RDH1R_DATA5;  // DATA5 (8 bits)
+    typedef bit_field_t<0, 0xff> CAN_RDH1R_DATA4;  // DATA4 (8 bits)
     static const uint32_t CAN_RDH1R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_FMR_CAN2SB(uint32_t x) { return (x & 0x3f) << 8; } // CAN2SB (6 bits)
+    typedef bit_field_t<8, 0x3f> CAN_FMR_CAN2SB;  // CAN2SB (6 bits)
     static const uint32_t CAN_FMR_FINIT = 0x1;          // FINIT
     static const uint32_t CAN_FMR_RESET_VALUE = 0x0;
 
@@ -8608,17 +8619,17 @@ struct dac_t
     static const uint32_t CR_EN1 = 0x1;            // DAC channel1 enable
     static const uint32_t CR_BOFF1 = 0x2;          // DAC channel1 output buffer disable
     static const uint32_t CR_TEN1 = 0x4;           // DAC channel1 trigger enable
-    static constexpr uint32_t CR_TSEL1(uint32_t x) { return (x & 0x7) << 3; } // DAC channel1 trigger selection (3 bits)
-    static constexpr uint32_t CR_WAVE1(uint32_t x) { return (x & 0x3) << 6; } // DAC channel1 noise/triangle wave generation enable (2 bits)
-    static constexpr uint32_t CR_MAMP1(uint32_t x) { return (x & 0xf) << 8; } // DAC channel1 mask/amplitude selector (4 bits)
+    typedef bit_field_t<3, 0x7> CR_TSEL1;  // DAC channel1 trigger selection (3 bits)
+    typedef bit_field_t<6, 0x3> CR_WAVE1;  // DAC channel1 noise/triangle wave generation enable (2 bits)
+    typedef bit_field_t<8, 0xf> CR_MAMP1;  // DAC channel1 mask/amplitude selector (4 bits)
     static const uint32_t CR_DMAEN1 = 0x1000;      // DAC channel1 DMA enable
     static const uint32_t CR_DMAUDRIE1 = 0x2000;   // DAC channel1 DMA Underrun Interrupt enable
     static const uint32_t CR_EN2 = 0x10000;        // DAC channel2 enable
     static const uint32_t CR_BOFF2 = 0x20000;      // DAC channel2 output buffer disable
     static const uint32_t CR_TEN2 = 0x40000;       // DAC channel2 trigger enable
-    static constexpr uint32_t CR_TSEL2(uint32_t x) { return (x & 0x7) << 19; } // DAC channel2 trigger selection (3 bits)
-    static constexpr uint32_t CR_WAVE2(uint32_t x) { return (x & 0x3) << 22; } // DAC channel2 noise/triangle wave generation enable (2 bits)
-    static constexpr uint32_t CR_MAMP2(uint32_t x) { return (x & 0xf) << 24; } // DAC channel2 mask/amplitude selector (4 bits)
+    typedef bit_field_t<19, 0x7> CR_TSEL2;  // DAC channel2 trigger selection (3 bits)
+    typedef bit_field_t<22, 0x3> CR_WAVE2;  // DAC channel2 noise/triangle wave generation enable (2 bits)
+    typedef bit_field_t<24, 0xf> CR_MAMP2;  // DAC channel2 mask/amplitude selector (4 bits)
     static const uint32_t CR_DMAEN2 = 0x10000000;  // DAC channel2 DMA enable
     static const uint32_t CR_DMAUDRIE2 = 0x20000000;// DAC channel2 DMA underrun interrupt enable
     static const uint32_t CR_RESET_VALUE = 0x0;
@@ -8627,40 +8638,40 @@ struct dac_t
     static const uint32_t SWTRIGR_SWTRIG2 = 0x2;        // DAC channel2 software trigger
     static const uint32_t SWTRIGR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DHR12R1_DACC1DHR(uint32_t x) { return (x & 0xfff) << 0; } // DAC channel1 12-bit right-aligned data (12 bits)
+    typedef bit_field_t<0, 0xfff> DHR12R1_DACC1DHR;  // DAC channel1 12-bit right-aligned data (12 bits)
     static const uint32_t DHR12R1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DHR12L1_DACC1DHR(uint32_t x) { return (x & 0xfff) << 4; } // DAC channel1 12-bit left-aligned data (12 bits)
+    typedef bit_field_t<4, 0xfff> DHR12L1_DACC1DHR;  // DAC channel1 12-bit left-aligned data (12 bits)
     static const uint32_t DHR12L1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DHR8R1_DACC1DHR(uint32_t x) { return (x & 0xff) << 0; } // DAC channel1 8-bit right-aligned data (8 bits)
+    typedef bit_field_t<0, 0xff> DHR8R1_DACC1DHR;  // DAC channel1 8-bit right-aligned data (8 bits)
     static const uint32_t DHR8R1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DHR12R2_DACC2DHR(uint32_t x) { return (x & 0xfff) << 0; } // DAC channel2 12-bit right-aligned data (12 bits)
+    typedef bit_field_t<0, 0xfff> DHR12R2_DACC2DHR;  // DAC channel2 12-bit right-aligned data (12 bits)
     static const uint32_t DHR12R2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DHR12L2_DACC2DHR(uint32_t x) { return (x & 0xfff) << 4; } // DAC channel2 12-bit left-aligned data (12 bits)
+    typedef bit_field_t<4, 0xfff> DHR12L2_DACC2DHR;  // DAC channel2 12-bit left-aligned data (12 bits)
     static const uint32_t DHR12L2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DHR8R2_DACC2DHR(uint32_t x) { return (x & 0xff) << 0; } // DAC channel2 8-bit right-aligned data (8 bits)
+    typedef bit_field_t<0, 0xff> DHR8R2_DACC2DHR;  // DAC channel2 8-bit right-aligned data (8 bits)
     static const uint32_t DHR8R2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DHR12RD_DACC1DHR(uint32_t x) { return (x & 0xfff) << 0; } // DAC channel1 12-bit right-aligned data (12 bits)
-    static constexpr uint32_t DHR12RD_DACC2DHR(uint32_t x) { return (x & 0xfff) << 16; } // DAC channel2 12-bit right-aligned data (12 bits)
+    typedef bit_field_t<0, 0xfff> DHR12RD_DACC1DHR;  // DAC channel1 12-bit right-aligned data (12 bits)
+    typedef bit_field_t<16, 0xfff> DHR12RD_DACC2DHR;  // DAC channel2 12-bit right-aligned data (12 bits)
     static const uint32_t DHR12RD_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DHR12LD_DACC1DHR(uint32_t x) { return (x & 0xfff) << 4; } // DAC channel1 12-bit left-aligned data (12 bits)
-    static constexpr uint32_t DHR12LD_DACC2DHR(uint32_t x) { return (x & 0xfff) << 20; } // DAC channel2 12-bit left-aligned data (12 bits)
+    typedef bit_field_t<4, 0xfff> DHR12LD_DACC1DHR;  // DAC channel1 12-bit left-aligned data (12 bits)
+    typedef bit_field_t<20, 0xfff> DHR12LD_DACC2DHR;  // DAC channel2 12-bit left-aligned data (12 bits)
     static const uint32_t DHR12LD_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DHR8RD_DACC2DHR(uint32_t x) { return (x & 0xff) << 8; } // DAC channel2 8-bit right-aligned data (8 bits)
-    static constexpr uint32_t DHR8RD_DACC1DHR(uint32_t x) { return (x & 0xff) << 0; } // DAC channel1 8-bit right-aligned data (8 bits)
+    typedef bit_field_t<8, 0xff> DHR8RD_DACC2DHR;  // DAC channel2 8-bit right-aligned data (8 bits)
+    typedef bit_field_t<0, 0xff> DHR8RD_DACC1DHR;  // DAC channel1 8-bit right-aligned data (8 bits)
     static const uint32_t DHR8RD_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DOR1_DACC1DOR(uint32_t x) { return (x & 0xfff) << 0; } // DAC channel1 data output (12 bits)
+    typedef bit_field_t<0, 0xfff> DOR1_DACC1DOR;  // DAC channel1 data output (12 bits)
     static const uint32_t DOR1_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DOR2_DACC2DOR(uint32_t x) { return (x & 0xfff) << 0; } // DAC channel2 data output (12 bits)
+    typedef bit_field_t<0, 0xfff> DOR2_DACC2DOR;  // DAC channel2 data output (12 bits)
     static const uint32_t DOR2_RESET_VALUE = 0x0;
 
     static const uint32_t SR_DMAUDR2 = 0x20000000; // DAC channel2 DMA underrun flag
@@ -8689,15 +8700,15 @@ struct scb_t
     volatile uint32_t    SHPR2;                // [Read-write] System handler priority registers
     volatile uint32_t    SHPR3;                // [Read-write] System handler priority registers
 
-    static constexpr uint32_t CPUID_Revision(uint32_t x) { return (x & 0xf) << 0; } // Revision number (4 bits)
-    static constexpr uint32_t CPUID_PartNo(uint32_t x) { return (x & 0xfff) << 4; } // Part number of the processor (12 bits)
-    static constexpr uint32_t CPUID_Constant(uint32_t x) { return (x & 0xf) << 16; } // Reads as 0xF (4 bits)
-    static constexpr uint32_t CPUID_Variant(uint32_t x) { return (x & 0xf) << 20; } // Variant number (4 bits)
-    static constexpr uint32_t CPUID_Implementer(uint32_t x) { return (x & 0xff) << 24; } // Implementer code (8 bits)
+    typedef bit_field_t<0, 0xf> CPUID_Revision;  // Revision number (4 bits)
+    typedef bit_field_t<4, 0xfff> CPUID_PartNo;  // Part number of the processor (12 bits)
+    typedef bit_field_t<16, 0xf> CPUID_Constant;  // Reads as 0xF (4 bits)
+    typedef bit_field_t<20, 0xf> CPUID_Variant;  // Variant number (4 bits)
+    typedef bit_field_t<24, 0xff> CPUID_Implementer;  // Implementer code (8 bits)
     static const uint32_t CPUID_RESET_VALUE = 0x410fc241;
 
-    static constexpr uint32_t ICSR_VECTACTIVE(uint32_t x) { return (x & 0x3f) << 0; } // Active vector (6 bits)
-    static constexpr uint32_t ICSR_VECTPENDING(uint32_t x) { return (x & 0x3f) << 12; } // Pending vector (6 bits)
+    typedef bit_field_t<0, 0x3f> ICSR_VECTACTIVE;  // Active vector (6 bits)
+    typedef bit_field_t<12, 0x3f> ICSR_VECTPENDING;  // Pending vector (6 bits)
     static const uint32_t ICSR_ISRPENDING = 0x400000;// Interrupt pending flag
     static const uint32_t ICSR_PENDSTCLR = 0x2000000;// SysTick exception clear-pending bit
     static const uint32_t ICSR_PENDSTSET = 0x4000000;// SysTick exception set-pending bit
@@ -8709,7 +8720,7 @@ struct scb_t
     static const uint32_t AIRCR_VECTCLRACTIVE = 0x2;  // VECTCLRACTIVE
     static const uint32_t AIRCR_SYSRESETREQ = 0x4;    // SYSRESETREQ
     static const uint32_t AIRCR_ENDIANESS = 0x8000;   // ENDIANESS
-    static constexpr uint32_t AIRCR_VECTKEYSTAT(uint32_t x) { return (x & 0xffff) << 16; } // Register key (16 bits)
+    typedef bit_field_t<16, 0xffff> AIRCR_VECTKEYSTAT;  // Register key (16 bits)
     static const uint32_t AIRCR_RESET_VALUE = 0x0;
 
     static const uint32_t SCR_SLEEPONEXIT = 0x2;    // SLEEPONEXIT
@@ -8721,11 +8732,11 @@ struct scb_t
     static const uint32_t CCR_STKALIGN = 0x200;     // STKALIGN
     static const uint32_t CCR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t SHPR2_PRI_11(uint32_t x) { return (x & 0xff) << 24; } // Priority of system handler 11 (8 bits)
+    typedef bit_field_t<24, 0xff> SHPR2_PRI_11;  // Priority of system handler 11 (8 bits)
     static const uint32_t SHPR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t SHPR3_PRI_14(uint32_t x) { return (x & 0xff) << 16; } // Priority of system handler 14 (8 bits)
-    static constexpr uint32_t SHPR3_PRI_15(uint32_t x) { return (x & 0xff) << 24; } // Priority of system handler 15 (8 bits)
+    typedef bit_field_t<16, 0xff> SHPR3_PRI_14;  // Priority of system handler 14 (8 bits)
+    typedef bit_field_t<24, 0xff> SHPR3_PRI_15;  // Priority of system handler 15 (8 bits)
     static const uint32_t SHPR3_RESET_VALUE = 0x0;
 };
 
@@ -8751,13 +8762,13 @@ struct stk_t
     static const uint32_t CSR_COUNTFLAG = 0x10000;  // COUNTFLAG
     static const uint32_t CSR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t RVR_RELOAD(uint32_t x) { return (x & 0xffffff) << 0; } // RELOAD value (24 bits)
+    typedef bit_field_t<0, 0xffffff> RVR_RELOAD;  // RELOAD value (24 bits)
     static const uint32_t RVR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CVR_CURRENT(uint32_t x) { return (x & 0xffffff) << 0; } // Current counter value (24 bits)
+    typedef bit_field_t<0, 0xffffff> CVR_CURRENT;  // Current counter value (24 bits)
     static const uint32_t CVR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CALIB_TENMS(uint32_t x) { return (x & 0xffffff) << 0; } // Calibration value (24 bits)
+    typedef bit_field_t<0, 0xffffff> CALIB_TENMS;  // Calibration value (24 bits)
     static const uint32_t CALIB_SKEW = 0x40000000;    // SKEW flag: Indicates whether the TENMS value is exact
     static const uint32_t CALIB_NOREF = 0x80000000;   // NOREF flag. Reads as zero
     static const uint32_t CALIB_RESET_VALUE = 0x0;
