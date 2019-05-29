@@ -21,7 +21,7 @@ static void send(uint8_t x)
     {
         led_a::set();
         sys_tick::delay_ms(25);
-        ser::write(x & BV(i));
+        ser::write(x & (1 << i));
         srclk::set();
         sys_tick::delay_ms(25);
         srclk::clear();
