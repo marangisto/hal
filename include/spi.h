@@ -104,15 +104,15 @@ public:
         SPI().CR1 = _::CR1_RESET_VALUE;         // reset control register 1
         SPI().CR2 = _::CR2_RESET_VALUE;         // reset control register 2
         SPI().CR1 |= _::CR1_MSTR;               // master mode
-        SPI().CR1 |= _::CR1_BR(divider);        // clock divider
-        SPI().CR1 |= spi_mode_traits<mode>::template mode<_>();
+        SPI().CR1 |= _::CR1_BR::template value<divider>();          // clock divider
+        SPI().CR1 |= spi_mode_traits<mode>::template mode<_>();     // SPI-mode
         if (order == lsb_first)                 // choose bit order
             SPI().CR1 |= _::CR1_LSBFIRST;       // lsb first
         SPI().CR1 |= _::CR1_BIDIMODE;           // simplex transmission
         SPI().CR1 |= _::CR1_BIDIOE;             // simplex output enabled
         SPI().CR2 |= _::CR2_SSOE;               // ss output enable
         SPI().CR2 |= _::CR2_FRXTH;              // fifo 1/4 (8-bit)
-        //SPI().CR2 |= _::CR2_DS(0x7);          // 8-bit data size (FIXME: has no effect on 8 vs 16-bit writes!)
+        //SPI().CR2 |= _::CR2_DS::value<0x7>();          // 8-bit data size (FIXME: has no effect on 8 vs 16-bit writes!)
         SPI().CR1 |= _::CR1_SPE;                // enable spi
     }
 
