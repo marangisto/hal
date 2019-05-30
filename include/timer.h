@@ -165,11 +165,11 @@ public:
 
         timer_traits<TN>::rcc_enable();
         TIM().CCMR1 = _::CCMR1_RESET_VALUE
-                    | _::CCMR1_CC1S::template value<0x1>()
-                    | _::CCMR1_CC2S::template value<0x1>()
+                    | _::template CCMR1_CC1S<0x1>
+                    | _::template CCMR1_CC2S<0x1>
                     ; // TI1 & TI2 as inputs
         TIM().CCER = _::CCER_RESET_VALUE;   // CCER_CC1P CCER_CC2P polarity choices
-        TIM().SMCR = _::SMCR_RESET_VALUE | _::SMCR_SMS::template value<0x1>();
+        TIM().SMCR = _::SMCR_RESET_VALUE | _::template SMCR_SMS<0x1>;
         TIM().ARR = arr;
         TIM().CNT = _::CNT_RESET_VALUE;;
         TIM().CR1 = _::CR1_RESET_VALUE | _::CR1_CEN;

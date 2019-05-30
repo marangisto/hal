@@ -53,16 +53,16 @@ extern "C" void system_init(void)
 
     // set system clock to HSI-PLL 48MHz
 
-    Flash.ACR = flash_t::ACR_PRFTBE | flash_t::ACR_LATENCY::value<0x1>();
+    Flash.ACR = flash_t::ACR_PRFTBE | flash_t::ACR_LATENCY<0x1>;
 
-    RCC.CFGR |= _::CFGR_PLLMUL::value<0xa>();        // PLL multiplier 12
+    RCC.CFGR |= _::CFGR_PLLMUL<0xa>;        // PLL multiplier 12
     RCC.CR |= _::CR_PLLON;                  // enable PLL
     while (!(RCC.CR & _::CR_PLLRDY));       // wait for PLL to be ready
-    RCC.CFGR |= _::CFGR_SW::value<0x2>();            // select PLL as system clock
+    RCC.CFGR |= _::CFGR_SW<0x2>;            // select PLL as system clock
 
     // wait for PLL as system clock
 
-    while ((RCC.CFGR & _::CFGR_SWS::value<0x3>()) != _::CFGR_SWS::value<0x2>());
+    while ((RCC.CFGR & _::CFGR_SWS<0x3>) != _::CFGR_SWS<0x2>);
 
     // initialize sys-tick for milli-second counts
 
