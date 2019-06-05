@@ -34,7 +34,7 @@ SECTIONS
         . = ALIGN(4);
         *(.rodata)
         *(.rodata*)
-        . = ALIGN(4);
+        . = ALIGN(8);
     } > FLASH
 
     __sidata = LOADADDR(.data);
@@ -45,7 +45,7 @@ SECTIONS
         __sdata = .;
         *(.data)
         *(.data*)
-        . = ALIGN(4);
+        . = ALIGN(8);
         __edata = .;
     } > RAM AT > FLASH
 
@@ -56,7 +56,7 @@ SECTIONS
         *(.bss)
         *(.bss*)
         *(COMMON)
-        . = ALIGN(4);
+        . = ALIGN(8);
         __ebss = .;
         end = .;
     } > RAM
