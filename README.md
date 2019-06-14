@@ -1,2 +1,2 @@
-# stm32
+# HAL
 Device support and HAL for MCUs
