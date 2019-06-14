@@ -6,8 +6,8 @@
 
 #include <gpio.h>
 
-using namespace stm32f0;
-using namespace gpio;
+using system::sys_tick;
+using namespace system::gpio;
 
 typedef output_t<PA5> srclk;    // sck
 typedef output_t<PA7> ser;      // mosi

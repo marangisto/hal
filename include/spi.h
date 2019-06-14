@@ -2,7 +2,7 @@
 
 #include <gpio.h>
 
-namespace stm32f0
+namespace system
 {
 
 namespace spi

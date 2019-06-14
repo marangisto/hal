@@ -1,9 +1,8 @@
 #include <timer.h>
 #include <gpio.h>
 
-using namespace stm32f0;
-using namespace timer;
-using namespace gpio;
+using namespace system::timer;
+using namespace system::gpio;
 
 typedef timer_t<1> tim_a;
 typedef timer_t<3> tim_b;
@@ -34,7 +33,7 @@ int main()
     led_a::setup();
     led_b::setup();
 
-    cpsie();
+    system::cpsie();
 
     for (;;);
 }

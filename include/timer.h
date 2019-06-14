@@ -1,9 +1,9 @@
 #pragma once
 
-#include <device.h>
+#include <system.h>
 #include <gpio.h>
 
-namespace stm32f0
+namespace system
 {
 
 namespace timer

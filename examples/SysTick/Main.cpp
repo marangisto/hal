@@ -1,7 +1,7 @@
 #include <gpio.h>
 
-using namespace stm32f0;
-using namespace gpio;
+using system::sys_tick;
+using namespace system::gpio;
 
 typedef output_t<PC8> led_a;
 typedef output_t<PC9> led_b;

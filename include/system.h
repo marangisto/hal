@@ -7,7 +7,7 @@
 namespace device = stm32f0x1;
 #endif
 
-namespace stm32f0
+namespace system
 {
 
 static inline void cpsid(void) { __asm volatile ("cpsid i"); }

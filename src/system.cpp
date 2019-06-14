@@ -1,7 +1,6 @@
-#include <device.h>
+#include <system.h>
 
-
-namespace stm32f0
+namespace system
 {
 
 using namespace device;
@@ -16,7 +15,7 @@ void sys_tick::delay_ms(uint32_t ms)
 
 void sys_tick::init(uint32_t n)
 {
-    using namespace stm32f0;
+    using namespace system;
     typedef stk_t _;
 
     ms_counter = 0;                             // start new epoq
@@ -35,12 +34,12 @@ inline void sys_tick_update() { ++sys_tick::ms_counter; } // N.B. wraps in 49 da
 
 extern "C" void SysTick_HDLR()
 {
-    stm32f0::sys_tick_update();
+    system::sys_tick_update();
 }
 
 extern "C" void system_init(void)
 {
-    using namespace stm32f0;
+    using namespace system;
     typedef rcc_t _;
 
     // reset clock control registers
@@ -67,6 +66,6 @@ extern "C" void system_init(void)
 
     // initialize sys-tick for milli-second counts
 
-    stm32f0::sys_tick_init(60000);
+    system::sys_tick_init(60000);
 }
 

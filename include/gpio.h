@@ -1,8 +1,8 @@
 #pragma once
 
-#include <device.h>
+#include <system.h>
 
-namespace stm32f0
+namespace system
 {
 
 namespace gpio

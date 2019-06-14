@@ -2,9 +2,8 @@
 #include <button.h>
 #include <gpio.h>
 
-using namespace stm32f0;
-using namespace timer;
-using namespace gpio;
+using namespace system::timer;
+using namespace system::gpio;
 
 typedef button_t<PA0> btn;
 typedef timer_t<6> aux;
@@ -27,7 +26,7 @@ int main()
     led_b::setup();
     int i = 0;
 
-    cpsie();
+    system::cpsie();
 
     for (;;)
     {
