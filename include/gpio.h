@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stm32f0.h>
+#include <device.h>
 
 namespace stm32f0
 {

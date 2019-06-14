@@ -3,7 +3,7 @@
 #include <cstddef>
 
 #if defined(STM32F0x1)
-#include <stm32f0x1.h>
+#include <device/stm32f0x1.h>
 namespace device = stm32f0x1;
 #endif
 

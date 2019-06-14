@@ -1,9 +1,10 @@
-#include <stm32f0.h>
+#include <device.h>
 
-using namespace stm32f0x1;
 
 namespace stm32f0
 {
+
+using namespace device;
 
 void sys_tick::delay_ms(uint32_t ms)
 {
