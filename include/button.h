@@ -11,10 +11,10 @@ class button_t
 public:
     static inline bool read()
     {
-        cpsid();
+        nvic::disable();
         bool b = m_pressed;
         m_pressed = false;
-        cpsie();
+        nvic::enable();
         return b;
     }
  

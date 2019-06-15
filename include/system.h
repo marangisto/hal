@@ -10,9 +10,6 @@ namespace device = stm32f0x1;
 namespace system
 {
 
-static inline void cpsid(void) { __asm volatile ("cpsid i"); }
-static inline void cpsie(void) { __asm volatile ("cpsie i"); }
-
 class sys_tick
 {
 public:
@@ -29,8 +26,11 @@ private:
     static volatile uint32_t ms_counter;
 };
 
-struct ISR
+struct nvic
 {
+    static inline void enable() { __asm volatile ("cpsie i"); }
+    static inline void disable() { __asm volatile ("cpsid i"); }
+
     enum pos_t
       { WWDG = 0
       , PVD_VDDIO2 = 1

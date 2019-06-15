@@ -36,7 +36,7 @@ int main()
     led_b::setup();
     int i = 0;
 
-    system::cpsie();
+    system::nvic::enable();
 
     for (;;)
     {

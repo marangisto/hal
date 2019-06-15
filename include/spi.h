@@ -38,7 +38,7 @@ template<> struct spi_traits<1>
     typedef spi1_t T;
     static inline T& SPI() { return SPI1; }
     static inline void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_SPI1EN; }
-    static inline void nvic_enable() { ISR::enable<ISR::SPI1>(); }
+    static inline void nvic_enable() { nvic::enable<nvic::SPI1>(); }
     static const internal::alternate_function_t sck = internal::SPI1_SCK;
     static const internal::alternate_function_t mosi = internal::SPI1_MOSI;
     static const internal::alternate_function_t miso = internal::SPI1_MISO;
@@ -50,7 +50,7 @@ template<> struct spi_traits<2>
     typedef spi2_t T;
     static inline T& SPI() { return SPI2; }
     static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_SPI2EN; }
-    static inline void nvic_enable() { ISR::enable<ISR::SPI2>(); }
+    static inline void nvic_enable() { nvic::enable<nvic::SPI2>(); }
     static const internal::alternate_function_t sck = internal::SPI2_SCK;
     static const internal::alternate_function_t mosi = internal::SPI2_MOSI;
     static const internal::alternate_function_t miso = internal::SPI2_MISO;
