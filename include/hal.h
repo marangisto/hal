@@ -6,6 +6,10 @@
 #include <device/stm32f0x1.h>
 namespace device = stm32f0x1;
 #include <peripheral/stm32f0.h>
+#elif defined(STM32F411)
+#include <device/stm32f411.h>
+namespace device = stm32f411;
+#include <peripheral/stm32f4.h>
 #endif
 
 namespace hal

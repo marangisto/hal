@@ -10,7 +10,7 @@ namespace gpio
 
 using namespace device;
 
-enum gpio_port_t { PA, PB, PC, PD, PE, PF };
+enum gpio_port_t { PA, PB, PC, PD, PE, PF, PG, PH };
 
 enum gpio_pin_t
     { PA0, PA1, PA2, PA3, PA4, PA5, PA6, PA7, PA8, PA9, PA10, PA11, PA12, PA13, PA14, PA15
@@ -19,6 +19,8 @@ enum gpio_pin_t
     , PD0, PD1, PD2, PD3, PD4, PD5, PD6, PD7, PD8, PD9, PD10, PD11, PD12, PD13, PD14, PD15
     , PE0, PE1, PE2, PE3, PE4, PE5, PE6, PE7, PE8, PE9, PE10, PE11, PE12, PE13, PE14, PE15
     , PF0, PF1, PF2, PF3, PF4, PF5, PF6, PF7, PF8, PF9, PF10, PF11, PF12, PF13, PF14, PF15
+    , PG0, PG1, PG2, PG3, PG4, PG5, PG6, PG7, PG8, PG9, PG10, PG11, PG12, PG13, PG14, PG15
+    , PH0, PH1, PH2, PH3, PH4, PH5, PH6, PH7, PH8, PH9, PH10, PH11, PH12, PH13, PH14, PH15
     };
 
 static inline constexpr gpio_port_t pin_port(gpio_pin_t p)
@@ -61,7 +63,7 @@ template<> struct port_traits<PD>
     static inline gpio_t& gpio() { return GPIOD; }
 };
 
-#if defined(STM32F07x) || defined(STM32F09x)
+#if defined(STM32F07x) || defined(STM32F09x) || defined(STM32F4)
 template<> struct port_traits<PE>
 {
     typedef gpioe_t gpio_t;
@@ -69,11 +71,29 @@ template<> struct port_traits<PE>
 };
 #endif
 
+#if defined(STM32F0)
 template<> struct port_traits<PF>
 {
     typedef gpiof_t gpio_t;
     static inline gpio_t& gpio() { return GPIOF; }
 };
+#endif
+
+#if defined(STM32L4)
+template<> struct port_traits<PG>
+{
+    typedef gpiog_t gpio_t;
+    static inline gpio_t& gpio() { return GPIOG; }
+};
+#endif
+
+#if defined(STM32F4)
+template<> struct port_traits<PH>
+{
+    typedef gpioh_t gpio_t;
+    static inline gpio_t& gpio() { return GPIOH; }
+};
+#endif
 
 template<gpio_pin_t PIN>
 struct pin_t
@@ -104,7 +124,7 @@ public:
     }
 
     static inline void set() { pin::gpio().BSRR = pin::bit_mask; }
-    static inline void clear() { pin::gpio().BRR = pin::bit_mask; }
+    static inline void clear() { pin::gpio().BSRR = pin::bit_mask << 16; }
     static inline bool read() { return (pin::gpio().ODR & pin::bit_mask) != 0; }
     static inline void write(bool x) { x ? set() : clear(); }
     static inline void toggle() { write(!read()); }
