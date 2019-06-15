@@ -19,7 +19,7 @@ template<> struct timer_traits<1>
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM1; }
     static inline void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM1EN; }
-    static inline void nvic_enable() { nvic::enable<nvic::TIM1_BRK_UP_TRG_COM>(); }
+    static inline void nvic_enable() { nvic::enable<T>(); }
     static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM1_CH1;
     static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM1_CH2;
 };
@@ -30,7 +30,7 @@ template<> struct timer_traits<2>
     typedef uint32_t count_t;
     static inline T& TIM() { return TIM2; }
     static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM2EN; }
-    static inline void nvic_enable() { nvic::enable<nvic::TIM2>(); }
+    static inline void nvic_enable() { nvic::enable<T>(); }
     static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM2_CH1_ETR;
     static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM2_CH2;
 };
@@ -41,7 +41,7 @@ template<> struct timer_traits<3>
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM3; }
     static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM3EN; }
-    static inline void nvic_enable() { nvic::enable<nvic::TIM3>(); }
+    static inline void nvic_enable() { nvic::enable<T>(); }
     static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM3_CH1;
     static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM3_CH2;
 };
@@ -53,7 +53,7 @@ template<> struct timer_traits<6>
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM6; }
     static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM6EN; }
-    static inline void nvic_enable() { nvic::enable<nvic::TIM6_DAC>(); }
+    static inline void nvic_enable() { nvic::enable<T>(); }
 };
 #endif
 
@@ -64,7 +64,7 @@ template<> struct timer_traits<7>
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM7; }
     static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM7EN; }
-    static inline void nvic_enable() { nvic::enable<nvic::TIM7>(); }
+    static inline void nvic_enable() { nvic::enable<T>(); }
 };
 #endif
 
@@ -74,7 +74,7 @@ template<> struct timer_traits<14>
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM14; }
     static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM14EN; }
-    static inline void nvic_enable() { nvic::enable<nvic::TIM14>(); }
+    static inline void nvic_enable() { nvic::enable<T>(); }
 };
 
 #if !defined(STM32F03x)
@@ -84,7 +84,7 @@ template<> struct timer_traits<15>
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM15; }
     static inline void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM15EN; }
-    static inline void nvic_enable() { nvic::enable<nvic::TIM15>(); }
+    static inline void nvic_enable() { nvic::enable<T>(); }
 };
 #endif
 
@@ -94,7 +94,7 @@ template<> struct timer_traits<16>
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM16; }
     static inline void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM16EN; }
-    static inline void nvic_enable() { nvic::enable<nvic::TIM16>(); }
+    static inline void nvic_enable() { nvic::enable<T>(); }
 };
 
 template<> struct timer_traits<17>
@@ -103,7 +103,7 @@ template<> struct timer_traits<17>
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM17; }
     static inline void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM17EN; }
-    static inline void nvic_enable() { nvic::enable<nvic::TIM17>(); }
+    static inline void nvic_enable() { nvic::enable<T>(); }
 };
 
 template<int TN>
@@ -158,10 +158,10 @@ public:
     template<gpio::input_type_t input_type>
     static inline void setup(count_t arr)
     {
-        using namespace gpio;
+        using namespace gpio::internal;
 
-        internal::alternate_t<CH1, timer_traits<TN>::ch1>::template setup<input_type>();
-        internal::alternate_t<CH2, timer_traits<TN>::ch2>::template setup<input_type>();
+        alternate_t<CH1, timer_traits<TN>::ch1>::template setup<input_type>();
+        alternate_t<CH2, timer_traits<TN>::ch2>::template setup<input_type>();
 
         timer_traits<TN>::rcc_enable();
         TIM().CCMR1 = _::CCMR1_RESET_VALUE
@@ -184,7 +184,7 @@ private:
     static inline typename timer_traits<TN>::T& TIM() { return timer_traits<TN>::TIM(); }
 };
 
-}
+} // namespace timer
 
-}
+} // namespace system
 

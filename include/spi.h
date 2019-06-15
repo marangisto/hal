@@ -38,11 +38,11 @@ template<> struct spi_traits<1>
     typedef spi1_t T;
     static inline T& SPI() { return SPI1; }
     static inline void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_SPI1EN; }
-    static inline void nvic_enable() { nvic::enable<nvic::SPI1>(); }
-    static const internal::alternate_function_t sck = internal::SPI1_SCK;
-    static const internal::alternate_function_t mosi = internal::SPI1_MOSI;
-    static const internal::alternate_function_t miso = internal::SPI1_MISO;
-    static const internal::alternate_function_t nss = internal::SPI1_NSS;
+    static inline void nvic_enable() { nvic::enable<T>(); }
+    static const gpio::internal::alternate_function_t sck = gpio::internal::SPI1_SCK;
+    static const gpio::internal::alternate_function_t mosi = gpio::internal::SPI1_MOSI;
+    static const gpio::internal::alternate_function_t miso = gpio::internal::SPI1_MISO;
+    static const gpio::internal::alternate_function_t nss = gpio::internal::SPI1_NSS;
 };
 
 template<> struct spi_traits<2>
@@ -50,11 +50,11 @@ template<> struct spi_traits<2>
     typedef spi2_t T;
     static inline T& SPI() { return SPI2; }
     static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_SPI2EN; }
-    static inline void nvic_enable() { nvic::enable<nvic::SPI2>(); }
-    static const internal::alternate_function_t sck = internal::SPI2_SCK;
-    static const internal::alternate_function_t mosi = internal::SPI2_MOSI;
-    static const internal::alternate_function_t miso = internal::SPI2_MISO;
-    static const internal::alternate_function_t nss = internal::SPI2_NSS;
+    static inline void nvic_enable() { nvic::enable<T>(); }
+    static const gpio::internal::alternate_function_t sck = gpio::internal::SPI2_SCK;
+    static const gpio::internal::alternate_function_t mosi = gpio::internal::SPI2_MOSI;
+    static const gpio::internal::alternate_function_t miso = gpio::internal::SPI2_MISO;
+    static const gpio::internal::alternate_function_t nss = gpio::internal::SPI2_NSS;
 };
 
 template<spi_mode_t> struct spi_mode_traits {};
@@ -97,8 +97,10 @@ public:
         >
     static inline void setup()
     {
-        internal::alternate_t<SCK, spi_traits<NO>::sck>::template setup<speed>();
-        internal::alternate_t<MOSI, spi_traits<NO>::mosi>::template setup<speed>();
+        using namespace gpio::internal;
+
+        alternate_t<SCK, spi_traits<NO>::sck>::template setup<speed>();
+        alternate_t<MOSI, spi_traits<NO>::mosi>::template setup<speed>();
 
         spi_traits<NO>::rcc_enable();           // enable spi clock
         SPI().CR1 = _::CR1_RESET_VALUE;         // reset control register 1
