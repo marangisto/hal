@@ -130,21 +130,21 @@ extern "C" void system_init(void)
 
     using internal::encode;
 
-    constexpr uint32_t pllcfgr = encode<pllSRC, _::PLLCFGR_PLLSRC, 1>()
-                               | encode<pllN, _::PLLCFGR_PLLN0, 9>()
-                               | encode<pllM, _::PLLCFGR_PLLM0, 6>()
-                               | encode<pllP, _::PLLCFGR_PLLP0, 2>()
-                               | encode<pllQ, _::PLLCFGR_PLLQ0, 4>()
-                               ;
+    RCC.PLLCFGR = encode<pllSRC, _::PLLCFGR_PLLSRC, 1>()
+                | encode<pllN, _::PLLCFGR_PLLN0, 9>()
+                | encode<pllM, _::PLLCFGR_PLLM0, 6>()
+                | encode<pllP, _::PLLCFGR_PLLP0, 2>()
+                | encode<pllQ, _::PLLCFGR_PLLQ0, 4>()
+                ;
 
-    RCC.PLLCFGR = pllcfgr;
     RCC.CR |= _::CR_PLLON;                              // enable PLL
     while (!(RCC.CR & _::CR_PLLRDY));                   // wait for PLL to be ready
 
-    uint32_t clkSRC = encode<0x2, _::CFGR_SW0, 2>();    // select PLL as system clock
+    RCC.CFGR |= encode<0x2, _::CFGR_SW0, 2>();          // select PLL as system clock
 
-    RCC.CFGR |= clkSRC;
-    while ((RCC.CFGR & encode<0x3, _::CFGR_SWS0, 2>()) != clkSRC);    // wait for PLL as system clock
+    // wait for PLL as system clock
+
+    while ((RCC.CFGR & encode<0x3, _::CFGR_SWS0, 2>()) != encode<0x2, _::CFGR_SWS0, 2>());
 
     // initialize sys-tick for milli-second counts
 
