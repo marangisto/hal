@@ -33,7 +33,7 @@ int main()
     led_a::setup();
     led_b::setup();
 
-    system::nvic::enable();
+    system::interrupt::enable();
 
     for (;;);
 }

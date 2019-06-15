@@ -26,7 +26,7 @@ int main()
     led_b::setup();
     int i = 0;
 
-    system::nvic::enable();
+    system::interrupt::enable();
 
     for (;;)
     {

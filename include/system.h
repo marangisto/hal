@@ -5,7 +5,7 @@
 #if defined(STM32F0x1)
 #include <device/stm32f0x1.h>
 namespace device = stm32f0x1;
-#include <nvic/stm32f0.h>
+#include <peripheral/stm32f0.h>
 #endif
 
 namespace system
@@ -27,15 +27,18 @@ private:
     static volatile uint32_t ms_counter;
 };
 
-struct nvic
+struct interrupt
 {
     static inline void enable() { __asm volatile ("cpsie i"); }
     static inline void disable() { __asm volatile ("cpsid i"); }
+};
 
-    template<typename PERIPHERAL>
-    static void enable()
+template<typename T>
+struct peripheral
+{
+    static void nvic_enable()
     {
-            internal::nvic_traits<PERIPHERAL>::enable();
+        internal::peripheral_traits<T>::nvic_enable();
     }
 };
 

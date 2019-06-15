@@ -11,10 +11,10 @@ class button_t
 public:
     static inline bool read()
     {
-        nvic::disable();
+        interrupt::disable();
         bool b = m_pressed;
         m_pressed = false;
-        nvic::enable();
+        interrupt::enable();
         return b;
     }
  
