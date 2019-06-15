@@ -41,28 +41,24 @@ template<> struct port_traits<PA>
 {
     typedef gpioa_t gpio_t;
     static inline gpio_t& gpio() { return GPIOA; }
-    static inline void setup() { RCC.AHBENR |= rcc_t::AHBENR_IOPAEN; }
 };
 
 template<> struct port_traits<PB>
 {
     typedef gpiob_t gpio_t;
     static inline gpio_t& gpio() { return GPIOB; }
-    static inline void setup() { RCC.AHBENR |= rcc_t::AHBENR_IOPBEN; }
 };
 
 template<> struct port_traits<PC>
 {
     typedef gpioc_t gpio_t;
     static inline gpio_t& gpio() { return GPIOC; }
-    static inline void setup() { RCC.AHBENR |= rcc_t::AHBENR_IOPCEN; }
 };
 
 template<> struct port_traits<PD>
 {
     typedef gpiod_t gpio_t;
     static inline gpio_t& gpio() { return GPIOD; }
-    static inline void setup() { RCC.AHBENR |= rcc_t::AHBENR_IOPDEN; }
 };
 
 #if defined(STM32F07x) || defined(STM32F09x)
@@ -70,7 +66,6 @@ template<> struct port_traits<PE>
 {
     typedef gpioe_t gpio_t;
     static inline gpio_t& gpio() { return GPIOE; }
-    static inline void setup() { RCC.AHBENR |= rcc_t::AHBENR_IOPEEN; }
 };
 #endif
 
@@ -78,7 +73,6 @@ template<> struct port_traits<PF>
 {
     typedef gpiof_t gpio_t;
     static inline gpio_t& gpio() { return GPIOF; }
-    static inline void setup() { RCC.AHBENR |= rcc_t::AHBENR_IOPFEN; }
 };
 
 template<gpio_pin_t PIN>
@@ -101,7 +95,7 @@ public:
     template<output_type_t output_type = push_pull, output_speed_t speed = low_speed>
     static inline void setup()
     {
-        port_traits<pin_port(PIN)>::setup();
+        peripheral<typename port_traits<pin_port(PIN)>::gpio_t>::rcc_enable();
         pin::gpio().MODER |= pin::output_mode << (pin::bit_pos*2);
         if (speed != low_speed)
             pin::gpio().OSPEEDR |= speed << (pin::bit_pos*2);
@@ -126,7 +120,7 @@ public:
     template<input_type_t input_type = floating>
     static inline void setup()
     {
-        port_traits<pin_port(PIN)>::setup();
+        peripheral<typename port_traits<pin_port(PIN)>::gpio_t>::rcc_enable();
         pin::gpio().MODER |= pin::input_mode << (pin::bit_pos*2);
         if (input_type != floating)
             pin::gpio().PUPDR |= input_type << (pin::bit_pos*2);
@@ -264,7 +258,7 @@ public:
     template<output_speed_t speed = low_speed>
     static inline void setup()
     {
-        port_traits<pin_port(PIN)>::setup();
+        peripheral<typename port_traits<pin_port(PIN)>::gpio_t>::rcc_enable();
         pin::gpio().MODER |= pin::alternate_mode << (pin::bit_pos*2);
         if (speed != low_speed)
             pin::gpio().OSPEEDR |= speed << (pin::bit_pos*2);
@@ -277,7 +271,7 @@ public:
     template<input_type_t input_type = floating>
     static inline void setup()
     {
-        port_traits<pin_port(PIN)>::setup();
+        peripheral<typename port_traits<pin_port(PIN)>::gpio_t>::rcc_enable();
         pin::gpio().MODER |= pin::alternate_mode << (pin::bit_pos*2);
         if (input_type != floating)
             pin::gpio().PUPDR |= input_type << (pin::bit_pos*2);

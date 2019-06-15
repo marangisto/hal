@@ -45,27 +45,129 @@ enum pos_t
 
 template<typename PERIPHERAL> struct peripheral_traits {};
 
-template<> struct peripheral_traits<tim1_t> { static void nvic_enable() { device::NVIC.ISER |= 1 << TIM1_BRK_UP_TRG_COM; } };
-template<> struct peripheral_traits<tim2_t> { static void nvic_enable() { device::NVIC.ISER |= 1 << TIM2; } };
-template<> struct peripheral_traits<tim3_t> { static void nvic_enable() { device::NVIC.ISER |= 1 << TIM3; } };
-#if defined(STM32F05x) || defined(STM32F07x) || defined(STM32F09x)
-template<> struct peripheral_traits<tim6_t> { static void nvic_enable() { device::NVIC.ISER |= 1 << TIM6_DAC; } };
-#endif
+template<> struct peripheral_traits<gpioa_t>
+{
+    static void rcc_enable() { RCC.AHBENR |= rcc_t::AHBENR_IOPAEN; }
+};
+
+template<> struct peripheral_traits<gpiob_t>
+{
+    static void rcc_enable() { RCC.AHBENR |= rcc_t::AHBENR_IOPBEN; }
+};
+
+template<> struct peripheral_traits<gpioc_t>
+{
+    static void rcc_enable() { RCC.AHBENR |= rcc_t::AHBENR_IOPCEN; }
+};
+
+template<> struct peripheral_traits<gpiod_t>
+{
+    static void rcc_enable() { RCC.AHBENR |= rcc_t::AHBENR_IOPDEN; }
+};
+
 #if defined(STM32F07x) || defined(STM32F09x)
-template<> struct peripheral_traits<tim7_t> { static void nvic_enable() { device::NVIC.ISER |= 1 << TIM7; } };
+template<> struct peripheral_traits<gpioe_t>
+{
+    static void rcc_enable() { RCC.AHBENR |= rcc_t::AHBENR_IOPEEN; }
+};
 #endif
-template<> struct peripheral_traits<tim14_t> { static void nvic_enable() { device::NVIC.ISER |= 1 << TIM14; } };
+
+template<> struct peripheral_traits<gpiof_t>
+{
+    static void rcc_enable() { RCC.AHBENR |= rcc_t::AHBENR_IOPFEN; }
+};
+
+template<> struct peripheral_traits<tim1_t>
+{
+    static void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM1EN; }
+    static void nvic_enable() { NVIC.ISER |= 1 << TIM1_BRK_UP_TRG_COM; }
+};
+
+template<> struct peripheral_traits<tim2_t>
+{
+    static void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM2EN; }
+    static void nvic_enable() { NVIC.ISER |= 1 << TIM2; }
+};
+
+template<> struct peripheral_traits<tim3_t>
+{
+    static void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM3EN; }
+    static void nvic_enable() { NVIC.ISER |= 1 << TIM3; }
+};
+
+#if defined(STM32F05x) || defined(STM32F07x) || defined(STM32F09x)
+template<> struct peripheral_traits<tim6_t>
+{
+    static void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM6EN; }
+    static void nvic_enable() { NVIC.ISER |= 1 << TIM6_DAC; }
+};
+#endif
+
+#if defined(STM32F07x) || defined(STM32F09x)
+template<> struct peripheral_traits<tim7_t>
+{
+    static void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM7EN; }
+    static void nvic_enable() { NVIC.ISER |= 1 << TIM7; }
+};
+#endif
+
+template<> struct peripheral_traits<tim14_t>
+{
+    static void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM14EN; }
+    static void nvic_enable() { NVIC.ISER |= 1 << TIM14; }
+};
+
 #if !defined(STM32F03x)
-template<> struct peripheral_traits<tim15_t> { static void nvic_enable() { device::NVIC.ISER |= 1 << TIM15; } };
+template<> struct peripheral_traits<tim15_t>
+{
+    static void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM15EN; }
+    static void nvic_enable() { NVIC.ISER |= 1 << TIM15; }
+};
 #endif
-template<> struct peripheral_traits<tim16_t> { static void nvic_enable() { device::NVIC.ISER |= 1 << TIM16; } };
-template<> struct peripheral_traits<tim17_t> { static void nvic_enable() { device::NVIC.ISER |= 1 << TIM17; } };
-template<> struct peripheral_traits<i2c1_t> { static void nvic_enable() { device::NVIC.ISER |= 1 << I2C1; } };
-template<> struct peripheral_traits<i2c2_t> { static void nvic_enable() { device::NVIC.ISER |= 1 << I2C2; } };
-template<> struct peripheral_traits<spi1_t> { static void nvic_enable() { device::NVIC.ISER |= 1 << SPI1; } };
-template<> struct peripheral_traits<spi2_t> { static void nvic_enable() { device::NVIC.ISER |= 1 << SPI2; } };
-template<> struct peripheral_traits<usart1_t> { static void nvic_enable() { device::NVIC.ISER |= 1 << USART1; } };
-template<> struct peripheral_traits<usart2_t> { static void nvic_enable() { device::NVIC.ISER |= 1 << USART2; } };
+
+template<> struct peripheral_traits<tim16_t>
+{
+    static void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM16EN; }
+    static void nvic_enable() { NVIC.ISER |= 1 << TIM16; }
+};
+
+template<> struct peripheral_traits<tim17_t>
+{
+    static void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM17EN; }
+    static void nvic_enable() { NVIC.ISER |= 1 << TIM17; }
+};
+
+template<> struct peripheral_traits<i2c1_t>
+{
+    static void nvic_enable() { NVIC.ISER |= 1 << I2C1; }
+};
+
+template<> struct peripheral_traits<i2c2_t>
+{
+    static void nvic_enable() { NVIC.ISER |= 1 << I2C2; }
+};
+
+template<> struct peripheral_traits<spi1_t>
+{
+    static void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_SPI1EN; }
+    static void nvic_enable() { NVIC.ISER |= 1 << SPI1; }
+};
+
+template<> struct peripheral_traits<spi2_t>
+{
+    static void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_SPI2EN; }
+    static void nvic_enable() { NVIC.ISER |= 1 << SPI2; }
+};
+
+template<> struct peripheral_traits<usart1_t>
+{
+    static void nvic_enable() { NVIC.ISER |= 1 << USART1; }
+};
+
+template<> struct peripheral_traits<usart2_t>
+{
+    static void nvic_enable() { NVIC.ISER |= 1 << USART2; }
+};
 
 } // namespace internal
 

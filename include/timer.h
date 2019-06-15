@@ -18,8 +18,6 @@ template<> struct timer_traits<1>
     typedef tim1_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM1; }
-    static inline void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM1EN; }
-    static inline void nvic_enable() { peripheral<T>::nvic_enable(); }
     static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM1_CH1;
     static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM1_CH2;
 };
@@ -29,8 +27,6 @@ template<> struct timer_traits<2>
     typedef tim2_t T;
     typedef uint32_t count_t;
     static inline T& TIM() { return TIM2; }
-    static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM2EN; }
-    static inline void nvic_enable() { peripheral<T>::nvic_enable(); }
     static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM2_CH1_ETR;
     static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM2_CH2;
 };
@@ -40,8 +36,6 @@ template<> struct timer_traits<3>
     typedef tim3_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM3; }
-    static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM3EN; }
-    static inline void nvic_enable() { peripheral<T>::nvic_enable(); }
     static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM3_CH1;
     static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM3_CH2;
 };
@@ -52,8 +46,6 @@ template<> struct timer_traits<6>
     typedef tim6_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM6; }
-    static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM6EN; }
-    static inline void nvic_enable() { peripheral<T>::nvic_enable(); }
 };
 #endif
 
@@ -63,8 +55,6 @@ template<> struct timer_traits<7>
     typedef tim7_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM7; }
-    static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM7EN; }
-    static inline void nvic_enable() { peripheral<T>::nvic_enable(); }
 };
 #endif
 
@@ -73,8 +63,6 @@ template<> struct timer_traits<14>
     typedef tim14_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM14; }
-    static inline void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM14EN; }
-    static inline void nvic_enable() { peripheral<T>::nvic_enable(); }
 };
 
 #if !defined(STM32F03x)
@@ -83,8 +71,6 @@ template<> struct timer_traits<15>
     typedef tim15_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM15; }
-    static inline void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM15EN; }
-    static inline void nvic_enable() { peripheral<T>::nvic_enable(); }
 };
 #endif
 
@@ -93,8 +79,6 @@ template<> struct timer_traits<16>
     typedef tim16_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM16; }
-    static inline void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM16EN; }
-    static inline void nvic_enable() { peripheral<T>::nvic_enable(); }
 };
 
 template<> struct timer_traits<17>
@@ -102,8 +86,6 @@ template<> struct timer_traits<17>
     typedef tim17_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM17; }
-    static inline void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM17EN; }
-    static inline void nvic_enable() { peripheral<T>::nvic_enable(); }
 };
 
 template<int TN>
@@ -114,7 +96,7 @@ public:
 
     static inline void setup(uint16_t psc, count_t arr)
     {
-        timer_traits<TN>::rcc_enable();
+        peripheral<_>::rcc_enable();
         TIM().CR1 = _::CR1_RESET_VALUE;
         TIM().PSC = psc;
         TIM().ARR = arr;
@@ -125,7 +107,7 @@ public:
     static inline void update_interrupt_enable()
     {
         TIM().DIER |= _::DIER_UIE;
-        timer_traits<TN>::nvic_enable();
+        peripheral<_>::nvic_enable();
     }
 
     static inline volatile bool uif()
@@ -163,7 +145,7 @@ public:
         alternate_t<CH1, timer_traits<TN>::ch1>::template setup<input_type>();
         alternate_t<CH2, timer_traits<TN>::ch2>::template setup<input_type>();
 
-        timer_traits<TN>::rcc_enable();
+        peripheral<_>::rcc_enable();
         TIM().CCMR1 = _::CCMR1_RESET_VALUE
                     | _::template CCMR1_CC1S<0x1>
                     | _::template CCMR1_CC2S<0x1>

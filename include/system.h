@@ -36,6 +36,11 @@ struct interrupt
 template<typename T>
 struct peripheral
 {
+    static void rcc_enable()
+    {
+        internal::peripheral_traits<T>::rcc_enable();
+    }
+
     static void nvic_enable()
     {
         internal::peripheral_traits<T>::nvic_enable();
