@@ -8,7 +8,7 @@ namespace device = stm32f0x1;
 #include <peripheral/stm32f0.h>
 #endif
 
-namespace system
+namespace hal
 {
 
 class sys_tick

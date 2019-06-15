@@ -1,8 +1,8 @@
 #pragma once
 
-#include <system.h>
+#include <hal.h>
 
-namespace system
+namespace hal
 {
 
 namespace gpio

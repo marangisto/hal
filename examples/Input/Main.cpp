@@ -1,7 +1,7 @@
 #include <gpio.h>
 
-using system::sys_tick;
-using namespace system::gpio;
+using hal::sys_tick;
+using namespace hal::gpio;
 
 typedef input_t<PA0> btn;
 typedef output_t<PC8> led_a;

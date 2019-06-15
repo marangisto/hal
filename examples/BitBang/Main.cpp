@@ -6,8 +6,8 @@
 
 #include <gpio.h>
 
-using system::sys_tick;
-using namespace system::gpio;
+using hal::sys_tick;
+using namespace hal::gpio;
 
 typedef output_t<PA5> srclk;    // sck
 typedef output_t<PA7> ser;      // mosi

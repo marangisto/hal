@@ -1,9 +1,9 @@
 #pragma once
 
-#include <system.h>
+#include <hal.h>
 #include <gpio.h>
 
-namespace system
+namespace hal
 {
 
 namespace timer
@@ -168,5 +168,5 @@ private:
 
 } // namespace timer
 
-} // namespace system
+} // namespace hal
 

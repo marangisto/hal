@@ -2,8 +2,8 @@
 #include <button.h>
 #include <gpio.h>
 
-using namespace system::timer;
-using namespace system::gpio;
+using namespace hal::timer;
+using namespace hal::gpio;
 
 typedef input_t<PA15> enc_1;
 typedef input_t<PB3> enc_2;
@@ -36,7 +36,7 @@ int main()
     led_b::setup();
     int i = 0;
 
-    system::interrupt::enable();
+    hal::interrupt::enable();
 
     for (;;)
     {

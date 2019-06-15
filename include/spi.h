@@ -2,7 +2,7 @@
 
 #include <gpio.h>
 
-namespace system
+namespace hal
 {
 
 namespace spi

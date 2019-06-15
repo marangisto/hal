@@ -1,6 +1,6 @@
-#include <system.h>
+#include <hal.h>
 
-namespace system
+namespace hal
 {
 
 using namespace device;
@@ -15,7 +15,7 @@ void sys_tick::delay_ms(uint32_t ms)
 
 void sys_tick::init(uint32_t n)
 {
-    using namespace system;
+    using namespace hal;
     typedef stk_t _;
 
     ms_counter = 0;                             // start new epoq
@@ -34,12 +34,12 @@ inline void sys_tick_update() { ++sys_tick::ms_counter; } // N.B. wraps in 49 da
 
 extern "C" void SysTick_HDLR()
 {
-    system::sys_tick_update();
+    hal::sys_tick_update();
 }
 
 extern "C" void system_init(void)
 {
-    using namespace system;
+    using namespace hal;
     typedef rcc_t _;
 
     // reset clock control registers
@@ -66,6 +66,6 @@ extern "C" void system_init(void)
 
     // initialize sys-tick for milli-second counts
 
-    system::sys_tick_init(60000);
+    hal::sys_tick_init(60000);
 }
 

@@ -7,9 +7,9 @@
 #include <spi.h>
 #include <gpio.h>
 
-using system::sys_tick;
-using namespace system::gpio;
-using namespace system::spi;
+using hal::sys_tick;
+using namespace hal::gpio;
+using namespace hal::spi;
 
 typedef spi_t<1, PA5, PA7> hc595;
 typedef output_t<PA2> latch;

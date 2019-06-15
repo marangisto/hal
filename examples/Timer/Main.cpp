@@ -1,8 +1,8 @@
 #include <timer.h>
 #include <gpio.h>
 
-using namespace system::timer;
-using namespace system::gpio;
+using namespace hal::timer;
+using namespace hal::gpio;
 
 typedef timer_t<1> tim_a;
 typedef timer_t<3> tim_b;
@@ -33,7 +33,7 @@ int main()
     led_a::setup();
     led_b::setup();
 
-    system::interrupt::enable();
+    hal::interrupt::enable();
 
     for (;;);
 }

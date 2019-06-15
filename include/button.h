@@ -2,7 +2,7 @@
 
 #include <gpio.h>
 
-namespace system::gpio
+namespace hal::gpio
 {
 
 template<gpio_pin_t PIN>

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace system
+namespace hal
 {
 
 namespace internal
@@ -171,5 +171,5 @@ template<> struct peripheral_traits<usart2_t>
 
 } // namespace internal
 
-} // namespace system
+} // namespace hal
 
