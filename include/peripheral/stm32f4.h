@@ -106,7 +106,7 @@ template<> struct peripheral_traits<gpioh_t>
 template<> struct peripheral_traits<tim1_t>
 {
     static void rcc_enable() { device::RCC.APB2ENR |= rcc_t::APB2ENR_TIM1EN; }
-    static void nvic_enable() { NVIC.ISER0 |= 1 << TIM1_BRK_TIM9; }
+    static void nvic_enable() { NVIC.ISER0 |= 1 << TIM1_UP_TIM10; }
 };
 
 template<> struct peripheral_traits<tim2_t>
