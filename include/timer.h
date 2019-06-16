@@ -40,6 +40,24 @@ template<> struct timer_traits<3>
     static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM3_CH2;
 };
 
+#if defined(STM32F4)
+template<> struct timer_traits<4>
+{
+    typedef tim4_t T;
+    typedef uint16_t count_t;
+    static inline T& TIM() { return TIM4; }
+};
+#endif
+
+#if defined(STM32F4)
+template<> struct timer_traits<5>
+{
+    typedef tim5_t T;
+    typedef uint16_t count_t;
+    static inline T& TIM() { return TIM5; }
+};
+#endif
+
 #if defined(STM32F05x) || defined(STM32F07x) || defined(STM32F09x)
 template<> struct timer_traits<6>
 {
@@ -58,14 +76,43 @@ template<> struct timer_traits<7>
 };
 #endif
 
+#if defined(STM32F4)
+template<> struct timer_traits<9>
+{
+    typedef tim9_t T;
+    typedef uint16_t count_t;
+    static inline T& TIM() { return TIM9; }
+};
+#endif
+
+#if defined(STM32F4)
+template<> struct timer_traits<10>
+{
+    typedef tim10_t T;
+    typedef uint16_t count_t;
+    static inline T& TIM() { return TIM10; }
+};
+#endif
+
+#if defined(STM32F4)
+template<> struct timer_traits<11>
+{
+    typedef tim11_t T;
+    typedef uint16_t count_t;
+    static inline T& TIM() { return TIM11; }
+};
+#endif
+
+#if !defined(STM32F4)
 template<> struct timer_traits<14>
 {
     typedef tim14_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM14; }
 };
+#endif
 
-#if !defined(STM32F03x)
+#if !defined(STM32F03x) && !defined(STM32F4)
 template<> struct timer_traits<15>
 {
     typedef tim15_t T;
@@ -74,19 +121,23 @@ template<> struct timer_traits<15>
 };
 #endif
 
+#if !defined(STM32F4)
 template<> struct timer_traits<16>
 {
     typedef tim16_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM16; }
 };
+#endif
 
+#if !defined(STM32F4)
 template<> struct timer_traits<17>
 {
     typedef tim17_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM17; }
 };
+#endif
 
 template<int TN>
 class timer_t
