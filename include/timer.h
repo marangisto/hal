@@ -213,6 +213,11 @@ public:
         return TIM().CNT;
     }
 
+    static inline void set_count(count_t x)
+    {
+        TIM().CNT = x;
+    }
+
 private:
     static inline typename timer_traits<TN>::T& TIM() { return timer_traits<TN>::TIM(); }
 };
