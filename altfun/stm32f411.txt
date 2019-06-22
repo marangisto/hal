@@ -1,0 +1,82 @@
+PA0 - TIM2_CH1,TIM2_ETR TIM5_CH1 - - - - USART2_CTS - - - - - - - EVENT_OUT
+PA1 - TIM2_CH2 TIM5_CH2 - - SPI4_MOSI,I2S4_SD - USART2_RTS - - - - - - - EVENT_OUT
+PA2 - TIM2_CH3 TIM5_CH3 TIM9_CH1 - I2S2_CKIN - USART2_TX - - - - - - - EVENT_OUT
+PA3 - TIM2_CH4 TIM5_CH4 TIM9_CH2 - I2S2_MCK - USART2_RX - - - - - - - EVENT_OUT
+PA4 - - - - - SPI1_NSS,I2S1_WS SPI3_NSS,I2S3_WS USART2_CK - - - - - - - EVENT_OUT
+PA5 - TIM2_CH1,TIM2_ETR - - - SPI1_SCK,I2S1_CK - - - - - - - - - EVENT_OUT
+PA6 - TIM1_BKIN TIM3_CH1 - - SPI1_MISO I2S2_MCK - - - - - SDIO_CMD - - EVENT_OUT
+PA7 - TIM1_CH1N TIM3_CH2 - - SPI1_MOSI,I2S1_SD - - - - - - - - - EVENT_OUT
+PA8 MCO_1 TIM1_CH1 - - I2C3_SCL - - USART1_CK - - USB_FS_SOF - SDIO_D1 - - EVENT_OUT
+PA9 - TIM1_CH2 - - I2C3_SMBA - - USART1_TX - - USB_FS_VBUS - SDIO_D2 - - EVENT_OUT
+PA10 - TIM1_CH3 - - - - SPI5_MOSI,I2S5_SD USART1_RX - - USB_FS_ID - - - - EVENT_OUT
+PA11 - TIM1_CH4 - - - - SPI4_MISO USART1_CTS USART6_TX - USB_FS_DM - - - - EVENT_OUT
+PA12 - TIM1_ETR - - - - SPI5_MISO USART1_RTS USART6_RX - USB_FS_DP - - - - EVENT_OUT
+PA13 JTMS-SWDIO - - - - - - - - - - - - - - EVENT_OUT
+PA14 JTCK-SWCLK - - - - - - - - - - - - - - EVENT_OUT
+PA15 JTDI TIM2_CH1,TIM2_ETR - - - SPI1_NSS,I2S1_WS SPI3_NSS,I2S3_WS USART1_TX - - - - - - - EVENT_OUT
+PB0 - TIM1_CH2N TIM3_CH3 - - - SPI5_SCK,I2S5_CK  - - - - - - - EVENT_OUT
+PB1 - TIM1_CH3N TIM3_CH4 - - - SPI5_NSS,I2S5_WS  - - - - - - - EVENT_OUT
+PB2 - - - - - - - - - - - - - - - EVENT_OUT
+PB3 JTDO-SWO TIM2_CH2 - - - SPI1_SCK,I2S1_CK SPI3_SCK,I2S3_CK USART1_RX - I2C2_SDA - - - - - EVENT_OUT
+PB4 JTRST  TIM3_CH1 - - SPI1_MISO SPI3_MISO I2S3ext_SD - I2C3_SDA   SDIO_D0 - - EVENT_OUT
+PB5 - - TIM3_CH2 - I2C1_SMBA SPI1_MOSI,I2S1_SD SPI3_MOSI,I2S3_SD  - - - - SDIO_D3 - - EVENT_OUT
+PB6 - - TIM4_CH1 - I2C1_SCL - - USART1_TX - - - -  - - EVENT_OUT
+PB7 - - TIM4_CH2 - I2C1_SDA - - USART1_RX - - - - SDIO_D0 - - EVENT_OUT
+PB8 - - TIM4_CH3 TIM10_CH1 I2C1_SCL - SPI5_MOSI,I2S5_SD - - I2C3_SDA - - SDIO_D4 - - EVENT_OUT
+PB9 - - TIM4_CH4 TIM11_CH1 I2C1_SDA SPI2_NSS,I2S2_WS - - - I2C2_SDA - - SDIO_D5 - - EVENT_OUT
+PB10 - TIM2_CH3 - - I2C2_SCL SPI2_SCK,I2S2_CK I2S3_MCK - - - - - SDIO_D7 - - EVENT_OUT
+PB11 - TIM2_CH4 - - I2C2_SDA I2S2_CKIN - - - - - - - - - EVENT_OUT
+PB12 - TIM1_BKIN - - I2C2_SMBA SPI2_NSS,I2S2_WS SPI4_NSS,I2S4_WS SPI3_SCK,I2S3_CK - - - - - - - EVENT_OUT
+PB13 - TIM1_CH1N - - - SPI2_SCK,I2S2_CK SPI4_SCK,I2S4_CK - - - - - - - - EVENT_OUT
+PB14 - TIM1_CH2N - - - SPI2_MISO I2S2ext_SD - - - - - SDIO_D6 - - EVENT_OUT
+PB15 RTC_50H TIM1_CH3N - - - SPI2_MOSI,I2S2_SD - - - - - - SDIO_CK - - EVENT_OUT
+PC0 - - - - - - - - - - - - - - - EVENT_OUT
+PC1 - - - - - - - - - - - - - - - EVENT_OUT
+PC2 - - - - - SPI2_MISO I2S2ext_SD - - - - - - - - EVENT_OUT
+PC3 - - - - - SPI2_MOSI,I2S2_SD - - - - - - - - - EVENT_OUT
+PC4 - - - - -  - - - - - - - - - EVENT_OUT
+PC5 - - - - -  - - - - - - - - - EVENT_OUT
+PC6 - - TIM3_CH1 - - I2S2_MCK - - USART6_TX - - - SDIO_D6 - - EVENT_OUT
+PC7 - - TIM3_CH2 - - SPI2_SCK,I2S2_CK I2S3_MCK - USART6_RX - - - SDIO_D7 - - EVENT_OUT
+PC8 - - TIM3_CH3 - - - - - USART6_CK - - - SDIO_D0 - - EVENT_OUT
+PC9 MCO_2 - TIM3_CH4 - I2C3_SDA I2S2_CKIN - -  - - - SDIO_D1 - - EVENT_OUT
+PC10 - - - - - - SPI3_SCK,I2S3_CK - - - - - SDIO_D2 - - EVENT_OUT
+PC11 - - - - - I2S3ext_SD SPI3_MISO - - - - - SDIO_D3 - - EVENT_OUT
+PC12 - - - - - - SPI3_MOSI,I2S3_SD - - - - - SDIO_CK - - EVENT_OUT
+PC13 - - - - - - - - - - - - - - - -
+PC14 - - - - - - - - - - - - - - - -
+PC15 - - - - - - - - - - - - - - - -
+PD0 - - - - - - - - - - - - - - - EVENT_OUT
+PD1 - - - - - - - - - - - - - - - EVENT_OUT
+PD2 - - TIM3_ETR - - - - - - - - - SDIO_CMD   EVENT_OUT
+PD3 - - - - - SPI2_SCK,I2S2_CK  USART2_CTS - - - - - - - EVENT_OUT
+PD4 - - - - - - - USART2_RTS - - - - - - - EVENT_OUT
+PD5 - - - - - - - USART2_TX - - - - - - - EVENT_OUT
+PD6 - - - - - SPI3_MOSI,I2S3_SD - USART2_RX - - - - - - - EVENT_OUT
+PD7 - - - - - - - USART2_CK - - - - - - - EVENT_OUT
+PD8 - - - - - - - - - - - - - - - EVENT_OUT
+PD9 - - - - - - - - - - - - - - - EVENT_OUT
+PD10 - - - - - - - - - - - - - - - EVENT_OUT
+PD11 - - - - - - - - - - - - - - - EVENT_OUT
+PD12 - - TIM4_CH1 - - - - - - - - - - - - EVENT_OUT
+PD13 - - TIM4_CH2 - - - - - - - - - - - - EVENT_OUT
+PD14 - - TIM4_CH3 - - - - - - - - - - - - EVENT_OUT
+PD15 - - TIM4_CH4 - - - - - - - - - - - - EVENT_OUT
+PE0 - - TIM4_ETR - - - - - - - - - - - - EVENT_OUT
+PE1 - -  - - - - - - - - - - - - EVENT_OUT
+PE2 TRACECLK - - - - SPI4_SCK,I2S4_CK SPI5_SCK,I2S5_CK - - - - - - - - EVENT_OUT
+PE3 TRACED0 - - - - - - - - - - - - - - EVENT_OUT
+PE4 TRACED1 - - - - SPI4_NSS,I2S4_WS SPI5_NSS,I2S5_WS - - - - - - - - EVENT_OUT
+PE5 TRACED2 - - TIM9_CH1 - SPI4_MISO SPI5_MISO - - - - - - - - EVENT_OUT
+PE6 TRACED3 - - TIM9_CH2 - SPI4_MOSI,I2S4_SD SPI5_MOSI,I2S5_SD - - - - - - - - EVENT_OUT
+PE7 - TIM1_ETR - - - - - - - - - - - - - EVENT_OUT
+PE8 - TIM1_CH1N - - - - - - - - - - - - - EVENT_OUT
+PE9 - TIM1_CH1 - - - - - - - - - - - - - EVENT_OUT
+PE10 - TIM1_CH2N - - - - - - - - - - - - - EVENT_OUT
+PE11 - TIM1_CH2 - - - SPI4_NSS,I2S4_WS SPI5_NSS,I2S5_WS - - - - - - - - EVENT_OUT
+PE12 - TIM1_CH3N - - - SPI4_SCK,I2S4_CK SPI5_SCK,I2S5_CK - - - - - - - - EVENT_OUT
+PE13 - TIM1_CH3 - - - SPI4_MISO SPI5_MISO - - - - - - - - EVENT_OUT
+PE14 - TIM1_CH4 - - - SPI4_MOSI,I2S4_SD SPI5_MOSI,I2S5_SD - - - - - - - - EVENT_OUT
+PE15 - TIM1_BKIN - - - - - - - - - - - - - EVENT_OUT
+PH0 - - - - - - - - - - - - - - - -
+PH1 - - - - - - - - - - - - - - - -
