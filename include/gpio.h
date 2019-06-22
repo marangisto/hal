@@ -126,7 +126,7 @@ public:
     static inline void set() { pin::gpio().BSRR = pin::bit_mask; }
     static inline void clear() { pin::gpio().BSRR = pin::bit_mask << 16; }
     static inline bool read() { return (pin::gpio().ODR & pin::bit_mask) != 0; }
-    static inline void write(bool x) { x ? set() : clear(); }
+    static inline bool write(bool x) { x ? set() : clear(); return x; }
     static inline void toggle() { write(!read()); }
 
 private:
