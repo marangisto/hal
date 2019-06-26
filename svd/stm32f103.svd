@@ -8933,7 +8933,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR1_Input</displayName>
           <description>capture/compare mode register 1 (input
           mode)</description>
-          <alternateRegister>CCMR1_Output</alternateRegister>
           <addressOffset>0x18</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -9064,7 +9063,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR2_Input</displayName>
           <description>capture/compare mode register 2 (input
           mode)</description>
-          <alternateRegister>CCMR2_Output</alternateRegister>
           <addressOffset>0x1C</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -9950,7 +9948,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR1_Input</displayName>
           <description>capture/compare mode register 1 (input
           mode)</description>
-          <alternateRegister>CCMR1_Output</alternateRegister>
           <addressOffset>0x18</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -10081,7 +10078,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR2_Input</displayName>
           <description>capture/compare mode register 2 (input
           mode)</description>
-          <alternateRegister>CCMR2_Output</alternateRegister>
           <addressOffset>0x1C</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -10684,7 +10680,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR1_Input</displayName>
           <description>capture/compare mode register 1 (input
           mode)</description>
-          <alternateRegister>CCMR1_Output</alternateRegister>
           <addressOffset>0x18</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -11065,7 +11060,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR1_Input</displayName>
           <description>capture/compare mode register (input
           mode)</description>
-          <alternateRegister>CCMR1_Output</alternateRegister>
           <addressOffset>0x18</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -26717,7 +26711,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>FS_GRXSTSR_Host</displayName>
           <description>OTG_FS Receive status debug read(Host
           mode)</description>
-          <alternateRegister>FS_GRXSTSR_Device</alternateRegister>
           <addressOffset>0x1C</addressOffset>
           <size>0x20</size>
           <access>read-only</access>
@@ -26803,7 +26796,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>FS_GNPTXFSIZ_Host</displayName>
           <description>OTG_FS non-periodic transmit FIFO size
           register (Host mode)</description>
-          <alternateRegister>FS_GNPTXFSIZ_Device</alternateRegister>
           <addressOffset>0x28</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
