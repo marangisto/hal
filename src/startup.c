@@ -30,7 +30,7 @@ __attribute__ ((section(".text"))) void Reset_HDLR(void)
 
 __attribute__ ((section(".text"), optimize("-O3"))) void __nothing(void) {}
 
-#if defined(STM32F0)
+#if defined(STM32F051)
 void NMI_HDLR(void) __attribute__ ((weak, alias("__nothing")));
 void HardFault_HDLR(void) __attribute__ ((weak, alias("__nothing")));
 void SVCall_HDLR(void) __attribute__ ((weak, alias("__nothing")));
@@ -129,7 +129,7 @@ struct __vector_table vectors __attribute__ ((section(".vectors"))) =
       , ISR_USB
       }
     };
-#elif defined (STM32F4)
+#elif defined (STM32F411)
 void NMI_HDLR(void) __attribute__ ((weak, alias("__nothing")));
 void HardFault_HDLR(void) __attribute__ ((weak, alias("__nothing")));
 void MemManage_HDLR(void) __attribute__ ((weak, alias("__nothing")));
@@ -321,5 +321,7 @@ struct __vector_table vectors __attribute__ ((section(".vectors"))) =
       , 0x0
       }
     };
+#else
+    _Static_assert (0, "no startup sequence for MCU");
 #endif
 

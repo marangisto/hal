@@ -65,7 +65,7 @@ template<> struct peripheral_traits<gpiod_t>
     static void rcc_enable() { RCC.AHBENR |= rcc_t::AHBENR_IOPDEN; }
 };
 
-#if defined(STM32F07x) || defined(STM32F09x)
+#if defined(HAVE_PERIPHERAL_GPIOE)
 template<> struct peripheral_traits<gpioe_t>
 {
     static void rcc_enable() { RCC.AHBENR |= rcc_t::AHBENR_IOPEEN; }
@@ -95,7 +95,7 @@ template<> struct peripheral_traits<tim3_t>
     static void nvic_enable() { NVIC.ISER |= 1 << TIM3; }
 };
 
-#if defined(STM32F05x) || defined(STM32F07x) || defined(STM32F09x)
+#if defined(HAVE_PERIPHERAL_TIM6)
 template<> struct peripheral_traits<tim6_t>
 {
     static void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM6EN; }
@@ -103,7 +103,7 @@ template<> struct peripheral_traits<tim6_t>
 };
 #endif
 
-#if defined(STM32F07x) || defined(STM32F09x)
+#if defined(HAVE_PERIPHERAL_TIM7)
 template<> struct peripheral_traits<tim7_t>
 {
     static void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM7EN; }
@@ -117,7 +117,7 @@ template<> struct peripheral_traits<tim14_t>
     static void nvic_enable() { NVIC.ISER |= 1 << TIM14; }
 };
 
-#if !defined(STM32F03x)
+#if defined(HAVE_PERIPHERAL_TIM15)
 template<> struct peripheral_traits<tim15_t>
 {
     static void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM15EN; }

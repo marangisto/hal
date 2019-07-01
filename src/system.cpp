@@ -41,13 +41,13 @@ void sys_tick::init(uint32_t n)
 
     ms_counter = 0;                             // start new epoq
 
-#if defined(STM32F0)
+#if defined(STM32F051)
     STK.CSR = _::CSR_RESET_VALUE;               // reset controls
     STK.RVR = n - 1;                            // reload value
     STK.CVR = _::CVR_RESET_VALUE;               // current counter value
     STK.CSR |= _::CSR_CLKSOURCE;                // systick clock source
     STK.CSR |= _::CSR_ENABLE | _::CSR_TICKINT;  // enable counter & interrupts
-#elif defined(STM32F4)
+#elif defined(STM32F411)
     STK.CTRL = _::CTRL_RESET_VALUE;                 // reset controls
     STK.LOAD = n - 1;                               // reload value
     STK.VAL = _::VAL_RESET_VALUE;                   // current counter value
@@ -74,7 +74,7 @@ extern "C" void system_init(void)
     using namespace hal;
     typedef rcc_t _;
 
-#if defined(STM32F0)
+#if defined(STM32F051)
     // reset clock control registers
 
     RCC.CR = _::CR_RESET_VALUE;
@@ -100,7 +100,7 @@ extern "C" void system_init(void)
     // initialize sys-tick for milli-second counts
 
     hal::sys_tick_init(60000);
-#elif defined(STM32F4)
+#elif defined(STM32F411)
     // reset clock control registers
 
     RCC.CR = _::CR_RESET_VALUE;

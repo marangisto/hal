@@ -2,8 +2,9 @@
 
 #include <cstddef>
 
-#if defined(STM32F0x1)
+#if defined(STM32F051)
 #include <device/stm32f0x1.h>
+#undef HAVE_PERIPHERAL_GPIOE    // should not be present
 namespace device = stm32f0x1;
 #include <peripheral/stm32f0.h>
 #elif defined(STM32F411)

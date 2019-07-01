@@ -39,31 +39,39 @@ enum input_type_t { floating, pull_up, pull_down };
 
 template<gpio_port_t PORT> struct port_traits {};
 
+#if defined(HAVE_PERIPHERAL_GPIOA)
 template<> struct port_traits<PA>
 {
     typedef gpioa_t gpio_t;
     static inline gpio_t& gpio() { return GPIOA; }
 };
+#endif
 
+#if defined(HAVE_PERIPHERAL_GPIOB)
 template<> struct port_traits<PB>
 {
     typedef gpiob_t gpio_t;
     static inline gpio_t& gpio() { return GPIOB; }
 };
+#endif
 
+#if defined(HAVE_PERIPHERAL_GPIOC)
 template<> struct port_traits<PC>
 {
     typedef gpioc_t gpio_t;
     static inline gpio_t& gpio() { return GPIOC; }
 };
+#endif
 
+#if defined(HAVE_PERIPHERAL_GPIOD)
 template<> struct port_traits<PD>
 {
     typedef gpiod_t gpio_t;
     static inline gpio_t& gpio() { return GPIOD; }
 };
+#endif
 
-#if defined(STM32F07x) || defined(STM32F09x) || defined(STM32F4)
+#if defined(HAVE_PERIPHERAL_GPIOE)
 template<> struct port_traits<PE>
 {
     typedef gpioe_t gpio_t;
@@ -71,7 +79,7 @@ template<> struct port_traits<PE>
 };
 #endif
 
-#if defined(STM32F0)
+#if defined(HAVE_PERIPHERAL_GPIOF)
 template<> struct port_traits<PF>
 {
     typedef gpiof_t gpio_t;
@@ -79,7 +87,7 @@ template<> struct port_traits<PF>
 };
 #endif
 
-#if defined(STM32L4)
+#if defined(HAVE_PERIPHERAL_GPIOG)
 template<> struct port_traits<PG>
 {
     typedef gpiog_t gpio_t;
@@ -87,7 +95,7 @@ template<> struct port_traits<PG>
 };
 #endif
 
-#if defined(STM32F4)
+#if defined(HAVE_PERIPHERAL_GPIOH)
 template<> struct port_traits<PH>
 {
     typedef gpioh_t gpio_t;

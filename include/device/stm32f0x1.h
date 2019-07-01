@@ -69,6 +69,8 @@ struct crc_t
 
 static crc_t& CRC = *reinterpret_cast<crc_t*>(0x40023000);
 
+#define HAVE_PERIPHERAL_CRC
+
 
 ////
 //
@@ -419,6 +421,8 @@ struct gpiof_t
 };
 
 static gpiof_t& GPIOF = *reinterpret_cast<gpiof_t*>(0x48001400);
+
+#define HAVE_PERIPHERAL_GPIOF
 
 
 ////
@@ -771,6 +775,8 @@ struct gpiod_t
 
 static gpiod_t& GPIOD = *reinterpret_cast<gpiod_t*>(0x48000c00);
 
+#define HAVE_PERIPHERAL_GPIOD
+
 
 ////
 //
@@ -1121,6 +1127,8 @@ struct gpioc_t
 };
 
 static gpioc_t& GPIOC = *reinterpret_cast<gpioc_t*>(0x48000800);
+
+#define HAVE_PERIPHERAL_GPIOC
 
 
 ////
@@ -1473,6 +1481,8 @@ struct gpiob_t
 
 static gpiob_t& GPIOB = *reinterpret_cast<gpiob_t*>(0x48000400);
 
+#define HAVE_PERIPHERAL_GPIOB
+
 
 ////
 //
@@ -1823,6 +1833,8 @@ struct gpioe_t
 };
 
 static gpioe_t& GPIOE = *reinterpret_cast<gpioe_t*>(0x48001000);
+
+#define HAVE_PERIPHERAL_GPIOE
 
 
 ////
@@ -2175,6 +2187,8 @@ struct gpioa_t
 
 static gpioa_t& GPIOA = *reinterpret_cast<gpioa_t*>(0x48000000);
 
+#define HAVE_PERIPHERAL_GPIOA
+
 
 ////
 //
@@ -2290,6 +2304,8 @@ struct spi1_t
 };
 
 static spi1_t& SPI1 = *reinterpret_cast<spi1_t*>(0x40013000);
+
+#define HAVE_PERIPHERAL_SPI1
 
 
 ////
@@ -2407,6 +2423,8 @@ struct spi2_t
 
 static spi2_t& SPI2 = *reinterpret_cast<spi2_t*>(0x40003800);
 
+#define HAVE_PERIPHERAL_SPI2
+
 
 ////
 //
@@ -2446,6 +2464,8 @@ struct pwr_t
 };
 
 static pwr_t& PWR = *reinterpret_cast<pwr_t*>(0x40007000);
+
+#define HAVE_PERIPHERAL_PWR
 
 
 ////
@@ -2612,6 +2632,8 @@ struct i2c1_t
 
 static i2c1_t& I2C1 = *reinterpret_cast<i2c1_t*>(0x40005400);
 
+#define HAVE_PERIPHERAL_I2C1
+
 
 ////
 //
@@ -2777,6 +2799,8 @@ struct i2c2_t
 
 static i2c2_t& I2C2 = *reinterpret_cast<i2c2_t*>(0x40005800);
 
+#define HAVE_PERIPHERAL_I2C2
+
 
 ////
 //
@@ -2820,6 +2844,8 @@ struct iwdg_t
 
 static iwdg_t& IWDG = *reinterpret_cast<iwdg_t*>(0x40003000);
 
+#define HAVE_PERIPHERAL_IWDG
+
 
 ////
 //
@@ -2853,6 +2879,8 @@ struct wwdg_t
 };
 
 static wwdg_t& WWDG = *reinterpret_cast<wwdg_t*>(0x40002c00);
+
+#define HAVE_PERIPHERAL_WWDG
 
 
 ////
@@ -3122,6 +3150,8 @@ struct tim1_t
 
 static tim1_t& TIM1 = *reinterpret_cast<tim1_t*>(0x40012c00);
 
+#define HAVE_PERIPHERAL_TIM1
+
 
 ////
 //
@@ -3371,6 +3401,8 @@ struct tim2_t
 };
 
 static tim2_t& TIM2 = *reinterpret_cast<tim2_t*>(0x40000000);
+
+#define HAVE_PERIPHERAL_TIM2
 
 
 ////
@@ -3622,6 +3654,8 @@ struct tim3_t
 
 static tim3_t& TIM3 = *reinterpret_cast<tim3_t*>(0x40000400);
 
+#define HAVE_PERIPHERAL_TIM3
+
 
 ////
 //
@@ -3718,6 +3752,8 @@ struct tim14_t
 
 static tim14_t& TIM14 = *reinterpret_cast<tim14_t*>(0x40002000);
 
+#define HAVE_PERIPHERAL_TIM14
+
 
 ////
 //
@@ -3778,6 +3814,8 @@ struct tim6_t
 
 static tim6_t& TIM6 = *reinterpret_cast<tim6_t*>(0x40001000);
 
+#define HAVE_PERIPHERAL_TIM6
+
 
 ////
 //
@@ -3837,6 +3875,8 @@ struct tim7_t
 };
 
 static tim7_t& TIM7 = *reinterpret_cast<tim7_t*>(0x40001400);
+
+#define HAVE_PERIPHERAL_TIM7
 
 
 ////
@@ -4001,6 +4041,8 @@ struct exti_t
 
 static exti_t& EXTI = *reinterpret_cast<exti_t*>(0x40010400);
 
+#define HAVE_PERIPHERAL_EXTI
+
 
 ////
 //
@@ -4153,6 +4195,8 @@ struct nvic_t
 };
 
 static nvic_t& NVIC = *reinterpret_cast<nvic_t*>(0xe000e100);
+
+#define HAVE_PERIPHERAL_NVIC
 
 
 ////
@@ -4480,6 +4524,8 @@ struct dma1_t
 
 static dma1_t& DMA1 = *reinterpret_cast<dma1_t*>(0x40020000);
 
+#define HAVE_PERIPHERAL_DMA1
+
 
 ////
 //
@@ -4806,6 +4852,8 @@ struct dma2_t
 
 static dma2_t& DMA2 = *reinterpret_cast<dma2_t*>(0x40020400);
 
+#define HAVE_PERIPHERAL_DMA2
+
 
 ////
 //
@@ -5047,6 +5095,8 @@ struct rcc_t
 
 static rcc_t& RCC = *reinterpret_cast<rcc_t*>(0x40021000);
 
+#define HAVE_PERIPHERAL_RCC
+
 
 ////
 //
@@ -5189,6 +5239,8 @@ struct syscfg_comp_t
 
 static syscfg_comp_t& SYSCFG_COMP = *reinterpret_cast<syscfg_comp_t*>(0x40010000);
 
+#define HAVE_PERIPHERAL_SYSCFG_COMP
+
 
 ////
 //
@@ -5311,6 +5363,8 @@ struct adc_t
 };
 
 static adc_t& ADC = *reinterpret_cast<adc_t*>(0x40012400);
+
+#define HAVE_PERIPHERAL_ADC
 
 
 ////
@@ -5496,6 +5550,8 @@ struct usart1_t
 
 static usart1_t& USART1 = *reinterpret_cast<usart1_t*>(0x40013800);
 
+#define HAVE_PERIPHERAL_USART1
+
 
 ////
 //
@@ -5679,6 +5735,8 @@ struct usart2_t
 };
 
 static usart2_t& USART2 = *reinterpret_cast<usart2_t*>(0x40004400);
+
+#define HAVE_PERIPHERAL_USART2
 
 
 ////
@@ -5864,6 +5922,8 @@ struct usart3_t
 
 static usart3_t& USART3 = *reinterpret_cast<usart3_t*>(0x40004800);
 
+#define HAVE_PERIPHERAL_USART3
+
 
 ////
 //
@@ -6047,6 +6107,8 @@ struct usart4_t
 };
 
 static usart4_t& USART4 = *reinterpret_cast<usart4_t*>(0x40004c00);
+
+#define HAVE_PERIPHERAL_USART4
 
 
 ////
@@ -6232,6 +6294,8 @@ struct usart6_t
 
 static usart6_t& USART6 = *reinterpret_cast<usart6_t*>(0x40011400);
 
+#define HAVE_PERIPHERAL_USART6
+
 
 ////
 //
@@ -6415,6 +6479,8 @@ struct usart7_t
 };
 
 static usart7_t& USART7 = *reinterpret_cast<usart7_t*>(0x40011800);
+
+#define HAVE_PERIPHERAL_USART7
 
 
 ////
@@ -6600,6 +6666,8 @@ struct usart8_t
 
 static usart8_t& USART8 = *reinterpret_cast<usart8_t*>(0x40011c00);
 
+#define HAVE_PERIPHERAL_USART8
+
 
 ////
 //
@@ -6783,6 +6851,8 @@ struct usart5_t
 };
 
 static usart5_t& USART5 = *reinterpret_cast<usart5_t*>(0x40005000);
+
+#define HAVE_PERIPHERAL_USART5
 
 
 ////
@@ -7047,6 +7117,8 @@ struct rtc_t
 
 static rtc_t& RTC = *reinterpret_cast<rtc_t*>(0x40002800);
 
+#define HAVE_PERIPHERAL_RTC
+
 
 ////
 //
@@ -7235,6 +7307,8 @@ struct tim15_t
 
 static tim15_t& TIM15 = *reinterpret_cast<tim15_t*>(0x40014000);
 
+#define HAVE_PERIPHERAL_TIM15
+
 
 ////
 //
@@ -7382,6 +7456,8 @@ struct tim16_t
 
 static tim16_t& TIM16 = *reinterpret_cast<tim16_t*>(0x40014400);
 
+#define HAVE_PERIPHERAL_TIM16
+
 
 ////
 //
@@ -7528,6 +7604,8 @@ struct tim17_t
 };
 
 static tim17_t& TIM17 = *reinterpret_cast<tim17_t*>(0x40014800);
+
+#define HAVE_PERIPHERAL_TIM17
 
 
 ////
@@ -7749,6 +7827,8 @@ struct tsc_t
 
 static tsc_t& TSC = *reinterpret_cast<tsc_t*>(0x40024000);
 
+#define HAVE_PERIPHERAL_TSC
+
 
 ////
 //
@@ -7825,6 +7905,8 @@ struct cec_t
 };
 
 static cec_t& CEC = *reinterpret_cast<cec_t*>(0x40007800);
+
+#define HAVE_PERIPHERAL_CEC
 
 
 ////
@@ -7906,6 +7988,8 @@ struct flash_t
 
 static flash_t& Flash = *reinterpret_cast<flash_t*>(0x40022000);
 
+#define HAVE_PERIPHERAL_Flash
+
 
 ////
 //
@@ -7955,6 +8039,8 @@ struct dbgmcu_t
 };
 
 static dbgmcu_t& DBGMCU = *reinterpret_cast<dbgmcu_t*>(0x40015800);
+
+#define HAVE_PERIPHERAL_DBGMCU
 
 
 ////
@@ -8218,6 +8304,8 @@ struct usb_t
 
 static usb_t& USB = *reinterpret_cast<usb_t*>(0x40005c00);
 
+#define HAVE_PERIPHERAL_USB
+
 
 ////
 //
@@ -8280,6 +8368,8 @@ struct crs_t
 };
 
 static crs_t& CRS = *reinterpret_cast<crs_t*>(0x40006c00);
+
+#define HAVE_PERIPHERAL_CRS
 
 
 ////
@@ -10772,6 +10862,8 @@ struct can_t
 
 static can_t& CAN = *reinterpret_cast<can_t*>(0x40006400);
 
+#define HAVE_PERIPHERAL_CAN
+
 
 ////
 //
@@ -10901,6 +10993,8 @@ struct dac_t
 
 static dac_t& DAC = *reinterpret_cast<dac_t*>(0x40007400);
 
+#define HAVE_PERIPHERAL_DAC
+
 
 ////
 //
@@ -10984,6 +11078,8 @@ struct scb_t
 
 static scb_t& SCB = *reinterpret_cast<scb_t*>(0xe000ed00);
 
+#define HAVE_PERIPHERAL_SCB
+
 
 ////
 //
@@ -11023,6 +11119,8 @@ struct stk_t
 };
 
 static stk_t& STK = *reinterpret_cast<stk_t*>(0xe000e010);
+
+#define HAVE_PERIPHERAL_STK
 
 
 }

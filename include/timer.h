@@ -13,6 +13,7 @@ using namespace device;
 
 template<int TN> struct timer_traits {};
 
+#if defined(HAVE_PERIPHERAL_TIM1)
 template<> struct timer_traits<1>
 {
     typedef tim1_t T;
@@ -21,7 +22,9 @@ template<> struct timer_traits<1>
     static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM1_CH1;
     static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM1_CH2;
 };
+#endif
 
+#if defined(HAVE_PERIPHERAL_TIM2)
 template<> struct timer_traits<2>
 {
     typedef tim2_t T;
@@ -30,7 +33,9 @@ template<> struct timer_traits<2>
     static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM2_CH1_ETR;
     static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM2_CH2;
 };
+#endif
 
+#if defined(HAVE_PERIPHERAL_TIM3)
 template<> struct timer_traits<3>
 {
     typedef tim3_t T;
@@ -39,8 +44,9 @@ template<> struct timer_traits<3>
     static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM3_CH1;
     static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM3_CH2;
 };
+#endif
 
-#if defined(STM32F4)
+#if defined(HAVE_PERIPHERAL_TIM4)
 template<> struct timer_traits<4>
 {
     typedef tim4_t T;
@@ -49,7 +55,7 @@ template<> struct timer_traits<4>
 };
 #endif
 
-#if defined(STM32F4)
+#if defined(HAVE_PERIPHERAL_TIM5)
 template<> struct timer_traits<5>
 {
     typedef tim5_t T;
@@ -58,7 +64,7 @@ template<> struct timer_traits<5>
 };
 #endif
 
-#if defined(STM32F05x) || defined(STM32F07x) || defined(STM32F09x)
+#if defined(HAVE_PERIPHERAL_TIM6)
 template<> struct timer_traits<6>
 {
     typedef tim6_t T;
@@ -67,7 +73,7 @@ template<> struct timer_traits<6>
 };
 #endif
 
-#if defined(STM32F07x) || defined(STM32F09x)
+#if defined(HAVE_PERIPHERAL_TIM7)
 template<> struct timer_traits<7>
 {
     typedef tim7_t T;
@@ -76,7 +82,7 @@ template<> struct timer_traits<7>
 };
 #endif
 
-#if defined(STM32F4)
+#if defined(HAVE_PERIPHERAL_TIM9)
 template<> struct timer_traits<9>
 {
     typedef tim9_t T;
@@ -85,7 +91,7 @@ template<> struct timer_traits<9>
 };
 #endif
 
-#if defined(STM32F4)
+#if defined(HAVE_PERIPHERAL_TIM10)
 template<> struct timer_traits<10>
 {
     typedef tim10_t T;
@@ -94,7 +100,7 @@ template<> struct timer_traits<10>
 };
 #endif
 
-#if defined(STM32F4)
+#if defined(HAVE_PERIPHERAL_TIM11)
 template<> struct timer_traits<11>
 {
     typedef tim11_t T;
@@ -103,7 +109,7 @@ template<> struct timer_traits<11>
 };
 #endif
 
-#if !defined(STM32F4)
+#if defined(HAVE_PERIPHERAL_TIM14)
 template<> struct timer_traits<14>
 {
     typedef tim14_t T;
@@ -112,7 +118,7 @@ template<> struct timer_traits<14>
 };
 #endif
 
-#if !defined(STM32F03x) && !defined(STM32F4)
+#if defined(HAVE_PERIPHERAL_TIM15)
 template<> struct timer_traits<15>
 {
     typedef tim15_t T;
@@ -121,7 +127,7 @@ template<> struct timer_traits<15>
 };
 #endif
 
-#if !defined(STM32F4)
+#if defined(HAVE_PERIPHERAL_TIM16)
 template<> struct timer_traits<16>
 {
     typedef tim16_t T;
@@ -130,7 +136,7 @@ template<> struct timer_traits<16>
 };
 #endif
 
-#if !defined(STM32F4)
+#if defined(HAVE_PERIPHERAL_TIM17)
 template<> struct timer_traits<17>
 {
     typedef tim17_t T;
