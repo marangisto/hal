@@ -11051,7 +11051,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>EMR1</displayName>
           <description>EXTI CPU wakeup with event mask
           register</description>
-          <alternateRegister>IMR1</alternateRegister>
           <addressOffset>0x80</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -11825,7 +11824,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR1_Input</displayName>
           <description>capture/compare mode register 1 (input
           mode)</description>
-          <alternateRegister>CCMR1_Output</alternateRegister>
           <addressOffset>0x18</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -14377,7 +14375,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR1_Input</displayName>
           <description>capture/compare mode register 1 (output
           mode)</description>
-          <alternateRegister>CCMR1_Output</alternateRegister>
           <addressOffset>0x18</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -14552,7 +14549,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR2_Input</displayName>
           <description>capture/compare mode register 2 (output
           mode)</description>
-          <alternateRegister>CCMR2_Output</alternateRegister>
           <addressOffset>0x1C</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -15819,7 +15815,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CHSELR_1</displayName>
           <description>channel selection register CHSELRMOD = 1 in
           ADC_CFGR1</description>
-          <alternateRegister>CHSELR</alternateRegister>
           <addressOffset>0x28</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -23313,7 +23308,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR1_Input</displayName>
           <description>capture/compare mode register 1 (input
           mode)</description>
-          <alternateRegister>CCMR1_Output</alternateRegister>
           <addressOffset>0x18</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -24184,7 +24178,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR1_Input</displayName>
           <description>capture/compare mode register 1 (input
           mode)</description>
-          <alternateRegister>CCMR1_Output</alternateRegister>
           <addressOffset>0x18</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -24329,7 +24322,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR2_Input</displayName>
           <description>capture/compare mode register 2 (input
           mode)</description>
-          <alternateRegister>CCMR2_Output</alternateRegister>
           <addressOffset>0x1C</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
