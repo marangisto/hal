@@ -6090,7 +6090,7 @@ struct adc_t
     template<uint32_t X>
     static constexpr uint32_t HWCFGR6_CHMAP23 =             // Input channel mapping (5 bits)
         bit_field_t<24, 0x1f>::value<X>();
-    static const uint32_t HWCFGR6_RESET_VALUE = 0x1f1f1f11f;
+    static const uint32_t HWCFGR6_RESET_VALUE = 0x1f1f1f1f;
 
     template<uint32_t X>
     static constexpr uint32_t HWCFGR5_CHMAP19 =             // Input channel mapping (5 bits)
