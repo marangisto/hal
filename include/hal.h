@@ -11,6 +11,12 @@ namespace device = stm32f0x1;
 #include <device/stm32f411.h>
 namespace device = stm32f411;
 #include <peripheral/stm32f4.h>
+#elif defined(STM32G070)
+#include <device/stm32g07x.h>
+namespace device = stm32g07x;
+#include <peripheral/stm32g0.h>
+#else
+static_assert(false, "mcu not recognized");
 #endif
 
 namespace hal
