@@ -41,7 +41,7 @@ void sys_tick::init(uint32_t n)
 
     ms_counter = 0;                             // start new epoq
 
-#if defined(STM32F051)
+#if defined(STM32F051) || defined(STM32G070)
     STK.CSR = _::CSR_RESET_VALUE;               // reset controls
     STK.RVR = n - 1;                            // reload value
     STK.CVR = _::CVR_RESET_VALUE;               // current counter value
@@ -149,6 +149,14 @@ extern "C" void system_init(void)
     // initialize sys-tick for milli-second counts
 
     hal::sys_tick_init(100000);
+#elif defined(STM32G070)
+    // reset clock control registers
+
+    RCC.CR = _::CR_RESET_VALUE;
+
+    // initialize sys-tick for milli-second counts
+
+    hal::sys_tick_init(60000);
 #else
     static_assert(false, "no featured clock initialzation");
 #endif

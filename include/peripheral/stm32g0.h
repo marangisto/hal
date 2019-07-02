@@ -10,23 +10,23 @@ using namespace device;
 
 enum pos_t
   { WWDG = 0
-  , PVD_VDDIO2 = 1
-  , RTC = 2
+  , RESERVED_VECTOR1 = 1
+  , RTC_TAMP = 2
   , FLASH = 3
-  , RCC_CRS = 4
+  , RCC_ = 4
   , EXTI0_1 = 5
   , EXTI2_3 = 6
   , EXTI4_15 = 7
-  , TSC = 8
+  , RESERVED_VECTOR8 = 8
   , DMA_CH1 = 9
   , DMA_CH2_3 = 10
-  , DMA_CH4_5_6_7 = 11
+  , DMA_CH4_5_6_7_DMAMUX = 11
   , ADC_COMP = 12
   , TIM1_BRK_UP_TRG_COM = 13
   , TIM1_CC = 14
-  , TIM2 = 15
+  , RESERVED_VECTOR15 = 15
   , TIM3 = 16
-  , TIM6_DAC = 17
+  , TIM6 = 17
   , TIM7 = 18
   , TIM14 = 19
   , TIM15 = 20
@@ -38,9 +38,9 @@ enum pos_t
   , SPI2 = 26
   , USART1 = 27
   , USART2 = 28
-  , USART3_4_5_6_7_8 = 29
-  , CEC_CAN = 30
-  , USB = 31
+  , USART3_4 = 29
+  , RESEVED_VECTOR30 = 30
+  , RESEVED_VECTOR31 = 31
   };
 
 template<typename PERIPHERAL> struct peripheral_traits {};
@@ -86,7 +86,7 @@ template<> struct peripheral_traits<tim1_t>
 template<> struct peripheral_traits<tim2_t>
 {
     static void rcc_enable() { RCC.APBENR1 |= rcc_t::APBENR1_TIM2EN; }
-    static void nvic_enable() { NVIC.ISER |= 1 << TIM2; }
+//    static void nvic_enable() { NVIC.ISER |= 1 << TIM2; }
 };
 
 template<> struct peripheral_traits<tim3_t>
@@ -98,7 +98,7 @@ template<> struct peripheral_traits<tim3_t>
 template<> struct peripheral_traits<tim6_t>
 {
     static void rcc_enable() { RCC.APBENR1 |= rcc_t::APBENR1_TIM6EN; }
-    static void nvic_enable() { NVIC.ISER |= 1 << TIM6_DAC; }
+    static void nvic_enable() { NVIC.ISER |= 1 << TIM6; }
 };
 
 template<> struct peripheral_traits<tim7_t>
