@@ -329,12 +329,14 @@ void PendSV_HDLR(void) __attribute__ ((weak, alias("__nothing")));
 void SysTick_HDLR(void) __attribute__ ((weak, alias("__nothing")));
 
 void ISR_WWDG(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_PVD(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_RTC_TAMP(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_FLASH(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_RCC(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_EXTI0_1(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_EXTI2_3(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_EXTI4_15(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_UCPD1_UCPD2(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_TSC(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_DMA_CH1(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_DMA_CH2_3(void) __attribute__ ((weak, alias("__nothing")));
@@ -342,7 +344,7 @@ void ISR_DMA_CH4_5_6_7_DMAMUX(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_ADC(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_TIM1_BRK_UP_TRG_COM(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_TIM1_CC(void) __attribute__ ((weak, alias("__nothing")));
-//void ISR_TIM2(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM2(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_TIM3(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_TIM6(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_TIM7(void) __attribute__ ((weak, alias("__nothing")));
@@ -356,7 +358,9 @@ void ISR_SPI1(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_SPI2(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_USART1(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_USART2(void) __attribute__ ((weak, alias("__nothing")));
-void ISR_USART3_4(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_USART3_4_LPUART1(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_CEC(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_AES_RNG(void) __attribute__ ((weak, alias("__nothing")));
 
 struct __vector_table
 {
@@ -384,21 +388,21 @@ struct __vector_table vectors __attribute__ ((section(".vectors"))) =
       , SysTick_HDLR
       }
     , { ISR_WWDG
-      , 0x0
+      , ISR_PVD                 // not available on G0x0
       , ISR_RTC_TAMP
       , ISR_FLASH
       , ISR_RCC
       , ISR_EXTI0_1
       , ISR_EXTI2_3
       , ISR_EXTI4_15
-      , 0x0
+      , ISR_UCPD1_UCPD2         // not available on G0x0
       , ISR_DMA_CH1
       , ISR_DMA_CH2_3
       , ISR_DMA_CH4_5_6_7_DMAMUX
       , ISR_ADC
       , ISR_TIM1_BRK_UP_TRG_COM
       , ISR_TIM1_CC
-      , 0x0
+      , ISR_TIM2                // not available on G0x0
       , ISR_TIM3
       , ISR_TIM6
       , ISR_TIM7
@@ -412,9 +416,9 @@ struct __vector_table vectors __attribute__ ((section(".vectors"))) =
       , ISR_SPI2
       , ISR_USART1
       , ISR_USART2
-      , ISR_USART3_4
-      , 0x0
-      , 0x0
+      , ISR_USART3_4_LPUART1    // LPUART1 not available on G0x0
+      , ISR_CEC                 // not available on G0x0
+      , ISR_AES_RNG             // not available on G0x0
       }
     };
 #else

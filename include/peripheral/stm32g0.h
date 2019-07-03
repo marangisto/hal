@@ -10,21 +10,21 @@ using namespace device;
 
 enum pos_t
   { WWDG = 0
-  , RESERVED_VECTOR1 = 1
+  , PVD = 1
   , RTC_TAMP = 2
   , FLASH = 3
   , RCC_ = 4
   , EXTI0_1 = 5
   , EXTI2_3 = 6
   , EXTI4_15 = 7
-  , RESERVED_VECTOR8 = 8
+  , UCPD1_UCPD2 = 8
   , DMA_CH1 = 9
   , DMA_CH2_3 = 10
   , DMA_CH4_5_6_7_DMAMUX = 11
   , ADC_COMP = 12
   , TIM1_BRK_UP_TRG_COM = 13
   , TIM1_CC = 14
-  , RESERVED_VECTOR15 = 15
+  , TIM2 = 15
   , TIM3 = 16
   , TIM6 = 17
   , TIM7 = 18
@@ -38,9 +38,9 @@ enum pos_t
   , SPI2 = 26
   , USART1 = 27
   , USART2 = 28
-  , USART3_4 = 29
-  , RESEVED_VECTOR30 = 30
-  , RESEVED_VECTOR31 = 31
+  , USART3_4_LPUART1 = 29
+  , CEC = 30
+  , AES_RNG = 31
   };
 
 template<typename PERIPHERAL> struct peripheral_traits {};
@@ -65,13 +65,6 @@ template<> struct peripheral_traits<gpiod_t>
     static void rcc_enable() { RCC.IOPENR |= rcc_t::IOPENR_IOPDEN; }
 };
 
-#if defined(HAVE_PERIPHERAL_GPIOE)
-template<> struct peripheral_traits<gpioe_t>
-{
-    static void rcc_enable() { RCC.IOPENR |= rcc_t::IOPENR_IOPEEN; }
-};
-#endif
-
 template<> struct peripheral_traits<gpiof_t>
 {
     static void rcc_enable() { RCC.IOPENR |= rcc_t::IOPENR_IOPFEN; }
@@ -86,7 +79,7 @@ template<> struct peripheral_traits<tim1_t>
 template<> struct peripheral_traits<tim2_t>
 {
     static void rcc_enable() { RCC.APBENR1 |= rcc_t::APBENR1_TIM2EN; }
-//    static void nvic_enable() { NVIC.ISER |= 1 << TIM2; }
+    static void nvic_enable() { NVIC.ISER |= 1 << TIM2; }
 };
 
 template<> struct peripheral_traits<tim3_t>
