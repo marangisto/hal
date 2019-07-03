@@ -153,6 +153,24 @@ extern "C" void system_init(void)
     // reset clock control registers
 
     RCC.CR = _::CR_RESET_VALUE;
+    RCC.CFGR = _::CFGR_RESET_VALUE;
+
+    // set system clock to HSI-PLL 64MHz
+
+/*
+    constexpr uint8_t wait_states = 0x2;    // 2 wait-states for 64MHz
+
+    FLASH.ACR = flash_t::ACR_PRFTEN | flash_t::ACR_LATENCY<wait_states>;
+
+    RCC.CFGR |= _::CFGR_PLLMUL<0xa>;        // PLL multiplier 12
+    RCC.CR |= _::CR_PLLON;                  // enable PLL
+    while (!(RCC.CR & _::CR_PLLRDY));       // wait for PLL to be ready
+    RCC.CFGR |= _::CFGR_SW<0x2>;            // select PLL as system clock
+
+    // wait for PLL as system clock
+
+    while ((RCC.CFGR & _::CFGR_SWS<0x3>) != _::CFGR_SWS<0x2>);
+*/
 
     // initialize sys-tick for milli-second counts
 
