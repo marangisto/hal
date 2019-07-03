@@ -124,6 +124,7 @@ public:
     static inline void setup()
     {
         peripheral<typename port_traits<pin_port(PIN)>::gpio_t>::rcc_enable();
+        pin::gpio().MODER &= ~(0x3 << (pin::bit_pos*2));
         pin::gpio().MODER |= pin::output_mode << (pin::bit_pos*2);
         if (speed != low_speed)
             pin::gpio().OSPEEDR |= speed << (pin::bit_pos*2);
@@ -149,7 +150,8 @@ public:
     static inline void setup()
     {
         peripheral<typename port_traits<pin_port(PIN)>::gpio_t>::rcc_enable();
-        pin::gpio().MODER |= pin::input_mode << (pin::bit_pos*2);
+        pin::gpio().MODER &= ~(0x3 << (pin::bit_pos*2));
+        // pin::gpio().MODER |= pin::input_mode << (pin::bit_pos*2); redundant since == 0
         if (input_type != floating)
             pin::gpio().PUPDR |= input_type << (pin::bit_pos*2);
     }
@@ -287,6 +289,7 @@ public:
     static inline void setup()
     {
         peripheral<typename port_traits<pin_port(PIN)>::gpio_t>::rcc_enable();
+        pin::gpio().MODER &= ~(0x3 << (pin::bit_pos*2));
         pin::gpio().MODER |= pin::alternate_mode << (pin::bit_pos*2);
         if (speed != low_speed)
             pin::gpio().OSPEEDR |= speed << (pin::bit_pos*2);
