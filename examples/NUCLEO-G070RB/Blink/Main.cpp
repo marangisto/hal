@@ -17,6 +17,6 @@ int main()
 void loop()
 {
     ld4::toggle();
-    sys_tick::delay_ms(25);
+    sys_tick::delay_ms(1000);
 }
 
