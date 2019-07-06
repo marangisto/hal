@@ -3,20 +3,24 @@
 #include <cstddef>
 
 #if defined(STM32F051)
-#include <device/stm32f0x1.h>
-#undef HAVE_PERIPHERAL_GPIOE    // should not be present
-namespace device = stm32f0x1;
-#include <peripheral/stm32f0.h>
+    #include <device/stm32f0x1.h>
+    #undef HAVE_PERIPHERAL_GPIOE    // should not be present
+    namespace device = stm32f0x1;
+    #include <peripheral/stm32f0.h>
 #elif defined(STM32F411)
-#include <device/stm32f411.h>
-namespace device = stm32f411;
-#include <peripheral/stm32f4.h>
+    #include <device/stm32f411.h>
+    namespace device = stm32f411;
+    #include <peripheral/stm32f4.h>
 #elif defined(STM32G070)
-#include <device/stm32g07x.h>
-namespace device = stm32g07x;
-#include <peripheral/stm32g0.h>
+    #include <device/stm32g07x.h>
+    namespace device = stm32g07x;
+    #include <peripheral/stm32g0.h>
+#elif defined(STM32G431)
+    #include <device/stm32g431.h>
+    namespace device = stm32g431xx;
+    #include <peripheral/stm32g4.h>
 #else
-static_assert(false, "mcu not recognized");
+    static_assert(false, "mcu not recognized");
 #endif
 
 namespace hal
