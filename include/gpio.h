@@ -180,12 +180,15 @@ enum alternate_function_t
     , I2C1_SMBA
     , I2C2_SCL
     , I2C2_SDA
+    , I2S_CKIN
     , I2S1_CK
     , I2S1_MCK
     , I2S1_SD
     , I2S1_WS
     , IR_OUT
     , MCO
+    , OSC_EN
+    , OSC32_EN
     , SPI1_MISO
     , SPI1_MOSI
     , SPI1_NSS
@@ -196,6 +199,16 @@ enum alternate_function_t
     , SPI2_SCK
     , SWCLK
     , SWDIO
+    , TIM1_BKIN
+    , TIM1_BKIN2
+    , TIM1_CH1
+    , TIM1_CH1N
+    , TIM1_CH2
+    , TIM1_CH2N
+    , TIM1_CH3
+    , TIM1_CH3N
+    , TIM1_CH4
+    , TIM1_ETR
     , TIM14_CH1
     , TIM15_BKIN
     , TIM15_CH1
@@ -207,15 +220,6 @@ enum alternate_function_t
     , TIM17_BKIN
     , TIM17_CH1
     , TIM17_CH1N
-    , TIM1_BKIN
-    , TIM1_CH1
-    , TIM1_CH1N
-    , TIM1_CH2
-    , TIM1_CH2N
-    , TIM1_CH3
-    , TIM1_CH3N
-    , TIM1_CH4
-    , TIM1_ETR
     , TIM2_CH1_ETR
     , TIM2_CH2
     , TIM2_CH3
@@ -253,15 +257,22 @@ enum alternate_function_t
     , USART1_CK
     , USART1_CTS
     , USART1_RTS
+    , USART1_RTS_DE_CK
     , USART1_RX
     , USART1_TX
     , USART2_CK
     , USART2_CTS
     , USART2_RTS
+    , USART2_RTS_DE_CK
     , USART2_RX
     , USART2_TX
     , USART3_CTS
+    , USART3_RTS_DE_CK
+    , USART3_RX
+    , USART3_TX
+    , USART4_CTS
     , USART4_RTS
+    , USART4_RTS_DE_CK
     , USART4_RX
     , USART4_TX
     , USART6_RX
@@ -279,6 +290,8 @@ template<> struct alt_fun_traits<PIN, ALT_FUN>      \
 
 #if defined(STM32F051)
 #include "gpio/stm32f051.h"
+#elif defined(STM32G070)
+#include "gpio/stm32g070.h"
 #endif
 
 template<gpio_pin_t PIN, alternate_function_t ALT>
