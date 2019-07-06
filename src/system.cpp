@@ -47,7 +47,7 @@ void sys_tick::init(uint32_t n)
     STK.CVR = _::CVR_RESET_VALUE;               // current counter value
     STK.CSR |= _::CSR_CLKSOURCE;                // systick clock source
     STK.CSR |= _::CSR_ENABLE | _::CSR_TICKINT;  // enable counter & interrupts
-#elif defined(STM32F411)
+#elif defined(STM32F411) || defined(STM32G431)
     STK.CTRL = _::CTRL_RESET_VALUE;                 // reset controls
     STK.LOAD = n - 1;                               // reload value
     STK.VAL = _::VAL_RESET_VALUE;                   // current counter value
@@ -183,6 +183,15 @@ extern "C" void system_init(void)
     // wait for PLL as system clock
 
 //    while ((RCC.CFGR & _::CFGR_SWS<0x3>) != _::CFGR_SWS<0x2>);
+
+    // initialize sys-tick for milli-second counts
+
+    hal::sys_tick_init(60000);
+#elif defined(STM32G431)
+    // reset clock control registers
+
+    RCC.CR = _::CR_RESET_VALUE;
+    RCC.CFGR = _::CFGR_RESET_VALUE;
 
     // initialize sys-tick for milli-second counts
 

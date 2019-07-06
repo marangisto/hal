@@ -421,6 +421,249 @@ struct __vector_table vectors __attribute__ ((section(".vectors"))) =
       , ISR_AES_RNG             // not available on G0x0
       }
     };
+#elif defined (STM32G431)
+void NMI_HDLR(void) __attribute__ ((weak, alias("__nothing")));
+void HardFault_HDLR(void) __attribute__ ((weak, alias("__nothing")));
+void MemManage_HDLR(void) __attribute__ ((weak, alias("__nothing")));
+void BusFault_HDLR(void) __attribute__ ((weak, alias("__nothing")));
+void UsageFault_HDLR(void) __attribute__ ((weak, alias("__nothing")));
+void SVCall_HDLR(void) __attribute__ ((weak, alias("__nothing")));
+void Debug_Monitor_HDLR(void) __attribute__ ((weak, alias("__nothing")));
+void PendSV_HDLR(void) __attribute__ ((weak, alias("__nothing")));
+void SysTick_HDLR(void) __attribute__ ((weak, alias("__nothing")));
+
+void ISR_WWDG(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_PVD_PVM(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_RTC_TAMP_CSS_LSE(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_RTC_WKUP(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_FLASH(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_RCC_(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_EXTI0(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_EXTI1(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_EXTI2(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_EXTI3(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_EXTI4(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA_CH1(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA_CH2(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA_CH3(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA_CH4(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA_CH5(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA_CH6(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA_CH7(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_ADC1_2(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_USP_HP(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_USP_LP(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_FDCAN1_INTR1_IT(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_FDCAN1_INTR0_IT(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_EXTI9_5(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM1_BRK_TIM15(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM1_UP_TIM16(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM1_TRG_COM_TIM17(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM1_CC(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM2(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM3(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM4(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_I2C1_EV(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_I2C1_ER(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_I2C2_EV(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_I2C2_ER(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_SPI1(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_SPI2(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_USART1(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_USART2(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_USART3(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_EXTI15_10(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_RTC_ALARM(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_USB_WAKE_UP(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM8_BRK_TERR_IERR(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM8_TRG_COM_DIR_IDX(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM8_UP(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM8_CC(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_ADC3(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_FMC(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_LPTIM1(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM5(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_SPI3(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_UART4(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_UART5(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM6_DAC1_3_UNDER(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM7_DAC2_4_UNDER(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA2_CH1(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA2_CH2(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA2_CH3(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA2_CH4(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA2_CH5(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_ADC4(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_ADC5(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_UCPD1(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_COMP1_2_3(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_COMP4_5_6(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_COMP7(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_HRTIM_MASTER_IRQN(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_HRTIM_TIMA_IRQN(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_HRTIM_TIMB_IRQN(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_HRTIM_TIMC_IRQN(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_HRTIM_TIMD_IRQN(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_HRTIM_TIME_IRQN(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_HRTIM_TIM_FLT_IRQN(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_HRTIM_TIMF_IRQN(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_CRS(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_SAI(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM20_BRK_TERR_IERR(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM20_UP(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM20_TRG_COM_DIR_IDX(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM20_CC(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_FPU(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_I2C4_EV(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_I2C4_ER(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_SPI4(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_AES(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_FDCAN2_INTR0(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_FDCAN2_INTR1(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_FDCAN3_INTR0(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_FDCAN3_INTR1(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_RNG(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_LPUART(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_I2C3_EV(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_I2C3_ER(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMAMUX_OVR(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_QUADSPI(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA1_CH8(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA2_CH6(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA2_CH7(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_DMA2_CH8(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_CORDIC(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_FMAC(void) __attribute__ ((weak, alias("__nothing")));
+
+struct __vector_table
+  {
+      uint32_t *sp;
+      void (*sys[15])(void);
+      void (*irq[102])(void);
+  };
+
+  struct __vector_table vectors __attribute__ ((section(".vectors"))) =
+      { &__estack
+      , { Reset_HDLR
+        , NMI_HDLR
+        , HardFault_HDLR
+        , MemManage_HDLR
+        , BusFault_HDLR
+        , UsageFault_HDLR
+        , 0x0
+        , 0x0
+        , 0x0
+        , 0x0
+        , SVCall_HDLR
+        , Debug_Monitor_HDLR
+        , 0x0
+        , PendSV_HDLR
+        , SysTick_HDLR
+        }
+      , { ISR_WWDG
+        , ISR_PVD_PVM
+        , ISR_RTC_TAMP_CSS_LSE
+        , ISR_RTC_WKUP
+        , ISR_FLASH
+        , ISR_RCC_
+        , ISR_EXTI0
+        , ISR_EXTI1
+        , ISR_EXTI2
+        , ISR_EXTI3
+        , ISR_EXTI4
+        , ISR_DMA_CH1
+        , ISR_DMA_CH2
+        , ISR_DMA_CH3
+        , ISR_DMA_CH4
+        , ISR_DMA_CH5
+        , ISR_DMA_CH6
+        , ISR_DMA_CH7
+        , ISR_ADC1_2
+        , ISR_USP_HP
+        , ISR_USP_LP
+        , ISR_FDCAN1_INTR1_IT
+        , ISR_FDCAN1_INTR0_IT
+        , ISR_EXTI9_5
+        , ISR_TIM1_BRK_TIM15
+        , ISR_TIM1_UP_TIM16
+        , ISR_TIM1_TRG_COM_TIM17
+        , ISR_TIM1_CC
+        , ISR_TIM2
+        , ISR_TIM3
+        , ISR_TIM4
+        , ISR_I2C1_EV
+        , ISR_I2C1_ER
+        , ISR_I2C2_EV
+        , ISR_I2C2_ER
+        , ISR_SPI1
+        , ISR_SPI2
+        , ISR_USART1
+        , ISR_USART2
+        , ISR_USART3
+        , ISR_EXTI15_10
+        , ISR_RTC_ALARM
+        , ISR_USB_WAKE_UP
+        , ISR_TIM8_BRK_TERR_IERR
+        , ISR_TIM8_TRG_COM_DIR_IDX
+        , ISR_TIM8_UP
+        , ISR_TIM8_CC
+        , ISR_ADC3
+        , ISR_FMC
+        , ISR_LPTIM1
+        , ISR_TIM5
+        , ISR_SPI3
+        , ISR_UART4
+        , ISR_UART5
+        , ISR_TIM6_DAC1_3_UNDER
+        , ISR_TIM7_DAC2_4_UNDER
+        , ISR_DMA2_CH1
+        , ISR_DMA2_CH2
+        , ISR_DMA2_CH3
+        , ISR_DMA2_CH4
+        , ISR_DMA2_CH5
+        , ISR_ADC4
+        , ISR_ADC5
+        , ISR_UCPD1
+        , ISR_COMP1_2_3
+        , ISR_COMP4_5_6
+        , ISR_COMP7
+        , ISR_HRTIM_MASTER_IRQN
+        , ISR_HRTIM_TIMA_IRQN
+        , ISR_HRTIM_TIMB_IRQN
+        , ISR_HRTIM_TIMC_IRQN
+        , ISR_HRTIM_TIMD_IRQN
+        , ISR_HRTIM_TIME_IRQN
+        , ISR_HRTIM_TIM_FLT_IRQN
+        , ISR_HRTIM_TIMF_IRQN
+        , ISR_CRS
+        , ISR_SAI
+        , ISR_TIM20_BRK_TERR_IERR
+        , ISR_TIM20_UP
+        , ISR_TIM20_TRG_COM_DIR_IDX
+        , ISR_TIM20_CC
+        , ISR_FPU
+        , ISR_I2C4_EV
+        , ISR_I2C4_ER
+        , ISR_SPI4
+        , ISR_AES
+        , ISR_FDCAN2_INTR0
+        , ISR_FDCAN2_INTR1
+        , ISR_FDCAN3_INTR0
+        , ISR_FDCAN3_INTR1
+        , ISR_RNG
+        , ISR_LPUART
+        , ISR_I2C3_EV
+        , ISR_I2C3_ER
+        , ISR_DMAMUX_OVR
+        , ISR_QUADSPI
+        , ISR_DMA1_CH8
+        , ISR_DMA2_CH6
+        , ISR_DMA2_CH7
+        , ISR_DMA2_CH8
+        , ISR_CORDIC
+        , ISR_FMAC
+        }
+      };
 #else
     _Static_assert (0, "no startup sequence for MCU");
 #endif
