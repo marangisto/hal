@@ -99,7 +99,7 @@ extern "C" void system_init(void)
 
     // initialize sys-tick for milli-second counts
 
-    hal::sys_tick_init(60000);
+    hal::sys_tick_init(48000);
 #elif defined(STM32F411)
     // reset clock control registers
 
@@ -156,7 +156,12 @@ extern "C" void system_init(void)
 
     // set system clock to HSI-PLL 64MHz and p-clock = 64MHz
 
-    // fR (fSYS) = fVCO / pllP                          // <= 64MHz
+    constexpr uint8_t wait_states = 0x2;                // 2 wait-states for 64Hz at Vcore range 1
+
+    FLASH.ACR = flash_t::ACR_PRFTEN | flash_t::ACR_LATENCY<wait_states>;
+    while (((FLASH.ACR & flash_t::ACR_LATENCY<0x7>) & 0xf) != flash_t::ACR_LATENCY<wait_states>); // wait to take effect
+
+    // fR (fSYS) = fVCO / pllR                          // <= 64MHz
     // fP = fVCO / pllP                                 // <= 122MHz
 
     // pllN = 8.0, pllM = 1.0, pllP = 2.0, pllR = 2.0, fSYS = 6.4e7, fPllP = 6.4e7, fVCO = 1.28e8
@@ -172,21 +177,22 @@ extern "C" void system_init(void)
                    | _::PLLSYSCFGR_PLLM<pllM>
                    | _::PLLSYSCFGR_PLLP<pllP>
                    | _::PLLSYSCFGR_PLLR<pllR>
+                   | _::PLLSYSCFGR_PLLREN
                    | _::PLLSYSCFGR_PLLPEN
                    ;
 
     RCC.CR |= _::CR_PLLON;                              // enable PLL
     while (!(RCC.CR & _::CR_PLLRDY));                   // wait for PLL to be ready
 
-//    RCC.CFGR |= _::CFGR_SW<0x2>;                        // select PLL as system clock
+    RCC.CFGR |= _::CFGR_SW<0x2>;                        // select PLL as system clock
 
     // wait for PLL as system clock
 
-//    while ((RCC.CFGR & _::CFGR_SWS<0x3>) != _::CFGR_SWS<0x2>);
+    while ((RCC.CFGR & _::CFGR_SWS<0x3>) != _::CFGR_SWS<0x2>);
 
     // initialize sys-tick for milli-second counts
 
-    hal::sys_tick_init(60000);
+    hal::sys_tick_init(64000);
 #elif defined(STM32G431)
     // reset clock control registers
 
@@ -195,7 +201,7 @@ extern "C" void system_init(void)
 
     // initialize sys-tick for milli-second counts
 
-    hal::sys_tick_init(60000);
+    hal::sys_tick_init(170000);
 #else
     static_assert(false, "no featured clock initialzation");
 #endif
