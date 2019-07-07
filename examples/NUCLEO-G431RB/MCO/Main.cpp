@@ -6,7 +6,7 @@ using namespace hal::gpio;
 using namespace hal::mco;
 
 typedef output_t<PA5> ld4;
-typedef mco_t<PA8, mco_hsi16, 4> mco;
+typedef mco_t<PA8, mco_sysclk, 16> mco;
 
 void loop();
 
