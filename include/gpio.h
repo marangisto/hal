@@ -165,7 +165,7 @@ private:
 namespace internal
 {
 
-enum alt_fun_t { AF0, AF1, AF2, AF3, AF4, AF5, AF6, AF7 };
+enum alt_fun_t { AF0, AF1, AF2, AF3, AF4, AF5, AF6, AF7, AF8, AF9, AF10, AF11, AF12, AF13, AF14, AF15 };
 
 enum alternate_function_t
     { CAN_RX
@@ -173,22 +173,69 @@ enum alternate_function_t
     , CEC
     , COMP1_OUT
     , COMP2_OUT
+    , COMP3_OUT
+    , COMP4_OUT
     , CRS_SYNC
+    , EVENT_OUT
     , EVENTOUT
+    , FDCAN1_RX
+    , FDCAN1_TX
     , I2C1_SCL
     , I2C1_SDA
     , I2C1_SMBA
     , I2C2_SCL
     , I2C2_SDA
+    , I2C2_SMBA
+    , I2C3_SCL
+    , I2C3_SDA
+    , I2C3_SMBA
     , I2S_CKIN
     , I2S1_CK
     , I2S1_MCK
     , I2S1_SD
     , I2S1_WS
+    , I2S2_CK
+    , I2S2_MCK
+    , I2S2_SD
+    , I2S2_WS
+    , I2S3_CK
+    , I2S3_MCK
+    , I2S3_SD
+    , I2S3_WS
+    , I2SCKIN
     , IR_OUT
+    , JTCK
+    , JTDI
+    , JTDO
+    , JTDO_TRACESWO
+    , JTMS
+    , JTRST
+    , LPTIM1_ETR
+    , LPTIM1_IN1
+    , LPTIM1_IN2
+    , LPTIM1_OUT
+    , LPUART1_CTS
+    , LPUART1_RTS_DE
+    , LPUART1_RX
+    , LPUART1_TX
     , MCO
     , OSC_EN
     , OSC32_EN
+    , RTC_OUT2
+    , RTC_REFIN
+    , SAI1_CK1
+    , SAI1_CK2
+    , SAI1_D1
+    , SAI1_D2
+    , SAI1_D3
+    , SAI1_FS_A
+    , SAI1_FS_B
+    , SAI1_MCLK_A
+    , SAI1_MCLK_B
+    , SAI1_SCK_A
+    , SAI1_SCK_B
+    , SAI1_SD_A
+    , SAI1_SD_B
     , SPI1_MISO
     , SPI1_MOSI
     , SPI1_NSS
@@ -197,8 +244,14 @@ enum alternate_function_t
     , SPI2_MOSI
     , SPI2_NSS
     , SPI2_SCK
+    , SPI3_MISO
+    , SPI3_MOSI
+    , SPI3_NSS
+    , SPI3_SCK
     , SWCLK
+    , SWCLK_JTCK
     , SWDIO
+    , SWDIO_JTMS
     , TIM1_BKIN
     , TIM1_BKIN2
     , TIM1_CH1
@@ -208,6 +261,7 @@ enum alternate_function_t
     , TIM1_CH3
     , TIM1_CH3N
     , TIM1_CH4
+    , TIM1_CH4N
     , TIM1_ETR
     , TIM14_CH1
     , TIM15_BKIN
@@ -220,15 +274,39 @@ enum alternate_function_t
     , TIM17_BKIN
     , TIM17_CH1
     , TIM17_CH1N
+    , TIM2_CH1
     , TIM2_CH1_ETR
     , TIM2_CH2
     , TIM2_CH3
     , TIM2_CH4
+    , TIM2_ETR
     , TIM3_CH1
     , TIM3_CH2
     , TIM3_CH3
     , TIM3_CH4
     , TIM3_ETR
+    , TIM4_CH1
+    , TIM4_CH2
+    , TIM4_CH3
+    , TIM4_CH4
+    , TIM4_ETR
+    , TIM8_BKIN
+    , TIM8_BKIN2
+    , TIM8_CH1
+    , TIM8_CH1N
+    , TIM8_CH2
+    , TIM8_CH2N
+    , TIM8_CH3
+    , TIM8_CH3N
+    , TIM8_CH4
+    , TIM8_CH4N
+    , TIM8_ETR
+    , TRACECK
+    , TRACED0
+    , TRACED1
+    , TRACED2
+    , TRACED3
+    , TRACESWO
     , TSC_G1_IO1
     , TSC_G1_IO2
     , TSC_G1_IO3
@@ -254,19 +332,28 @@ enum alternate_function_t
     , TSC_G6_IO3
     , TSC_G6_IO4
     , TSC_SYNC
+    , UART4_CTS
+    , UART4_RTS_DE
+    , UART4_RX
+    , UART4_TX
+    , UCPD1_FRSTX
     , USART1_CK
     , USART1_CTS
     , USART1_RTS
+    , USART1_RTS_DE
     , USART1_RTS_DE_CK
     , USART1_RX
     , USART1_TX
     , USART2_CK
     , USART2_CTS
     , USART2_RTS
+    , USART2_RTS_DE
     , USART2_RTS_DE_CK
     , USART2_RX
     , USART2_TX
+    , USART3_CK
     , USART3_CTS
+    , USART3_RTS_DE
     , USART3_RTS_DE_CK
     , USART3_RX
     , USART3_TX
@@ -277,6 +364,7 @@ enum alternate_function_t
     , USART4_TX
     , USART6_RX
     , USART6_TX
+    , USB_CRS_SYNC
     };
 
 template<gpio_pin_t PIN, alternate_function_t ALT>
@@ -292,6 +380,8 @@ template<> struct alt_fun_traits<PIN, ALT_FUN>      \
 #include "gpio/stm32f051.h"
 #elif defined(STM32G070)
 #include "gpio/stm32g070.h"
+#elif defined(STM32G431)
+#include "gpio/stm32g431.h"
 #endif
 
 template<gpio_pin_t PIN, alternate_function_t ALT>
