@@ -53,6 +53,18 @@ template<> struct spi_traits<2>
     static const gpio::internal::alternate_function_t nss = gpio::internal::SPI2_NSS;
 };
 
+#if defined(HAVE_PERIPHERAL_SPI3)
+template<> struct spi_traits<3>
+{
+    typedef spi3_t T;
+    static inline T& SPI() { return SPI3; }
+    static const gpio::internal::alternate_function_t sck = gpio::internal::SPI3_SCK;
+    static const gpio::internal::alternate_function_t mosi = gpio::internal::SPI3_MOSI;
+    static const gpio::internal::alternate_function_t miso = gpio::internal::SPI3_MISO;
+    static const gpio::internal::alternate_function_t nss = gpio::internal::SPI3_NSS;
+};
+#endif
+
 template<spi_mode_t> struct spi_mode_traits {};
 
 template<> struct spi_mode_traits<mode_0>

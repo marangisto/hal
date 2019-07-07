@@ -261,6 +261,12 @@ template<> struct peripheral_traits<spi2_t>
     static void nvic_enable() { nvic<SPI2>::enable(); }
 };
 
+template<> struct peripheral_traits<spi3_t>
+{
+    static void rcc_enable() { RCC.APB1ENR1 |= rcc_t::APB1ENR1_SP3EN; }
+    static void nvic_enable() { nvic<SPI3>::enable(); }
+};
+
 template<> struct peripheral_traits<usart1_t>
 {
     static void nvic_enable() { nvic<USART1>::enable(); }
