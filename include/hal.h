@@ -7,6 +7,10 @@
     #undef HAVE_PERIPHERAL_GPIOE    // should not be present
     namespace device = stm32f0x1;
     #include <peripheral/stm32f0.h>
+#elif defined(STM32F103)
+    #include <device/stm32f103.h>
+    namespace device = stm32f103;
+    #include <peripheral/stm32f1.h>
 #elif defined(STM32F411)
     #include <device/stm32f411.h>
     namespace device = stm32f411;
