@@ -13731,7 +13731,7 @@ static scb_t& SCB = *reinterpret_cast<scb_t*>(0xe000ed00);
 struct stk_t
 {
     volatile uint32_t    CTRL;                 // [Read-write] SysTick control and status register
-    volatile uint32_t    LOAD_;                // [Read-write] SysTick reload value register
+    volatile uint32_t    LOAD;                 // [Read-write] SysTick reload value register
     volatile uint32_t    VAL;                  // [Read-write] SysTick current value register
     volatile uint32_t    CALIB;                // [Read-write] SysTick calibration value register
 
@@ -13742,9 +13742,9 @@ struct stk_t
     static const uint32_t CTRL_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t LOAD__RELOAD =              // RELOAD value (24 bits)
+    static constexpr uint32_t LOAD_RELOAD =              // RELOAD value (24 bits)
         bit_field_t<0, 0xffffff>::value<X>();
-    static const uint32_t LOAD__RESET_VALUE = 0x0;
+    static const uint32_t LOAD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
     static constexpr uint32_t VAL_CURRENT =             // Current counter value (24 bits)

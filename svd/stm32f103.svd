@@ -32824,8 +32824,8 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           </fields>
         </register>
         <register>
-          <name>LOAD_</name>
-          <displayName>LOAD_</displayName>
+          <name>LOAD</name>
+          <displayName>LOAD</displayName>
           <description>SysTick reload value register</description>
           <addressOffset>0x4</addressOffset>
           <size>0x20</size>
