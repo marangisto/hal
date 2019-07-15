@@ -47,7 +47,7 @@ void sys_tick::init(uint32_t n)
     STK.CVR = _::CVR_RESET_VALUE;               // current counter value
     STK.CSR |= _::CSR_CLKSOURCE;                // systick clock source
     STK.CSR |= _::CSR_ENABLE | _::CSR_TICKINT;  // enable counter & interrupts
-#elif defined(STM32F411) || defined(STM32G431)
+#elif defined(STM32F103) || defined(STM32F411) || defined(STM32G431)
     STK.CTRL = _::CTRL_RESET_VALUE;                 // reset controls
     STK.LOAD = n - 1;                               // reload value
     STK.VAL = _::VAL_RESET_VALUE;                   // current counter value
@@ -64,7 +64,7 @@ inline void sys_tick_init(uint32_t n) { sys_tick::init(n); }
 inline void sys_tick_update() { ++sys_tick::ms_counter; } // N.B. wraps in 49 days!
 }
 
-extern "C" void SysTick_HDLR()
+extern "C" void ISR_SYSTICK()
 {
     hal::sys_tick_update();
 }

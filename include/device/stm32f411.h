@@ -76,6 +76,8 @@ struct adc_common_t
     static constexpr uint32_t CCR_DELAY =               // Delay between 2 sampling phases (4 bits)
         bit_field_t<8, 0xf>::value<X>();
     static const uint32_t CCR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t FPU = 81; // FPU interrupt
 };
 
 static adc_common_t& ADC_Common = *reinterpret_cast<adc_common_t*>(0x40012300);
@@ -298,6 +300,8 @@ struct adc1_t
     static constexpr uint32_t DR_DATA =                // Regular data (16 bits)
         bit_field_t<0, 0xffff>::value<X>();
     static const uint32_t DR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t ADC = 18; // ADC1 global interrupt
 };
 
 static adc1_t& ADC1 = *reinterpret_cast<adc1_t*>(0x40012000);
@@ -552,6 +556,15 @@ struct exti_t
     static constexpr uint32_t PR_PR21 = 0x200000;      // Pending bit 21
     static constexpr uint32_t PR_PR22 = 0x400000;      // Pending bit 22
     static const uint32_t PR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t EXTI0 = 6; // EXTI Line0 interrupt
+    static constexpr uint8_t EXTI1 = 7; // EXTI Line1 interrupt
+    static constexpr uint8_t EXTI15_10 = 40; // EXTI Line[15:10] interrupts
+    static constexpr uint8_t EXTI2 = 8; // EXTI Line2 interrupt
+    static constexpr uint8_t EXTI3 = 9; // EXTI Line3 interrupt
+    static constexpr uint8_t EXTI4 = 10; // EXTI Line4 interrupt
+    static constexpr uint8_t EXTI9_5 = 23; // EXTI Line[9:5] interrupts
+    static constexpr uint8_t TAMP_STAMP = 2; // Tamper and TimeStamp interrupts through the EXTI line
 };
 
 static exti_t& EXTI = *reinterpret_cast<exti_t*>(0x40013c00);
@@ -629,6 +642,8 @@ struct flash_t
     static constexpr uint32_t OPTCR_nWRP =                // Not write protect (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
     static const uint32_t OPTCR_RESET_VALUE = 0x14;
+
+    static constexpr uint8_t FLASH = 4; // FLASH global interrupt
 };
 
 static flash_t& FLASH = *reinterpret_cast<flash_t*>(0x40023c00);
@@ -2320,6 +2335,9 @@ struct rcc_t
     static constexpr uint32_t PLLI2SCFGR_PLLI2SNx =            // PLLI2S multiplication factor for VCO (9 bits)
         bit_field_t<6, 0x1ff>::value<X>();
     static const uint32_t PLLI2SCFGR_RESET_VALUE = 0x20003000;
+
+    static constexpr uint8_t I2C1_ER = 32; // I2C1 error interrupt
+    static constexpr uint8_t I2C1_EV = 31; // I2C1 event interrupt
 };
 
 static rcc_t& RCC = *reinterpret_cast<rcc_t*>(0x40023800);
@@ -2707,6 +2725,9 @@ struct rtc_t
 
 
     static const uint32_t BKP19R_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t I2C2_ER = 34; // I2C2 error interrupt
+    static constexpr uint8_t I2C2_EV = 33; // I2C2 event interrupt
 };
 
 static rtc_t& RTC = *reinterpret_cast<rtc_t*>(0x40002800);
@@ -2896,6 +2917,9 @@ struct sdio_t
 
 
     static const uint32_t FIFO_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t I2C3_ER = 73; // I2C3 error interrupt
+    static constexpr uint8_t I2C3_EV = 72; // I2C3 event interrupt
 };
 
 static sdio_t& SDIO = *reinterpret_cast<sdio_t*>(0x40012c00);
@@ -3618,6 +3642,8 @@ struct tim10_t
     static constexpr uint32_t CCR1_CCR1 =                // Capture/Compare 1 value (16 bits)
         bit_field_t<0, 0xffff>::value<X>();
     static const uint32_t CCR1_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t SPI1 = 35; // SPI1 global interrupt
 };
 
 static tim10_t& TIM10 = *reinterpret_cast<tim10_t*>(0x40014400);
@@ -3716,6 +3742,8 @@ struct tim11_t
     static constexpr uint32_t OR_RMP =                 // Input 1 remapping capability (2 bits)
         bit_field_t<0, 0x3>::value<X>();
     static const uint32_t OR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t SPI2 = 36; // SPI2 global interrupt
 };
 
 static tim11_t& TIM11 = *reinterpret_cast<tim11_t*>(0x40014800);
@@ -3973,6 +4001,8 @@ struct tim2_t
     static constexpr uint32_t OR_ITR1_RMP =            // Timer Input 4 remap (2 bits)
         bit_field_t<10, 0x3>::value<X>();
     static const uint32_t OR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t SPI3 = 51; // SPI3 global interrupt
 };
 
 static tim2_t& TIM2 = *reinterpret_cast<tim2_t*>(0x40000000);
@@ -4224,6 +4254,8 @@ struct tim3_t
     static constexpr uint32_t DMAR_DMAB =                // DMA register for burst accesses (16 bits)
         bit_field_t<0, 0xffff>::value<X>();
     static const uint32_t DMAR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t SPI4 = 84; // SPI4 global interrupt
 };
 
 static tim3_t& TIM3 = *reinterpret_cast<tim3_t*>(0x40000400);
@@ -4970,6 +5002,9 @@ struct usart1_t
     static constexpr uint32_t GTPR_PSC =                 // Prescaler value (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     static const uint32_t GTPR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t OTG_FS = 67; // USB On The Go FS global interrupt
+    static constexpr uint8_t OTG_FS_WKUP = 42; // USB On-The-Go FS Wakeup through EXTI line interrupt
 };
 
 static usart1_t& USART1 = *reinterpret_cast<usart1_t*>(0x40011000);
@@ -5207,6 +5242,8 @@ struct wwdg_t
 
     static constexpr uint32_t SR_EWIF = 0x1;           // Early wakeup interrupt flag
     static const uint32_t SR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t PVD = 1; // PVD through EXTI line detection interrupt
 };
 
 static wwdg_t& WWDG = *reinterpret_cast<wwdg_t*>(0x40002c00);
@@ -5841,6 +5878,8 @@ struct dma2_t
     static constexpr uint32_t S7FCR_FTH =                 // FIFO threshold selection (2 bits), Read-write
         bit_field_t<0, 0x3>::value<X>();
     static const uint32_t S7FCR_RESET_VALUE = 0x21;
+
+    static constexpr uint8_t RCC = 5; // RCC global interrupt
 };
 
 static dma2_t& DMA2 = *reinterpret_cast<dma2_t*>(0x40026400);
@@ -6475,6 +6514,9 @@ struct dma1_t
     static constexpr uint32_t S7FCR_FTH =                 // FIFO threshold selection (2 bits), Read-write
         bit_field_t<0, 0x3>::value<X>();
     static const uint32_t S7FCR_RESET_VALUE = 0x21;
+
+    static constexpr uint8_t RTC_ALARM = 41; // RTC Alarms (A and B) through EXTI line interrupt
+    static constexpr uint8_t RTC_WKUP = 3; // RTC Wakeup interrupt through the EXTI line
 };
 
 static dma1_t& DMA1 = *reinterpret_cast<dma1_t*>(0x40026000);
@@ -6809,6 +6851,8 @@ struct gpioh_t
     static constexpr uint32_t AFRH_AFRH8 =               // Alternate function selection for port x bit y (y = 8..15) (4 bits)
         bit_field_t<0, 0xf>::value<X>();
     static const uint32_t AFRH_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t SDIO = 49; // SDIO global interrupt
 };
 
 static gpioh_t& GPIOH = *reinterpret_cast<gpioh_t*>(0x40021c00);
@@ -7477,6 +7521,11 @@ struct gpiod_t
     static constexpr uint32_t AFRH_AFRH8 =               // Alternate function selection for port x bit y (y = 8..15) (4 bits)
         bit_field_t<0, 0xf>::value<X>();
     static const uint32_t AFRH_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t TIM1_BRK_TIM9 = 24; // TIM1 Break interrupt and TIM9 global interrupt
+    static constexpr uint8_t TIM1_CC = 27; // TIM1 Capture Compare interrupt
+    static constexpr uint8_t TIM1_TRG_COM_TIM11 = 26; // TIM1 Trigger and Commutation interrupts and TIM11 global interrupt
+    static constexpr uint8_t TIM1_UP_TIM10 = 25; // TIM1 Update interrupt and TIM10 global interrupt
 };
 
 static gpiod_t& GPIOD = *reinterpret_cast<gpiod_t*>(0x40020c00);
@@ -7811,6 +7860,8 @@ struct gpioc_t
     static constexpr uint32_t AFRH_AFRH8 =               // Alternate function selection for port x bit y (y = 8..15) (4 bits)
         bit_field_t<0, 0xf>::value<X>();
     static const uint32_t AFRH_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t TIM1_UP_TIM10 = 25; // TIM1 Update interrupt and TIM10 global interrupt
 };
 
 static gpioc_t& GPIOC = *reinterpret_cast<gpioc_t*>(0x40020800);
@@ -8145,6 +8196,8 @@ struct gpiob_t
     static constexpr uint32_t AFRH_AFRH8 =               // Alternate function selection for port x bit y (y = 8..15) (4 bits)
         bit_field_t<0, 0xf>::value<X>();
     static const uint32_t AFRH_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t TIM1_TRG_COM_TIM11 = 26; // TIM1 Trigger and Commutation interrupts and TIM11 global interrupt
 };
 
 static gpiob_t& GPIOB = *reinterpret_cast<gpiob_t*>(0x40020400);
@@ -8479,6 +8532,8 @@ struct gpioa_t
     static constexpr uint32_t AFRH_AFRH8 =               // Alternate function selection for port x bit y (y = 8..15) (4 bits)
         bit_field_t<0, 0xf>::value<X>();
     static const uint32_t AFRH_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t TIM2 = 28; // TIM2 global interrupt
 };
 
 static gpioa_t& GPIOA = *reinterpret_cast<gpioa_t*>(0x40020000);
@@ -8590,6 +8645,8 @@ struct i2c3_t
     static constexpr uint32_t TRISE_TRISE =               // Maximum rise time in Fast/Standard mode (Master mode) (6 bits)
         bit_field_t<0, 0x3f>::value<X>();
     static const uint32_t TRISE_RESET_VALUE = 0x2;
+
+    static constexpr uint8_t TIM3 = 29; // TIM3 global interrupt
 };
 
 static i2c3_t& I2C3 = *reinterpret_cast<i2c3_t*>(0x40005c00);
@@ -8701,6 +8758,9 @@ struct i2c2_t
     static constexpr uint32_t TRISE_TRISE =               // Maximum rise time in Fast/Standard mode (Master mode) (6 bits)
         bit_field_t<0, 0x3f>::value<X>();
     static const uint32_t TRISE_RESET_VALUE = 0x2;
+
+    static constexpr uint8_t I2C3_ER = 73; // I2C3 error interrupt
+    static constexpr uint8_t I2C3_EV = 72; // I2C3 event interrupt
 };
 
 static i2c2_t& I2C2 = *reinterpret_cast<i2c2_t*>(0x40005800);
@@ -8812,6 +8872,9 @@ struct i2c1_t
     static constexpr uint32_t TRISE_TRISE =               // Maximum rise time in Fast/Standard mode (Master mode) (6 bits)
         bit_field_t<0, 0x3f>::value<X>();
     static const uint32_t TRISE_RESET_VALUE = 0x2;
+
+    static constexpr uint8_t I2C2_ER = 34; // I2C2 error interrupt
+    static constexpr uint8_t I2C2_EV = 33; // I2C2 event interrupt
 };
 
 static i2c1_t& I2C1 = *reinterpret_cast<i2c1_t*>(0x40005400);
@@ -8917,6 +8980,9 @@ struct i2s2ext_t
     static constexpr uint32_t I2SPR_I2SDIV =              // I2S Linear prescaler (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     static const uint32_t I2SPR_RESET_VALUE = 0xa;
+
+    static constexpr uint8_t I2C1_ER = 32; // I2C1 error interrupt
+    static constexpr uint8_t I2C1_EV = 31; // I2C1 event interrupt
 };
 
 static i2s2ext_t& I2S2ext = *reinterpret_cast<i2s2ext_t*>(0x40003400);
@@ -9232,6 +9298,8 @@ struct spi2_t
     static constexpr uint32_t I2SPR_I2SDIV =              // I2S Linear prescaler (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     static const uint32_t I2SPR_RESET_VALUE = 0xa;
+
+    static constexpr uint8_t SPI1 = 35; // SPI1 global interrupt
 };
 
 static spi2_t& SPI2 = *reinterpret_cast<spi2_t*>(0x40003800);
@@ -9337,6 +9405,8 @@ struct spi3_t
     static constexpr uint32_t I2SPR_I2SDIV =              // I2S Linear prescaler (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     static const uint32_t I2SPR_RESET_VALUE = 0xa;
+
+    static constexpr uint8_t SPI2 = 36; // SPI2 global interrupt
 };
 
 static spi3_t& SPI3 = *reinterpret_cast<spi3_t*>(0x40003c00);
@@ -9442,6 +9512,8 @@ struct spi4_t
     static constexpr uint32_t I2SPR_I2SDIV =              // I2S Linear prescaler (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     static const uint32_t I2SPR_RESET_VALUE = 0xa;
+
+    static constexpr uint8_t SPI3 = 51; // SPI3 global interrupt
 };
 
 static spi4_t& SPI4 = *reinterpret_cast<spi4_t*>(0x40013400);
@@ -9979,6 +10051,8 @@ struct fpu_t
     static constexpr uint32_t FPSCR_Z = 0x40000000;       // Zero condition code flag
     static constexpr uint32_t FPSCR_N = 0x80000000;       // Negative condition code flag
     static const uint32_t FPSCR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t FPU = 81; // Floating point unit interrupt
 };
 
 static fpu_t& FPU = *reinterpret_cast<fpu_t*>(0xe000ef34);

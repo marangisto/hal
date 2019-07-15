@@ -2301,6 +2301,8 @@ struct spi1_t
     static constexpr uint32_t I2SPR_I2SDIV =              // I2S Linear prescaler (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     static const uint32_t I2SPR_RESET_VALUE = 0x10;
+
+    static constexpr uint8_t SPI1 = 25; // SPI1_global_interrupt
 };
 
 static spi1_t& SPI1 = *reinterpret_cast<spi1_t*>(0x40013000);
@@ -2419,6 +2421,8 @@ struct spi2_t
     static constexpr uint32_t I2SPR_I2SDIV =              // I2S Linear prescaler (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     static const uint32_t I2SPR_RESET_VALUE = 0x10;
+
+    static constexpr uint8_t SPI2 = 26; // SPI2 global interrupt
 };
 
 static spi2_t& SPI2 = *reinterpret_cast<spi2_t*>(0x40003800);
@@ -2628,6 +2632,8 @@ struct i2c1_t
     static constexpr uint32_t TXDR_TXDATA =              // 8-bit transmit data (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     static const uint32_t TXDR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t I2C1 = 23; // I2C1 global interrupt
 };
 
 static i2c1_t& I2C1 = *reinterpret_cast<i2c1_t*>(0x40005400);
@@ -2795,6 +2801,8 @@ struct i2c2_t
     static constexpr uint32_t TXDR_TXDATA =              // 8-bit transmit data (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     static const uint32_t TXDR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t I2C2 = 24; // I2C2 global interrupt
 };
 
 static i2c2_t& I2C2 = *reinterpret_cast<i2c2_t*>(0x40005800);
@@ -2876,6 +2884,8 @@ struct wwdg_t
 
     static constexpr uint32_t SR_EWIF = 0x1;           // Early wakeup interrupt flag
     static const uint32_t SR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t WWDG = 0; // Window Watchdog interrupt
 };
 
 static wwdg_t& WWDG = *reinterpret_cast<wwdg_t*>(0x40002c00);
@@ -3146,6 +3156,9 @@ struct tim1_t
     static constexpr uint32_t DMAR_DMAB =                // DMA register for burst accesses (16 bits)
         bit_field_t<0, 0xffff>::value<X>();
     static const uint32_t DMAR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t TIM1_BRK_UP_TRG_COM = 13; // TIM1 break, update, trigger and commutation interrupt
+    static constexpr uint8_t TIM1_CC = 14; // TIM1 Capture Compare interrupt
 };
 
 static tim1_t& TIM1 = *reinterpret_cast<tim1_t*>(0x40012c00);
@@ -3398,6 +3411,8 @@ struct tim2_t
     static constexpr uint32_t DMAR_DMAR =                // DMA register for burst accesses (16 bits)
         bit_field_t<0, 0xffff>::value<X>();
     static const uint32_t DMAR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t TIM2 = 15; // TIM2 global interrupt
 };
 
 static tim2_t& TIM2 = *reinterpret_cast<tim2_t*>(0x40000000);
@@ -3650,6 +3665,8 @@ struct tim3_t
     static constexpr uint32_t DMAR_DMAR =                // DMA register for burst accesses (16 bits)
         bit_field_t<0, 0xffff>::value<X>();
     static const uint32_t DMAR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t TIM3 = 16; // TIM3 global interrupt
 };
 
 static tim3_t& TIM3 = *reinterpret_cast<tim3_t*>(0x40000400);
@@ -3748,6 +3765,8 @@ struct tim14_t
     static constexpr uint32_t OR_RMP =                 // Timer input 1 remap (2 bits)
         bit_field_t<0, 0x3>::value<X>();
     static const uint32_t OR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t TIM14 = 19; // TIM14 global interrupt
 };
 
 static tim14_t& TIM14 = *reinterpret_cast<tim14_t*>(0x40002000);
@@ -3872,6 +3891,8 @@ struct tim7_t
     static constexpr uint32_t ARR_ARR =                 // Low Auto-reload value (16 bits)
         bit_field_t<0, 0xffff>::value<X>();
     static const uint32_t ARR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t TIM7 = 18; // TIM7 global interrupt
 };
 
 static tim7_t& TIM7 = *reinterpret_cast<tim7_t*>(0x40001400);
@@ -4037,6 +4058,11 @@ struct exti_t
     static constexpr uint32_t PR_PR17 = 0x20000;       // Pending bit 17
     static constexpr uint32_t PR_PR19 = 0x80000;       // Pending bit 19
     static const uint32_t PR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t EXTI0_1 = 5; // EXTI Line[1:0] interrupts
+    static constexpr uint8_t EXTI2_3 = 6; // EXTI Line[3:2] interrupts
+    static constexpr uint8_t EXTI4_15 = 7; // EXTI Line15 and EXTI4 interrupts
+    static constexpr uint8_t PVD = 1; // PVD and VDDIO2 supply comparator interrupt
 };
 
 static exti_t& EXTI = *reinterpret_cast<exti_t*>(0x40010400);
@@ -4520,6 +4546,8 @@ struct dma1_t
 
 
     static const uint32_t CMAR7_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t DMA1_CH1 = 9; // DMA1 channel 1 interrupt
 };
 
 static dma1_t& DMA1 = *reinterpret_cast<dma1_t*>(0x40020000);
@@ -4848,6 +4876,9 @@ struct dma2_t
 
 
     static const uint32_t CMAR7_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t DMA1_CH2_3_DMA2_CH1_2 = 10; // DMA1 channel 2 and 3 and DMA2 channel 1 and 2 interrupt
+    static constexpr uint8_t DMA1_CH4_5_6_7_DMA2_CH3_4_5 = 11; // DMA1 channel 4, 5, 6 and 7 and DMA2 channel 3, 4 and 5 interrupts
 };
 
 static dma2_t& DMA2 = *reinterpret_cast<dma2_t*>(0x40020400);
@@ -5091,6 +5122,8 @@ struct rcc_t
     static constexpr uint32_t CR2_HSI48RDY = 0x20000;   // HSI48 clock ready flag, Read-only
     static constexpr uint32_t CR2_HSI48CAL = 0x1000000; // HSI48 factory clock calibration, Read-only
     static const uint32_t CR2_RESET_VALUE = 0x80;
+
+    static constexpr uint8_t RCC_CRS = 4; // RCC and CRS global interrupts
 };
 
 static rcc_t& RCC = *reinterpret_cast<rcc_t*>(0x40021000);
@@ -5360,6 +5393,8 @@ struct adc_t
     static constexpr uint32_t CCR_TSEN = 0x800000;      // Temperature sensor enable
     static constexpr uint32_t CCR_VREFEN = 0x400000;    // Temperature sensor and VREFINT enable
     static const uint32_t CCR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t ADC_COMP = 12; // ADC and comparator interrupts
 };
 
 static adc_t& ADC = *reinterpret_cast<adc_t*>(0x40012400);
@@ -5546,6 +5581,8 @@ struct usart1_t
     static constexpr uint32_t TDR_TDR =                 // Transmit data value (9 bits)
         bit_field_t<0, 0x1ff>::value<X>();
     static const uint32_t TDR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t USART1 = 27; // USART1 global interrupt
 };
 
 static usart1_t& USART1 = *reinterpret_cast<usart1_t*>(0x40013800);
@@ -5732,6 +5769,8 @@ struct usart2_t
     static constexpr uint32_t TDR_TDR =                 // Transmit data value (9 bits)
         bit_field_t<0, 0x1ff>::value<X>();
     static const uint32_t TDR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t USART2 = 28; // USART2 global interrupt
 };
 
 static usart2_t& USART2 = *reinterpret_cast<usart2_t*>(0x40004400);
@@ -6476,6 +6515,8 @@ struct usart7_t
     static constexpr uint32_t TDR_TDR =                 // Transmit data value (9 bits)
         bit_field_t<0, 0x1ff>::value<X>();
     static const uint32_t TDR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t USART3_4_5_6_7_8 = 29; // USART3, USART4, USART5, USART6, USART7, USART8 global interrupt
 };
 
 static usart7_t& USART7 = *reinterpret_cast<usart7_t*>(0x40011800);
@@ -7113,6 +7154,8 @@ struct rtc_t
 
 
     static const uint32_t BKP4R_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t RTC = 2; // RTC interrupts
 };
 
 static rtc_t& RTC = *reinterpret_cast<rtc_t*>(0x40002800);
@@ -7303,6 +7346,8 @@ struct tim15_t
     static constexpr uint32_t DMAR_DMAB =                // DMA register for burst accesses (16 bits)
         bit_field_t<0, 0xffff>::value<X>();
     static const uint32_t DMAR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t TIM15 = 20; // TIM15 global interrupt
 };
 
 static tim15_t& TIM15 = *reinterpret_cast<tim15_t*>(0x40014000);
@@ -7452,6 +7497,8 @@ struct tim16_t
     static constexpr uint32_t DMAR_DMAB =                // DMA register for burst accesses (16 bits)
         bit_field_t<0, 0xffff>::value<X>();
     static const uint32_t DMAR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t TIM16 = 21; // TIM16 global interrupt
 };
 
 static tim16_t& TIM16 = *reinterpret_cast<tim16_t*>(0x40014400);
@@ -7601,6 +7648,8 @@ struct tim17_t
     static constexpr uint32_t DMAR_DMAB =                // DMA register for burst accesses (16 bits)
         bit_field_t<0, 0xffff>::value<X>();
     static const uint32_t DMAR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t TIM17 = 22; // TIM17 global interrupt
 };
 
 static tim17_t& TIM17 = *reinterpret_cast<tim17_t*>(0x40014800);
@@ -7823,6 +7872,8 @@ struct tsc_t
     static constexpr uint32_t IOG6CR_CNT =                 // Counter value (14 bits)
         bit_field_t<0, 0x3fff>::value<X>();
     static const uint32_t IOG6CR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t TSC = 8; // Touch sensing interrupt
 };
 
 static tsc_t& TSC = *reinterpret_cast<tsc_t*>(0x40024000);
@@ -7902,6 +7953,8 @@ struct cec_t
     static constexpr uint32_t IER_RXENDIE = 0x2;        // End Of Reception Interrupt Enable
     static constexpr uint32_t IER_RXBRIE = 0x1;         // Rx-Byte Received Interrupt Enable
     static const uint32_t IER_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t CEC_CAN = 30; // CEC and CAN global interrupt
 };
 
 static cec_t& CEC = *reinterpret_cast<cec_t*>(0x40007800);
@@ -7984,6 +8037,8 @@ struct flash_t
 
 
     static const uint32_t WRPR_RESET_VALUE = 0xffffffff;
+
+    static constexpr uint8_t FLASH = 3; // Flash global interrupt
 };
 
 static flash_t& Flash = *reinterpret_cast<flash_t*>(0x40022000);
@@ -8300,6 +8355,8 @@ struct usb_t
     static constexpr uint32_t BCDR_PS2DET = 0x80;        // DM pull-up detection status, Read-only
     static constexpr uint32_t BCDR_DPPU = 0x8000;        // DP pull-up control, Read-write
     static const uint32_t BCDR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t USB = 31; // USB global interrupt
 };
 
 static usb_t& USB = *reinterpret_cast<usb_t*>(0x40005c00);
@@ -10989,6 +11046,8 @@ struct dac_t
     static constexpr uint32_t SR_DMAUDR2 = 0x20000000; // DAC channel2 DMA underrun flag
     static constexpr uint32_t SR_DMAUDR1 = 0x2000;     // DAC channel1 DMA underrun flag
     static const uint32_t SR_RESET_VALUE = 0x0;
+
+    static constexpr uint8_t TIM6_DAC = 17; // TIM6 global interrupt and DAC underrun interrupt
 };
 
 static dac_t& DAC = *reinterpret_cast<dac_t*>(0x40007400);
