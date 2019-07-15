@@ -1,3 +1,9 @@
+////
+//
+//        STM32G431xx vectors
+//
+////
+
 void ISR_NMI(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_HARDFAULT(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_MEMMANAGE(void) __attribute__ ((weak, alias("__nothing")));
