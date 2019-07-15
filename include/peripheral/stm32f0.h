@@ -8,41 +8,6 @@ namespace internal
 
 using namespace device;
 
-enum pos_t
-  { WWDG = 0
-  , PVD_VDDIO2 = 1
-  , RTC = 2
-  , FLASH = 3
-  , RCC_CRS = 4
-  , EXTI0_1 = 5
-  , EXTI2_3 = 6
-  , EXTI4_15 = 7
-  , TSC = 8
-  , DMA_CH1 = 9
-  , DMA_CH2_3 = 10
-  , DMA_CH4_5_6_7 = 11
-  , ADC_COMP = 12
-  , TIM1_BRK_UP_TRG_COM = 13
-  , TIM1_CC = 14
-  , TIM2 = 15
-  , TIM3 = 16
-  , TIM6_DAC = 17
-  , TIM7 = 18
-  , TIM14 = 19
-  , TIM15 = 20
-  , TIM16 = 21
-  , TIM17 = 22
-  , I2C1 = 23
-  , I2C2 = 24
-  , SPI1 = 25
-  , SPI2 = 26
-  , USART1 = 27
-  , USART2 = 28
-  , USART3_4_5_6_7_8 = 29
-  , CEC_CAN = 30
-  , USB = 31
-  };
-
 template<typename PERIPHERAL> struct peripheral_traits {};
 
 template<> struct peripheral_traits<gpioa_t>
@@ -80,26 +45,26 @@ template<> struct peripheral_traits<gpiof_t>
 template<> struct peripheral_traits<tim1_t>
 {
     static void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM1EN; }
-    static void nvic_enable() { NVIC.ISER |= 1 << TIM1_BRK_UP_TRG_COM; }
+    static void nvic_enable() { NVIC.ISER |= 1 << tim1_t::TIM1_BRK_UP_TRG_COM; }
 };
 
 template<> struct peripheral_traits<tim2_t>
 {
     static void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM2EN; }
-    static void nvic_enable() { NVIC.ISER |= 1 << TIM2; }
+    static void nvic_enable() { NVIC.ISER |= 1 << tim2_t::TIM2; }
 };
 
 template<> struct peripheral_traits<tim3_t>
 {
     static void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM3EN; }
-    static void nvic_enable() { NVIC.ISER |= 1 << TIM3; }
+    static void nvic_enable() { NVIC.ISER |= 1 << tim3_t::TIM3; }
 };
 
 #if defined(HAVE_PERIPHERAL_TIM6)
 template<> struct peripheral_traits<tim6_t>
 {
     static void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM6EN; }
-    static void nvic_enable() { NVIC.ISER |= 1 << TIM6_DAC; }
+    static void nvic_enable() { NVIC.ISER |= 1 << dac_t::TIM6_DAC; }
 };
 #endif
 
@@ -107,66 +72,66 @@ template<> struct peripheral_traits<tim6_t>
 template<> struct peripheral_traits<tim7_t>
 {
     static void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM7EN; }
-    static void nvic_enable() { NVIC.ISER |= 1 << TIM7; }
+    static void nvic_enable() { NVIC.ISER |= 1 << tim7_t::TIM7; }
 };
 #endif
 
 template<> struct peripheral_traits<tim14_t>
 {
     static void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM14EN; }
-    static void nvic_enable() { NVIC.ISER |= 1 << TIM14; }
+    static void nvic_enable() { NVIC.ISER |= 1 << tim14_t::TIM14; }
 };
 
 #if defined(HAVE_PERIPHERAL_TIM15)
 template<> struct peripheral_traits<tim15_t>
 {
     static void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM15EN; }
-    static void nvic_enable() { NVIC.ISER |= 1 << TIM15; }
+    static void nvic_enable() { NVIC.ISER |= 1 << tim15_t::TIM15; }
 };
 #endif
 
 template<> struct peripheral_traits<tim16_t>
 {
     static void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM16EN; }
-    static void nvic_enable() { NVIC.ISER |= 1 << TIM16; }
+    static void nvic_enable() { NVIC.ISER |= 1 << tim16_t::TIM16; }
 };
 
 template<> struct peripheral_traits<tim17_t>
 {
     static void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM17EN; }
-    static void nvic_enable() { NVIC.ISER |= 1 << TIM17; }
+    static void nvic_enable() { NVIC.ISER |= 1 << tim17_t::TIM17; }
 };
 
 template<> struct peripheral_traits<i2c1_t>
 {
-    static void nvic_enable() { NVIC.ISER |= 1 << I2C1; }
+    static void nvic_enable() { NVIC.ISER |= 1 << i2c1_t::I2C1; }
 };
 
 template<> struct peripheral_traits<i2c2_t>
 {
-    static void nvic_enable() { NVIC.ISER |= 1 << I2C2; }
+    static void nvic_enable() { NVIC.ISER |= 1 << i2c2_t::I2C2; }
 };
 
 template<> struct peripheral_traits<spi1_t>
 {
     static void rcc_enable() { RCC.APB2ENR |= rcc_t::APB2ENR_SPI1EN; }
-    static void nvic_enable() { NVIC.ISER |= 1 << SPI1; }
+    static void nvic_enable() { NVIC.ISER |= 1 << spi1_t::SPI1; }
 };
 
 template<> struct peripheral_traits<spi2_t>
 {
     static void rcc_enable() { RCC.APB1ENR |= rcc_t::APB1ENR_SPI2EN; }
-    static void nvic_enable() { NVIC.ISER |= 1 << SPI2; }
+    static void nvic_enable() { NVIC.ISER |= 1 << spi2_t::SPI2; }
 };
 
 template<> struct peripheral_traits<usart1_t>
 {
-    static void nvic_enable() { NVIC.ISER |= 1 << USART1; }
+    static void nvic_enable() { NVIC.ISER |= 1 << usart1_t::USART1; }
 };
 
 template<> struct peripheral_traits<usart2_t>
 {
-    static void nvic_enable() { NVIC.ISER |= 1 << USART2; }
+    static void nvic_enable() { NVIC.ISER |= 1 << usart2_t::USART2; }
 };
 
 } // namespace internal
