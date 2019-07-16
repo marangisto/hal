@@ -33,6 +33,8 @@ int main()
     led_a::setup();
     led_b::setup();
 
+    hal::nvic<isr::TIM1_BRK_UP_TRG_COM>::enable();
+    hal::nvic<isr::TIM3>::enable();
     hal::interrupt::enable();
 
     for (;;);

@@ -1,17 +1,23 @@
+DIRS := include/device src/vector
 SVDS := $(wildcard svd/*.svd)
 DEVS := $(SVDS:svd/%.svd=include/device/%.h)
 VECT := $(SVDS:svd/%.svd=src/vector/%.c)
 
+all: dirs $(DEVS) $(VECT)
+
+.PHONY: dirs
+
+dirs: ${DIRS}
+
+${DIRS}:
+	mkdir -p $@
+
 include/device/%.h: svd/%.svd
-	[ -d include/device ] || mkdir include/device
 	SVD2CPP $< > $@
 
 src/vector/%.c: svd/%.svd
-	[ -d src/vector ] || mkdir src/vector
 	SVD2CPP --interrupt $< > $@
 
-all: $(DEVS) $(VECT)
-
 clean:
-	rm -f $(DEVS) $(VECT)
+	rm -rf $(DIRS)
 

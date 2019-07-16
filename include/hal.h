@@ -6,23 +6,18 @@
     #include <device/stm32f0x1.h>
     #undef HAVE_PERIPHERAL_GPIOE    // should not be present
     namespace device = stm32f0x1;
-    #include <peripheral/stm32f0.h>
 #elif defined(STM32F103)
     #include <device/stm32f103.h>
     namespace device = stm32f103;
-    #include <peripheral/stm32f1.h>
 #elif defined(STM32F411)
     #include <device/stm32f411.h>
     namespace device = stm32f411;
-    #include <peripheral/stm32f4.h>
 #elif defined(STM32G070)
     #include <device/stm32g07x.h>
     namespace device = stm32g07x;
-    #include <peripheral/stm32g0.h>
 #elif defined(STM32G431)
     #include <device/stm32g431.h>
     namespace device = stm32g431xx;
-    #include <peripheral/stm32g4.h>
 #else
     static_assert(false, "mcu not recognized");
 #endif
@@ -52,19 +47,45 @@ struct interrupt
     static inline void disable() { __asm volatile ("cpsid i"); }
 };
 
-template<typename T>
-struct peripheral
-{
-    static void rcc_enable()
-    {
-        internal::peripheral_traits<T>::rcc_enable();
-    }
+template<bool> struct is_in_range;
 
-    static void nvic_enable()
-    {
-        internal::peripheral_traits<T>::nvic_enable();
-    }
+template<int POS, typename = is_in_range<true> >
+struct nvic {};
+
+#if defined(STM32F051)
+template<int POS>
+struct nvic<POS, is_in_range<(0 <= POS && POS < 32)> >
+{
+    static void enable() { device::NVIC.ISER |= 1 << POS; }
 };
 
-}
+#elif defined(STM32F411) || defined(STM32G431)
+template<int POS>
+struct nvic<POS, is_in_range<(0 <= POS && POS < 32)> >
+{
+    static void enable() { device::NVIC.ISER0 |= 1 << POS; }
+};
+
+template<int POS>
+struct nvic<POS, is_in_range<(32 <= POS && POS < 64)> >
+{
+    static void enable() { device::NVIC.ISER1 |= 1 << (POS - 32); }
+};
+
+template<int POS>
+struct nvic<POS, is_in_range<(64 <= POS && POS < 96)> >
+{
+    static void enable() { device::NVIC.ISER2 |= 1 << (POS - 64); }
+};
+#endif
+
+#if defined(STM32G431)
+template<int POS>
+struct nvic<POS, is_in_range<(96 <= POS && POS < 128)> >
+{
+    static void enable() { device::NVIC.ISER3 |= 1 << (POS - 96); }
+};
+#endif
+
+} // namespace hal
 

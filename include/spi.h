@@ -110,7 +110,7 @@ public:
         alternate_t<SCK, spi_traits<NO>::sck>::template setup<speed>();
         alternate_t<MOSI, spi_traits<NO>::mosi>::template setup<speed>();
 
-        peripheral<_>::rcc_enable();            // enable spi clock
+        peripheral_traits<_>::enable();         // enable spi clock
         SPI().CR1 = _::CR1_RESET_VALUE;         // reset control register 1
         SPI().CR2 = _::CR2_RESET_VALUE;         // reset control register 2
         SPI().CR1 |= _::CR1_MSTR;               // master mode
@@ -164,7 +164,6 @@ public:
 
         SPI().CR2 &= ~mask;
         SPI().CR2 |= flags & mask;
-        peripheral<_>::nvic_enable();
     }
 
 private:

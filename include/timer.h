@@ -153,7 +153,7 @@ public:
 
     static inline void setup(uint16_t psc, count_t arr)
     {
-        peripheral<_>::rcc_enable();
+        peripheral_traits<_>::enable();
         TIM().CR1 = _::CR1_RESET_VALUE;
         TIM().PSC = psc;
         TIM().ARR = arr;
@@ -164,7 +164,6 @@ public:
     static inline void update_interrupt_enable()
     {
         TIM().DIER |= _::DIER_UIE;
-        peripheral<_>::nvic_enable();
     }
 
     static inline volatile bool uif()
@@ -202,7 +201,7 @@ public:
         alternate_t<CH1, timer_traits<TN>::ch1>::template setup<input_type>();
         alternate_t<CH2, timer_traits<TN>::ch2>::template setup<input_type>();
 
-        peripheral<_>::rcc_enable();
+        peripheral_traits<_>::enable();
         TIM().CCMR1 = _::CCMR1_RESET_VALUE
                     | _::template CCMR1_CC1S<0x1>
                     | _::template CCMR1_CC2S<0x1>

@@ -26,6 +26,7 @@ int main()
     led_b::setup();
     int i = 0;
 
+    hal::nvic<isr::TIM6_DAC>::enable();
     hal::interrupt::enable();
 
     for (;;)

@@ -13855,6 +13855,388 @@ static stk_t& STK = *reinterpret_cast<stk_t*>(0xe000e010);
 #define HAVE_PERIPHERAL_STK
 
 
+template<typename PERIPHERAL> struct peripheral_traits {};
+
+template<> struct peripheral_traits<fsmc_t>
+{
+    static void enable() { RCC.AHBENR |= rcc_t::AHBENR_FSMCEN; }
+    static void disable() { RCC.AHBENR &= ~rcc_t::AHBENR_FSMCEN; }
+};
+
+template<> struct peripheral_traits<pwr_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_PWREN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_PWREN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_PWRRST; }
+};
+
+template<> struct peripheral_traits<gpioa_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_IOPAEN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_IOPAEN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_IOPARST; }
+};
+
+template<> struct peripheral_traits<gpiob_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_IOPBEN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_IOPBEN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_IOPBRST; }
+};
+
+template<> struct peripheral_traits<gpioc_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_IOPCEN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_IOPCEN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_IOPCRST; }
+};
+
+template<> struct peripheral_traits<gpiod_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_IOPDEN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_IOPDEN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_IOPDRST; }
+};
+
+template<> struct peripheral_traits<gpioe_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_IOPEEN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_IOPEEN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_IOPERST; }
+};
+
+template<> struct peripheral_traits<gpiof_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_IOPFEN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_IOPFEN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_IOPFRST; }
+};
+
+template<> struct peripheral_traits<gpiog_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_IOPGEN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_IOPGEN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_IOPGRST; }
+};
+
+template<> struct peripheral_traits<afio_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_AFIOEN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_AFIOEN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_AFIORST; }
+};
+
+template<> struct peripheral_traits<dma1_t>
+{
+    static void enable() { RCC.AHBENR |= rcc_t::AHBENR_DMA1EN; }
+    static void disable() { RCC.AHBENR &= ~rcc_t::AHBENR_DMA1EN; }
+};
+
+template<> struct peripheral_traits<dma2_t>
+{
+    static void enable() { RCC.AHBENR |= rcc_t::AHBENR_DMA2EN; }
+    static void disable() { RCC.AHBENR &= ~rcc_t::AHBENR_DMA2EN; }
+};
+
+template<> struct peripheral_traits<sdio_t>
+{
+    static void enable() { RCC.AHBENR |= rcc_t::AHBENR_SDIOEN; }
+    static void disable() { RCC.AHBENR &= ~rcc_t::AHBENR_SDIOEN; }
+};
+
+template<> struct peripheral_traits<bkp_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_BKPEN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_BKPEN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_BKPRST; }
+};
+
+template<> struct peripheral_traits<wwdg_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_WWDGEN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_WWDGEN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_WWDGRST; }
+};
+
+template<> struct peripheral_traits<tim1_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM1EN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_TIM1EN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_TIM1RST; }
+};
+
+template<> struct peripheral_traits<tim8_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM8EN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_TIM8EN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_TIM8RST; }
+};
+
+template<> struct peripheral_traits<tim2_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM2EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_TIM2EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_TIM2RST; }
+};
+
+template<> struct peripheral_traits<tim3_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM3EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_TIM3EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_TIM3RST; }
+};
+
+template<> struct peripheral_traits<tim4_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM4EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_TIM4EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_TIM4RST; }
+};
+
+template<> struct peripheral_traits<tim5_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM5EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_TIM5EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_TIM5RST; }
+};
+
+template<> struct peripheral_traits<tim9_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM9EN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_TIM9EN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_TIM9RST; }
+};
+
+template<> struct peripheral_traits<tim12_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM12EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_TIM12EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_TIM12RST; }
+};
+
+template<> struct peripheral_traits<tim10_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM10EN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_TIM10EN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_TIM10RST; }
+};
+
+template<> struct peripheral_traits<tim11_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_TIM11EN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_TIM11EN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_TIM11RST; }
+};
+
+template<> struct peripheral_traits<tim13_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM13EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_TIM13EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_TIM13RST; }
+};
+
+template<> struct peripheral_traits<tim14_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM14EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_TIM14EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_TIM14RST; }
+};
+
+template<> struct peripheral_traits<tim6_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM6EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_TIM6EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_TIM6RST; }
+};
+
+template<> struct peripheral_traits<tim7_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_TIM7EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_TIM7EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_TIM7RST; }
+};
+
+template<> struct peripheral_traits<i2c1_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_I2C1EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_I2C1EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_I2C1RST; }
+};
+
+template<> struct peripheral_traits<i2c2_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_I2C2EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_I2C2EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_I2C2RST; }
+};
+
+template<> struct peripheral_traits<spi1_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_SPI1EN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_SPI1EN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_SPI1RST; }
+};
+
+template<> struct peripheral_traits<spi2_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_SPI2EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_SPI2EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_SPI2RST; }
+};
+
+template<> struct peripheral_traits<spi3_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_SPI3EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_SPI3EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_SPI3RST; }
+};
+
+template<> struct peripheral_traits<usart1_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_USART1EN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_USART1EN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_USART1RST; }
+};
+
+template<> struct peripheral_traits<usart2_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_USART2EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_USART2EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_USART2RST; }
+};
+
+template<> struct peripheral_traits<usart3_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_USART3EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_USART3EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_USART3RST; }
+};
+
+template<> struct peripheral_traits<adc1_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_ADC1EN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_ADC1EN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_ADC1RST; }
+};
+
+template<> struct peripheral_traits<adc2_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_ADC2EN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_ADC2EN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_ADC2RST; }
+};
+
+template<> struct peripheral_traits<adc3_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_ADC3EN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_ADC3EN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_ADC3RST; }
+};
+
+template<> struct peripheral_traits<dac_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_DACEN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_DACEN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_DACRST; }
+};
+
+template<> struct peripheral_traits<uart4_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_UART4EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_UART4EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_UART4RST; }
+};
+
+template<> struct peripheral_traits<uart5_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_UART5EN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_UART5EN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_UART5RST; }
+};
+
+template<> struct peripheral_traits<crc_t>
+{
+    static void enable() { RCC.AHBENR |= rcc_t::AHBENR_CRCEN; }
+    static void disable() { RCC.AHBENR &= ~rcc_t::AHBENR_CRCEN; }
+};
+
+template<> struct peripheral_traits<usb_t>
+{
+    static void enable() { RCC.APB1ENR |= rcc_t::APB1ENR_USBEN; }
+    static void disable() { RCC.APB1ENR &= ~rcc_t::APB1ENR_USBEN; }
+    static void reset() { RCC.APB1RSTR |= rcc_t::APB1RSTR_USBRST; }
+};
+
 }
 
-
+struct isr { enum interrupt_t
+    { RESET = -15
+    , NMI = -14
+    , HARDFAULT = -13
+    , MEMMANAGE = -12
+    , BUSFAULT = -11
+    , USAGEFAULT = -10
+    , SVCALL = -5
+    , DEBUG = -4
+    , PENDSV = -2
+    , SYSTICK = -1
+    , WWDG = 0
+    , PVD = 1
+    , TAMPER = 2
+    , RTC = 3
+    , FLASH = 4
+    , RCC = 5
+    , EXTI0 = 6
+    , EXTI1 = 7
+    , EXTI2 = 8
+    , EXTI3 = 9
+    , EXTI4 = 10
+    , DMA1_CHANNEL1 = 11
+    , DMA1_CHANNEL2 = 12
+    , DMA1_CHANNEL3 = 13
+    , DMA1_CHANNEL4 = 14
+    , DMA1_CHANNEL5 = 15
+    , DMA1_CHANNEL6 = 16
+    , DMA1_CHANNEL7 = 17
+    , ADC1_2 = 18
+    , USB_HP_CAN_TX = 19
+    , USB_LP_CAN_RX0 = 20
+    , CAN_RX1 = 21
+    , CAN_SCE = 22
+    , EXTI9_5 = 23
+    , TIM1_BRK = 24
+    , TIM1_UP = 25
+    , TIM1_TRG_COM = 26
+    , TIM1_CC = 27
+    , TIM2 = 28
+    , TIM3 = 29
+    , TIM4 = 30
+    , I2C1_EV = 31
+    , I2C1_ER = 32
+    , I2C2_EV = 33
+    , I2C2_ER = 34
+    , SPI1 = 35
+    , SPI2 = 36
+    , USART1 = 37
+    , USART2 = 38
+    , USART3 = 39
+    , EXTI15_10 = 40
+    , RTCALARM = 41
+    , TIM8_BRK = 43
+    , TIM8_UP = 44
+    , TIM8_TRG_COM = 45
+    , TIM8_CC = 46
+    , ADC3 = 47
+    , FSMC = 48
+    , SDIO = 49
+    , TIM5 = 50
+    , SPI3 = 51
+    , UART4 = 52
+    , UART5 = 53
+    , TIM6 = 54
+    , TIM7 = 55
+    , DMA2_CHANNEL1 = 56
+    , DMA2_CHANNEL2 = 57
+    , DMA2_CHANNEL3 = 58
+    , DMA2_CHANNEL4_5 = 59
+    }; };
