@@ -59,8 +59,8 @@ int main()
 
     hal::nvic<isr::TIM1_UP_TIM10>::enable();
     hal::nvic<isr::TIM3>::enable();
-    hal::nvic<30>::enable();            // FIXME: constants not in SVD!
-    hal::nvic<50>::enable();            // FIXME: constants not in SVD!
+    hal::nvic<isr::TIM4>::enable();
+    hal::nvic<isr::TIM5>::enable();
     interrupt::enable();
 
     for (;;);

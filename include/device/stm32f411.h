@@ -8647,6 +8647,8 @@ struct i2c3_t
     static const uint32_t TRISE_RESET_VALUE = 0x2;
 
     static constexpr uint8_t TIM3 = 29; // TIM3 global interrupt
+    static constexpr uint8_t TIM4 = 30; // TIM4 global interrupt
+    static constexpr uint8_t TIM5 = 50; // TIM5 global interrupt
 };
 
 static i2c3_t& I2C3 = *reinterpret_cast<i2c3_t*>(0x40005c00);
@@ -10655,6 +10657,7 @@ struct isr { enum interrupt_t
     , TIM1_CC = 27
     , TIM2 = 28
     , TIM3 = 29
+    , TIM4 = 30
     , I2C1_EV = 31
     , I2C1_ER = 32
     , I2C2_EV = 33
@@ -10665,6 +10668,7 @@ struct isr { enum interrupt_t
     , RTC_ALARM = 41
     , OTG_FS_WKUP = 42
     , SDIO = 49
+    , TIM5 = 50
     , SPI3 = 51
     , OTG_FS = 67
     , I2C3_EV = 72

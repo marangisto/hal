@@ -31,6 +31,7 @@ void ISR_TIM1_TRG_COM_TIM11(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_TIM1_CC(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_TIM2(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_TIM3(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM4(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_I2C1_EV(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_I2C1_ER(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_I2C2_EV(void) __attribute__ ((weak, alias("__nothing")));
@@ -41,6 +42,7 @@ void ISR_EXTI15_10(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_RTC_ALARM(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_OTG_FS_WKUP(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_SDIO(void) __attribute__ ((weak, alias("__nothing")));
+void ISR_TIM5(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_SPI3(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_OTG_FS(void) __attribute__ ((weak, alias("__nothing")));
 void ISR_I2C3_EV(void) __attribute__ ((weak, alias("__nothing")));
@@ -95,7 +97,7 @@ void (*vectors[])(void) __attribute__ ((section(".vectors"))) =
     , ISR_TIM1_CC                   // 27: TIM1 Capture Compare interrupt
     , ISR_TIM2                      // 28: TIM2 global interrupt
     , ISR_TIM3                      // 29: TIM3 global interrupt
-    , 0x0
+    , ISR_TIM4                      // 30: TIM4 global interrupt
     , ISR_I2C1_EV                   // 31: I2C1 event interrupt
     , ISR_I2C1_ER                   // 32: I2C1 error interrupt
     , ISR_I2C2_EV                   // 33: I2C2 event interrupt
@@ -115,7 +117,7 @@ void (*vectors[])(void) __attribute__ ((section(".vectors"))) =
     , 0x0
     , 0x0
     , ISR_SDIO                      // 49: SDIO global interrupt
-    , 0x0
+    , ISR_TIM5                      // 50: TIM5 global interrupt
     , ISR_SPI3                      // 51: SPI3 global interrupt
     , 0x0
     , 0x0
