@@ -49,30 +49,30 @@ struct interrupt
 
 template<bool> struct is_in_range;
 
-template<int POS, typename = is_in_range<true> >
+template<isr::interrupt_t POS, typename = is_in_range<true> >
 struct nvic {};
 
 #if defined(STM32F051)
-template<int POS>
+template<isr::interrupt_t POS>
 struct nvic<POS, is_in_range<(0 <= POS && POS < 32)> >
 {
     static void enable() { device::NVIC.ISER |= 1 << POS; }
 };
 
 #elif defined(STM32F411) || defined(STM32G431)
-template<int POS>
+template<isr::interrupt_t POS>
 struct nvic<POS, is_in_range<(0 <= POS && POS < 32)> >
 {
     static void enable() { device::NVIC.ISER0 |= 1 << POS; }
 };
 
-template<int POS>
+template<isr::interrupt_t POS>
 struct nvic<POS, is_in_range<(32 <= POS && POS < 64)> >
 {
     static void enable() { device::NVIC.ISER1 |= 1 << (POS - 32); }
 };
 
-template<int POS>
+template<isr::interrupt_t POS>
 struct nvic<POS, is_in_range<(64 <= POS && POS < 96)> >
 {
     static void enable() { device::NVIC.ISER2 |= 1 << (POS - 64); }
@@ -80,7 +80,7 @@ struct nvic<POS, is_in_range<(64 <= POS && POS < 96)> >
 #endif
 
 #if defined(STM32G431)
-template<int POS>
+template<isr::interrupt_t POS>
 struct nvic<POS, is_in_range<(96 <= POS && POS < 128)> >
 {
     static void enable() { device::NVIC.ISER3 |= 1 << (POS - 96); }
