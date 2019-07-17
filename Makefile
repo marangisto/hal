@@ -1,7 +1,7 @@
 DIRS := include/device src/vector
 SVDS := $(wildcard svd/*.svd)
 DEVS := $(SVDS:svd/%.svd=include/device/%.h)
-VECT := $(SVDS:svd/%.svd=src/vector/%.c)
+VECT := $(SVDS:svd/%.svd=src/vector/%.cpp)
 
 all: dirs $(DEVS) $(VECT)
 
@@ -15,7 +15,7 @@ ${DIRS}:
 include/device/%.h: svd/%.svd
 	SVD2CPP $< > $@
 
-src/vector/%.c: svd/%.svd
+src/vector/%.cpp: svd/%.svd
 	SVD2CPP --interrupt $< > $@
 
 clean:

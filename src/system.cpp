@@ -64,12 +64,12 @@ inline void sys_tick_init(uint32_t n) { sys_tick::init(n); }
 inline void sys_tick_update() { ++sys_tick::ms_counter; } // N.B. wraps in 49 days!
 }
 
-extern "C" void ISR_SYSTICK()
+extern void ISR_SYSTICK()
 {
     hal::sys_tick_update();
 }
 
-extern "C" void system_init(void)
+extern void system_init(void)
 {
     using namespace hal;
     typedef rcc_t _;

@@ -30,22 +30,22 @@ typedef example_t<3, PD13, 120> exb;
 typedef example_t<4, PD14, 140> exc;
 typedef example_t<5, PD15, 160> exd;
 
-extern "C" void ISR_TIM1_UP_TIM10(void)
+extern void ISR_TIM1_UP_TIM10(void)
 {
     exa::isr();
 }
 
-extern "C" void ISR_TIM3(void)
+extern void ISR_TIM3(void)
 {
     exb::isr();
 }
 
-extern "C" void ISR_TIM4(void)
+extern void ISR_TIM4(void)
 {
     exc::isr();
 }
 
-extern "C" void ISR_TIM5(void)
+extern void ISR_TIM5(void)
 {
     exd::isr();
 }
