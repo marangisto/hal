@@ -18940,7 +18940,12 @@ template<> struct peripheral_traits<i2c4_t>
 
 }
 
-struct isr { enum interrupt_t
+struct interrupt
+{
+    static inline void enable() { __asm volatile ("cpsie i"); }
+    static inline void disable() { __asm volatile ("cpsid i"); }
+
+    enum interrupt_t
     { RESET = -15
     , NMI = -14
     , HARDFAULT = -13
@@ -18994,4 +18999,5 @@ struct isr { enum interrupt_t
     , HASH_RNG = 80
     , FPU = 81
     , SPI4 = 84
-    }; };
+    };
+};

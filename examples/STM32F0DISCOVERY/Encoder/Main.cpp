@@ -14,7 +14,7 @@ typedef timer_t<6> aux;
 typedef output_t<PC8> led_a;
 typedef output_t<PC9> led_b;
 
-template<> void handler<isr::TIM6_DAC>()
+template<> void handler<interrupt::TIM6_DAC>()
 {
     aux::clear_uif();
     btn::update();
@@ -36,8 +36,8 @@ int main()
     led_b::setup();
     int i = 0;
 
-    hal::nvic<isr::TIM6_DAC>::enable();
-    hal::interrupt::enable();
+    hal::nvic<interrupt::TIM6_DAC>::enable();
+    interrupt::enable();
 
     for (;;)
     {

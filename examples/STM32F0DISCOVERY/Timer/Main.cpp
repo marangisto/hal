@@ -10,13 +10,13 @@ typedef timer_t<3> tim_b;
 typedef output_t<PC8> led_a;
 typedef output_t<PC9> led_b;
 
-template<> void handler<isr::TIM1_BRK_UP_TRG_COM>()
+template<> void handler<interrupt::TIM1_BRK_UP_TRG_COM>()
 {
     tim_a::clear_uif();
     led_a::toggle();
 }
 
-template<> void handler<isr::TIM3>()
+template<> void handler<interrupt::TIM3>()
 {
     tim_b::clear_uif();
     led_b::write(!led_a::read());
@@ -33,9 +33,9 @@ int main()
     led_a::setup();
     led_b::setup();
 
-    hal::nvic<isr::TIM1_BRK_UP_TRG_COM>::enable();
-    hal::nvic<isr::TIM3>::enable();
-    hal::interrupt::enable();
+    hal::nvic<interrupt::TIM1_BRK_UP_TRG_COM>::enable();
+    hal::nvic<interrupt::TIM3>::enable();
+    interrupt::enable();
 
     for (;;);
 }

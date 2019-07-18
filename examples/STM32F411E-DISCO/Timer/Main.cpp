@@ -30,22 +30,22 @@ typedef example_t<3, PD13, 120> exb;
 typedef example_t<4, PD14, 140> exc;
 typedef example_t<5, PD15, 160> exd;
 
-template<> void handler<isr::TIM1_UP_TIM10>()
+template<> void handler<interrupt::TIM1_UP_TIM10>()
 {
     exa::isr();
 }
 
-template<> void handler<isr::TIM3>()
+template<> void handler<interrupt::TIM3>()
 {
     exb::isr();
 }
 
-template<> void handler<isr::TIM4>()
+template<> void handler<interrupt::TIM4>()
 {
     exc::isr();
 }
 
-template<> void handler<isr::TIM5>()
+template<> void handler<interrupt::TIM5>()
 {
     exd::isr();
 }
@@ -57,10 +57,10 @@ int main()
     exc::setup();
     exd::setup();
 
-    hal::nvic<isr::TIM1_UP_TIM10>::enable();
-    hal::nvic<isr::TIM3>::enable();
-    hal::nvic<isr::TIM4>::enable();
-    hal::nvic<isr::TIM5>::enable();
+    hal::nvic<interrupt::TIM1_UP_TIM10>::enable();
+    hal::nvic<interrupt::TIM3>::enable();
+    hal::nvic<interrupt::TIM4>::enable();
+    hal::nvic<interrupt::TIM5>::enable();
     interrupt::enable();
 
     for (;;);

@@ -8,7 +8,7 @@ extern uint32_t __estack;
 extern void system_init(void);
 extern int main(void);
 
-template<> void handler<isr::RESET>()
+template<> void handler<interrupt::RESET>()
 {
     uint32_t *bss = &__sbss;
     uint32_t *data = &__sdata;
@@ -28,7 +28,7 @@ template<> void handler<isr::RESET>()
         ;
 }
 
-extern "C" void __reset() __attribute__ ((alias("_Z7handlerILN3isr11interrupt_tEn15EEvv")));
+extern "C" void __reset() __attribute__ ((alias("_Z7handlerILN9interrupt11interrupt_tEn15EEvv")));
 
 extern void __default_handler(void) {}
 

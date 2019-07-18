@@ -11451,7 +11451,12 @@ template<> struct peripheral_traits<dac_t>
 
 }
 
-struct isr { enum interrupt_t
+struct interrupt
+{
+    static inline void enable() { __asm volatile ("cpsie i"); }
+    static inline void disable() { __asm volatile ("cpsid i"); }
+
+    enum interrupt_t
     { RESET = -15
     , NMI = -14
     , HARDFAULT = -13
@@ -11494,4 +11499,5 @@ struct isr { enum interrupt_t
     , USART3_4_5_6_7_8 = 29
     , CEC_CAN = 30
     , USB = 31
-    }; };
+    };
+};

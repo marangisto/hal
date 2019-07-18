@@ -4,7 +4,7 @@
 
 #if defined(STM32F051)
     #include <device/stm32f0x1.h>
-    #undef HAVE_PERIPHERAL_GPIOE    // should not be present
+//    #undef HAVE_PERIPHERAL_GPIOE    // should not be present
     namespace device = stm32f0x1;
 #elif defined(STM32F103)
     #include <device/stm32f103.h>
@@ -41,38 +41,32 @@ private:
     static volatile uint32_t ms_counter;
 };
 
-struct interrupt
-{
-    static inline void enable() { __asm volatile ("cpsie i"); }
-    static inline void disable() { __asm volatile ("cpsid i"); }
-};
-
 template<bool> struct is_in_range;
 
-template<isr::interrupt_t POS, typename = is_in_range<true> >
+template<interrupt::interrupt_t POS, typename = is_in_range<true> >
 struct nvic {};
 
 #if defined(STM32F051)
-template<isr::interrupt_t POS>
+template<interrupt::interrupt_t POS>
 struct nvic<POS, is_in_range<(0 <= POS && POS < 32)> >
 {
     static void enable() { device::NVIC.ISER |= 1 << POS; }
 };
 
 #elif defined(STM32F411) || defined(STM32G431)
-template<isr::interrupt_t POS>
+template<interrupt::interrupt_t POS>
 struct nvic<POS, is_in_range<(0 <= POS && POS < 32)> >
 {
     static void enable() { device::NVIC.ISER0 |= 1 << POS; }
 };
 
-template<isr::interrupt_t POS>
+template<interrupt::interrupt_t POS>
 struct nvic<POS, is_in_range<(32 <= POS && POS < 64)> >
 {
     static void enable() { device::NVIC.ISER1 |= 1 << (POS - 32); }
 };
 
-template<isr::interrupt_t POS>
+template<interrupt::interrupt_t POS>
 struct nvic<POS, is_in_range<(64 <= POS && POS < 96)> >
 {
     static void enable() { device::NVIC.ISER2 |= 1 << (POS - 64); }
@@ -80,7 +74,7 @@ struct nvic<POS, is_in_range<(64 <= POS && POS < 96)> >
 #endif
 
 #if defined(STM32G431)
-template<isr::interrupt_t POS>
+template<interrupt::interrupt_t POS>
 struct nvic<POS, is_in_range<(96 <= POS && POS < 128)> >
 {
     static void enable() { device::NVIC.ISER3 |= 1 << (POS - 96); }
@@ -89,4 +83,4 @@ struct nvic<POS, is_in_range<(96 <= POS && POS < 128)> >
 
 } // namespace hal
 
-template<isr::interrupt_t> void handler();
+template<interrupt::interrupt_t> void handler();

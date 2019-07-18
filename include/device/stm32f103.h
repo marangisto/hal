@@ -14169,7 +14169,12 @@ template<> struct peripheral_traits<usb_t>
 
 }
 
-struct isr { enum interrupt_t
+struct interrupt
+{
+    static inline void enable() { __asm volatile ("cpsie i"); }
+    static inline void disable() { __asm volatile ("cpsid i"); }
+
+    enum interrupt_t
     { RESET = -15
     , NMI = -14
     , HARDFAULT = -13
@@ -14239,4 +14244,5 @@ struct isr { enum interrupt_t
     , DMA2_CHANNEL2 = 57
     , DMA2_CHANNEL3 = 58
     , DMA2_CHANNEL4_5 = 59
-    }; };
+    };
+};
