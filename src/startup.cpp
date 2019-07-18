@@ -8,7 +8,7 @@ extern uint32_t __estack;
 extern void system_init(void);
 extern int main(void);
 
-__attribute__ ((section(".text"))) extern void ISR_RESET(void)
+extern void ISR_RESET(void)
 {
     uint32_t *bss = &__sbss;
     uint32_t *data = &__sdata;
@@ -28,8 +28,7 @@ __attribute__ ((section(".text"))) extern void ISR_RESET(void)
         ;
 }
 
-__attribute__ ((section(".text"), optimize("-O3"))) extern void __nothing(void) {}
-
+extern void __default_handler(void) {}
 
 #if defined(STM32F051)
 #include "vector/stm32f0x1.cpp"
