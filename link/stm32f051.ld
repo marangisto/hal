@@ -1,6 +1,6 @@
 /* STM32F051 64k FLASH, 8k RAM */
 
-ENTRY(_Z9ISR_RESETv)
+ENTRY(__reset)
 
 MEMORY
 {

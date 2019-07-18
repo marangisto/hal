@@ -89,3 +89,4 @@ struct nvic<POS, is_in_range<(96 <= POS && POS < 128)> >
 
 } // namespace hal
 
+template<isr::interrupt_t> void handler();

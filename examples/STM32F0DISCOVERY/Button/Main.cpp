@@ -11,7 +11,7 @@ typedef timer_t<6> aux;
 typedef output_t<PC8> led_a;
 typedef output_t<PC9> led_b;
 
-extern void ISR_TIM6_DAC(void)
+template<> void handler<isr::TIM6_DAC>()
 {
     aux::clear_uif();
     btn::update();

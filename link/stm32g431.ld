@@ -1,6 +1,6 @@
 /* STM32G431 128k FLASH, 32k RAM */
 
-ENTRY(_Z9ISR_RESETv)
+ENTRY(__reset)
 
 MEMORY
 {

@@ -1,6 +1,6 @@
 /* STM32F411 512k FLASH, 128k RAM */
 
-ENTRY(_Z9ISR_RESETv)
+ENTRY(__reset)
 
 MEMORY
 {

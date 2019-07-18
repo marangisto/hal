@@ -10,13 +10,13 @@ typedef timer_t<3> tim_b;
 typedef output_t<PC8> led_a;
 typedef output_t<PC9> led_b;
 
-extern void ISR_TIM1_BRK_UP_TRG_COM(void)
+template<> void handler<isr::TIM1_BRK_UP_TRG_COM>()
 {
     tim_a::clear_uif();
     led_a::toggle();
 }
 
-extern void ISR_TIM3(void)
+template<> void handler<isr::TIM3>()
 {
     tim_b::clear_uif();
     led_b::write(!led_a::read());

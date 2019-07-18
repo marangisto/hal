@@ -1,6 +1,6 @@
 /* STM32G070 128k FLASH, 36k RAM */
 
-ENTRY(_Z9ISR_RESETv)
+ENTRY(__reset)
 
 MEMORY
 {
