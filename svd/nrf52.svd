@@ -36,11 +36,6 @@
             OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\n
             OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n
         </licenseText>
-  <addressUnitBits>8</addressUnitBits>
-  <width>32</width>
-  <size>32</size>
-  <resetValue>0x00000000</resetValue>
-  <resetMask>0xFFFFFFFF</resetMask>
   <cpu>
     <name>CM4</name>
     <revision>r0p1</revision>
@@ -52,11 +47,11 @@
   </cpu>
   <headerSystemFilename>system_nrf52</headerSystemFilename>
   <headerDefinitionsPrefix>NRF_</headerDefinitionsPrefix>
-  <vendorExtensions>
-    <ExampleStackSize>2048</ExampleStackSize>
-    <ExampleHeapSize>2048</ExampleHeapSize>
-    <MaxInterrupts>240</MaxInterrupts>
-  </vendorExtensions>
+  <addressUnitBits>8</addressUnitBits>
+  <width>32</width>
+  <size>32</size>
+  <resetValue>0x00000000</resetValue>
+  <resetMask>0xFFFFFFFF</resetMask>
   <peripherals>
     <peripheral>
       <name>FICR</name>
@@ -3141,7 +3136,6 @@
       <groupName>POWER</groupName>
       <baseAddress>0x40000000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>BPROT</alternatePeripheral>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -4124,7 +4118,6 @@
       <groupName>CLOCK</groupName>
       <baseAddress>0x40000000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>BPROT</alternatePeripheral>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -6719,9 +6712,9 @@
       <name>UARTE0</name>
       <description>UART with EasyDMA</description>
       <groupName>UARTE</groupName>
+      <headerStructName>UARTE</headerStructName>
       <baseAddress>0x40002000</baseAddress>
       <size>32</size>
-      <headerStructName>UARTE</headerStructName>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -8024,9 +8017,9 @@
       <name>SPIM0</name>
       <description>Serial Peripheral Interface Master with EasyDMA 0</description>
       <groupName>SPIM</groupName>
+      <headerStructName>SPIM</headerStructName>
       <baseAddress>0x40003000</baseAddress>
       <size>32</size>
-      <headerStructName>SPIM</headerStructName>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -8816,10 +8809,9 @@
       <name>SPIS0</name>
       <description>SPI Slave 0</description>
       <groupName>SPIS</groupName>
+      <headerStructName>SPIS</headerStructName>
       <baseAddress>0x40003000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SPIM0</alternatePeripheral>
-      <headerStructName>SPIS</headerStructName>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -9459,10 +9451,9 @@
       <name>TWIM0</name>
       <description>I2C compatible Two-Wire Master Interface with EasyDMA 0</description>
       <groupName>TWIM</groupName>
+      <headerStructName>TWIM</headerStructName>
       <baseAddress>0x40003000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SPIM0</alternatePeripheral>
-      <headerStructName>TWIM</headerStructName>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -10435,10 +10426,9 @@
       <name>TWIS0</name>
       <description>I2C compatible Two-Wire Slave Interface with EasyDMA 0</description>
       <groupName>TWIS</groupName>
+      <headerStructName>TWIS</headerStructName>
       <baseAddress>0x40003000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SPIM0</alternatePeripheral>
-      <headerStructName>TWIS</headerStructName>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -11368,10 +11358,9 @@
       <name>SPI0</name>
       <description>Serial Peripheral Interface 0</description>
       <groupName>SPI</groupName>
+      <headerStructName>SPI</headerStructName>
       <baseAddress>0x40003000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SPIM0</alternatePeripheral>
-      <headerStructName>SPI</headerStructName>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -11704,10 +11693,9 @@
       <name>TWI0</name>
       <description>I2C compatible Two-Wire Interface 0</description>
       <groupName>TWI</groupName>
+      <headerStructName>TWI</headerStructName>
       <baseAddress>0x40003000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SPIM0</alternatePeripheral>
-      <headerStructName>TWI</headerStructName>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -12397,7 +12385,6 @@
       <groupName>SPIS</groupName>
       <baseAddress>0x40004000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SPIM1</alternatePeripheral>
       <interrupt>
         <name>SPIM1_SPIS1_TWIM1_TWIS1_SPI1_TWI1</name>
         <value>4</value>
@@ -12409,7 +12396,6 @@
       <groupName>TWIM</groupName>
       <baseAddress>0x40004000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SPIM1</alternatePeripheral>
       <interrupt>
         <name>SPIM1_SPIS1_TWIM1_TWIS1_SPI1_TWI1</name>
         <value>4</value>
@@ -12421,7 +12407,6 @@
       <groupName>TWIS</groupName>
       <baseAddress>0x40004000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SPIM1</alternatePeripheral>
       <interrupt>
         <name>SPIM1_SPIS1_TWIM1_TWIS1_SPI1_TWI1</name>
         <value>4</value>
@@ -12433,7 +12418,6 @@
       <groupName>SPI</groupName>
       <baseAddress>0x40004000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SPIM1</alternatePeripheral>
       <interrupt>
         <name>SPIM1_SPIS1_TWIM1_TWIS1_SPI1_TWI1</name>
         <value>4</value>
@@ -17403,9 +17387,9 @@
       <name>TIMER0</name>
       <description>Timer/Counter 0</description>
       <groupName>TIMER</groupName>
+      <headerStructName>TIMER</headerStructName>
       <baseAddress>0x40008000</baseAddress>
       <size>32</size>
-      <headerStructName>TIMER</headerStructName>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -18155,9 +18139,9 @@
       <name>RTC0</name>
       <description>Real time counter 0</description>
       <groupName>RTC</groupName>
+      <headerStructName>RTC</headerStructName>
       <baseAddress>0x4000B000</baseAddress>
       <size>32</size>
-      <headerStructName>RTC</headerStructName>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -19964,7 +19948,6 @@
       <groupName>AAR</groupName>
       <baseAddress>0x4000F000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>CCM</alternatePeripheral>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -22493,7 +22476,6 @@
       <groupName>LPCOMP</groupName>
       <baseAddress>0x40013000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>COMP</alternatePeripheral>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -23169,9 +23151,9 @@
       <name>SWI0</name>
       <description>Software interrupt 0</description>
       <groupName>SWI</groupName>
+      <headerStructName>SWI</headerStructName>
       <baseAddress>0x40014000</baseAddress>
       <size>32</size>
-      <headerStructName>SWI</headerStructName>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -23186,8 +23168,8 @@
           <name>UNUSED</name>
           <description>Unused.</description>
           <addressOffset>0x000</addressOffset>
-          <resetValue>0x00000000</resetValue>
           <access>read-only</access>
+          <resetValue>0x00000000</resetValue>
         </register>
       </registers>
     </peripheral>
@@ -23195,10 +23177,9 @@
       <name>EGU0</name>
       <description>Event Generator Unit 0</description>
       <groupName>EGU</groupName>
+      <headerStructName>EGU</headerStructName>
       <baseAddress>0x40014000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SWI0</alternatePeripheral>
-      <headerStructName>EGU</headerStructName>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -24422,7 +24403,6 @@
       <groupName>EGU</groupName>
       <baseAddress>0x40015000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SWI1</alternatePeripheral>
       <interrupt>
         <name>SWI1_EGU1</name>
         <value>21</value>
@@ -24445,7 +24425,6 @@
       <groupName>EGU</groupName>
       <baseAddress>0x40016000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SWI2</alternatePeripheral>
       <interrupt>
         <name>SWI2_EGU2</name>
         <value>22</value>
@@ -24468,7 +24447,6 @@
       <groupName>EGU</groupName>
       <baseAddress>0x40017000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SWI3</alternatePeripheral>
       <interrupt>
         <name>SWI3_EGU3</name>
         <value>23</value>
@@ -24491,7 +24469,6 @@
       <groupName>EGU</groupName>
       <baseAddress>0x40018000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SWI4</alternatePeripheral>
       <interrupt>
         <name>SWI4_EGU4</name>
         <value>24</value>
@@ -24514,7 +24491,6 @@
       <groupName>EGU</groupName>
       <baseAddress>0x40019000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SWI5</alternatePeripheral>
       <interrupt>
         <name>SWI5_EGU5</name>
         <value>25</value>
@@ -24546,9 +24522,9 @@
       <name>PWM0</name>
       <description>Pulse Width Modulation Unit 0</description>
       <groupName>PWM</groupName>
+      <headerStructName>PWM</headerStructName>
       <baseAddress>0x4001C000</baseAddress>
       <size>32</size>
-      <headerStructName>PWM</headerStructName>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -26222,7 +26198,6 @@
           <description>Deprecated register -  Register for erasing a page in Code area. Equivalent to ERASEPAGE.</description>
           <addressOffset>0x508</addressOffset>
           <access>read-write</access>
-          <alternateRegister>ERASEPAGE</alternateRegister>
           <fields>
             <field>
               <name>ERASEPCR1</name>
@@ -33994,7 +33969,6 @@
       <groupName>SPIS</groupName>
       <baseAddress>0x40023000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SPIM2</alternatePeripheral>
       <interrupt>
         <name>SPIM2_SPIS2_SPI2</name>
         <value>35</value>
@@ -34006,7 +33980,6 @@
       <groupName>SPI</groupName>
       <baseAddress>0x40023000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SPIM2</alternatePeripheral>
       <interrupt>
         <name>SPIM2_SPIS2_SPI2</name>
         <value>35</value>
@@ -34967,9 +34940,9 @@
       <name>P0</name>
       <description>GPIO Port 1</description>
       <groupName>GPIO</groupName>
+      <headerStructName>GPIO</headerStructName>
       <baseAddress>0x50000000</baseAddress>
       <size>32</size>
-      <headerStructName>GPIO</headerStructName>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -40410,7 +40383,6 @@
       <groupName>TWI</groupName>
       <baseAddress>0x40004000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>SPIM1</alternatePeripheral>
       <interrupt>
         <name>SPIM1_SPIS1_TWIM1_TWIS1_SPI1_TWI1</name>
         <value>4</value>
@@ -40420,10 +40392,9 @@
       <name>UART0</name>
       <description>Universal Asynchronous Receiver/Transmitter</description>
       <groupName>UART</groupName>
+      <headerStructName>UART</headerStructName>
       <baseAddress>0x40002000</baseAddress>
       <size>32</size>
-      <alternatePeripheral>UARTE0</alternatePeripheral>
-      <headerStructName>UART</headerStructName>
       <addressBlock>
         <offset>0</offset>
         <size>0x1000</size>
@@ -41255,4 +41226,9 @@
       </registers>
     </peripheral>
   </peripherals>
+  <vendorExtensions>
+    <ExampleStackSize>2048</ExampleStackSize>
+    <ExampleHeapSize>2048</ExampleHeapSize>
+    <MaxInterrupts>240</MaxInterrupts>
+  </vendorExtensions>
 </device>
