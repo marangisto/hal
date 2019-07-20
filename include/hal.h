@@ -46,7 +46,7 @@ template<bool> struct is_in_range;
 template<interrupt::interrupt_t POS, typename = is_in_range<true> >
 struct nvic {};
 
-#if defined(STM32F051)
+#if defined(STM32F051) || defined(STM32G070)
 template<interrupt::interrupt_t POS>
 struct nvic<POS, is_in_range<(0 <= POS && POS < 32)> >
 {

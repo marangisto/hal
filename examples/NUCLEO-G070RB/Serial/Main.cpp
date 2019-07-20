@@ -10,10 +10,18 @@ typedef output_t<PA5> ld4;
 
 void loop();
 
+template<> void handler<interrupt::USART2>()
+{
+    ld4::toggle();
+    serial::read();
+}
+
 int main()
 {
     ld4::setup();
     serial::setup<230400>();
+    hal::nvic<interrupt::USART2>::enable();
+    interrupt::enable();
 
     for (;;)
         loop();
@@ -24,9 +32,7 @@ void loop()
     static uint8_t i = 0;
     static char buf[32];
 
-    ld4::toggle();
     serial::write(itoa(i++, buf, 10));
     serial::write("\n");
-    sys_tick::delay_ms(25);
 }
 
