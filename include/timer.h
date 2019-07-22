@@ -227,6 +227,49 @@ private:
     static inline typename timer_traits<TN>::T& TIM() { return timer_traits<TN>::TIM(); }
 };
 
+template<int TN, gpio::gpio_pin_t CH1>
+class capture_t
+{
+public:
+    typedef typename timer_traits<TN>::T _;
+    typedef typename timer_traits<TN>::count_t count_t;
+
+    template<gpio::input_type_t input_type>
+    static inline void setup(count_t arr)
+    {
+        using namespace gpio::internal;
+
+        alternate_t<CH1, timer_traits<TN>::ch1>::template setup<input_type>();
+
+        peripheral_traits<_>::enable();
+        TIM().CCMR1 = _::CCMR1_RESET_VALUE          // reset register
+                    | _::template CCMR1_CC1S<0x1>   // TI1 as input
+                    ; 
+        TIM().CCER  = _::CCER_RESET_VALUE           // reset register
+                    | _::CCER_CC1E                  // enable capture
+                    ;
+        TIM().DIER  = _::DIER_RESET_VALUE           // reset register
+                    | _::DIER_CC1IE                 // interrupt on capture
+                    ;
+        TIM().CR1   = _::CR1_RESET_VALUE            // reset register
+                    | _::CR1_CEN                    // enable timer
+                    ;
+    }
+
+    static inline volatile count_t count()
+    {
+        return TIM().CNT;
+    }
+
+    static inline void set_count(count_t x)
+    {
+        TIM().CNT = x;
+    }
+
+private:
+    static inline typename timer_traits<TN>::T& TIM() { return timer_traits<TN>::TIM(); }
+};
+
 } // namespace timer
 
 } // namespace hal

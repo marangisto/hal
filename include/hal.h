@@ -41,6 +41,16 @@ private:
     static volatile uint32_t ms_counter;
 };
 
+class sys_clock
+{
+public:
+    static void init();
+    static uint32_t freq() { return m_freq; }
+
+private:
+    static uint32_t m_freq;
+};
+
 template<bool> struct is_in_range;
 
 template<interrupt::interrupt_t POS, typename = is_in_range<true> >

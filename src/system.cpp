@@ -62,19 +62,17 @@ volatile uint32_t sys_tick::ms_counter = 0;
 
 inline void sys_tick_init(uint32_t n) { sys_tick::init(n); }
 inline void sys_tick_update() { ++sys_tick::ms_counter; } // N.B. wraps in 49 days!
-}
 
-template<> void handler<interrupt::SYSTICK>()
-{
-    hal::sys_tick_update();
-}
+uint32_t sys_clock::m_freq;
 
-extern void system_init(void)
+void sys_clock::init()
 {
     using namespace hal;
     typedef rcc_t _;
 
 #if defined(STM32F051)
+    m_freq = 48000000;
+
     // reset clock control registers
 
     RCC.CR = _::CR_RESET_VALUE;
@@ -96,11 +94,9 @@ extern void system_init(void)
     // wait for PLL as system clock
 
     while ((RCC.CFGR & _::CFGR_SWS<0x3>) != _::CFGR_SWS<0x2>);
-
-    // initialize sys-tick for milli-second counts
-
-    hal::sys_tick_init(48000);
 #elif defined(STM32F411)
+    m_freq = 100000000;
+
     // reset clock control registers
 
     RCC.CR = _::CR_RESET_VALUE;
@@ -144,11 +140,9 @@ extern void system_init(void)
     // wait for PLL as system clock
 
     while ((RCC.CFGR & encode<0x3, _::CFGR_SWS0, 2>()) != encode<0x2, _::CFGR_SWS0, 2>());
-
-    // initialize sys-tick for milli-second counts
-
-    hal::sys_tick_init(100000);
 #elif defined(STM32G070)
+    m_freq = 64000000;
+
     // reset clock control registers
 
     RCC.CR = _::CR_RESET_VALUE;
@@ -189,11 +183,9 @@ extern void system_init(void)
     // wait for PLL as system clock
 
     while ((RCC.CFGR & _::CFGR_SWS<0x3>) != _::CFGR_SWS<0x2>);
-
-    // initialize sys-tick for milli-second counts
-
-    hal::sys_tick_init(64000);
 #elif defined(STM32G431)
+    m_freq = 170000000;
+
     // reset clock control registers
 
     RCC.CR = _::CR_RESET_VALUE;
@@ -234,12 +226,23 @@ extern void system_init(void)
     // wait for PLL as system clock
 
     while ((RCC.CFGR & _::CFGR_SWS<0x3>) != _::CFGR_SWS<0x3>);
-
-    // initialize sys-tick for milli-second counts
-
-    hal::sys_tick_init(170000);
 #else
     static_assert(false, "no featured clock initialzation");
 #endif
+    // initialize sys-tick for milli-second counts
+
+    hal::sys_tick_init(m_freq / 1000);
+}
+
+} //  namespace hal
+
+template<> void handler<interrupt::SYSTICK>()
+{
+    hal::sys_tick_update();
+}
+
+extern void system_init(void)
+{
+    hal::sys_clock::init();
 }
 
