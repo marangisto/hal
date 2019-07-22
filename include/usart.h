@@ -67,20 +67,18 @@ public:
         using namespace gpio::internal;
 
         alternate_t<TX, usart_traits<NO>::tx>::template setup<speed>();
-        alternate_t<RX, usart_traits<NO>::rx>::template setup<pull_up>();   // FIXME: should this be pull-up?
+        alternate_t<RX, usart_traits<NO>::rx>::template setup<pull_up>();
 
-        // baud-rate = fsck / usartdiv
-        // usartdiv = 64000000 / 9600
-        peripheral_traits<_>::enable();         // enable usart peripheral clock
-        USART().BRR = 64000000 / baud_rate;     // set baud-rate FIXME: need clock reference!
-        USART().CR1 |= _::CR1_RESET_VALUE       // reset control register 1
-                    | _::CR1_TE                 // enable transmitter
-                    | _::CR1_RE                 // enable receiver
-                    | _::CR1_RXNEIE             // interrupt on rx buffer not empty
-                    | _::CR1_UE                 // enable usart itself
+        peripheral_traits<_>::enable();                 // enable usart peripheral clock
+        USART().BRR = sys_clock::freq() / baud_rate;    // set baud-rate FIXME: need clock reference!
+        USART().CR1 |= _::CR1_RESET_VALUE               // reset control register 1
+                    | _::CR1_TE                         // enable transmitter
+                    | _::CR1_RE                         // enable receiver
+                    | _::CR1_RXNEIE                     // interrupt on rx buffer not empty
+                    | _::CR1_UE                         // enable usart itself
                     ;
-        USART().CR2 |= _::CR2_RESET_VALUE;      // reset control register 2
-        USART().CR3 |= _::CR3_RESET_VALUE;      // reset control register 3
+        USART().CR2 |= _::CR2_RESET_VALUE;              // reset control register 2
+        USART().CR3 |= _::CR3_RESET_VALUE;              // reset control register 3
     }
 
 
