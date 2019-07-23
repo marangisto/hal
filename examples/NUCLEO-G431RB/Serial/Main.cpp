@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <usart.h>
+#include <redirect.h>
 
 using hal::sys_tick;
 using namespace hal::gpio;
@@ -23,16 +24,21 @@ int main()
     hal::nvic<interrupt::USART2>::enable();
     interrupt::enable();
 
+    stdio_t::bind_stdout<serial>();
+    stdio_t::bind_stderr<serial>();
+
     for (;;)
         loop();
 }
 
 void loop()
 {
-    static uint8_t i = 0;
-    static char buf[32];
+    static int i = 0;
+    const float pi = 3.141592654;
 
-    serial::write(itoa(i++, buf, 10));
-    serial::write("\n");
+    fprintf(stdout, "hello world! %d %f\n", i, pi * i);
+    if (i % 10 == 0)
+        fprintf(stderr, "error message %d\n", i);
+    i++;
 }
 

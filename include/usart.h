@@ -95,6 +95,13 @@ public:
             write(*s++);
     }
 
+    static uint32_t write(const char *buf, uint32_t len)
+    {
+        for (uint32_t i = 0; i < len; ++i)
+            write(*buf++);
+        return len;
+    }
+
     __attribute__((always_inline))
     static inline char read()
     {
