@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <usart.h>
 #include <redirect.h>
+#include <cstring>
 
 using hal::sys_tick;
 using namespace hal::gpio;
@@ -24,8 +25,7 @@ int main()
     hal::nvic<interrupt::USART2>::enable();
     interrupt::enable();
 
-    stdio_t::bind_stdout<serial>();
-    stdio_t::bind_stderr<serial>();
+    stdio_t::bind<serial>();
 
     for (;;)
         loop();
@@ -33,18 +33,14 @@ int main()
 
 void loop()
 {
-    char c;
+    char buf[256];
 
-    if (serial::read(c))
-        putchar(c);
-/*
-    static int i = 0;
-    const float pi = 3.141592654;
-
-    fprintf(stdout, "hello world! %d %f\n", i, pi * i);
-    if (i % 10 == 0)
-        fprintf(stderr, "error message %d\n", i);
-    i++;
-*/
+    if (fgets(buf, sizeof(buf), stdin))
+    {
+        char *p = strpbrk(buf, "\r\n");
+        if (p)
+            *p = 0;
+        printf("got = '%s'\n", buf);
+    }
 }
 
