@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gpio.h>
+#include <fifo.h>
 
 namespace hal
 {
@@ -53,6 +54,7 @@ template<int NO, gpio_pin_t TX, gpio_pin_t RX> struct usart_t
 {
 private:
     typedef typename usart_traits<NO>::T _;
+    typedef fifo_t<char, NO, 16> fifo;
 
 public:
     template
@@ -81,7 +83,6 @@ public:
         USART().CR3 |= _::CR3_RESET_VALUE;              // reset control register 3
     }
 
-
     __attribute__((always_inline))
     static inline void write(uint8_t x)
     {
@@ -102,11 +103,17 @@ public:
         return len;
     }
 
+    // call isr in relevant handler
     __attribute__((always_inline))
-    static inline char read()
+    static inline void isr()
     {
-        while (!rx_not_empty());
-        return USART2.RDR;
+        fifo::put(USART2.RDR);
+    }
+
+    __attribute__((always_inline))
+    static inline bool read(char &c)
+    {
+        return fifo::get(c);
     }
 
     __attribute__((always_inline))

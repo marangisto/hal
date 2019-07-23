@@ -91,6 +91,12 @@ struct nvic<POS, is_in_range<(96 <= POS && POS < 128)> >
 };
 #endif
 
+struct critical_section_t
+{
+    critical_section_t() { interrupt::disable(); }
+    ~critical_section_t() { interrupt::enable(); }
+};
+
 } // namespace hal
 
 template<interrupt::interrupt_t> void handler();

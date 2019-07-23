@@ -14,7 +14,7 @@ void loop();
 template<> void handler<interrupt::USART2>()
 {
     ld4::toggle();
-    serial::read();
+    serial::isr();
 }
 
 int main()
@@ -33,6 +33,11 @@ int main()
 
 void loop()
 {
+    char c;
+
+    if (serial::read(c))
+        putchar(c);
+/*
     static int i = 0;
     const float pi = 3.141592654;
 
@@ -40,5 +45,6 @@ void loop()
     if (i % 10 == 0)
         fprintf(stderr, "error message %d\n", i);
     i++;
+*/
 }
 
