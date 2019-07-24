@@ -37,9 +37,7 @@ void loop()
 
     if (fgets(buf, sizeof(buf), stdin))
     {
-        char *p = strpbrk(buf, "\r\n");
-        if (p)
-            *p = 0;
+        buf[strcspn(buf, "\r\n")] = 0;
         printf("got = '%s'\n", buf);
     }
 }
