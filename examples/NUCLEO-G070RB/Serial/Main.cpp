@@ -1,5 +1,7 @@
 #include <stdlib.h>
+#include <cstring>
 #include <usart.h>
+#include <redirect.h>
 
 using hal::sys_tick;
 using namespace hal::gpio;
@@ -13,7 +15,7 @@ void loop();
 template<> void handler<interrupt::USART2>()
 {
     ld4::toggle();
-    serial::read();
+    serial::isr();
 }
 
 int main()
@@ -23,16 +25,20 @@ int main()
     hal::nvic<interrupt::USART2>::enable();
     interrupt::enable();
 
+    stdio_t::bind<serial>();
+
     for (;;)
         loop();
 }
 
 void loop()
 {
-    static uint8_t i = 0;
-    static char buf[32];
+    char buf[256];
 
-    serial::write(itoa(i++, buf, 10));
-    serial::write("\n");
+    if (fgets(buf, sizeof(buf), stdin))
+    {
+        buf[strcspn(buf, "\r\n")] = 0;
+        printf("got = '%s'\n", buf);
+    }
 }
 
