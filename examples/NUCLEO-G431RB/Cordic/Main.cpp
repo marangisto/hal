@@ -19,10 +19,35 @@ template<> void handler<interrupt::USART2>()
 {
     ld4::toggle();
     serial::isr();
-    cordic::setup<cordic::sine, 6>();
 }
 
 void loop();
+
+const float pi = 3.141592654;
+
+template<uint32_t SAMPLE_FREQUENCY>
+class generator_t
+{
+public:
+    static constexpr float dt = 1. / SAMPLE_FREQUENCY;
+
+    generator_t(float f): m_p(1. / f), m_t(.0), m_w(f * 2.) {}
+
+    float next_sample()
+    {
+        auto y = 4. * q31tof(cordic::compute(ftoq31(1. - m_w * m_t)));
+
+        m_t += dt;
+        if (m_t >= m_p)
+            m_t -= m_p;
+        return y;
+    }
+
+private:
+    float m_p;  // period
+    float m_t;  // time
+    float m_w;  // time
+};
 
 int main()
 {
@@ -31,26 +56,14 @@ int main()
     hal::nvic<interrupt::USART2>::enable();
     interrupt::enable();
     stdio_t::bind<serial>();
+    cordic::setup<cordic::sine, 6>();
 
-    const float pi = 3.141592654;
     const uint32_t buf_size = 500;
-    float sample_freq = 96 * 1024;
-    float wave_freq = 440; // Hz
-    float period = 1. / wave_freq;
-    float dt = 1. / sample_freq;
-    float w = wave_freq * 2 * pi;
-
-    auto f = [w](float t) { return 4. * sin(w * t); };
-
-    float t = 0;
+    const uint32_t sample_freq = 96000;
+    generator_t<sample_freq> c4(440.), c5(880.);
 
     for (uint32_t i = 0; i < buf_size; ++i)
-    {
-        printf("%f\n", f(t));
-        t += dt;
-        if (t >= period)
-            t -= period;
-    }
+        printf("%f %f\n", c4.next_sample(), c5.next_sample());
 
     for (;;)
         loop();
