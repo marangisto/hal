@@ -30,27 +30,26 @@ int main()
     serial::setup<230400>();
     hal::nvic<interrupt::USART2>::enable();
     interrupt::enable();
-
     stdio_t::bind<serial>();
 
     const float pi = 3.141592654;
     const uint32_t buf_size = 500;
-    float sample_freq = 500;
-    float wave_freq = 2.51; // Hz
+    float sample_freq = 96 * 1024;
+    float wave_freq = 440; // Hz
+    float period = 1. / wave_freq;
     float dt = 1. / sample_freq;
-    uint32_t wrap = sample_freq / wave_freq;
     float w = wave_freq * 2 * pi;
 
     auto f = [w](float t) { return 4. * sin(w * t); };
 
-    uint32_t j = 0;
+    float t = 0;
 
     for (uint32_t i = 0; i < buf_size; ++i)
     {
-        float t = dt * j;
         printf("%f\n", f(t));
-        if (++j >= wrap)
-            j = 0;
+        t += dt;
+        if (t >= period)
+            t -= period;
     }
 
     for (;;)
