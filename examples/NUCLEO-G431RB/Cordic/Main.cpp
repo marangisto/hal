@@ -23,30 +23,42 @@ template<> void handler<interrupt::USART2>()
 
 void loop();
 
-const float pi = 3.141592654;
-
 template<uint32_t SAMPLE_FREQUENCY>
 class generator_t
 {
 public:
-    static constexpr float dt = 1. / SAMPLE_FREQUENCY;
+    static constexpr float DT = 1. / SAMPLE_FREQUENCY;
 
-    generator_t(float f): m_p(1. / f), m_t(.0), m_w(f * 2.) {}
+    generator_t(float f): m_phase(.0)
+    {
+        set_freq(f);
+    }
+
+    float get_freq()
+    {
+        return m_freq;
+    }
+
+    void set_freq(float f)
+    {
+        m_freq = f;
+        m_dp = DT * 2 * m_freq;
+    }
 
     float next_sample()
     {
-        auto y = 4. * q31tof(cordic::compute(ftoq31(1. - m_w * m_t)));
+        auto y = 4. * q31tof(cordic::compute(ftoq31(1. - m_phase)));
 
-        m_t += dt;
-        if (m_t >= m_p)
-            m_t -= m_p;
+        m_phase += m_dp;
+        if (m_phase >= 2.)
+            m_phase -= 2.;
         return y;
     }
 
 private:
-    float m_p;  // period
-    float m_t;  // time
-    float m_w;  // time
+    float m_freq;
+    float m_phase;
+    float m_dp;
 };
 
 int main()
