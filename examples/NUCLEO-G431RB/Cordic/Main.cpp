@@ -4,6 +4,7 @@
 #include <cordic.h>
 #include <cstring>
 #include <math.h>
+#include <utility>
 
 using hal::sys_tick;
 using namespace hal::gpio;
@@ -14,6 +15,7 @@ typedef usart_t<2, PA2, PA3> serial;
 typedef output_t<PA5> ld4;
 
 typedef hal::cordic::cordic_t cordic;
+typedef std::pair<float, float> freq_ampl;
 
 template<> void handler<interrupt::USART2>()
 {
@@ -29,9 +31,14 @@ class generator_t
 public:
     static constexpr float DT = 1. / SAMPLE_FREQUENCY;
 
-    generator_t(float f): m_phase(.0)
+    generator_t(float f = 440): m_ampl(1.), m_phase(.0)
     {
         set_freq(f);
+    }
+
+    generator_t(const freq_ampl& fa): m_ampl(fa.second), m_phase(.0)
+    {
+        set_freq(fa.first);
     }
 
     float get_freq()
@@ -39,24 +46,36 @@ public:
         return m_freq;
     }
 
-    void set_freq(float f)
+    void set_freq(float freq)
     {
-        m_freq = f;
+        m_freq = freq;
         m_dp = DT * 2 * m_freq;
+    }
+
+    float get_ampl()
+    {
+        return m_ampl;
+    }
+
+    void set_ampl(float ampl)
+    {
+        m_ampl = ampl;
     }
 
     float next_sample()
     {
-        auto y = 4. * q31tof(cordic::compute(ftoq31(1. - m_phase)));
+        // FIXME: interleave cordic with phase update
+        auto y = q31tof(cordic::compute(ftoq31(1. - m_phase)));
 
         m_phase += m_dp;
         if (m_phase >= 2.)
             m_phase -= 2.;
-        return y;
+        return y * m_ampl;
     }
 
 private:
     float m_freq;
+    float m_ampl;
     float m_phase;
     float m_dp;
 };
@@ -68,14 +87,36 @@ int main()
     hal::nvic<interrupt::USART2>::enable();
     interrupt::enable();
     stdio_t::bind<serial>();
-    cordic::setup<cordic::sine, 6>();
+    cordic::setup<cordic::sine, 4>();
 
     const uint32_t buf_size = 500;
     const uint32_t sample_freq = 96000;
-    generator_t<sample_freq> c4(440.), c5(880.);
+    const float f = 440.;
+
+    generator_t<sample_freq> w1[10], w2[10];
+
+    for (uint16_t i = 0; i < sizeof(w1) / sizeof(*w1); ++i)
+    {
+        float k = i + 1;
+        w1[i] = generator_t<sample_freq>(freq_ampl(f * k, 1. / k));
+    }
+
+    for (uint16_t i = 0; i < sizeof(w2) / sizeof(*w2); ++i)
+    {
+        float k = 2 * i + 1;
+        w2[i] = generator_t<sample_freq>(freq_ampl(f * k, 1. / k));
+    }
 
     for (uint32_t i = 0; i < buf_size; ++i)
-        printf("%f %f\n", c4.next_sample(), c5.next_sample());
+    {
+        float s1 = 0, s2 = 0;
+
+        for (uint8_t j = 0; j < sizeof(w1) / sizeof(*w1); ++j)
+            s1 += w1[j].next_sample();
+        for (uint8_t j = 0; j < sizeof(w2) / sizeof(*w2); ++j)
+            s2 += w2[j].next_sample();
+        printf("%f %f\n", 4. * s1, 4. * s2);
+    }
 
     for (;;)
         loop();
