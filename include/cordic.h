@@ -5,12 +5,14 @@ namespace hal
 namespace cordic
 {
 
+__attribute__((always_inline))
 static inline float q31tof(int32_t x)
 {
     constexpr float k = 1. / static_cast<float>(0x7FFFFFFF);
     return x * k;
 }
 
+__attribute__((always_inline))
 static inline int32_t ftoq31(float x)
 {
     constexpr float k = static_cast<float>(0x7FFFFFFF);
@@ -58,7 +60,8 @@ struct cordic_t
                    ;
     }
 
-    static int32_t compute(int32_t x)
+    __attribute__((always_inline))
+    static inline int32_t compute(int32_t x)
     {
         CORDIC.WDATA = x;
         return CORDIC.RDATA;

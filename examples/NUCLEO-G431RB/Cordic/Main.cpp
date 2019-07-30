@@ -62,7 +62,8 @@ public:
         m_ampl = ampl;
     }
 
-    float next_sample()
+    __attribute__((always_inline))
+    float inline next_sample()
     {
         // FIXME: interleave cordic with phase update
         auto y = q31tof(cordic::compute(ftoq31(1. - m_phase)));
@@ -88,8 +89,9 @@ int main()
     interrupt::enable();
     stdio_t::bind<serial>();
     cordic::setup<cordic::sine, 4>();
+    serial::write("startup complete!\n");
 
-    const uint32_t buf_size = 500;
+    const uint32_t buf_size = 1000;
     const uint32_t sample_freq = 96000;
     const float f = 440.;
 
@@ -107,16 +109,34 @@ int main()
         w2[i] = generator_t<sample_freq>(freq_ampl(f * k, 1. / k));
     }
 
+    static float b1[buf_size], b2[buf_size];
+
+    uint32_t t0 = sys_tick::count();
+
     for (uint32_t i = 0; i < buf_size; ++i)
     {
-        float s1 = 0, s2 = 0;
+        float s = 0;
 
         for (uint8_t j = 0; j < sizeof(w1) / sizeof(*w1); ++j)
-            s1 += w1[j].next_sample();
-        for (uint8_t j = 0; j < sizeof(w2) / sizeof(*w2); ++j)
-            s2 += w2[j].next_sample();
-        printf("%f %f\n", 4. * s1, 4. * s2);
+            s += w1[j].next_sample();
+        b1[i] = s;
     }
+
+    uint32_t t = sys_tick::count() - t0;
+
+    for (uint32_t i = 0; i < buf_size; ++i)
+    {
+        float s = 0;
+
+        for (uint8_t j = 0; j < sizeof(w2) / sizeof(*w2); ++j)
+            s += w2[j].next_sample();
+        b2[i] = s;
+    }
+
+    for (uint32_t i = 0; i < buf_size; ++i)
+        printf("%f %f\n", 4. * b1[i], 4. * b2[i]);
+
+    printf("elapsed = %ld\n", t);
 
     for (;;)
         loop();
