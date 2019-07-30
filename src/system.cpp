@@ -226,6 +226,13 @@ void sys_clock::init()
     // wait for PLL as system clock
 
     while ((RCC.CFGR & _::CFGR_SWS<0x3>) != _::CFGR_SWS<0x3>);
+
+    // enable FPU
+
+    FPU_CPACR.CPACR |= fpu_cpacr_t::CPACR_CP<0xf>;      // enable co-processors
+    __asm volatile ("dsb");                             // data pipe-line reset
+    __asm volatile ("isb");                             // instruction pipe-line reset
+
 #else
     static_assert(false, "no featured clock initialzation");
 #endif
