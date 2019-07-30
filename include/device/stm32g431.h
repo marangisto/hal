@@ -14321,7 +14321,7 @@ struct fpu_cpacr_t
     static const uint32_t CPACR_RESET_VALUE = 0x0;
 };
 
-static fpu_cpacr_t& FPU_CPACR = *reinterpret_cast<fpu_cpacr_t*>(0xe000ef08);
+static fpu_cpacr_t& FPU_CPACR = *reinterpret_cast<fpu_cpacr_t*>(0xe000ed88);
 
 #define HAVE_PERIPHERAL_FPU_CPACR
 

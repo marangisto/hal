@@ -31913,7 +31913,7 @@
          <name>FPU_CPACR</name>
          <description>Floating point unit CPACR</description>
          <groupName>FPU</groupName>
-         <baseAddress>0xE000EF08</baseAddress>
+         <baseAddress>0xE000ED88</baseAddress>
          <addressBlock>
             <offset>0x0</offset>
             <size>0x5</size>
