@@ -162,6 +162,24 @@ private:
     typedef pin_t<PIN> pin;
 };
 
+template<gpio_pin_t PIN>
+class analog_t
+{
+public:
+    template<input_type_t input_type = floating>
+    static inline void setup()
+    {
+        peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
+        pin::gpio().MODER |= 0x3 << (pin::bit_pos*2);
+        static_assert(input_type != pull_up, "only floating or pull-down modes allowed for analog pins");
+        if (input_type != floating)
+            pin::gpio().PUPDR |= input_type << (pin::bit_pos*2);
+    }
+
+private:
+    typedef pin_t<PIN> pin;
+};
+
 namespace internal
 {
 
