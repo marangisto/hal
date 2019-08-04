@@ -27138,7 +27138,7 @@
          <name>ADC12_Common</name>
          <description>Analog-to-Digital Converter</description>
          <groupName>ADC</groupName>
-         <baseAddress>0x50000200</baseAddress>
+         <baseAddress>0x50000300</baseAddress>
          <addressBlock>
             <offset>0x0</offset>
             <size>0x11</size>

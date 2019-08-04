@@ -12827,7 +12827,7 @@ struct adc12_common_t
     static const uint32_t CDR_RESET_VALUE = 0x0;
 };
 
-static adc12_common_t& ADC12_Common = *reinterpret_cast<adc12_common_t*>(0x50000200);
+static adc12_common_t& ADC12_Common = *reinterpret_cast<adc12_common_t*>(0x50000300);
 
 #define HAVE_PERIPHERAL_ADC12_Common
 
