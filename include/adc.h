@@ -23,7 +23,6 @@ struct adc_t
     {
         using namespace device;
 
-
         // FIXME: assert adc is not enabled
         peripheral_traits<adc12_common_t>::enable();            // enable adc clock
 
@@ -40,15 +39,9 @@ struct adc_t
                    ;
 
         ADC1.DIFSEL = _::DIFSEL_RESET_VALUE;                    // differential mode register
-
         ADC1.GCOMP = _::GCOMP_RESET_VALUE;                      // reset gain compensation register
-
         ADC1.CFGR2 = _::CFGR2_RESET_VALUE;                      // reset configuration register 2
-
-        ADC1.CR = _::CFGR2_RESET_VALUE                          // reset control register
-                | _::CR_ADVREGEN;                               // enable adc voltage regulator
-                ;
-
+        ADC1.CR = _::CR_RESET_VALUE;                            // reset control register
         RCC.CCIPR1 |= rcc_t::CCIPR1_ADCSEL<0x1>;                // use pll P clock  FIXME: does not seem to have any effect!
 
         ADC12_Common.CCR = adc12_common_t::CCR_RESET_VALUE      // reset common control register
@@ -57,21 +50,17 @@ struct adc_t
 
         ADC1.IER = _::IER_RESET_VALUE                           // reset register
 //                 | _::IER_EOCIE                                 // interrupt on conversion end
-                 | _::IER_OVRIE                                 // interrupt on overrun FIXME: do we really want this?
+//                 | _::IER_OVRIE                                 // interrupt on overrun FIXME: do we really want this?
                  ;
-        /*
-//        ADC12_Common.CCR |= adc12_common_t::CCR_VREFEN;         // enable vref
 
+        ADC1.CR &= ~_::CR_DEEPPWD;                              // disable deep power down mode
+        ADC1.CR |= _::CR_ADVREGEN;                              // enable adc voltage regulator
+        sys_clock::delay_us(10);                                // wait for regulator to stabilize
+        ADC1.CR |= _::CR_ADCAL;                                 // start calibration
+        while (ADC1.CR & _::CR_ADCAL);                          // wait for calibration to complete
+        for (volatile uint8_t i = 0; i < 4; ++i);               // cycles between calibration and adc enable
         ADC1.CR |= _::CR_ADEN;                                  // enable adc 
         while (!(ADC1.ISR & _::ISR_ADRDY));                     // wait for adc ready 
-
-        sys_tick::delay_ms(1);                                  // FIXME: delay 10us for regulator stability
-
-        ADC1.CR |= _::CR_ADCAL;                                 // start calibration
-        //while (ADC1.CR & _::CR_ADCAL);                          // wait for calibration to complete
-
-        */
-
     }
 
     static inline void start_conversion()
