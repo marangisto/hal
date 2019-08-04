@@ -26,6 +26,7 @@ int main()
     interrupt::enable();
 
     stdio_t::bind<serial>();
+    printf("Welcome to the STM32G431!\n");
 
     for (;;)
         loop();
@@ -35,6 +36,7 @@ void loop()
 {
     char buf[256];
 
+    printf("> \n");
     if (fgets(buf, sizeof(buf), stdin))
     {
         buf[strcspn(buf, "\r\n")] = 0;
