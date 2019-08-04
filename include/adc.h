@@ -17,10 +17,11 @@ namespace adc
 
 struct adc_t
 {
+    typedef device::adc1_t _;
+
     static void setup()
     {
         using namespace device;
-        typedef adc1_t _;
 
         RCC.CCIPR1 |= rcc_t::CCIPR1_ADCSEL<0x2>;                // use system clock
 
@@ -59,7 +60,21 @@ struct adc_t
 //        ADC1.CR |= _::CR_ADSTART;                               // start conversions
     }
 
-    static uint32_t read()
+    static inline void start_conversion()
+    {
+        using namespace device;
+
+        ADC1.CR |= _::CR_ADSTART;                               // start conversions
+    }
+
+    static inline bool end_of_conversion()
+    {
+        using namespace device;
+
+        return (ADC1.ISR & _::ISR_EOC) != 0;                    // start conversions
+    }
+
+    static inline uint32_t read()
     {
         using namespace device;
 
