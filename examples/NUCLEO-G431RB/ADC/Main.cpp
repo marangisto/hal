@@ -1,16 +1,21 @@
 #include <stdlib.h>
-#include <adc.h>
 #include <usart.h>
-#include <cstring>
+#include <redirect.h>
+#include <adc.h>
 
 using hal::sys_tick;
+using hal::sys_clock;
 using namespace hal::gpio;
 using namespace hal::usart;
 using namespace hal::adc;
 
 typedef usart_t<2, PA2, PA3> serial;
 typedef output_t<PA5> ld4;
+typedef output_t<PA10> d2;
 typedef analog_t<PA0> ain;
+typedef adc_t adc;
+
+void loop();
 
 template<> void handler<interrupt::USART2>()
 {
@@ -18,37 +23,36 @@ template<> void handler<interrupt::USART2>()
     serial::isr();
 }
 
-template<> void handler<interrupt::ADC1_2>()
-{
-    ld4::toggle();
-}
-
-typedef adc_t adc1;
-
 int main()
 {
+    adc::setup();
+    ain::setup();
     ld4::setup();
+    d2::setup();
     serial::setup<230400>();
     hal::nvic<interrupt::USART2>::enable();
-//    hal::nvic<interrupt::ADC1_2>::enable();
     interrupt::enable();
-
-    ain::setup();
-    adc1::setup();
-    serial::write("ADC ready!\n");
+    stdio_t::bind<serial>();
+    printf("Welcome to the STM32G431!\n");
 
     for (;;)
-    {
-        static char buf[256];
-        uint32_t x = adc1::read();
+        loop();
+}
 
-        serial::write(itoa(x, buf, 16));
-        serial::write("    0x");
-        serial::write(itoa(adc1::isr(), buf, 16));
-        serial::write("    0x");
-        serial::write(itoa(adc1::cr(), buf, 16));
-        serial::write("\n");
-        sys_tick::delay_ms(1000);
+void loop()
+{
+    char buf[256];
+
+    printf("> \n");
+    if (fgets(buf, sizeof(buf), stdin))
+    {
+        d2::toggle();
+        adc::start_conversion();
+        while (!adc::end_of_conversion());
+        d2::toggle();
+        uint16_t y = adc::read();
+
+        printf("adc = %d\n", y);
     }
 }
 
