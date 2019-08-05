@@ -15750,6 +15750,12 @@ template<> struct peripheral_traits<i2c2_t>
     static void reset() { RCC.APB1RSTR1 |= rcc_t::APB1RSTR1_I2C2RST; }
 };
 
+template<> struct peripheral_traits<i2c3_t>
+{
+    static void enable() { RCC.APB1RSTR1 |= rcc_t::APB1RSTR1_I2C3; }
+    static void disable() { RCC.APB1RSTR1 &= ~rcc_t::APB1RSTR1_I2C3; }
+};
+
 template<> struct peripheral_traits<pwr_t>
 {
     static void enable() { RCC.APB1ENR1 |= rcc_t::APB1ENR1_PWREN; }
@@ -15964,18 +15970,30 @@ template<> struct peripheral_traits<syscfg_t>
     static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_SYSCFGRST; }
 };
 
+template<> struct peripheral_traits<dac1_t>
+{
+    static void enable() { RCC.AHB2ENR |= rcc_t::AHB2ENR_DAC1; }
+    static void disable() { RCC.AHB2ENR &= ~rcc_t::AHB2ENR_DAC1; }
+};
+
 template<> struct peripheral_traits<dac2_t>
 {
+    static void enable() { RCC.AHB2ENR |= rcc_t::AHB2ENR_DAC2; }
+    static void disable() { RCC.AHB2ENR &= ~rcc_t::AHB2ENR_DAC2; }
     static void reset() { RCC.AHB2RSTR |= rcc_t::AHB2RSTR_DAC2RST; }
 };
 
 template<> struct peripheral_traits<dac3_t>
 {
+    static void enable() { RCC.AHB2ENR |= rcc_t::AHB2ENR_DAC3; }
+    static void disable() { RCC.AHB2ENR &= ~rcc_t::AHB2ENR_DAC3; }
     static void reset() { RCC.AHB2RSTR |= rcc_t::AHB2RSTR_DAC3RST; }
 };
 
 template<> struct peripheral_traits<dac4_t>
 {
+    static void enable() { RCC.AHB2ENR |= rcc_t::AHB2ENR_DAC4; }
+    static void disable() { RCC.AHB2ENR &= ~rcc_t::AHB2ENR_DAC4; }
     static void reset() { RCC.AHB2RSTR |= rcc_t::AHB2RSTR_DAC4RST; }
 };
 
