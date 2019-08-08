@@ -32,19 +32,23 @@ template<uint8_t NO, uint8_t CH> struct dac_channel_traits {};
 
 template<uint8_t NO> struct dac_channel_traits<NO, 1>
 {
+    typedef typename dac_traits<NO>::T _;
     static constexpr gpio::gpio_pin_t pin = dac_traits<NO>::ch1_pin;
-    static constexpr uint32_t CR_EN = dac_traits<NO>::T::DAC_CR_EN1;
-    static constexpr uint32_t CR_TEN = dac_traits<NO>::T::DAC_CR_TEN1;
-    static constexpr uint32_t SWTRGR_SWTRIG = dac_traits<NO>::T::DAC_SWTRGR_SWTRIG1;
+    static constexpr uint32_t CR_EN = _::DAC_CR_EN1;
+    static constexpr uint32_t CR_TEN = _::DAC_CR_TEN1;
+    template<uint32_t X> static constexpr uint32_t CR_TSEL = _::template DAC_CR_TSEL1<X>;
+    static constexpr uint32_t SWTRGR_SWTRIG = _::DAC_SWTRGR_SWTRIG1;
     static inline void write(uint16_t x) { dac_traits<NO>::DAC().DAC_DHR12R1 = x; }
 };
 
 template<uint8_t NO> struct dac_channel_traits<NO, 2>
 {
+    typedef typename dac_traits<NO>::T _;
     static constexpr gpio::gpio_pin_t pin = dac_traits<NO>::ch2_pin;
-    static constexpr uint32_t CR_EN = dac_traits<NO>::T::DAC_CR_EN2;
-    static constexpr uint32_t CR_TEN = dac_traits<NO>::T::DAC_CR_TEN2;
-    static constexpr uint32_t SWTRGR_SWTRIG = dac_traits<NO>::T::DAC_SWTRGR_SWTRIG2;
+    static constexpr uint32_t CR_EN = _::DAC_CR_EN2;
+    static constexpr uint32_t CR_TEN = _::DAC_CR_TEN2;
+    template<uint32_t X> static constexpr uint32_t CR_TSEL = _::template DAC_CR_TSEL2<X>;
+    static constexpr uint32_t SWTRGR_SWTRIG = _::DAC_SWTRGR_SWTRIG2;
     static inline void write(uint16_t x) { dac_traits<NO>::DAC().DAC_DHR12R2 = x; }
 };
 
@@ -66,9 +70,17 @@ struct dac_t
     static inline void enable()
     {
         gpio::analog_t<dac_channel_traits<NO, CH>::pin>::template setup<gpio::floating>();
+
         DAC().DAC_CR |= dac_channel_traits<NO, CH>::CR_EN;      // enable channel
         sys_clock::delay_us(8);                                 // wait for voltage to settle
-        DAC().DAC_CR |= dac_channel_traits<NO, CH>::CR_TEN;     // enable trigger for channel
+    }
+
+    template<uint8_t CH, uint8_t SEL = 0>
+    static inline void enable_trigger()
+    {
+        DAC().DAC_CR |= dac_channel_traits<NO, CH>::CR_TEN                  // enable trigger
+                     |  dac_channel_traits<NO, CH>::template CR_TSEL<SEL>   // select trigger source
+                     ;
     }
 
     template<uint8_t CH>
