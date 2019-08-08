@@ -42,10 +42,8 @@ int main()
     
         d2::toggle();
         dac::write<1>(x);
-        dac::trigger<1>();
         d2::toggle();
         dac::write<2>(4095 - x);
-        dac::trigger<2>();
     }
 }
 
