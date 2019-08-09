@@ -150,6 +150,7 @@ class timer_t
 {
 public:
     typedef typename timer_traits<TN>::count_t count_t;
+    enum master_mode_t { mm_reset, mm_enable, mm_update };
 
     static inline void setup(uint16_t psc, count_t arr)
     {
@@ -164,6 +165,12 @@ public:
     static inline void update_interrupt_enable()
     {
         TIM().DIER |= _::DIER_UIE;
+    }
+
+    template<master_mode_t MM>
+    static inline void master_mode()
+    {
+        TIM().CR2 |= _::template CR2_MMS<MM>;
     }
 
     static inline volatile bool uif()

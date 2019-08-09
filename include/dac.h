@@ -38,6 +38,7 @@ template<uint8_t NO> struct dac_channel_traits<NO, 1>
     static constexpr uint32_t CR_TEN = _::DAC_CR_TEN1;
     template<uint32_t X> static constexpr uint32_t CR_TSEL = _::template DAC_CR_TSEL1<X>;
     static constexpr uint32_t SWTRGR_SWTRIG = _::DAC_SWTRGR_SWTRIG1;
+    static constexpr uint32_t CR_DMAEN = _::DAC_CR_DMAEN1;
     static inline void write(uint16_t x) { dac_traits<NO>::DAC().DAC_DHR12R1 = x; }
 };
 
@@ -49,6 +50,7 @@ template<uint8_t NO> struct dac_channel_traits<NO, 2>
     static constexpr uint32_t CR_TEN = _::DAC_CR_TEN2;
     template<uint32_t X> static constexpr uint32_t CR_TSEL = _::template DAC_CR_TSEL2<X>;
     static constexpr uint32_t SWTRGR_SWTRIG = _::DAC_SWTRGR_SWTRIG2;
+    static constexpr uint32_t CR_DMAEN = _::DAC_CR_DMAEN2;
     static inline void write(uint16_t x) { dac_traits<NO>::DAC().DAC_DHR12R2 = x; }
 };
 
@@ -81,6 +83,12 @@ struct dac_t
         DAC().DAC_CR |= dac_channel_traits<NO, CH>::CR_TEN                  // enable trigger
                      |  dac_channel_traits<NO, CH>::template CR_TSEL<SEL>   // select trigger source
                      ;
+    }
+
+    template<uint8_t CH>
+    static inline void enable_dma()
+    {
+        DAC().DAC_CR |= dac_channel_traits<NO, CH>::CR_DMAEN;
     }
 
     template<uint8_t CH>

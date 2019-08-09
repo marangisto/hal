@@ -37,6 +37,8 @@ template<> void handler<interrupt::TIM6_DACUNDER>()
 int main()
 {
     dac::setup();
+    dac::enable_dma<1>();
+    dac::enable_trigger<1, 0x7>();  // TIM6_TRGO
     dac::enable<1>();
     dac::enable<2>();
 
@@ -44,6 +46,7 @@ int main()
     ain::setup();
 
     sample_timer::setup(8, 196);
+    sample_timer::master_mode<sample_timer::mm_update>();
     sample_timer::update_interrupt_enable();
 
     d2::setup();
