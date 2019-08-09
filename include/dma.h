@@ -16,6 +16,12 @@ template<> struct dma_traits<1>
     static inline T& DMA() { return device::DMA1; }
 };
 
+template<> struct dma_traits<2>
+{
+    typedef device::dma2_t T;
+    static inline T& DMA() { return device::DMA2; }
+};
+
 template<uint8_t NO, uint8_t CH> struct dma_channel_traits {};
 
 template<uint8_t NO> struct dma_channel_traits<NO, 1>
