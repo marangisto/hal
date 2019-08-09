@@ -14,7 +14,7 @@ using namespace hal::dac;
 typedef usart_t<2, PA2, PA3> serial;
 typedef output_t<PA10> d2;
 typedef analog_t<PA0> ain;
-typedef adc_t adc;
+typedef adc_t<1> adc;
 typedef dac_t<1> dac;
 
 void loop();
