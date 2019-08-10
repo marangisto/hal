@@ -22,6 +22,10 @@
     static_assert(false, "mcu not recognized");
 #endif
 
+#if defined(USE_HAL_DRIVER)
+extern "C" uint32_t SystemCoreClock;
+#endif
+
 namespace hal
 {
 
@@ -55,6 +59,13 @@ public:
         while (n > 0)
             --n;
     }
+
+#if defined(USE_HAL_DRIVER)
+    static void copy_system_core_clock()
+    {
+        m_freq = SystemCoreClock;
+    }
+#endif
 
 private:
     static uint32_t m_freq;
