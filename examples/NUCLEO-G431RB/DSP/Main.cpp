@@ -1,92 +1,64 @@
-#include <stdlib.h>
-#include <usart.h>
-#include <redirect.h>
 #include <timer.h>
-#include <adc.h>
+#include <button.h>
+#include <gpio.h>
 #include <dac.h>
 #include <dma.h>
 
-using hal::sys_tick;
-using hal::sys_clock;
-using namespace hal::gpio;
-using namespace hal::usart;
 using namespace hal::timer;
-using namespace hal::adc;
+using namespace hal::gpio;
 using namespace hal::dac;
 using namespace hal::dma;
 
-typedef usart_t<2, PA2, PA3> serial;
-typedef hal::timer::timer_t<6> sample_timer;
-typedef output_t<PA10> d2;
-typedef analog_t<PA0> ain;
-typedef adc_t<1> adc;
+typedef timer_t<2> tim2;
+typedef timer_t<6> tim6;
+typedef timer_t<3> aux;
+
 typedef dac_t<1> dac;
 typedef dma_t<1> dma;
 
-void loop();
+typedef button_t<PC13> btn;
+typedef output_t<PA5> led;
 
-template<> void handler<interrupt::USART2>()
+template<> void handler<interrupt::TIM3>()
 {
-    serial::isr();
+    aux::clear_uif();
+    btn::update();
 }
 
-template<> void handler<interrupt::TIM6_DACUNDER>()
-{
-    sample_timer::clear_uif();
-}
-
-template<> void handler<interrupt::DMA1_CH1>()
-{
-    dma::clear_interrupt_flag<1>();
-    d2::set();
-    d2::clear();
-}
-
-static constexpr uint32_t buffer_size = 5;
-static uint16_t output_buffer[buffer_size] = { 0, 1000, 2000, 3000, 4000 };
+static uint16_t sine[60] =
+    { 0x07ff,0x08cb,0x0994,0x0a5a,0x0b18,0x0bce,0x0c79,0x0d18,0x0da8,0x0e29,0x0e98,0x0ef4
+    , 0x0f3e,0x0f72,0x0f92,0x0f9d,0x0f92,0x0f72,0x0f3e,0x0ef4,0x0e98,0x0e29,0x0da8,0x0d18
+    , 0x0c79,0x0bce,0x0b18,0x0a5a,0x0994,0x08cb,0x07ff,0x0733,0x066a,0x05a4,0x04e6,0x0430
+    , 0x0385,0x02e6,0x0256,0x01d5,0x0166,0x010a,0x00c0,0x008c,0x006c,0x0061,0x006c,0x008c
+    , 0x00c0,0x010a,0x0166,0x01d5,0x0256,0x02e6,0x0385,0x0430,0x04e6,0x05a4,0x066a,0x0733
+    };
 
 int main()
 {
-    d2::setup();
- 
-    adc::setup();
-    ain::setup();
+    led::setup();
+    btn::setup<pull_down>();
 
-    dac::setup();
-    dac::enable_dma<1>();
-    dac::enable_trigger<1, 0x7>();  // TIM6_TRGO
-    dac::enable<1>();
-    dac::enable<2>();
+    aux::setup(100, 1000);
+    aux::update_interrupt_enable();
+    hal::nvic<interrupt::TIM3>::enable();
+
+    tim2::setup(149, 999);
+    tim2::master_mode<tim2::mm_update>();
+
+    tim6::setup(0, 2499);
+    tim6::master_mode<tim6::mm_update>();
+
+    interrupt::enable();
 
     dma::setup();
-    dma::mem_to_periph<1>(output_buffer, buffer_size, &device::DAC1.DAC_DHR12R1);
-    dma::enable_interrupt<1>(); 
-
-    sample_timer::setup(8, 196);
-    sample_timer::master_mode<sample_timer::mm_update>();
-    sample_timer::update_interrupt_enable();
-
-    serial::setup<230400>();
-    hal::nvic<interrupt::USART2>::enable();
-    hal::nvic<interrupt::TIM6_DACUNDER>::enable();
-    hal::nvic<interrupt::DMA1_CH1>::enable();
-    interrupt::enable();
-    stdio_t::bind<serial>();
-
-    printf("Welcome to the STM32G431!\n");
-
-    dma::enable<1>();       // enable dma transfer on channel 1
+    dac::setup();
+    dac::enable_trigger<1, 7>();
+    dac::enable_dma<1, dma, 1, uint16_t>(sine, sizeof(sine) / sizeof(*sine));
 
     for (;;)
-        loop();
-}
-
-void loop()
-{
-    adc::start_conversion();
-    while (!adc::end_of_conversion());
-    uint16_t y = adc::read();
-    //dac::write<1>(y);
-    dac::write<2>(4095-y);
+    {
+        if (btn::read())
+            led::toggle();
+    }
 }
 
