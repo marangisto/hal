@@ -64,6 +64,153 @@ template<uint8_t NO> struct dma_channel_traits<NO, 1>
     static inline volatile uint32_t& CMAR() { return DMA().CMAR1; }
 };
 
+template<uint8_t NO> struct dma_channel_traits<NO, 2>
+{
+    typedef typename dma_traits<NO>::T _;
+    static inline typename dma_traits<NO>::T& DMA() { return dma_traits<NO>::DMA(); }
+
+    static constexpr uint32_t ISR_TEIF = _::ISR_TEIF2;
+    static constexpr uint32_t ISR_HTIF = _::ISR_HTIF2;
+    static constexpr uint32_t ISR_TCIF = _::ISR_TCIF2;
+    static constexpr uint32_t ISR_GIF = _::ISR_GIF2;
+
+    static constexpr uint32_t IFCR_TEIF = _::IFCR_TEIF2;
+    static constexpr uint32_t IFCR_HTIF = _::IFCR_HTIF2;
+    static constexpr uint32_t IFCR_TCIF = _::IFCR_TCIF2;
+    static constexpr uint32_t IFCR_GIF = _::IFCR_GIF2;
+
+    static inline volatile uint32_t& CCR() { return DMA().CCR2; }
+    static inline volatile uint32_t& CNDTR() { return DMA().CNDTR2; }
+    static inline volatile uint32_t& CPAR() { return DMA().CPAR2; }
+    static inline volatile uint32_t& CMAR() { return DMA().CMAR2; }
+};
+
+template<uint8_t NO> struct dma_channel_traits<NO, 3>
+{
+    typedef typename dma_traits<NO>::T _;
+    static inline typename dma_traits<NO>::T& DMA() { return dma_traits<NO>::DMA(); }
+
+    static constexpr uint32_t ISR_TEIF = _::ISR_TEIF3;
+    static constexpr uint32_t ISR_HTIF = _::ISR_HTIF3;
+    static constexpr uint32_t ISR_TCIF = _::ISR_TCIF3;
+    static constexpr uint32_t ISR_GIF = _::ISR_GIF3;
+
+    static constexpr uint32_t IFCR_TEIF = _::IFCR_TEIF3;
+    static constexpr uint32_t IFCR_HTIF = _::IFCR_HTIF3;
+    static constexpr uint32_t IFCR_TCIF = _::IFCR_TCIF3;
+    static constexpr uint32_t IFCR_GIF = _::IFCR_GIF3;
+
+    static inline volatile uint32_t& CCR() { return DMA().CCR3; }
+    static inline volatile uint32_t& CNDTR() { return DMA().CNDTR3; }
+    static inline volatile uint32_t& CPAR() { return DMA().CPAR3; }
+    static inline volatile uint32_t& CMAR() { return DMA().CMAR3; }
+};
+
+template<uint8_t NO> struct dma_channel_traits<NO, 4>
+{
+    typedef typename dma_traits<NO>::T _;
+    static inline typename dma_traits<NO>::T& DMA() { return dma_traits<NO>::DMA(); }
+
+    static constexpr uint32_t ISR_TEIF = _::ISR_TEIF4;
+    static constexpr uint32_t ISR_HTIF = _::ISR_HTIF4;
+    static constexpr uint32_t ISR_TCIF = _::ISR_TCIF4;
+    static constexpr uint32_t ISR_GIF = _::ISR_GIF4;
+
+    static constexpr uint32_t IFCR_TEIF = _::IFCR_TEIF4;
+    static constexpr uint32_t IFCR_HTIF = _::IFCR_HTIF4;
+    static constexpr uint32_t IFCR_TCIF = _::IFCR_TCIF4;
+    static constexpr uint32_t IFCR_GIF = _::IFCR_GIF4;
+
+    static inline volatile uint32_t& CCR() { return DMA().CCR4; }
+    static inline volatile uint32_t& CNDTR() { return DMA().CNDTR4; }
+    static inline volatile uint32_t& CPAR() { return DMA().CPAR4; }
+    static inline volatile uint32_t& CMAR() { return DMA().CMAR4; }
+};
+
+template<uint8_t NO> struct dma_channel_traits<NO, 5>
+{
+    typedef typename dma_traits<NO>::T _;
+    static inline typename dma_traits<NO>::T& DMA() { return dma_traits<NO>::DMA(); }
+
+    static constexpr uint32_t ISR_TEIF = _::ISR_TEIF5;
+    static constexpr uint32_t ISR_HTIF = _::ISR_HTIF5;
+    static constexpr uint32_t ISR_TCIF = _::ISR_TCIF5;
+    static constexpr uint32_t ISR_GIF = _::ISR_GIF5;
+
+    static constexpr uint32_t IFCR_TEIF = _::IFCR_TEIF5;
+    static constexpr uint32_t IFCR_HTIF = _::IFCR_HTIF5;
+    static constexpr uint32_t IFCR_TCIF = _::IFCR_TCIF5;
+    static constexpr uint32_t IFCR_GIF = _::IFCR_GIF5;
+
+    static inline volatile uint32_t& CCR() { return DMA().CCR5; }
+    static inline volatile uint32_t& CNDTR() { return DMA().CNDTR5; }
+    static inline volatile uint32_t& CPAR() { return DMA().CPAR5; }
+    static inline volatile uint32_t& CMAR() { return DMA().CMAR5; }
+};
+
+template<uint8_t NO> struct dma_channel_traits<NO, 6>
+{
+    typedef typename dma_traits<NO>::T _;
+    static inline typename dma_traits<NO>::T& DMA() { return dma_traits<NO>::DMA(); }
+
+    static constexpr uint32_t ISR_TEIF = _::ISR_TEIF6;
+    static constexpr uint32_t ISR_HTIF = _::ISR_HTIF6;
+    static constexpr uint32_t ISR_TCIF = _::ISR_TCIF6;
+    static constexpr uint32_t ISR_GIF = _::ISR_GIF6;
+
+    static constexpr uint32_t IFCR_TEIF = _::IFCR_TEIF6;
+    static constexpr uint32_t IFCR_HTIF = _::IFCR_HTIF6;
+    static constexpr uint32_t IFCR_TCIF = _::IFCR_TCIF6;
+    static constexpr uint32_t IFCR_GIF = _::IFCR_GIF6;
+
+    static inline volatile uint32_t& CCR() { return DMA().CCR6; }
+    static inline volatile uint32_t& CNDTR() { return DMA().CNDTR6; }
+    static inline volatile uint32_t& CPAR() { return DMA().CPAR6; }
+    static inline volatile uint32_t& CMAR() { return DMA().CMAR6; }
+};
+
+template<uint8_t NO> struct dma_channel_traits<NO, 7>
+{
+    typedef typename dma_traits<NO>::T _;
+    static inline typename dma_traits<NO>::T& DMA() { return dma_traits<NO>::DMA(); }
+
+    static constexpr uint32_t ISR_TEIF = _::ISR_TEIF7;
+    static constexpr uint32_t ISR_HTIF = _::ISR_HTIF7;
+    static constexpr uint32_t ISR_TCIF = _::ISR_TCIF7;
+    static constexpr uint32_t ISR_GIF = _::ISR_GIF7;
+
+    static constexpr uint32_t IFCR_TEIF = _::IFCR_TEIF7;
+    static constexpr uint32_t IFCR_HTIF = _::IFCR_HTIF7;
+    static constexpr uint32_t IFCR_TCIF = _::IFCR_TCIF7;
+    static constexpr uint32_t IFCR_GIF = _::IFCR_GIF7;
+
+    static inline volatile uint32_t& CCR() { return DMA().CCR7; }
+    static inline volatile uint32_t& CNDTR() { return DMA().CNDTR7; }
+    static inline volatile uint32_t& CPAR() { return DMA().CPAR7; }
+    static inline volatile uint32_t& CMAR() { return DMA().CMAR7; }
+};
+
+template<uint8_t NO> struct dma_channel_traits<NO, 8>
+{
+    typedef typename dma_traits<NO>::T _;
+    static inline typename dma_traits<NO>::T& DMA() { return dma_traits<NO>::DMA(); }
+
+    static constexpr uint32_t ISR_TEIF = _::ISR_TEIF8;
+    static constexpr uint32_t ISR_HTIF = _::ISR_HTIF8;
+    static constexpr uint32_t ISR_TCIF = _::ISR_TCIF8;
+    static constexpr uint32_t ISR_GIF = _::ISR_GIF8;
+
+    static constexpr uint32_t IFCR_TEIF = _::IFCR_TEIF8;
+    static constexpr uint32_t IFCR_HTIF = _::IFCR_HTIF8;
+    static constexpr uint32_t IFCR_TCIF = _::IFCR_TCIF8;
+    static constexpr uint32_t IFCR_GIF = _::IFCR_GIF8;
+
+    static inline volatile uint32_t& CCR() { return DMA().CCR8; }
+    static inline volatile uint32_t& CNDTR() { return DMA().CNDTR8; }
+    static inline volatile uint32_t& CPAR() { return DMA().CPAR8; }
+    static inline volatile uint32_t& CMAR() { return DMA().CMAR8; }
+};
+
 template<uint8_t W> struct dma_size_bits {};
 
 template<> struct dma_size_bits<1> { static constexpr uint32_t BITS = 0x0; };
