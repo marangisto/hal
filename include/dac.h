@@ -69,7 +69,6 @@ template<uint8_t NO> struct dac_channel_traits<NO, 2>
     static inline void write(uint16_t x) { dac_traits<NO>::DAC().DAC_DHR12R2 = x; }
 };
 
-extern "C" void debug_print(const char *s, uint32_t i);
 template<uint8_t NO>
 struct dac_t
 {

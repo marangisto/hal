@@ -73,7 +73,6 @@ template<> struct dma_size_bits<4> { static constexpr uint32_t BITS = 0x2; };
 template<typename T>
 static constexpr uint32_t dma_type_size() { return dma_size_bits<sizeof(T)>::BITS; }
 
-extern "C" void debug_print(const char *s, uint32_t i);
 template<uint8_t NO>
 struct dma_t
 {
