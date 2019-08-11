@@ -15997,6 +15997,13 @@ template<> struct peripheral_traits<dac4_t>
     static void reset() { RCC.AHB2RSTR |= rcc_t::AHB2RSTR_DAC4RST; }
 };
 
+template<> struct peripheral_traits<adc12_common_t>
+{
+    static void enable() { RCC.AHB2ENR |= rcc_t::AHB2ENR_ADC12EN; }
+    static void disable() { RCC.AHB2ENR &= ~rcc_t::AHB2ENR_ADC12EN; }
+    static void reset() { RCC.AHB2RSTR |= rcc_t::AHB2RSTR_ADC12RST; }
+};
+
 template<> struct peripheral_traits<fmac_t>
 {
     static void enable() { RCC.AHB1ENR |= rcc_t::AHB1ENR_FMACEN; }
