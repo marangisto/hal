@@ -159,7 +159,17 @@ public:
         TIM().PSC = psc;
         TIM().ARR = arr;
         TIM().CR1 |= _::CR1_ARPE;
+        TIM().CR1 |= _::CR1_CEN;        // FIXME: should this be on by default?
+    }
+
+    static inline void enable()
+    {
         TIM().CR1 |= _::CR1_CEN;
+    }
+
+    static inline void disable()
+    {
+        TIM().CR1 &= ~_::CR1_CEN;
     }
 
     static inline void update_interrupt_enable()
@@ -178,7 +188,7 @@ public:
         return (TIM().SR & _::SR_UIF) != 0;
     }
 
-    static inline volatile void clear_uif()
+    static inline void clear_uif()
     {
         TIM().SR &= ~_::SR_UIF;
     }
