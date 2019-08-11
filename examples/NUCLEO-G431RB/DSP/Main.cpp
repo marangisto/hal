@@ -9,7 +9,6 @@ using namespace hal::gpio;
 using namespace hal::dac;
 using namespace hal::dma;
 
-typedef timer_t<2> tim2;
 typedef timer_t<6> tim6;
 typedef timer_t<3> aux;
 
@@ -42,9 +41,6 @@ int main()
     aux::update_interrupt_enable();
     hal::nvic<interrupt::TIM3>::enable();
 
-    tim2::setup(149, 999);
-    tim2::master_mode<tim2::mm_update>();
-
     tim6::setup(0, 2499);
     tim6::master_mode<tim6::mm_update>();
 
@@ -52,7 +48,7 @@ int main()
 
     dma::setup();
     dac::setup();
-    dac::enable_trigger<1, 7>();
+    dac::enable_trigger<1, 7>();    // FIXME: use constant for TIM6_TRGO
     dac::enable_dma<1, dma, 1, uint16_t>(sine, sizeof(sine) / sizeof(*sine));
 
     for (;;)
