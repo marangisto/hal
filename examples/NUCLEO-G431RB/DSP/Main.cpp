@@ -8,6 +8,7 @@ using namespace hal::timer;
 using namespace hal::gpio;
 using namespace hal::dac;
 using namespace hal::dma;
+using hal::sys_clock;
 
 typedef timer_t<6> tim6;
 typedef timer_t<3> aux;
@@ -17,11 +18,19 @@ typedef dma_t<1> dma;
 
 typedef button_t<PC13> btn;
 typedef output_t<PA5> led;
+typedef output_t<PA10> probe;
 
 template<> void handler<interrupt::TIM3>()
 {
     aux::clear_uif();
     btn::update();
+}
+
+template<> void handler<interrupt::TIM6_DACUNDER>()
+{
+    tim6::clear_uif();
+    probe::set();
+    probe::clear();
 }
 
 static uint16_t sine[60] =
@@ -34,15 +43,21 @@ static uint16_t sine[60] =
 
 int main()
 {
-    led::setup();
+    const uint32_t sample_freq = 96000;
     btn::setup<pull_down>();
+    probe::setup();
+    led::setup();
 
     aux::setup(100, 1000);
     aux::update_interrupt_enable();
     hal::nvic<interrupt::TIM3>::enable();
 
-    tim6::setup(0, 2499);
+    tim6::setup(0, sys_clock::freq() / sample_freq - 1);
     tim6::master_mode<tim6::mm_update>();
+
+    // enable for sampling frequency probe
+    tim6::update_interrupt_enable();
+    hal::nvic<interrupt::TIM6_DACUNDER>::enable();
 
     interrupt::enable();
 
