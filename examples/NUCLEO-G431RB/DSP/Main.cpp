@@ -14,7 +14,9 @@ typedef timer_t<6> tim6;
 typedef timer_t<3> aux;
 
 typedef dac_t<1> dac;
-typedef dma_t<1> dma;
+typedef dma_t<1> dac_dma;
+
+constexpr uint8_t dac_dma_ch = 1;
 
 typedef button_t<PC13> btn;
 typedef output_t<PA5> led;
@@ -61,10 +63,11 @@ int main()
 
     interrupt::enable();
 
-    dma::setup();
+    dac_dma::setup();
+
     dac::setup();
     dac::enable_trigger<1, 7>();    // FIXME: use constant for TIM6_TRGO
-    dac::enable_dma<1, dma, 1, uint16_t>(sine, sizeof(sine) / sizeof(*sine));
+    dac::enable_dma<1, dac_dma, dac_dma_ch, uint16_t>(sine, sizeof(sine) / sizeof(*sine));
 
     for (;;)
     {
