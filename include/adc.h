@@ -51,7 +51,7 @@ struct adc_t
                   ;
 
         ADC().SMPR1 = _::SMPR1_RESET_VALUE                      // reset sample time register
-                   | _::template SMPR1_SMP1<0x7>                // max sample time    FIXME: enum & parameterize!
+                   | _::template SMPR1_SMP1<0x0>                // max sample time    FIXME: enum & parameterize!
                    ;
 
         ADC().DIFSEL = _::DIFSEL_RESET_VALUE;                   // differential mode register
