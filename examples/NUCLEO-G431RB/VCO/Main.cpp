@@ -9,6 +9,12 @@
 #include <dac.h>
 #include <dma.h>
 
+namespace std
+{
+void __throw_bad_function_call() { for (;;); }
+}
+#include <functional>
+
 using namespace hal::cordic;
 using namespace hal::timer;
 using namespace hal::gpio;
@@ -71,6 +77,75 @@ static inline uint16_t sine_sample()
     return y;
 }
 
+template<typename WAVEGEN>
+class signal_generator_t
+{
+public:
+    void setup(float freq = 440.)
+    {
+        m_phi = -1.;
+        set_freq(freq);
+    }
+
+    void set_freq(float freq)
+    {
+        m_dphi = 2. * freq / sample_freq;
+    }
+
+    float sample()
+    {
+        float s = WAVEGEN::value(m_phi);                // generate signal value
+
+        if ((m_phi += m_dphi) >= 1.)                    // advance and wrap around
+            m_phi -= 2.;
+        return s;
+    }
+
+private:
+    float           m_phi;
+    volatile float  m_dphi;
+};
+
+struct sine
+{
+    static inline float value(float phi)
+    {
+        return q31tof(cordic::compute(ftoq31(phi)));
+    }
+};
+
+struct triangle
+{
+    static inline float value(float phi)
+    {
+        if (phi < -.5)
+            return 2. * phi + 2.;
+        else if (phi < .5)
+            return -2. * phi;
+        else
+            return 2 * phi - 2.;
+        return phi;
+    }
+};
+
+struct sawtooth
+{
+    static inline float value(float phi)
+    {
+        return phi;
+    }
+};
+
+struct square
+{
+    static inline float value(float phi)
+    {
+        return phi < 0 ? 1. : -1.;
+    }
+};
+
+static signal_generator_t<sine> sig_gen;
+
 template<> void handler<interrupt::DMA1_CH1>()
 {
     uint32_t sts = dac_dma::interrupt_status<dac_dma_ch>();
@@ -83,7 +158,7 @@ template<> void handler<interrupt::DMA1_CH1>()
 
         probe::set();
         for (uint16_t i = 0; i < half_buffer_size; ++i)
-            *p++ = sine_sample();
+            *p++ = (sig_gen.sample() + 1.) * 2020.;            // FIXME: correct for clipping
         probe::clear();
     }
 }
@@ -101,6 +176,8 @@ int main()
     led::setup();
 
     cordic::setup<cordic::sine, 4>();
+
+    sig_gen.setup();
 
     adc::setup();
     ain::setup();
@@ -128,7 +205,7 @@ int main()
     {
         if (btn::read())
         {    
-            osc_freq = led::read() ? 440 : 4186.009; // A4 : C8
+            sig_gen.set_freq(led::read() ? 440 : 4186.009); // A4 : C8
             led::toggle();
         }
     }
