@@ -8,6 +8,13 @@ namespace hal
 namespace dma
 {
 
+enum dma_interrupt_status
+    { dma_global_interrupt  = 0x1
+    , dma_transfer_complete = 0x2
+    , dma_half_transfer     = 0x4
+    , dma_transfer_error    = 0x8
+    };
+
 template<uint8_t NO, uint8_t CH> struct dmamux_traits {};
 
 template<> struct dmamux_traits<1, 1> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C0CR; } };
@@ -289,6 +296,18 @@ struct dma_t
     static inline void disable_interrupt()
     {
         dma_channel_traits<NO, CH>::CCR() &= ~(_::CCR1_TEIE | _::CCR1_HTIE | _::CCR1_TCIE);
+    }
+
+    template<uint8_t CH>
+    static inline uint32_t interrupt_status()
+    {
+        uint32_t x = DMA().ISR;
+
+        return ((x & dma_channel_traits<NO, CH>::ISR_GIF)  ? dma_global_interrupt  : 0)
+             | ((x & dma_channel_traits<NO, CH>::ISR_TCIF) ? dma_transfer_complete : 0)
+             | ((x & dma_channel_traits<NO, CH>::ISR_HTIF) ? dma_half_transfer     : 0)
+             | ((x & dma_channel_traits<NO, CH>::ISR_TEIF) ? dma_transfer_error    : 0)
+             ;
     }
 
     template<uint8_t CH>
