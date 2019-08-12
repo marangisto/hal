@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <usart.h>
 #include <redirect.h>
+#include <cordic.h>
 #include <timer.h>
 #include <button.h>
 #include <gpio.h>
@@ -8,6 +9,7 @@
 #include <dac.h>
 #include <dma.h>
 
+using namespace hal::cordic;
 using namespace hal::timer;
 using namespace hal::gpio;
 using namespace hal::adc;
@@ -22,11 +24,12 @@ typedef hal::timer::timer_t<3> aux;
 typedef adc_t<1> adc;
 typedef dac_t<1> dac;
 typedef dma_t<1> dac_dma;
+typedef hal::cordic::cordic_t cordic;   // FIXME: leaking device into here?
 
 constexpr uint8_t dac_dma_ch = 1;
 
 constexpr uint32_t sample_freq = 96000;
-constexpr uint16_t half_buffer_size = 64;
+constexpr uint16_t half_buffer_size = 32;
 constexpr uint16_t buffer_size = half_buffer_size * 2;
 
 static uint16_t output_buffer[buffer_size];
@@ -54,13 +57,14 @@ template<> void handler<interrupt::TIM6_DACUNDER>()
     probe::clear();
 }
 
-static volatile float angular_freq = 1000.;
+static volatile float osc_freq = 440.;
 
-static uint16_t next_sample()
+static inline uint16_t sine_sample()
 {
     static float phi = -1.;                         // normalized phase angle [-1, 1]
-    float dphi = 2. * angular_freq / sample_freq;   // angular increment per sample
-    uint16_t y = phi < 0 ? 0 : 4095;                // compute signal value
+    float dphi = 2. * osc_freq / sample_freq;       // angular increment per sample
+    float s = q31tof(cordic::compute(ftoq31(phi))); // cordic sine
+    uint16_t y = (s + 1.) * 2020.;                  // compute signal value FIXME: why 2047 truncates?
 
     if ((phi += dphi) >= 1.)                        // advance and wrap around
         phi -= 2.;
@@ -79,7 +83,7 @@ template<> void handler<interrupt::DMA1_CH1>()
 
         probe::set();
         for (uint16_t i = 0; i < half_buffer_size; ++i)
-            *p++ = next_sample();
+            *p++ = sine_sample();
         probe::clear();
     }
 }
@@ -95,6 +99,8 @@ int main()
     btn::setup<pull_down>();
     probe::setup();
     led::setup();
+
+    cordic::setup<cordic::sine, 4>();
 
     adc::setup();
     ain::setup();
@@ -122,7 +128,7 @@ int main()
     {
         if (btn::read())
         {    
-            angular_freq = led::read() ? 1000 : 1350;
+            osc_freq = led::read() ? 440 : 4186.009; // A4 : C8
             led::toggle();
         }
     }
