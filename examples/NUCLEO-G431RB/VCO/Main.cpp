@@ -63,20 +63,6 @@ template<> void handler<interrupt::TIM6_DACUNDER>()
     probe::clear();
 }
 
-static volatile float osc_freq = 440.;
-
-static inline uint16_t sine_sample()
-{
-    static float phi = -1.;                         // normalized phase angle [-1, 1]
-    float dphi = 2. * osc_freq / sample_freq;       // angular increment per sample
-    float s = q31tof(cordic::compute(ftoq31(phi))); // cordic sine
-    uint16_t y = (s + 1.) * 2020.;                  // compute signal value FIXME: why 2047 truncates?
-
-    if ((phi += dphi) >= 1.)                        // advance and wrap around
-        phi -= 2.;
-    return y;
-}
-
 template<typename WAVEGEN>
 class signal_generator_t
 {
@@ -158,7 +144,7 @@ template<> void handler<interrupt::DMA1_CH1>()
 
         probe::set();
         for (uint16_t i = 0; i < half_buffer_size; ++i)
-            *p++ = (sig_gen.sample() + 1.) * 2020.;            // FIXME: correct for clipping
+            *p++ = (sig_gen.sample() + 1.01) * 2010.;            // FIXME: correct for clipping
         probe::clear();
     }
 }
