@@ -22,7 +22,7 @@
     static_assert(false, "mcu not recognized");
 #endif
 
-#if defined(USE_HAL_DRIVER)
+#if defined(USE_HAL_DRIVER) || defined(USE_FULL_LL_DRIVER)
 extern "C" uint32_t SystemCoreClock;
 #endif
 
@@ -60,7 +60,7 @@ public:
             --n;
     }
 
-#if defined(USE_HAL_DRIVER)
+#if defined(USE_HAL_DRIVER) || defined(USE_FULL_LL_DRIVER)
     static void copy_system_core_clock()
     {
         m_freq = SystemCoreClock;
