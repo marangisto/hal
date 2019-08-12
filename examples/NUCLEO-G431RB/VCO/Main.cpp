@@ -26,7 +26,7 @@ typedef dma_t<1> dac_dma;
 constexpr uint8_t dac_dma_ch = 1;
 
 constexpr uint32_t sample_freq = 96000;
-constexpr uint16_t half_buffer_size = 128;
+constexpr uint16_t half_buffer_size = 64;
 constexpr uint16_t buffer_size = half_buffer_size * 2;
 
 static uint16_t output_buffer[buffer_size];
@@ -54,28 +54,32 @@ template<> void handler<interrupt::TIM6_DACUNDER>()
     probe::clear();
 }
 
+static volatile float angular_freq = 1000.;
+
+static uint16_t next_sample()
+{
+    static float phi = -1.;                         // normalized phase angle [-1, 1]
+    float dphi = 2. * angular_freq / sample_freq;   // angular increment per sample
+    uint16_t y = phi < 0 ? 0 : 4095;                // compute signal value
+
+    if ((phi += dphi) >= 1.)                        // advance and wrap around
+        phi -= 2.;
+    return y;
+}
+
 template<> void handler<interrupt::DMA1_CH1>()
 {
     uint32_t sts = dac_dma::interrupt_status<dac_dma_ch>();
 
     dac_dma::clear_interrupt_flags<dac_dma_ch>();
 
-    if (sts & dma_half_transfer)
+    if (sts & (dma_half_transfer | dma_transfer_complete))
     {
-        uint16_t *p = output_buffer;
+        uint16_t *p = output_buffer + (sts & dma_transfer_complete ? half_buffer_size : 0);
 
         probe::set();
         for (uint16_t i = 0; i < half_buffer_size; ++i)
-            *p++ = i * 4095 / half_buffer_size;
-        probe::clear();
-    }
-    else if (sts & dma_transfer_complete)
-    {
-        uint16_t *p = output_buffer + half_buffer_size;
-
-        probe::set();
-        for (uint16_t i = 0; i < half_buffer_size; ++i)
-            *p++ = 4095 - i * 4095 / half_buffer_size;
+            *p++ = next_sample();
         probe::clear();
     }
 }
@@ -117,7 +121,10 @@ int main()
     for (;;)
     {
         if (btn::read())
+        {    
+            angular_freq = led::read() ? 1000 : 1350;
             led::toggle();
+        }
     }
 }
 
