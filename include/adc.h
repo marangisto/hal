@@ -122,6 +122,8 @@ struct adc_t
     {
         using namespace device;
 
+        start_conversion();
+        while (!end_of_conversion());
         return ADC().DR;
     }
 };
