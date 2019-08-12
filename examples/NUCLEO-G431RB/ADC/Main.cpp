@@ -47,10 +47,8 @@ void loop()
     if (fgets(buf, sizeof(buf), stdin))
     {
         d2::toggle();
-        adc::start_conversion();
-        while (!adc::end_of_conversion());
-        d2::toggle();
         uint16_t y = adc::read();
+        d2::toggle();
 
         printf("adc = %d\n", y);
     }

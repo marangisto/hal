@@ -130,7 +130,7 @@ struct square
     }
 };
 
-static signal_generator_t<sine> sig_gen;
+static signal_generator_t<triangle> sig_gen;
 
 template<> void handler<interrupt::DMA1_CH1>()
 {
@@ -187,13 +187,19 @@ int main()
     dac::enable_dma<1, dac_dma, dac_dma_ch, uint16_t>(output_buffer, buffer_size);
     dac_dma::enable_interrupt<dac_dma_ch, true>();
 
+    float f = 440.;
+
     for (;;)
     {
         if (btn::read())
         {    
-            sig_gen.set_freq(led::read() ? 440 : 4186.009); // A4 : C8
+            f = led::read() ? 440 : 4186.009;   // A4 : C8
             led::toggle();
         }
+
+        float x = adc::read() * (1./2048.) - 1.;
+
+        sig_gen.set_freq(f * (1 + 0.5 * x));
     }
 }
 
