@@ -237,6 +237,26 @@ struct dma_t
     }
 
     template<uint8_t CH, typename T>
+    static inline void periph_to_mem(volatile uint32_t *source, volatile T *dest, uint16_t nelem)
+    {
+        typedef dma_channel_traits<NO, CH> __;
+
+        DMAMUX().CFR &= ~(1 << (CH-1));                                 // clear synchronization overrun flag
+        clear_interrupt_flags<CH>();                                    // clear all interrupt flags
+        __::CNDTR() = nelem;                                            // set number of data elements
+        __::CPAR() = reinterpret_cast<uint32_t>(dest);
+        __::CMAR() = reinterpret_cast<uint32_t>(source);
+
+        __::CCR() = _::CCR1_RESET_VALUE                                 // reset channel configuration register
+                  | _::CCR1_DIR                                         // direction read from peripheral, write memory
+                  | _::CCR1_MINC                                        // set memory increment mode
+                  | _::CCR1_CIRC                                        // use circular mode
+                  | _::template CCR1_MSIZE<dma_type_size<T>()>          // set memory item size
+                  | _::template CCR1_PSIZE<dma_type_size<uint32_t>()>   // set peripheral register size to 32-bits
+                  ;
+    }
+
+    template<uint8_t CH, typename T>
     static inline void mem_to_periph(const T *source, uint16_t nelem, volatile uint32_t *dest)
     {
         typedef dma_channel_traits<NO, CH> __;
@@ -246,7 +266,7 @@ struct dma_t
         __::CNDTR() = nelem;                                            // set number of data elements
         __::CPAR() = reinterpret_cast<uint32_t>(dest);
         __::CMAR() = reinterpret_cast<uint32_t>(source);
-  
+
         __::CCR() = _::CCR1_RESET_VALUE                                 // reset channel configuration register
                   | _::CCR1_DIR                                         // direction read from memory, write periphal
                   | _::CCR1_MINC                                        // set memory increment mode

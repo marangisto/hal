@@ -1,6 +1,7 @@
 #pragma once
 
 #include "hal.h"
+#include "dma.h"
 
 namespace hal
 {
@@ -38,7 +39,7 @@ struct adc_t
     {
         using namespace device;
 
-        ADC().CR |= _::CR_RESET_VALUE;                          // reset control register
+        ADC().CR = _::CR_RESET_VALUE;                           // reset control register
  
         peripheral_traits<__>::enable();                        // enable common adc clock
 
@@ -57,18 +58,13 @@ struct adc_t
         ADC().DIFSEL = _::DIFSEL_RESET_VALUE;                   // differential mode register
         ADC().GCOMP = _::GCOMP_RESET_VALUE;                     // reset gain compensation register
         ADC().CFGR2 = _::CFGR2_RESET_VALUE;                     // reset configuration register 2
-        ADC().CR = _::CR_RESET_VALUE;                           // reset control register
         RCC.CCIPR1 |= rcc_t::template CCIPR1_ADCSEL<0x1>;       // use pll P clock  FIXME: does not seem to have any effect!
 
         COMMON().CCR = __::CCR_RESET_VALUE                      // reset common control register
                      | __::template CCR_CKMODE<0x3>;            // divide clock by 4
                      ;
 
-        ADC().IER = _::IER_RESET_VALUE                          // reset register
-//                 | _::IER_EOCIE                               // interrupt on conversion end
-//                 | _::IER_OVRIE                               // interrupt on overrun FIXME: do we really want this?
-                  ;
-
+        ADC().IER = _::IER_RESET_VALUE;                         // reset interrupt register
         ADC().CR &= ~_::CR_DEEPPWD;                             // disable deep power down mode
         ADC().CR |= _::CR_ADVREGEN;                             // enable adc voltage regulator
         sys_clock::delay_us(10);                                // wait for regulator to stabilize
@@ -77,6 +73,35 @@ struct adc_t
         for (volatile uint8_t i = 0; i < 4; ++i);               // cycles between calibration and adc enable
         ADC().CR |= _::CR_ADEN;                                 // enable adc 
         while (!(ADC().ISR & _::ISR_ADRDY));                    // wait for adc ready 
+    }
+
+    template<typename DMA, uint8_t DMACH, typename T>
+    static inline void enable_dma(volatile T *dest, uint16_t nelem)
+    {
+        ADC().CFGR |= _::CFGR_DMAEN                                 // enable adc channel dma
+                   |  _::CFGR_DMACFG                                // select circular mode
+                   |  _::CFGR_CONT                                  // continuous conversion mode
+                   |  _::CFGR_AUTDLY                                // conversion auto-delay
+                   ;
+        DMA::template disable<DMACH>();                             // disable dma channel
+        DMA::template periph_to_mem<DMACH>(&ADC().DR, dest, nelem); // configure dma from memory
+        DMA::template enable<DMACH>();                              // enable dma channel
+        dma::dmamux_traits<DMA::INST, DMACH>::CCR() = device::dmamux_t::C0CR_DMAREQ_ID<5>;
+    }
+
+    template<uint8_t SEL>
+    static inline void enable_trigger()
+    {
+        ADC().CFGR |= _::template CFGR_EXTEN<0x1>                   // hardware trigger on rising edge
+                   |  _::template CFGR_EXTSEL<SEL>                  // trigger source selection
+                   ;
+    }
+
+    template<typename DMA, uint8_t DMACH>
+    static inline void disable_dma()
+    {
+        ADC().CFGR &= ~_::CFGR_DMAEN;                               // disable adc channel dma
+        DMA::template abort<DMACH>();                               // stop dma on relevant dma channel
     }
 
     static inline void start_conversion()
