@@ -26,6 +26,10 @@ typedef dma_t<1> dac_dma;
 constexpr uint8_t dac_dma_ch = 1;
 
 constexpr uint32_t sample_freq = 96000;
+constexpr uint16_t half_buffer_size = 128;
+constexpr uint16_t buffer_size = half_buffer_size * 2;
+
+static uint16_t output_buffer[buffer_size];
 
 typedef button_t<PC13> btn;
 typedef output_t<PA5> led;
@@ -58,25 +62,27 @@ template<> void handler<interrupt::DMA1_CH1>()
 
     if (sts & dma_half_transfer)
     {
+        uint16_t *p = output_buffer;
+
         probe::set();
+        for (uint16_t i = 0; i < half_buffer_size; ++i)
+            *p++ = i * 4095 / half_buffer_size;
+        probe::clear();
     }
     else if (sts & dma_transfer_complete)
     {
+        uint16_t *p = output_buffer + half_buffer_size;
+
+        probe::set();
+        for (uint16_t i = 0; i < half_buffer_size; ++i)
+            *p++ = 4095 - i * 4095 / half_buffer_size;
         probe::clear();
     }
-
 }
-
-static uint16_t sine[60] =
-    { 0x07ff,0x08cb,0x0994,0x0a5a,0x0b18,0x0bce,0x0c79,0x0d18,0x0da8,0x0e29,0x0e98,0x0ef4
-    , 0x0f3e,0x0f72,0x0f92,0x0f9d,0x0f92,0x0f72,0x0f3e,0x0ef4,0x0e98,0x0e29,0x0da8,0x0d18
-    , 0x0c79,0x0bce,0x0b18,0x0a5a,0x0994,0x08cb,0x07ff,0x0733,0x066a,0x05a4,0x04e6,0x0430
-    , 0x0385,0x02e6,0x0256,0x01d5,0x0166,0x010a,0x00c0,0x008c,0x006c,0x0061,0x006c,0x008c
-    , 0x00c0,0x010a,0x0166,0x01d5,0x0256,0x02e6,0x0385,0x0430,0x04e6,0x05a4,0x066a,0x0733
-    };
 
 int main()
 {
+    interrupt::enable();
     serial::setup<230400>();
     hal::nvic<interrupt::USART2>::enable();
     stdio_t::bind<serial>();
@@ -100,14 +106,12 @@ int main()
     //tim6::update_interrupt_enable();
     //hal::nvic<interrupt::TIM6_DACUNDER>::enable();
 
-    interrupt::enable();
-
     dac_dma::setup();
     hal::nvic<interrupt::DMA1_CH1>::enable();
 
     dac::setup();
     dac::enable_trigger<1, 7>();    // FIXME: use constant for TIM6_TRGO
-    dac::enable_dma<1, dac_dma, dac_dma_ch, uint16_t>(sine, sizeof(sine) / sizeof(*sine));
+    dac::enable_dma<1, dac_dma, dac_dma_ch, uint16_t>(output_buffer, buffer_size);
     dac_dma::enable_interrupt<dac_dma_ch, true>();
 
     for (;;)
