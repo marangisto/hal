@@ -1,11 +1,13 @@
 #include <timer.h>
 #include <button.h>
 #include <gpio.h>
+#include <adc.h>
 #include <dac.h>
 #include <dma.h>
 
 using namespace hal::timer;
 using namespace hal::gpio;
+using namespace hal::adc;
 using namespace hal::dac;
 using namespace hal::dma;
 using hal::sys_clock;
@@ -13,14 +15,19 @@ using hal::sys_clock;
 typedef timer_t<6> tim6;
 typedef timer_t<3> aux;
 
+typedef adc_t<1> adc;
 typedef dac_t<1> dac;
 typedef dma_t<1> dac_dma;
 
 constexpr uint8_t dac_dma_ch = 1;
 
+constexpr uint32_t sample_freq = 96000;
+
+
 typedef button_t<PC13> btn;
 typedef output_t<PA5> led;
 typedef output_t<PA10> probe;
+typedef analog_t<PA0> ain;
 
 template<> void handler<interrupt::TIM3>()
 {
@@ -45,10 +52,12 @@ static uint16_t sine[60] =
 
 int main()
 {
-    const uint32_t sample_freq = 96000;
     btn::setup<pull_down>();
     probe::setup();
     led::setup();
+
+    adc::setup();
+    ain::setup();
 
     aux::setup(100, 1000);
     aux::update_interrupt_enable();
