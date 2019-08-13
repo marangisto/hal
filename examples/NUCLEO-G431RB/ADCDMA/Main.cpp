@@ -39,11 +39,6 @@ static volatile uint16_t input[8];
 template<> void handler<interrupt::TIM6_DACUNDER>()
 {
     tim6::clear_uif();
-    /*
-    adc::start_conversion();
-    while (!adc::end_of_conversion());
-    input[0] = adc::read();
-    */
 }
 
 template<> void handler<interrupt::ADC1_2>()
@@ -51,6 +46,17 @@ template<> void handler<interrupt::ADC1_2>()
     tim6::clear_uif();
     probe::set();
     probe::clear();
+}
+
+template<> void handler<interrupt::DMA1_CH1>()
+{
+    uint32_t sts = adc_dma::interrupt_status<adc_dma_ch>();
+
+    adc_dma::clear_interrupt_flags<adc_dma_ch>();
+    probe::set();
+    probe::clear();
+
+    printf("dma interrupt = %lx\n", sts);
 }
 
 int main()
@@ -71,10 +77,12 @@ int main()
     hal::nvic<interrupt::TIM6_DACUNDER>::enable();
 
     adc_dma::setup();
+    hal::nvic<interrupt::DMA1_CH1>::enable();
 
     ain::setup();
     adc::setup();
     adc::enable_dma<adc_dma, adc_dma_ch, uint16_t>(input, sizeof(input) / sizeof(*input));
+    adc_dma::enable_interrupt<adc_dma_ch, true>();
     adc::enable_trigger<0xd>();     // TIM6_TRGO FIXME: use symbolic names for trigger selection
     adc::start_conversion();
 
