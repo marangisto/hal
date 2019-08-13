@@ -43,8 +43,11 @@ template<> void handler<interrupt::TIM6_DACUNDER>()
 
 template<> void handler<interrupt::ADC1_2>()
 {
-    tim6::clear_uif();
+    uint32_t sts = adc::interrupt_status();
+
+    adc::clear_interrupt_flags();
     probe::set();
+    printf("adc interrupt = %lx\n", sts);
     probe::clear();
 }
 
@@ -83,9 +86,14 @@ int main()
     adc::setup();
     adc::enable_dma<adc_dma, adc_dma_ch, uint16_t>(input, sizeof(input) / sizeof(*input));
     adc_dma::enable_interrupt<adc_dma_ch, true>();
+    hal::nvic<interrupt::ADC1_2>::enable();
+    adc::enable_interrupt();
+
+    //printf("adc = %d\n", adc::read());    // BLOCKS if interrupts are enabled and flags cleared!
+    
     adc::enable_trigger<0xd>();     // TIM6_TRGO FIXME: use symbolic names for trigger selection
     adc::start_conversion();
-
+    
     dac::setup();
     dac::enable<1>();
 

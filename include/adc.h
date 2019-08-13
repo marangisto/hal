@@ -104,6 +104,21 @@ struct adc_t
         DMA::template abort<DMACH>();                               // stop dma on relevant dma channel
     }
 
+    static inline void enable_interrupt()
+    {
+        ADC().IER = 0x7ff;
+    }
+
+    static inline uint32_t interrupt_status()
+    {
+        return ADC().ISR;
+    }
+
+    static inline uint32_t clear_interrupt_flags()
+    {
+        return ADC().ISR = 0x7ff;                   
+    }
+
     static inline void start_conversion()
     {
         using namespace device;
@@ -118,7 +133,7 @@ struct adc_t
         return (ADC().ISR & _::ISR_EOC) != 0;                   // conversion complete
     }
 
-    static inline uint32_t read()
+    static inline uint16_t read()
     {
         using namespace device;
 
