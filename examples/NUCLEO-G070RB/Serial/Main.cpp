@@ -23,9 +23,10 @@ int main()
     ld4::setup();
     serial::setup<230400>();
     hal::nvic<interrupt::USART2>::enable();
+    stdio_t::bind<serial>();
     interrupt::enable();
 
-    stdio_t::bind<serial>();
+    printf("Hello STM32G070!\n");
 
     for (;;)
         loop();
@@ -35,6 +36,8 @@ void loop()
 {
     char buf[256];
 
+    printf("> ");
+    fflush(stdout);
     if (fgets(buf, sizeof(buf), stdin))
     {
         buf[strcspn(buf, "\r\n")] = 0;
