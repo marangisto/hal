@@ -84,7 +84,7 @@ void sys_clock::init()
 
     // set system clock to HSI-PLL 48MHz
 
-    Flash.ACR = flash_t::ACR_PRFTBE | flash_t::ACR_LATENCY<0x1>;
+    FLASH.ACR = flash_t::ACR_PRFTBE | flash_t::ACR_LATENCY<0x1>;
 
     RCC.CFGR |= _::CFGR_PLLMUL<0xa>;        // PLL multiplier 12
     RCC.CR |= _::CR_PLLON;                  // enable PLL

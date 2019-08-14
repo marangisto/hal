@@ -12827,9 +12827,9 @@ struct adc12_common_t
     static const uint32_t CDR_RESET_VALUE = 0x0;
 };
 
-static adc12_common_t& ADC12_Common = *reinterpret_cast<adc12_common_t*>(0x50000300);
+static adc12_common_t& ADC12_COMMON = *reinterpret_cast<adc12_common_t*>(0x50000300);
 
-#define HAVE_PERIPHERAL_ADC12_Common
+#define HAVE_PERIPHERAL_ADC12_COMMON
 
 
 ////
@@ -12899,9 +12899,9 @@ struct adc345_common_t
     static const uint32_t CDR_RESET_VALUE = 0x0;
 };
 
-static adc345_common_t& ADC345_Common = *reinterpret_cast<adc345_common_t*>(0x50000700);
+static adc345_common_t& ADC345_COMMON = *reinterpret_cast<adc345_common_t*>(0x50000700);
 
-#define HAVE_PERIPHERAL_ADC345_Common
+#define HAVE_PERIPHERAL_ADC345_COMMON
 
 
 ////
@@ -15651,9 +15651,9 @@ struct usb_fs_device_t
     static const uint32_t BTABLE_RESET_VALUE = 0x0;
 };
 
-static usb_fs_device_t& USB_FS_device = *reinterpret_cast<usb_fs_device_t*>(0x40005c00);
+static usb_fs_device_t& USB_FS_DEVICE = *reinterpret_cast<usb_fs_device_t*>(0x40005c00);
 
-#define HAVE_PERIPHERAL_USB_FS_device
+#define HAVE_PERIPHERAL_USB_FS_DEVICE
 
 
 ////

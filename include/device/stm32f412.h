@@ -78,9 +78,9 @@ struct adc_common_t
     static const uint32_t CCR_RESET_VALUE = 0x0;
 };
 
-static adc_common_t& ADC_Common = *reinterpret_cast<adc_common_t*>(0x40012300);
+static adc_common_t& ADC_COMMON = *reinterpret_cast<adc_common_t*>(0x40012300);
 
-#define HAVE_PERIPHERAL_ADC_Common
+#define HAVE_PERIPHERAL_ADC_COMMON
 
 
 ////
@@ -8468,9 +8468,9 @@ struct i2s2ext_t
     static const uint32_t I2SPR_RESET_VALUE = 0xa;
 };
 
-static i2s2ext_t& I2S2ext = *reinterpret_cast<i2s2ext_t*>(0x40003400);
+static i2s2ext_t& I2S2EXT = *reinterpret_cast<i2s2ext_t*>(0x40003400);
 
-#define HAVE_PERIPHERAL_I2S2ext
+#define HAVE_PERIPHERAL_I2S2EXT
 
 
 ////
@@ -8573,9 +8573,9 @@ struct i2s3ext_t
     static const uint32_t I2SPR_RESET_VALUE = 0xa;
 };
 
-static i2s3ext_t& I2S3ext = *reinterpret_cast<i2s3ext_t*>(0x40004000);
+static i2s3ext_t& I2S3EXT = *reinterpret_cast<i2s3ext_t*>(0x40004000);
 
-#define HAVE_PERIPHERAL_I2S3ext
+#define HAVE_PERIPHERAL_I2S3EXT
 
 
 ////

@@ -8041,9 +8041,9 @@ struct flash_t
     static constexpr uint8_t FLASH = 3; // Flash global interrupt
 };
 
-static flash_t& Flash = *reinterpret_cast<flash_t*>(0x40022000);
+static flash_t& FLASH = *reinterpret_cast<flash_t*>(0x40022000);
 
-#define HAVE_PERIPHERAL_Flash
+#define HAVE_PERIPHERAL_FLASH
 
 
 ////

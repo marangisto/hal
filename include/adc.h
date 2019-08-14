@@ -16,8 +16,8 @@ template<> struct adc_traits<1>
     typedef device::adc1_t T;
     typedef device::adc12_common_t C;
     static inline T& ADC() { return device::ADC1; }
-#if defined(HAVE_PERIPHERAL_ADC12_Common)
-    static inline C& COMMON() { return device::ADC12_Common; }
+#if defined(HAVE_PERIPHERAL_ADC12_COMMON)
+    static inline C& COMMON() { return device::ADC12_COMMON; }
 #endif
 };
 
@@ -27,7 +27,7 @@ template<> struct adc_traits<2>
     typedef device::adc2_t T;
     typedef device::adc12_common_t C;
     static inline T& ADC() { return device::ADC2; }
-    static inline C& COMMON() { return device::ADC12_Common; }
+    static inline C& COMMON() { return device::ADC12_COMMON; }
 };
 #endif
 
