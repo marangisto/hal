@@ -10663,21 +10663,21 @@ static syscfg_t& SYSCFG = *reinterpret_cast<syscfg_t*>(0x40010000);
 
 struct vrefbuf_t
 {
-    volatile uint32_t    VREFBUF_CSR;          // VREF_BUF Control and Status Register
-    volatile uint32_t    VREFBUF_CCR;          // [Read-write] VREF_BUF Calibration Control Register
+    volatile uint32_t    CSR;                  // VREF_BUF Control and Status Register
+    volatile uint32_t    CCR;                  // [Read-write] VREF_BUF Calibration Control Register
 
-    static constexpr uint32_t VREFBUF_CSR_ENVR = 0x1;           // Enable Voltage Reference, Read-write
-    static constexpr uint32_t VREFBUF_CSR_HIZ = 0x2;            // High impedence mode for the VREF_BUF, Read-write
-    static constexpr uint32_t VREFBUF_CSR_VRR = 0x8;            // Voltage reference buffer ready, Read-only
+    static constexpr uint32_t CSR_ENVR = 0x1;           // Enable Voltage Reference, Read-write
+    static constexpr uint32_t CSR_HIZ = 0x2;            // High impedence mode for the VREF_BUF, Read-write
+    static constexpr uint32_t CSR_VRR = 0x8;            // Voltage reference buffer ready, Read-only
     template<uint32_t X>
-    static constexpr uint32_t VREFBUF_CSR_VRS =                 // Voltage reference scale (2 bits), Read-write
+    static constexpr uint32_t CSR_VRS =                 // Voltage reference scale (2 bits), Read-write
         bit_field_t<4, 0x3>::value<X>();
-    static const uint32_t VREFBUF_CSR_RESET_VALUE = 0x2;
+    static const uint32_t CSR_RESET_VALUE = 0x2;
 
     template<uint32_t X>
-    static constexpr uint32_t VREFBUF_CCR_TRIM =                // Trimming code (6 bits)
+    static constexpr uint32_t CCR_TRIM =                // Trimming code (6 bits)
         bit_field_t<0, 0x3f>::value<X>();
-    static const uint32_t VREFBUF_CCR_RESET_VALUE = 0x0;
+    static const uint32_t CCR_RESET_VALUE = 0x0;
 };
 
 static vrefbuf_t& VREFBUF = *reinterpret_cast<vrefbuf_t*>(0x40010030);
@@ -10928,247 +10928,247 @@ static opamp_t& OPAMP = *reinterpret_cast<opamp_t*>(0x40010300);
 
 struct dac1_t
 {
-    volatile uint32_t    DAC_CR;               // [Read-write] DAC control register
-    volatile uint32_t    DAC_SWTRGR;           // [Write-only] DAC software trigger register
-    volatile uint32_t    DAC_DHR12R1;          // [Read-write] DAC channel1 12-bit right-aligned data holding register
-    volatile uint32_t    DAC_DHR12L1;          // [Read-write] DAC channel1 12-bit left aligned data holding register
-    volatile uint32_t    DAC_DHR8R1;           // [Read-write] DAC channel1 8-bit right aligned data holding register
-    volatile uint32_t    DAC_DHR12R2;          // [Read-write] DAC channel2 12-bit right aligned data holding register
-    volatile uint32_t    DAC_DHR12L2;          // [Read-write] DAC channel2 12-bit left aligned data holding register
-    volatile uint32_t    DAC_DHR8R2;           // [Read-write] DAC channel2 8-bit right-aligned data holding register
-    volatile uint32_t    DAC_DHR12RD;          // [Read-write] Dual DAC 12-bit right-aligned data holding register
-    volatile uint32_t    DAC_DHR12LD;          // [Read-write] DUAL DAC 12-bit left aligned data holding register
-    volatile uint32_t    DAC_DHR8RD;           // [Read-write] DUAL DAC 8-bit right aligned data holding register
-    volatile uint32_t    DAC_DOR1;             // [Read-only] DAC channel1 data output register
-    volatile uint32_t    DAC_DOR2;             // [Read-only] DAC channel2 data output register
-    volatile uint32_t    DAC_SR;               // DAC status register
-    volatile uint32_t    DAC_CCR;              // [Read-write] DAC calibration control register
-    volatile uint32_t    DAC_MCR;              // [Read-write] DAC mode control register
-    volatile uint32_t    DAC_SHSR1;            // [Read-write] DAC Sample and Hold sample time register 1
-    volatile uint32_t    DAC_SHSR2;            // [Read-write] DAC Sample and Hold sample time register 2
-    volatile uint32_t    DAC_SHHR;             // [Read-write] DAC Sample and Hold hold time register
-    volatile uint32_t    DAC_SHRR;             // [Read-write] DAC Sample and Hold refresh time register
+    volatile uint32_t    CR;                   // [Read-write] DAC control register
+    volatile uint32_t    SWTRGR;               // [Write-only] DAC software trigger register
+    volatile uint32_t    DHR12R1;              // [Read-write] DAC channel1 12-bit right-aligned data holding register
+    volatile uint32_t    DHR12L1;              // [Read-write] DAC channel1 12-bit left aligned data holding register
+    volatile uint32_t    DHR8R1;               // [Read-write] DAC channel1 8-bit right aligned data holding register
+    volatile uint32_t    DHR12R2;              // [Read-write] DAC channel2 12-bit right aligned data holding register
+    volatile uint32_t    DHR12L2;              // [Read-write] DAC channel2 12-bit left aligned data holding register
+    volatile uint32_t    DHR8R2;               // [Read-write] DAC channel2 8-bit right-aligned data holding register
+    volatile uint32_t    DHR12RD;              // [Read-write] Dual DAC 12-bit right-aligned data holding register
+    volatile uint32_t    DHR12LD;              // [Read-write] DUAL DAC 12-bit left aligned data holding register
+    volatile uint32_t    DHR8RD;               // [Read-write] DUAL DAC 8-bit right aligned data holding register
+    volatile uint32_t    DOR1;                 // [Read-only] DAC channel1 data output register
+    volatile uint32_t    DOR2;                 // [Read-only] DAC channel2 data output register
+    volatile uint32_t    SR;                   // DAC status register
+    volatile uint32_t    CCR;                  // [Read-write] DAC calibration control register
+    volatile uint32_t    MCR;                  // [Read-write] DAC mode control register
+    volatile uint32_t    SHSR1;                // [Read-write] DAC Sample and Hold sample time register 1
+    volatile uint32_t    SHSR2;                // [Read-write] DAC Sample and Hold sample time register 2
+    volatile uint32_t    SHHR;                 // [Read-write] DAC Sample and Hold hold time register
+    volatile uint32_t    SHRR;                 // [Read-write] DAC Sample and Hold refresh time register
     reserved_t<2>        _0;
-    volatile uint32_t    DAC_STR1;             // [Read-write] Sawtooth register
-    volatile uint32_t    DAC_STR2;             // [Read-write] Sawtooth register
-    volatile uint32_t    DAC_STMODR;           // [Read-write] Sawtooth Mode register
+    volatile uint32_t    STR1;                 // [Read-write] Sawtooth register
+    volatile uint32_t    STR2;                 // [Read-write] Sawtooth register
+    volatile uint32_t    STMODR;               // [Read-write] Sawtooth Mode register
 
-    static constexpr uint32_t DAC_CR_EN1 = 0x1;            // DAC channel1 enable This bit is set and cleared by software to enable/disable DAC channel1.
-    static constexpr uint32_t DAC_CR_TEN1 = 0x2;           // DAC channel1 trigger enable
+    static constexpr uint32_t CR_EN1 = 0x1;            // DAC channel1 enable This bit is set and cleared by software to enable/disable DAC channel1.
+    static constexpr uint32_t CR_TEN1 = 0x2;           // DAC channel1 trigger enable
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_TSEL1 =               // DAC channel1 trigger selection These bits select the external event used to trigger DAC channel1. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (4 bits)
+    static constexpr uint32_t CR_TSEL1 =               // DAC channel1 trigger selection These bits select the external event used to trigger DAC channel1. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (4 bits)
         bit_field_t<2, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_WAVE1 =               // DAC channel1 noise/triangle wave generation enable These bits are set and cleared by software. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (2 bits)
+    static constexpr uint32_t CR_WAVE1 =               // DAC channel1 noise/triangle wave generation enable These bits are set and cleared by software. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (2 bits)
         bit_field_t<6, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_MAMP1 =               // DAC channel1 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
+    static constexpr uint32_t CR_MAMP1 =               // DAC channel1 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
         bit_field_t<8, 0xf>::value<X>();
-    static constexpr uint32_t DAC_CR_DMAEN1 = 0x1000;      // DAC channel1 DMA enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_DMAUDRIE1 = 0x2000;   // DAC channel1 DMA Underrun Interrupt enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_CEN1 = 0x4000;        // DAC Channel 1 calibration enable This bit is set and cleared by software to enable/disable DAC channel 1 calibration, it can be written only if bit EN1=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
-    static constexpr uint32_t DAC_CR_EN2 = 0x10000;        // DAC channel2 enable This bit is set and cleared by software to enable/disable DAC channel2.
-    static constexpr uint32_t DAC_CR_TEN2 = 0x20000;       // DAC channel2 trigger enable
+    static constexpr uint32_t CR_DMAEN1 = 0x1000;      // DAC channel1 DMA enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_DMAUDRIE1 = 0x2000;   // DAC channel1 DMA Underrun Interrupt enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_CEN1 = 0x4000;        // DAC Channel 1 calibration enable This bit is set and cleared by software to enable/disable DAC channel 1 calibration, it can be written only if bit EN1=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
+    static constexpr uint32_t CR_EN2 = 0x10000;        // DAC channel2 enable This bit is set and cleared by software to enable/disable DAC channel2.
+    static constexpr uint32_t CR_TEN2 = 0x20000;       // DAC channel2 trigger enable
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_TSEL2 =               // DAC channel2 trigger selection These bits select the external event used to trigger DAC channel2 Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled). (4 bits)
+    static constexpr uint32_t CR_TSEL2 =               // DAC channel2 trigger selection These bits select the external event used to trigger DAC channel2 Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled). (4 bits)
         bit_field_t<18, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_WAVE2 =               // DAC channel2 noise/triangle wave generation enable These bits are set/reset by software. 1x: Triangle wave generation enabled Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled) (2 bits)
+    static constexpr uint32_t CR_WAVE2 =               // DAC channel2 noise/triangle wave generation enable These bits are set/reset by software. 1x: Triangle wave generation enabled Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled) (2 bits)
         bit_field_t<22, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_MAMP2 =               // DAC channel2 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
+    static constexpr uint32_t CR_MAMP2 =               // DAC channel2 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
         bit_field_t<24, 0xf>::value<X>();
-    static constexpr uint32_t DAC_CR_DMAEN2 = 0x10000000;  // DAC channel2 DMA enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_DMAUDRIE2 = 0x20000000;// DAC channel2 DMA underrun interrupt enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_CEN2 = 0x40000000;    // DAC Channel 2 calibration enable This bit is set and cleared by software to enable/disable DAC channel 2 calibration, it can be written only if bit EN2=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
-    static const uint32_t DAC_CR_RESET_VALUE = 0x0;
+    static constexpr uint32_t CR_DMAEN2 = 0x10000000;  // DAC channel2 DMA enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_DMAUDRIE2 = 0x20000000;// DAC channel2 DMA underrun interrupt enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_CEN2 = 0x40000000;    // DAC Channel 2 calibration enable This bit is set and cleared by software to enable/disable DAC channel 2 calibration, it can be written only if bit EN2=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
+    static const uint32_t CR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DAC_SWTRGR_SWTRIG1 = 0x1;        // DAC channel1 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR1 register value has been loaded into the DAC_DOR1 register.
-    static constexpr uint32_t DAC_SWTRGR_SWTRIG2 = 0x2;        // DAC channel2 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR2 register value has been loaded into the DAC_DOR2 register.
-    static constexpr uint32_t DAC_SWTRGR_SWTRIGB1 = 0x10000;   // DAC channel1 software trigger B
-    static constexpr uint32_t DAC_SWTRGR_SWTRIGB2 = 0x20000;   // DAC channel2 software trigger B
-    static const uint32_t DAC_SWTRGR_RESET_VALUE = 0x0;
+    static constexpr uint32_t SWTRGR_SWTRIG1 = 0x1;        // DAC channel1 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR1 register value has been loaded into the DAC_DOR1 register.
+    static constexpr uint32_t SWTRGR_SWTRIG2 = 0x2;        // DAC channel2 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR2 register value has been loaded into the DAC_DOR2 register.
+    static constexpr uint32_t SWTRGR_SWTRIGB1 = 0x10000;   // DAC channel1 software trigger B
+    static constexpr uint32_t SWTRGR_SWTRIGB2 = 0x20000;   // DAC channel2 software trigger B
+    static const uint32_t SWTRGR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R1_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12R1_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R1_DACC1DHRB =           // DAC channel1 12-bit right-aligned data B (12 bits)
+    static constexpr uint32_t DHR12R1_DACC1DHRB =           // DAC channel1 12-bit right-aligned data B (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12R1_RESET_VALUE = 0x0;
+    static const uint32_t DHR12R1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L1_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12L1_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<4, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L1_DACC1DHRB =           // DAC channel1 12-bit left-aligned data B (12 bits)
+    static constexpr uint32_t DHR12L1_DACC1DHRB =           // DAC channel1 12-bit left-aligned data B (12 bits)
         bit_field_t<20, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12L1_RESET_VALUE = 0x0;
+    static const uint32_t DHR12L1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R1_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
+    static constexpr uint32_t DHR8R1_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R1_DACC1DHRB =           // DAC channel1 8-bit right-aligned data (8 bits)
+    static constexpr uint32_t DHR8R1_DACC1DHRB =           // DAC channel1 8-bit right-aligned data (8 bits)
         bit_field_t<8, 0xff>::value<X>();
-    static const uint32_t DAC_DHR8R1_RESET_VALUE = 0x0;
+    static const uint32_t DHR8R1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R2_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12R2_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R2_DACC2DHRB =           // DAC channel2 12-bit right-aligned data (12 bits)
+    static constexpr uint32_t DHR12R2_DACC2DHRB =           // DAC channel2 12-bit right-aligned data (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12R2_RESET_VALUE = 0x0;
+    static const uint32_t DHR12R2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L2_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specify 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12L2_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specify 12-bit data for DAC channel2. (12 bits)
         bit_field_t<4, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L2_DACC2DHRB =           // DAC channel2 12-bit left-aligned data B (12 bits)
+    static constexpr uint32_t DHR12L2_DACC2DHRB =           // DAC channel2 12-bit left-aligned data B (12 bits)
         bit_field_t<20, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12L2_RESET_VALUE = 0x0;
+    static const uint32_t DHR12L2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R2_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
+    static constexpr uint32_t DHR8R2_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R2_DACC2DHRB =           // DAC channel2 8-bit right-aligned data (8 bits)
+    static constexpr uint32_t DHR8R2_DACC2DHRB =           // DAC channel2 8-bit right-aligned data (8 bits)
         bit_field_t<8, 0xff>::value<X>();
-    static const uint32_t DAC_DHR8R2_RESET_VALUE = 0x0;
+    static const uint32_t DHR8R2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12RD_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12RD_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12RD_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12RD_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12RD_RESET_VALUE = 0x0;
+    static const uint32_t DHR12RD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12LD_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12LD_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<4, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12LD_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12LD_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
         bit_field_t<20, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12LD_RESET_VALUE = 0x0;
+    static const uint32_t DHR12LD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8RD_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
+    static constexpr uint32_t DHR8RD_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8RD_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
+    static constexpr uint32_t DHR8RD_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
         bit_field_t<8, 0xff>::value<X>();
-    static const uint32_t DAC_DHR8RD_RESET_VALUE = 0x0;
+    static const uint32_t DHR8RD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR1_DACC1DOR =            // DAC channel1 data output These bits are read-only, they contain data output for DAC channel1. (12 bits)
+    static constexpr uint32_t DOR1_DACC1DOR =            // DAC channel1 data output These bits are read-only, they contain data output for DAC channel1. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR1_DACC1DORB =           // DAC channel1 data output (12 bits)
+    static constexpr uint32_t DOR1_DACC1DORB =           // DAC channel1 data output (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DOR1_RESET_VALUE = 0x0;
+    static const uint32_t DOR1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR2_DACC2DOR =            // DAC channel2 data output These bits are read-only, they contain data output for DAC channel2. (12 bits)
+    static constexpr uint32_t DOR2_DACC2DOR =            // DAC channel2 data output These bits are read-only, they contain data output for DAC channel2. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR2_DACC2DORB =           // DAC channel2 data output (12 bits)
+    static constexpr uint32_t DOR2_DACC2DORB =           // DAC channel2 data output (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DOR2_RESET_VALUE = 0x0;
+    static const uint32_t DOR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DAC_SR_DAC1RDY = 0x800;      // DAC channel1 ready status bit, Read-write
-    static constexpr uint32_t DAC_SR_DORSTAT1 = 0x1000;    // DAC channel1 output register status bit, Read-write
-    static constexpr uint32_t DAC_SR_DMAUDR1 = 0x2000;     // DAC channel1 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
-    static constexpr uint32_t DAC_SR_CAL_FLAG1 = 0x4000;   // DAC Channel 1 calibration offset status This bit is set and cleared by hardware, Read-only
-    static constexpr uint32_t DAC_SR_BWST1 = 0x8000;       // DAC Channel 1 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR1, It is cleared by hardware when the write operation of DAC_SHSR1 is complete. (It takes about 3LSI periods of synchronization)., Read-only
-    static constexpr uint32_t DAC_SR_DAC2RDY = 0x8000000;  // DAC channel 2 ready status bit, Read-write
-    static constexpr uint32_t DAC_SR_DORSTAT2 = 0x10000000;// DAC channel 2 output register status bit, Read-write
-    static constexpr uint32_t DAC_SR_DMAUDR2 = 0x20000000; // DAC channel2 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
-    static constexpr uint32_t DAC_SR_CAL_FLAG2 = 0x40000000;// DAC Channel 2 calibration offset status This bit is set and cleared by hardware, Read-only
-    static constexpr uint32_t DAC_SR_BWST2 = 0x80000000;   // DAC Channel 2 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR2, It is cleared by hardware when the write operation of DAC_SHSR2 is complete. (It takes about 3 LSI periods of synchronization)., Read-only
-    static const uint32_t DAC_SR_RESET_VALUE = 0x0;
+    static constexpr uint32_t SR_DAC1RDY = 0x800;      // DAC channel1 ready status bit, Read-write
+    static constexpr uint32_t SR_DORSTAT1 = 0x1000;    // DAC channel1 output register status bit, Read-write
+    static constexpr uint32_t SR_DMAUDR1 = 0x2000;     // DAC channel1 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
+    static constexpr uint32_t SR_CAL_FLAG1 = 0x4000;   // DAC Channel 1 calibration offset status This bit is set and cleared by hardware, Read-only
+    static constexpr uint32_t SR_BWST1 = 0x8000;       // DAC Channel 1 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR1, It is cleared by hardware when the write operation of DAC_SHSR1 is complete. (It takes about 3LSI periods of synchronization)., Read-only
+    static constexpr uint32_t SR_DAC2RDY = 0x8000000;  // DAC channel 2 ready status bit, Read-write
+    static constexpr uint32_t SR_DORSTAT2 = 0x10000000;// DAC channel 2 output register status bit, Read-write
+    static constexpr uint32_t SR_DMAUDR2 = 0x20000000; // DAC channel2 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
+    static constexpr uint32_t SR_CAL_FLAG2 = 0x40000000;// DAC Channel 2 calibration offset status This bit is set and cleared by hardware, Read-only
+    static constexpr uint32_t SR_BWST2 = 0x80000000;   // DAC Channel 2 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR2, It is cleared by hardware when the write operation of DAC_SHSR2 is complete. (It takes about 3 LSI periods of synchronization)., Read-only
+    static const uint32_t SR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_CCR_OTRIM1 =              // DAC Channel 1 offset trimming value (5 bits)
+    static constexpr uint32_t CCR_OTRIM1 =              // DAC Channel 1 offset trimming value (5 bits)
         bit_field_t<0, 0x1f>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CCR_OTRIM2 =              // DAC Channel 2 offset trimming value (5 bits)
+    static constexpr uint32_t CCR_OTRIM2 =              // DAC Channel 2 offset trimming value (5 bits)
         bit_field_t<16, 0x1f>::value<X>();
-    static const uint32_t DAC_CCR_RESET_VALUE = 0x0;
+    static const uint32_t CCR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_MCR_MODE1 =               // DAC Channel 1 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN1=0 and bit CEN1 =0 in the DAC_CR register). If EN1=1 or CEN1 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 1 mode: DAC Channel 1 in normal Mode DAC Channel 1 in sample &amp;amp; hold mode (3 bits)
+    static constexpr uint32_t MCR_MODE1 =               // DAC Channel 1 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN1=0 and bit CEN1 =0 in the DAC_CR register). If EN1=1 or CEN1 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 1 mode: DAC Channel 1 in normal Mode DAC Channel 1 in sample &amp;amp; hold mode (3 bits)
         bit_field_t<0, 0x7>::value<X>();
-    static constexpr uint32_t DAC_MCR_DMADOUBLE1 = 0x100;   // DAC Channel1 DMA double data mode
-    static constexpr uint32_t DAC_MCR_SINFORMAT1 = 0x200;   // Enable signed format for DAC channel1
+    static constexpr uint32_t MCR_DMADOUBLE1 = 0x100;   // DAC Channel1 DMA double data mode
+    static constexpr uint32_t MCR_SINFORMAT1 = 0x200;   // Enable signed format for DAC channel1
     template<uint32_t X>
-    static constexpr uint32_t DAC_MCR_HFSEL =               // High frequency interface mode selection (2 bits)
+    static constexpr uint32_t MCR_HFSEL =               // High frequency interface mode selection (2 bits)
         bit_field_t<14, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_MCR_MODE2 =               // DAC Channel 2 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN2=0 and bit CEN2 =0 in the DAC_CR register). If EN2=1 or CEN2 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 2 mode: DAC Channel 2 in normal Mode DAC Channel 2 in sample &amp;amp; hold mode (3 bits)
+    static constexpr uint32_t MCR_MODE2 =               // DAC Channel 2 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN2=0 and bit CEN2 =0 in the DAC_CR register). If EN2=1 or CEN2 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 2 mode: DAC Channel 2 in normal Mode DAC Channel 2 in sample &amp;amp; hold mode (3 bits)
         bit_field_t<16, 0x7>::value<X>();
-    static constexpr uint32_t DAC_MCR_DMADOUBLE2 = 0x1000000;// DAC Channel2 DMA double data mode
-    static constexpr uint32_t DAC_MCR_SINFORMAT2 = 0x2000000;// Enable signed format for DAC channel2
-    static const uint32_t DAC_MCR_RESET_VALUE = 0x0;
+    static constexpr uint32_t MCR_DMADOUBLE2 = 0x1000000;// DAC Channel2 DMA double data mode
+    static constexpr uint32_t MCR_SINFORMAT2 = 0x2000000;// Enable signed format for DAC channel2
+    static const uint32_t MCR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHSR1_TSAMPLE1 =            // DAC Channel 1 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel1 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, If BWSTx=1, the write operation is ignored. (10 bits)
+    static constexpr uint32_t SHSR1_TSAMPLE1 =            // DAC Channel 1 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel1 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, If BWSTx=1, the write operation is ignored. (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
-    static const uint32_t DAC_SHSR1_RESET_VALUE = 0x0;
+    static const uint32_t SHSR1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHSR2_TSAMPLE2 =            // DAC Channel 2 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel2 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, if BWSTx=1, the write operation is ignored. (10 bits)
+    static constexpr uint32_t SHSR2_TSAMPLE2 =            // DAC Channel 2 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel2 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, if BWSTx=1, the write operation is ignored. (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
-    static const uint32_t DAC_SHSR2_RESET_VALUE = 0x0;
+    static const uint32_t SHSR2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHHR_THOLD1 =              // DAC Channel 1 hold Time (only valid in sample &amp;amp; hold mode) Hold time= (THOLD[9:0]) x T LSI (10 bits)
+    static constexpr uint32_t SHHR_THOLD1 =              // DAC Channel 1 hold Time (only valid in sample &amp;amp; hold mode) Hold time= (THOLD[9:0]) x T LSI (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHHR_THOLD2 =              // DAC Channel 2 hold time (only valid in sample &amp;amp; hold mode). Hold time= (THOLD[9:0]) x T LSI (10 bits)
+    static constexpr uint32_t SHHR_THOLD2 =              // DAC Channel 2 hold time (only valid in sample &amp;amp; hold mode). Hold time= (THOLD[9:0]) x T LSI (10 bits)
         bit_field_t<16, 0x3ff>::value<X>();
-    static const uint32_t DAC_SHHR_RESET_VALUE = 0x10001;
+    static const uint32_t SHHR_RESET_VALUE = 0x10001;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHRR_TREFRESH1 =           // DAC Channel 1 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
+    static constexpr uint32_t SHRR_TREFRESH1 =           // DAC Channel 1 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHRR_TREFRESH2 =           // DAC Channel 2 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
+    static constexpr uint32_t SHRR_TREFRESH2 =           // DAC Channel 2 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
         bit_field_t<16, 0xff>::value<X>();
-    static const uint32_t DAC_SHRR_RESET_VALUE = 0x10001;
+    static const uint32_t SHRR_RESET_VALUE = 0x10001;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR1_STRSTDATA1 =          // DAC Channel 1 Sawtooth reset value (12 bits)
+    static constexpr uint32_t STR1_STRSTDATA1 =          // DAC Channel 1 Sawtooth reset value (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
-    static constexpr uint32_t DAC_STR1_STDIR1 = 0x1000;      // DAC Channel1 Sawtooth direction setting
+    static constexpr uint32_t STR1_STDIR1 = 0x1000;      // DAC Channel1 Sawtooth direction setting
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR1_STINCDATA1 =          // DAC CH1 Sawtooth increment value (12.4 bit format) (16 bits)
+    static constexpr uint32_t STR1_STINCDATA1 =          // DAC CH1 Sawtooth increment value (12.4 bit format) (16 bits)
         bit_field_t<16, 0xffff>::value<X>();
-    static const uint32_t DAC_STR1_RESET_VALUE = 0x0;
+    static const uint32_t STR1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR2_STRSTDATA2 =          // DAC Channel 2 Sawtooth reset value (12 bits)
+    static constexpr uint32_t STR2_STRSTDATA2 =          // DAC Channel 2 Sawtooth reset value (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
-    static constexpr uint32_t DAC_STR2_STDIR2 = 0x1000;      // DAC Channel2 Sawtooth direction setting
+    static constexpr uint32_t STR2_STDIR2 = 0x1000;      // DAC Channel2 Sawtooth direction setting
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR2_STINCDATA2 =          // DAC CH2 Sawtooth increment value (12.4 bit format) (16 bits)
+    static constexpr uint32_t STR2_STINCDATA2 =          // DAC CH2 Sawtooth increment value (12.4 bit format) (16 bits)
         bit_field_t<16, 0xffff>::value<X>();
-    static const uint32_t DAC_STR2_RESET_VALUE = 0x0;
+    static const uint32_t STR2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STRSTTRIGSEL1 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STRSTTRIGSEL1 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
         bit_field_t<0, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STINCTRIGSEL1 =       // DAC Channel 1 Sawtooth Increment trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STINCTRIGSEL1 =       // DAC Channel 1 Sawtooth Increment trigger selection (4 bits)
         bit_field_t<8, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STRSTTRIGSEL2 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STRSTTRIGSEL2 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
         bit_field_t<16, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STINCTRIGSEL2 =       // DAC Channel 2 Sawtooth Increment trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STINCTRIGSEL2 =       // DAC Channel 2 Sawtooth Increment trigger selection (4 bits)
         bit_field_t<24, 0xf>::value<X>();
-    static const uint32_t DAC_STMODR_RESET_VALUE = 0x0;
+    static const uint32_t STMODR_RESET_VALUE = 0x0;
 };
 
 static dac1_t& DAC1 = *reinterpret_cast<dac1_t*>(0x50000800);
@@ -11184,247 +11184,247 @@ static dac1_t& DAC1 = *reinterpret_cast<dac1_t*>(0x50000800);
 
 struct dac2_t
 {
-    volatile uint32_t    DAC_CR;               // [Read-write] DAC control register
-    volatile uint32_t    DAC_SWTRGR;           // [Write-only] DAC software trigger register
-    volatile uint32_t    DAC_DHR12R1;          // [Read-write] DAC channel1 12-bit right-aligned data holding register
-    volatile uint32_t    DAC_DHR12L1;          // [Read-write] DAC channel1 12-bit left aligned data holding register
-    volatile uint32_t    DAC_DHR8R1;           // [Read-write] DAC channel1 8-bit right aligned data holding register
-    volatile uint32_t    DAC_DHR12R2;          // [Read-write] DAC channel2 12-bit right aligned data holding register
-    volatile uint32_t    DAC_DHR12L2;          // [Read-write] DAC channel2 12-bit left aligned data holding register
-    volatile uint32_t    DAC_DHR8R2;           // [Read-write] DAC channel2 8-bit right-aligned data holding register
-    volatile uint32_t    DAC_DHR12RD;          // [Read-write] Dual DAC 12-bit right-aligned data holding register
-    volatile uint32_t    DAC_DHR12LD;          // [Read-write] DUAL DAC 12-bit left aligned data holding register
-    volatile uint32_t    DAC_DHR8RD;           // [Read-write] DUAL DAC 8-bit right aligned data holding register
-    volatile uint32_t    DAC_DOR1;             // [Read-only] DAC channel1 data output register
-    volatile uint32_t    DAC_DOR2;             // [Read-only] DAC channel2 data output register
-    volatile uint32_t    DAC_SR;               // DAC status register
-    volatile uint32_t    DAC_CCR;              // [Read-write] DAC calibration control register
-    volatile uint32_t    DAC_MCR;              // [Read-write] DAC mode control register
-    volatile uint32_t    DAC_SHSR1;            // [Read-write] DAC Sample and Hold sample time register 1
-    volatile uint32_t    DAC_SHSR2;            // [Read-write] DAC Sample and Hold sample time register 2
-    volatile uint32_t    DAC_SHHR;             // [Read-write] DAC Sample and Hold hold time register
-    volatile uint32_t    DAC_SHRR;             // [Read-write] DAC Sample and Hold refresh time register
+    volatile uint32_t    CR;                   // [Read-write] DAC control register
+    volatile uint32_t    SWTRGR;               // [Write-only] DAC software trigger register
+    volatile uint32_t    DHR12R1;              // [Read-write] DAC channel1 12-bit right-aligned data holding register
+    volatile uint32_t    DHR12L1;              // [Read-write] DAC channel1 12-bit left aligned data holding register
+    volatile uint32_t    DHR8R1;               // [Read-write] DAC channel1 8-bit right aligned data holding register
+    volatile uint32_t    DHR12R2;              // [Read-write] DAC channel2 12-bit right aligned data holding register
+    volatile uint32_t    DHR12L2;              // [Read-write] DAC channel2 12-bit left aligned data holding register
+    volatile uint32_t    DHR8R2;               // [Read-write] DAC channel2 8-bit right-aligned data holding register
+    volatile uint32_t    DHR12RD;              // [Read-write] Dual DAC 12-bit right-aligned data holding register
+    volatile uint32_t    DHR12LD;              // [Read-write] DUAL DAC 12-bit left aligned data holding register
+    volatile uint32_t    DHR8RD;               // [Read-write] DUAL DAC 8-bit right aligned data holding register
+    volatile uint32_t    DOR1;                 // [Read-only] DAC channel1 data output register
+    volatile uint32_t    DOR2;                 // [Read-only] DAC channel2 data output register
+    volatile uint32_t    SR;                   // DAC status register
+    volatile uint32_t    CCR;                  // [Read-write] DAC calibration control register
+    volatile uint32_t    MCR;                  // [Read-write] DAC mode control register
+    volatile uint32_t    SHSR1;                // [Read-write] DAC Sample and Hold sample time register 1
+    volatile uint32_t    SHSR2;                // [Read-write] DAC Sample and Hold sample time register 2
+    volatile uint32_t    SHHR;                 // [Read-write] DAC Sample and Hold hold time register
+    volatile uint32_t    SHRR;                 // [Read-write] DAC Sample and Hold refresh time register
     reserved_t<2>        _0;
-    volatile uint32_t    DAC_STR1;             // [Read-write] Sawtooth register
-    volatile uint32_t    DAC_STR2;             // [Read-write] Sawtooth register
-    volatile uint32_t    DAC_STMODR;           // [Read-write] Sawtooth Mode register
+    volatile uint32_t    STR1;                 // [Read-write] Sawtooth register
+    volatile uint32_t    STR2;                 // [Read-write] Sawtooth register
+    volatile uint32_t    STMODR;               // [Read-write] Sawtooth Mode register
 
-    static constexpr uint32_t DAC_CR_EN1 = 0x1;            // DAC channel1 enable This bit is set and cleared by software to enable/disable DAC channel1.
-    static constexpr uint32_t DAC_CR_TEN1 = 0x2;           // DAC channel1 trigger enable
+    static constexpr uint32_t CR_EN1 = 0x1;            // DAC channel1 enable This bit is set and cleared by software to enable/disable DAC channel1.
+    static constexpr uint32_t CR_TEN1 = 0x2;           // DAC channel1 trigger enable
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_TSEL1 =               // DAC channel1 trigger selection These bits select the external event used to trigger DAC channel1. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (4 bits)
+    static constexpr uint32_t CR_TSEL1 =               // DAC channel1 trigger selection These bits select the external event used to trigger DAC channel1. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (4 bits)
         bit_field_t<2, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_WAVE1 =               // DAC channel1 noise/triangle wave generation enable These bits are set and cleared by software. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (2 bits)
+    static constexpr uint32_t CR_WAVE1 =               // DAC channel1 noise/triangle wave generation enable These bits are set and cleared by software. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (2 bits)
         bit_field_t<6, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_MAMP1 =               // DAC channel1 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
+    static constexpr uint32_t CR_MAMP1 =               // DAC channel1 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
         bit_field_t<8, 0xf>::value<X>();
-    static constexpr uint32_t DAC_CR_DMAEN1 = 0x1000;      // DAC channel1 DMA enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_DMAUDRIE1 = 0x2000;   // DAC channel1 DMA Underrun Interrupt enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_CEN1 = 0x4000;        // DAC Channel 1 calibration enable This bit is set and cleared by software to enable/disable DAC channel 1 calibration, it can be written only if bit EN1=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
-    static constexpr uint32_t DAC_CR_EN2 = 0x10000;        // DAC channel2 enable This bit is set and cleared by software to enable/disable DAC channel2.
-    static constexpr uint32_t DAC_CR_TEN2 = 0x20000;       // DAC channel2 trigger enable
+    static constexpr uint32_t CR_DMAEN1 = 0x1000;      // DAC channel1 DMA enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_DMAUDRIE1 = 0x2000;   // DAC channel1 DMA Underrun Interrupt enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_CEN1 = 0x4000;        // DAC Channel 1 calibration enable This bit is set and cleared by software to enable/disable DAC channel 1 calibration, it can be written only if bit EN1=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
+    static constexpr uint32_t CR_EN2 = 0x10000;        // DAC channel2 enable This bit is set and cleared by software to enable/disable DAC channel2.
+    static constexpr uint32_t CR_TEN2 = 0x20000;       // DAC channel2 trigger enable
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_TSEL2 =               // DAC channel2 trigger selection These bits select the external event used to trigger DAC channel2 Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled). (4 bits)
+    static constexpr uint32_t CR_TSEL2 =               // DAC channel2 trigger selection These bits select the external event used to trigger DAC channel2 Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled). (4 bits)
         bit_field_t<18, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_WAVE2 =               // DAC channel2 noise/triangle wave generation enable These bits are set/reset by software. 1x: Triangle wave generation enabled Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled) (2 bits)
+    static constexpr uint32_t CR_WAVE2 =               // DAC channel2 noise/triangle wave generation enable These bits are set/reset by software. 1x: Triangle wave generation enabled Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled) (2 bits)
         bit_field_t<22, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_MAMP2 =               // DAC channel2 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
+    static constexpr uint32_t CR_MAMP2 =               // DAC channel2 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
         bit_field_t<24, 0xf>::value<X>();
-    static constexpr uint32_t DAC_CR_DMAEN2 = 0x10000000;  // DAC channel2 DMA enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_DMAUDRIE2 = 0x20000000;// DAC channel2 DMA underrun interrupt enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_CEN2 = 0x40000000;    // DAC Channel 2 calibration enable This bit is set and cleared by software to enable/disable DAC channel 2 calibration, it can be written only if bit EN2=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
-    static const uint32_t DAC_CR_RESET_VALUE = 0x0;
+    static constexpr uint32_t CR_DMAEN2 = 0x10000000;  // DAC channel2 DMA enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_DMAUDRIE2 = 0x20000000;// DAC channel2 DMA underrun interrupt enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_CEN2 = 0x40000000;    // DAC Channel 2 calibration enable This bit is set and cleared by software to enable/disable DAC channel 2 calibration, it can be written only if bit EN2=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
+    static const uint32_t CR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DAC_SWTRGR_SWTRIG1 = 0x1;        // DAC channel1 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR1 register value has been loaded into the DAC_DOR1 register.
-    static constexpr uint32_t DAC_SWTRGR_SWTRIG2 = 0x2;        // DAC channel2 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR2 register value has been loaded into the DAC_DOR2 register.
-    static constexpr uint32_t DAC_SWTRGR_SWTRIGB1 = 0x10000;   // DAC channel1 software trigger B
-    static constexpr uint32_t DAC_SWTRGR_SWTRIGB2 = 0x20000;   // DAC channel2 software trigger B
-    static const uint32_t DAC_SWTRGR_RESET_VALUE = 0x0;
+    static constexpr uint32_t SWTRGR_SWTRIG1 = 0x1;        // DAC channel1 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR1 register value has been loaded into the DAC_DOR1 register.
+    static constexpr uint32_t SWTRGR_SWTRIG2 = 0x2;        // DAC channel2 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR2 register value has been loaded into the DAC_DOR2 register.
+    static constexpr uint32_t SWTRGR_SWTRIGB1 = 0x10000;   // DAC channel1 software trigger B
+    static constexpr uint32_t SWTRGR_SWTRIGB2 = 0x20000;   // DAC channel2 software trigger B
+    static const uint32_t SWTRGR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R1_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12R1_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R1_DACC1DHRB =           // DAC channel1 12-bit right-aligned data B (12 bits)
+    static constexpr uint32_t DHR12R1_DACC1DHRB =           // DAC channel1 12-bit right-aligned data B (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12R1_RESET_VALUE = 0x0;
+    static const uint32_t DHR12R1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L1_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12L1_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<4, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L1_DACC1DHRB =           // DAC channel1 12-bit left-aligned data B (12 bits)
+    static constexpr uint32_t DHR12L1_DACC1DHRB =           // DAC channel1 12-bit left-aligned data B (12 bits)
         bit_field_t<20, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12L1_RESET_VALUE = 0x0;
+    static const uint32_t DHR12L1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R1_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
+    static constexpr uint32_t DHR8R1_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R1_DACC1DHRB =           // DAC channel1 8-bit right-aligned data (8 bits)
+    static constexpr uint32_t DHR8R1_DACC1DHRB =           // DAC channel1 8-bit right-aligned data (8 bits)
         bit_field_t<8, 0xff>::value<X>();
-    static const uint32_t DAC_DHR8R1_RESET_VALUE = 0x0;
+    static const uint32_t DHR8R1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R2_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12R2_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R2_DACC2DHRB =           // DAC channel2 12-bit right-aligned data (12 bits)
+    static constexpr uint32_t DHR12R2_DACC2DHRB =           // DAC channel2 12-bit right-aligned data (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12R2_RESET_VALUE = 0x0;
+    static const uint32_t DHR12R2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L2_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specify 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12L2_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specify 12-bit data for DAC channel2. (12 bits)
         bit_field_t<4, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L2_DACC2DHRB =           // DAC channel2 12-bit left-aligned data B (12 bits)
+    static constexpr uint32_t DHR12L2_DACC2DHRB =           // DAC channel2 12-bit left-aligned data B (12 bits)
         bit_field_t<20, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12L2_RESET_VALUE = 0x0;
+    static const uint32_t DHR12L2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R2_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
+    static constexpr uint32_t DHR8R2_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R2_DACC2DHRB =           // DAC channel2 8-bit right-aligned data (8 bits)
+    static constexpr uint32_t DHR8R2_DACC2DHRB =           // DAC channel2 8-bit right-aligned data (8 bits)
         bit_field_t<8, 0xff>::value<X>();
-    static const uint32_t DAC_DHR8R2_RESET_VALUE = 0x0;
+    static const uint32_t DHR8R2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12RD_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12RD_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12RD_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12RD_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12RD_RESET_VALUE = 0x0;
+    static const uint32_t DHR12RD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12LD_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12LD_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<4, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12LD_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12LD_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
         bit_field_t<20, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12LD_RESET_VALUE = 0x0;
+    static const uint32_t DHR12LD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8RD_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
+    static constexpr uint32_t DHR8RD_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8RD_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
+    static constexpr uint32_t DHR8RD_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
         bit_field_t<8, 0xff>::value<X>();
-    static const uint32_t DAC_DHR8RD_RESET_VALUE = 0x0;
+    static const uint32_t DHR8RD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR1_DACC1DOR =            // DAC channel1 data output These bits are read-only, they contain data output for DAC channel1. (12 bits)
+    static constexpr uint32_t DOR1_DACC1DOR =            // DAC channel1 data output These bits are read-only, they contain data output for DAC channel1. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR1_DACC1DORB =           // DAC channel1 data output (12 bits)
+    static constexpr uint32_t DOR1_DACC1DORB =           // DAC channel1 data output (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DOR1_RESET_VALUE = 0x0;
+    static const uint32_t DOR1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR2_DACC2DOR =            // DAC channel2 data output These bits are read-only, they contain data output for DAC channel2. (12 bits)
+    static constexpr uint32_t DOR2_DACC2DOR =            // DAC channel2 data output These bits are read-only, they contain data output for DAC channel2. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR2_DACC2DORB =           // DAC channel2 data output (12 bits)
+    static constexpr uint32_t DOR2_DACC2DORB =           // DAC channel2 data output (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DOR2_RESET_VALUE = 0x0;
+    static const uint32_t DOR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DAC_SR_DAC1RDY = 0x800;      // DAC channel1 ready status bit, Read-write
-    static constexpr uint32_t DAC_SR_DORSTAT1 = 0x1000;    // DAC channel1 output register status bit, Read-write
-    static constexpr uint32_t DAC_SR_DMAUDR1 = 0x2000;     // DAC channel1 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
-    static constexpr uint32_t DAC_SR_CAL_FLAG1 = 0x4000;   // DAC Channel 1 calibration offset status This bit is set and cleared by hardware, Read-only
-    static constexpr uint32_t DAC_SR_BWST1 = 0x8000;       // DAC Channel 1 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR1, It is cleared by hardware when the write operation of DAC_SHSR1 is complete. (It takes about 3LSI periods of synchronization)., Read-only
-    static constexpr uint32_t DAC_SR_DAC2RDY = 0x8000000;  // DAC channel 2 ready status bit, Read-write
-    static constexpr uint32_t DAC_SR_DORSTAT2 = 0x10000000;// DAC channel 2 output register status bit, Read-write
-    static constexpr uint32_t DAC_SR_DMAUDR2 = 0x20000000; // DAC channel2 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
-    static constexpr uint32_t DAC_SR_CAL_FLAG2 = 0x40000000;// DAC Channel 2 calibration offset status This bit is set and cleared by hardware, Read-only
-    static constexpr uint32_t DAC_SR_BWST2 = 0x80000000;   // DAC Channel 2 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR2, It is cleared by hardware when the write operation of DAC_SHSR2 is complete. (It takes about 3 LSI periods of synchronization)., Read-only
-    static const uint32_t DAC_SR_RESET_VALUE = 0x0;
+    static constexpr uint32_t SR_DAC1RDY = 0x800;      // DAC channel1 ready status bit, Read-write
+    static constexpr uint32_t SR_DORSTAT1 = 0x1000;    // DAC channel1 output register status bit, Read-write
+    static constexpr uint32_t SR_DMAUDR1 = 0x2000;     // DAC channel1 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
+    static constexpr uint32_t SR_CAL_FLAG1 = 0x4000;   // DAC Channel 1 calibration offset status This bit is set and cleared by hardware, Read-only
+    static constexpr uint32_t SR_BWST1 = 0x8000;       // DAC Channel 1 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR1, It is cleared by hardware when the write operation of DAC_SHSR1 is complete. (It takes about 3LSI periods of synchronization)., Read-only
+    static constexpr uint32_t SR_DAC2RDY = 0x8000000;  // DAC channel 2 ready status bit, Read-write
+    static constexpr uint32_t SR_DORSTAT2 = 0x10000000;// DAC channel 2 output register status bit, Read-write
+    static constexpr uint32_t SR_DMAUDR2 = 0x20000000; // DAC channel2 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
+    static constexpr uint32_t SR_CAL_FLAG2 = 0x40000000;// DAC Channel 2 calibration offset status This bit is set and cleared by hardware, Read-only
+    static constexpr uint32_t SR_BWST2 = 0x80000000;   // DAC Channel 2 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR2, It is cleared by hardware when the write operation of DAC_SHSR2 is complete. (It takes about 3 LSI periods of synchronization)., Read-only
+    static const uint32_t SR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_CCR_OTRIM1 =              // DAC Channel 1 offset trimming value (5 bits)
+    static constexpr uint32_t CCR_OTRIM1 =              // DAC Channel 1 offset trimming value (5 bits)
         bit_field_t<0, 0x1f>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CCR_OTRIM2 =              // DAC Channel 2 offset trimming value (5 bits)
+    static constexpr uint32_t CCR_OTRIM2 =              // DAC Channel 2 offset trimming value (5 bits)
         bit_field_t<16, 0x1f>::value<X>();
-    static const uint32_t DAC_CCR_RESET_VALUE = 0x0;
+    static const uint32_t CCR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_MCR_MODE1 =               // DAC Channel 1 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN1=0 and bit CEN1 =0 in the DAC_CR register). If EN1=1 or CEN1 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 1 mode: DAC Channel 1 in normal Mode DAC Channel 1 in sample &amp;amp; hold mode (3 bits)
+    static constexpr uint32_t MCR_MODE1 =               // DAC Channel 1 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN1=0 and bit CEN1 =0 in the DAC_CR register). If EN1=1 or CEN1 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 1 mode: DAC Channel 1 in normal Mode DAC Channel 1 in sample &amp;amp; hold mode (3 bits)
         bit_field_t<0, 0x7>::value<X>();
-    static constexpr uint32_t DAC_MCR_DMADOUBLE1 = 0x100;   // DAC Channel1 DMA double data mode
-    static constexpr uint32_t DAC_MCR_SINFORMAT1 = 0x200;   // Enable signed format for DAC channel1
+    static constexpr uint32_t MCR_DMADOUBLE1 = 0x100;   // DAC Channel1 DMA double data mode
+    static constexpr uint32_t MCR_SINFORMAT1 = 0x200;   // Enable signed format for DAC channel1
     template<uint32_t X>
-    static constexpr uint32_t DAC_MCR_HFSEL =               // High frequency interface mode selection (2 bits)
+    static constexpr uint32_t MCR_HFSEL =               // High frequency interface mode selection (2 bits)
         bit_field_t<14, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_MCR_MODE2 =               // DAC Channel 2 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN2=0 and bit CEN2 =0 in the DAC_CR register). If EN2=1 or CEN2 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 2 mode: DAC Channel 2 in normal Mode DAC Channel 2 in sample &amp;amp; hold mode (3 bits)
+    static constexpr uint32_t MCR_MODE2 =               // DAC Channel 2 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN2=0 and bit CEN2 =0 in the DAC_CR register). If EN2=1 or CEN2 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 2 mode: DAC Channel 2 in normal Mode DAC Channel 2 in sample &amp;amp; hold mode (3 bits)
         bit_field_t<16, 0x7>::value<X>();
-    static constexpr uint32_t DAC_MCR_DMADOUBLE2 = 0x1000000;// DAC Channel2 DMA double data mode
-    static constexpr uint32_t DAC_MCR_SINFORMAT2 = 0x2000000;// Enable signed format for DAC channel2
-    static const uint32_t DAC_MCR_RESET_VALUE = 0x0;
+    static constexpr uint32_t MCR_DMADOUBLE2 = 0x1000000;// DAC Channel2 DMA double data mode
+    static constexpr uint32_t MCR_SINFORMAT2 = 0x2000000;// Enable signed format for DAC channel2
+    static const uint32_t MCR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHSR1_TSAMPLE1 =            // DAC Channel 1 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel1 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, If BWSTx=1, the write operation is ignored. (10 bits)
+    static constexpr uint32_t SHSR1_TSAMPLE1 =            // DAC Channel 1 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel1 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, If BWSTx=1, the write operation is ignored. (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
-    static const uint32_t DAC_SHSR1_RESET_VALUE = 0x0;
+    static const uint32_t SHSR1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHSR2_TSAMPLE2 =            // DAC Channel 2 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel2 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, if BWSTx=1, the write operation is ignored. (10 bits)
+    static constexpr uint32_t SHSR2_TSAMPLE2 =            // DAC Channel 2 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel2 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, if BWSTx=1, the write operation is ignored. (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
-    static const uint32_t DAC_SHSR2_RESET_VALUE = 0x0;
+    static const uint32_t SHSR2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHHR_THOLD1 =              // DAC Channel 1 hold Time (only valid in sample &amp;amp; hold mode) Hold time= (THOLD[9:0]) x T LSI (10 bits)
+    static constexpr uint32_t SHHR_THOLD1 =              // DAC Channel 1 hold Time (only valid in sample &amp;amp; hold mode) Hold time= (THOLD[9:0]) x T LSI (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHHR_THOLD2 =              // DAC Channel 2 hold time (only valid in sample &amp;amp; hold mode). Hold time= (THOLD[9:0]) x T LSI (10 bits)
+    static constexpr uint32_t SHHR_THOLD2 =              // DAC Channel 2 hold time (only valid in sample &amp;amp; hold mode). Hold time= (THOLD[9:0]) x T LSI (10 bits)
         bit_field_t<16, 0x3ff>::value<X>();
-    static const uint32_t DAC_SHHR_RESET_VALUE = 0x10001;
+    static const uint32_t SHHR_RESET_VALUE = 0x10001;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHRR_TREFRESH1 =           // DAC Channel 1 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
+    static constexpr uint32_t SHRR_TREFRESH1 =           // DAC Channel 1 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHRR_TREFRESH2 =           // DAC Channel 2 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
+    static constexpr uint32_t SHRR_TREFRESH2 =           // DAC Channel 2 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
         bit_field_t<16, 0xff>::value<X>();
-    static const uint32_t DAC_SHRR_RESET_VALUE = 0x10001;
+    static const uint32_t SHRR_RESET_VALUE = 0x10001;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR1_STRSTDATA1 =          // DAC Channel 1 Sawtooth reset value (12 bits)
+    static constexpr uint32_t STR1_STRSTDATA1 =          // DAC Channel 1 Sawtooth reset value (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
-    static constexpr uint32_t DAC_STR1_STDIR1 = 0x1000;      // DAC Channel1 Sawtooth direction setting
+    static constexpr uint32_t STR1_STDIR1 = 0x1000;      // DAC Channel1 Sawtooth direction setting
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR1_STINCDATA1 =          // DAC CH1 Sawtooth increment value (12.4 bit format) (16 bits)
+    static constexpr uint32_t STR1_STINCDATA1 =          // DAC CH1 Sawtooth increment value (12.4 bit format) (16 bits)
         bit_field_t<16, 0xffff>::value<X>();
-    static const uint32_t DAC_STR1_RESET_VALUE = 0x0;
+    static const uint32_t STR1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR2_STRSTDATA2 =          // DAC Channel 2 Sawtooth reset value (12 bits)
+    static constexpr uint32_t STR2_STRSTDATA2 =          // DAC Channel 2 Sawtooth reset value (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
-    static constexpr uint32_t DAC_STR2_STDIR2 = 0x1000;      // DAC Channel2 Sawtooth direction setting
+    static constexpr uint32_t STR2_STDIR2 = 0x1000;      // DAC Channel2 Sawtooth direction setting
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR2_STINCDATA2 =          // DAC CH2 Sawtooth increment value (12.4 bit format) (16 bits)
+    static constexpr uint32_t STR2_STINCDATA2 =          // DAC CH2 Sawtooth increment value (12.4 bit format) (16 bits)
         bit_field_t<16, 0xffff>::value<X>();
-    static const uint32_t DAC_STR2_RESET_VALUE = 0x0;
+    static const uint32_t STR2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STRSTTRIGSEL1 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STRSTTRIGSEL1 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
         bit_field_t<0, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STINCTRIGSEL1 =       // DAC Channel 1 Sawtooth Increment trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STINCTRIGSEL1 =       // DAC Channel 1 Sawtooth Increment trigger selection (4 bits)
         bit_field_t<8, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STRSTTRIGSEL2 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STRSTTRIGSEL2 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
         bit_field_t<16, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STINCTRIGSEL2 =       // DAC Channel 2 Sawtooth Increment trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STINCTRIGSEL2 =       // DAC Channel 2 Sawtooth Increment trigger selection (4 bits)
         bit_field_t<24, 0xf>::value<X>();
-    static const uint32_t DAC_STMODR_RESET_VALUE = 0x0;
+    static const uint32_t STMODR_RESET_VALUE = 0x0;
 };
 
 static dac2_t& DAC2 = *reinterpret_cast<dac2_t*>(0x50000c00);
@@ -11440,247 +11440,247 @@ static dac2_t& DAC2 = *reinterpret_cast<dac2_t*>(0x50000c00);
 
 struct dac3_t
 {
-    volatile uint32_t    DAC_CR;               // [Read-write] DAC control register
-    volatile uint32_t    DAC_SWTRGR;           // [Write-only] DAC software trigger register
-    volatile uint32_t    DAC_DHR12R1;          // [Read-write] DAC channel1 12-bit right-aligned data holding register
-    volatile uint32_t    DAC_DHR12L1;          // [Read-write] DAC channel1 12-bit left aligned data holding register
-    volatile uint32_t    DAC_DHR8R1;           // [Read-write] DAC channel1 8-bit right aligned data holding register
-    volatile uint32_t    DAC_DHR12R2;          // [Read-write] DAC channel2 12-bit right aligned data holding register
-    volatile uint32_t    DAC_DHR12L2;          // [Read-write] DAC channel2 12-bit left aligned data holding register
-    volatile uint32_t    DAC_DHR8R2;           // [Read-write] DAC channel2 8-bit right-aligned data holding register
-    volatile uint32_t    DAC_DHR12RD;          // [Read-write] Dual DAC 12-bit right-aligned data holding register
-    volatile uint32_t    DAC_DHR12LD;          // [Read-write] DUAL DAC 12-bit left aligned data holding register
-    volatile uint32_t    DAC_DHR8RD;           // [Read-write] DUAL DAC 8-bit right aligned data holding register
-    volatile uint32_t    DAC_DOR1;             // [Read-only] DAC channel1 data output register
-    volatile uint32_t    DAC_DOR2;             // [Read-only] DAC channel2 data output register
-    volatile uint32_t    DAC_SR;               // DAC status register
-    volatile uint32_t    DAC_CCR;              // [Read-write] DAC calibration control register
-    volatile uint32_t    DAC_MCR;              // [Read-write] DAC mode control register
-    volatile uint32_t    DAC_SHSR1;            // [Read-write] DAC Sample and Hold sample time register 1
-    volatile uint32_t    DAC_SHSR2;            // [Read-write] DAC Sample and Hold sample time register 2
-    volatile uint32_t    DAC_SHHR;             // [Read-write] DAC Sample and Hold hold time register
-    volatile uint32_t    DAC_SHRR;             // [Read-write] DAC Sample and Hold refresh time register
+    volatile uint32_t    CR;                   // [Read-write] DAC control register
+    volatile uint32_t    SWTRGR;               // [Write-only] DAC software trigger register
+    volatile uint32_t    DHR12R1;              // [Read-write] DAC channel1 12-bit right-aligned data holding register
+    volatile uint32_t    DHR12L1;              // [Read-write] DAC channel1 12-bit left aligned data holding register
+    volatile uint32_t    DHR8R1;               // [Read-write] DAC channel1 8-bit right aligned data holding register
+    volatile uint32_t    DHR12R2;              // [Read-write] DAC channel2 12-bit right aligned data holding register
+    volatile uint32_t    DHR12L2;              // [Read-write] DAC channel2 12-bit left aligned data holding register
+    volatile uint32_t    DHR8R2;               // [Read-write] DAC channel2 8-bit right-aligned data holding register
+    volatile uint32_t    DHR12RD;              // [Read-write] Dual DAC 12-bit right-aligned data holding register
+    volatile uint32_t    DHR12LD;              // [Read-write] DUAL DAC 12-bit left aligned data holding register
+    volatile uint32_t    DHR8RD;               // [Read-write] DUAL DAC 8-bit right aligned data holding register
+    volatile uint32_t    DOR1;                 // [Read-only] DAC channel1 data output register
+    volatile uint32_t    DOR2;                 // [Read-only] DAC channel2 data output register
+    volatile uint32_t    SR;                   // DAC status register
+    volatile uint32_t    CCR;                  // [Read-write] DAC calibration control register
+    volatile uint32_t    MCR;                  // [Read-write] DAC mode control register
+    volatile uint32_t    SHSR1;                // [Read-write] DAC Sample and Hold sample time register 1
+    volatile uint32_t    SHSR2;                // [Read-write] DAC Sample and Hold sample time register 2
+    volatile uint32_t    SHHR;                 // [Read-write] DAC Sample and Hold hold time register
+    volatile uint32_t    SHRR;                 // [Read-write] DAC Sample and Hold refresh time register
     reserved_t<2>        _0;
-    volatile uint32_t    DAC_STR1;             // [Read-write] Sawtooth register
-    volatile uint32_t    DAC_STR2;             // [Read-write] Sawtooth register
-    volatile uint32_t    DAC_STMODR;           // [Read-write] Sawtooth Mode register
+    volatile uint32_t    STR1;                 // [Read-write] Sawtooth register
+    volatile uint32_t    STR2;                 // [Read-write] Sawtooth register
+    volatile uint32_t    STMODR;               // [Read-write] Sawtooth Mode register
 
-    static constexpr uint32_t DAC_CR_EN1 = 0x1;            // DAC channel1 enable This bit is set and cleared by software to enable/disable DAC channel1.
-    static constexpr uint32_t DAC_CR_TEN1 = 0x2;           // DAC channel1 trigger enable
+    static constexpr uint32_t CR_EN1 = 0x1;            // DAC channel1 enable This bit is set and cleared by software to enable/disable DAC channel1.
+    static constexpr uint32_t CR_TEN1 = 0x2;           // DAC channel1 trigger enable
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_TSEL1 =               // DAC channel1 trigger selection These bits select the external event used to trigger DAC channel1. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (4 bits)
+    static constexpr uint32_t CR_TSEL1 =               // DAC channel1 trigger selection These bits select the external event used to trigger DAC channel1. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (4 bits)
         bit_field_t<2, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_WAVE1 =               // DAC channel1 noise/triangle wave generation enable These bits are set and cleared by software. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (2 bits)
+    static constexpr uint32_t CR_WAVE1 =               // DAC channel1 noise/triangle wave generation enable These bits are set and cleared by software. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (2 bits)
         bit_field_t<6, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_MAMP1 =               // DAC channel1 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
+    static constexpr uint32_t CR_MAMP1 =               // DAC channel1 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
         bit_field_t<8, 0xf>::value<X>();
-    static constexpr uint32_t DAC_CR_DMAEN1 = 0x1000;      // DAC channel1 DMA enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_DMAUDRIE1 = 0x2000;   // DAC channel1 DMA Underrun Interrupt enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_CEN1 = 0x4000;        // DAC Channel 1 calibration enable This bit is set and cleared by software to enable/disable DAC channel 1 calibration, it can be written only if bit EN1=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
-    static constexpr uint32_t DAC_CR_EN2 = 0x10000;        // DAC channel2 enable This bit is set and cleared by software to enable/disable DAC channel2.
-    static constexpr uint32_t DAC_CR_TEN2 = 0x20000;       // DAC channel2 trigger enable
+    static constexpr uint32_t CR_DMAEN1 = 0x1000;      // DAC channel1 DMA enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_DMAUDRIE1 = 0x2000;   // DAC channel1 DMA Underrun Interrupt enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_CEN1 = 0x4000;        // DAC Channel 1 calibration enable This bit is set and cleared by software to enable/disable DAC channel 1 calibration, it can be written only if bit EN1=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
+    static constexpr uint32_t CR_EN2 = 0x10000;        // DAC channel2 enable This bit is set and cleared by software to enable/disable DAC channel2.
+    static constexpr uint32_t CR_TEN2 = 0x20000;       // DAC channel2 trigger enable
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_TSEL2 =               // DAC channel2 trigger selection These bits select the external event used to trigger DAC channel2 Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled). (4 bits)
+    static constexpr uint32_t CR_TSEL2 =               // DAC channel2 trigger selection These bits select the external event used to trigger DAC channel2 Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled). (4 bits)
         bit_field_t<18, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_WAVE2 =               // DAC channel2 noise/triangle wave generation enable These bits are set/reset by software. 1x: Triangle wave generation enabled Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled) (2 bits)
+    static constexpr uint32_t CR_WAVE2 =               // DAC channel2 noise/triangle wave generation enable These bits are set/reset by software. 1x: Triangle wave generation enabled Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled) (2 bits)
         bit_field_t<22, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_MAMP2 =               // DAC channel2 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
+    static constexpr uint32_t CR_MAMP2 =               // DAC channel2 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
         bit_field_t<24, 0xf>::value<X>();
-    static constexpr uint32_t DAC_CR_DMAEN2 = 0x10000000;  // DAC channel2 DMA enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_DMAUDRIE2 = 0x20000000;// DAC channel2 DMA underrun interrupt enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_CEN2 = 0x40000000;    // DAC Channel 2 calibration enable This bit is set and cleared by software to enable/disable DAC channel 2 calibration, it can be written only if bit EN2=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
-    static const uint32_t DAC_CR_RESET_VALUE = 0x0;
+    static constexpr uint32_t CR_DMAEN2 = 0x10000000;  // DAC channel2 DMA enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_DMAUDRIE2 = 0x20000000;// DAC channel2 DMA underrun interrupt enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_CEN2 = 0x40000000;    // DAC Channel 2 calibration enable This bit is set and cleared by software to enable/disable DAC channel 2 calibration, it can be written only if bit EN2=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
+    static const uint32_t CR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DAC_SWTRGR_SWTRIG1 = 0x1;        // DAC channel1 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR1 register value has been loaded into the DAC_DOR1 register.
-    static constexpr uint32_t DAC_SWTRGR_SWTRIG2 = 0x2;        // DAC channel2 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR2 register value has been loaded into the DAC_DOR2 register.
-    static constexpr uint32_t DAC_SWTRGR_SWTRIGB1 = 0x10000;   // DAC channel1 software trigger B
-    static constexpr uint32_t DAC_SWTRGR_SWTRIGB2 = 0x20000;   // DAC channel2 software trigger B
-    static const uint32_t DAC_SWTRGR_RESET_VALUE = 0x0;
+    static constexpr uint32_t SWTRGR_SWTRIG1 = 0x1;        // DAC channel1 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR1 register value has been loaded into the DAC_DOR1 register.
+    static constexpr uint32_t SWTRGR_SWTRIG2 = 0x2;        // DAC channel2 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR2 register value has been loaded into the DAC_DOR2 register.
+    static constexpr uint32_t SWTRGR_SWTRIGB1 = 0x10000;   // DAC channel1 software trigger B
+    static constexpr uint32_t SWTRGR_SWTRIGB2 = 0x20000;   // DAC channel2 software trigger B
+    static const uint32_t SWTRGR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R1_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12R1_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R1_DACC1DHRB =           // DAC channel1 12-bit right-aligned data B (12 bits)
+    static constexpr uint32_t DHR12R1_DACC1DHRB =           // DAC channel1 12-bit right-aligned data B (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12R1_RESET_VALUE = 0x0;
+    static const uint32_t DHR12R1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L1_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12L1_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<4, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L1_DACC1DHRB =           // DAC channel1 12-bit left-aligned data B (12 bits)
+    static constexpr uint32_t DHR12L1_DACC1DHRB =           // DAC channel1 12-bit left-aligned data B (12 bits)
         bit_field_t<20, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12L1_RESET_VALUE = 0x0;
+    static const uint32_t DHR12L1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R1_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
+    static constexpr uint32_t DHR8R1_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R1_DACC1DHRB =           // DAC channel1 8-bit right-aligned data (8 bits)
+    static constexpr uint32_t DHR8R1_DACC1DHRB =           // DAC channel1 8-bit right-aligned data (8 bits)
         bit_field_t<8, 0xff>::value<X>();
-    static const uint32_t DAC_DHR8R1_RESET_VALUE = 0x0;
+    static const uint32_t DHR8R1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R2_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12R2_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R2_DACC2DHRB =           // DAC channel2 12-bit right-aligned data (12 bits)
+    static constexpr uint32_t DHR12R2_DACC2DHRB =           // DAC channel2 12-bit right-aligned data (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12R2_RESET_VALUE = 0x0;
+    static const uint32_t DHR12R2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L2_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specify 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12L2_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specify 12-bit data for DAC channel2. (12 bits)
         bit_field_t<4, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L2_DACC2DHRB =           // DAC channel2 12-bit left-aligned data B (12 bits)
+    static constexpr uint32_t DHR12L2_DACC2DHRB =           // DAC channel2 12-bit left-aligned data B (12 bits)
         bit_field_t<20, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12L2_RESET_VALUE = 0x0;
+    static const uint32_t DHR12L2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R2_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
+    static constexpr uint32_t DHR8R2_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R2_DACC2DHRB =           // DAC channel2 8-bit right-aligned data (8 bits)
+    static constexpr uint32_t DHR8R2_DACC2DHRB =           // DAC channel2 8-bit right-aligned data (8 bits)
         bit_field_t<8, 0xff>::value<X>();
-    static const uint32_t DAC_DHR8R2_RESET_VALUE = 0x0;
+    static const uint32_t DHR8R2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12RD_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12RD_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12RD_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12RD_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12RD_RESET_VALUE = 0x0;
+    static const uint32_t DHR12RD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12LD_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12LD_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<4, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12LD_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12LD_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
         bit_field_t<20, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12LD_RESET_VALUE = 0x0;
+    static const uint32_t DHR12LD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8RD_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
+    static constexpr uint32_t DHR8RD_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8RD_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
+    static constexpr uint32_t DHR8RD_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
         bit_field_t<8, 0xff>::value<X>();
-    static const uint32_t DAC_DHR8RD_RESET_VALUE = 0x0;
+    static const uint32_t DHR8RD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR1_DACC1DOR =            // DAC channel1 data output These bits are read-only, they contain data output for DAC channel1. (12 bits)
+    static constexpr uint32_t DOR1_DACC1DOR =            // DAC channel1 data output These bits are read-only, they contain data output for DAC channel1. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR1_DACC1DORB =           // DAC channel1 data output (12 bits)
+    static constexpr uint32_t DOR1_DACC1DORB =           // DAC channel1 data output (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DOR1_RESET_VALUE = 0x0;
+    static const uint32_t DOR1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR2_DACC2DOR =            // DAC channel2 data output These bits are read-only, they contain data output for DAC channel2. (12 bits)
+    static constexpr uint32_t DOR2_DACC2DOR =            // DAC channel2 data output These bits are read-only, they contain data output for DAC channel2. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR2_DACC2DORB =           // DAC channel2 data output (12 bits)
+    static constexpr uint32_t DOR2_DACC2DORB =           // DAC channel2 data output (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DOR2_RESET_VALUE = 0x0;
+    static const uint32_t DOR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DAC_SR_DAC1RDY = 0x800;      // DAC channel1 ready status bit, Read-write
-    static constexpr uint32_t DAC_SR_DORSTAT1 = 0x1000;    // DAC channel1 output register status bit, Read-write
-    static constexpr uint32_t DAC_SR_DMAUDR1 = 0x2000;     // DAC channel1 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
-    static constexpr uint32_t DAC_SR_CAL_FLAG1 = 0x4000;   // DAC Channel 1 calibration offset status This bit is set and cleared by hardware, Read-only
-    static constexpr uint32_t DAC_SR_BWST1 = 0x8000;       // DAC Channel 1 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR1, It is cleared by hardware when the write operation of DAC_SHSR1 is complete. (It takes about 3LSI periods of synchronization)., Read-only
-    static constexpr uint32_t DAC_SR_DAC2RDY = 0x8000000;  // DAC channel 2 ready status bit, Read-write
-    static constexpr uint32_t DAC_SR_DORSTAT2 = 0x10000000;// DAC channel 2 output register status bit, Read-write
-    static constexpr uint32_t DAC_SR_DMAUDR2 = 0x20000000; // DAC channel2 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
-    static constexpr uint32_t DAC_SR_CAL_FLAG2 = 0x40000000;// DAC Channel 2 calibration offset status This bit is set and cleared by hardware, Read-only
-    static constexpr uint32_t DAC_SR_BWST2 = 0x80000000;   // DAC Channel 2 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR2, It is cleared by hardware when the write operation of DAC_SHSR2 is complete. (It takes about 3 LSI periods of synchronization)., Read-only
-    static const uint32_t DAC_SR_RESET_VALUE = 0x0;
+    static constexpr uint32_t SR_DAC1RDY = 0x800;      // DAC channel1 ready status bit, Read-write
+    static constexpr uint32_t SR_DORSTAT1 = 0x1000;    // DAC channel1 output register status bit, Read-write
+    static constexpr uint32_t SR_DMAUDR1 = 0x2000;     // DAC channel1 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
+    static constexpr uint32_t SR_CAL_FLAG1 = 0x4000;   // DAC Channel 1 calibration offset status This bit is set and cleared by hardware, Read-only
+    static constexpr uint32_t SR_BWST1 = 0x8000;       // DAC Channel 1 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR1, It is cleared by hardware when the write operation of DAC_SHSR1 is complete. (It takes about 3LSI periods of synchronization)., Read-only
+    static constexpr uint32_t SR_DAC2RDY = 0x8000000;  // DAC channel 2 ready status bit, Read-write
+    static constexpr uint32_t SR_DORSTAT2 = 0x10000000;// DAC channel 2 output register status bit, Read-write
+    static constexpr uint32_t SR_DMAUDR2 = 0x20000000; // DAC channel2 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
+    static constexpr uint32_t SR_CAL_FLAG2 = 0x40000000;// DAC Channel 2 calibration offset status This bit is set and cleared by hardware, Read-only
+    static constexpr uint32_t SR_BWST2 = 0x80000000;   // DAC Channel 2 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR2, It is cleared by hardware when the write operation of DAC_SHSR2 is complete. (It takes about 3 LSI periods of synchronization)., Read-only
+    static const uint32_t SR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_CCR_OTRIM1 =              // DAC Channel 1 offset trimming value (5 bits)
+    static constexpr uint32_t CCR_OTRIM1 =              // DAC Channel 1 offset trimming value (5 bits)
         bit_field_t<0, 0x1f>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CCR_OTRIM2 =              // DAC Channel 2 offset trimming value (5 bits)
+    static constexpr uint32_t CCR_OTRIM2 =              // DAC Channel 2 offset trimming value (5 bits)
         bit_field_t<16, 0x1f>::value<X>();
-    static const uint32_t DAC_CCR_RESET_VALUE = 0x0;
+    static const uint32_t CCR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_MCR_MODE1 =               // DAC Channel 1 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN1=0 and bit CEN1 =0 in the DAC_CR register). If EN1=1 or CEN1 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 1 mode: DAC Channel 1 in normal Mode DAC Channel 1 in sample &amp;amp; hold mode (3 bits)
+    static constexpr uint32_t MCR_MODE1 =               // DAC Channel 1 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN1=0 and bit CEN1 =0 in the DAC_CR register). If EN1=1 or CEN1 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 1 mode: DAC Channel 1 in normal Mode DAC Channel 1 in sample &amp;amp; hold mode (3 bits)
         bit_field_t<0, 0x7>::value<X>();
-    static constexpr uint32_t DAC_MCR_DMADOUBLE1 = 0x100;   // DAC Channel1 DMA double data mode
-    static constexpr uint32_t DAC_MCR_SINFORMAT1 = 0x200;   // Enable signed format for DAC channel1
+    static constexpr uint32_t MCR_DMADOUBLE1 = 0x100;   // DAC Channel1 DMA double data mode
+    static constexpr uint32_t MCR_SINFORMAT1 = 0x200;   // Enable signed format for DAC channel1
     template<uint32_t X>
-    static constexpr uint32_t DAC_MCR_HFSEL =               // High frequency interface mode selection (2 bits)
+    static constexpr uint32_t MCR_HFSEL =               // High frequency interface mode selection (2 bits)
         bit_field_t<14, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_MCR_MODE2 =               // DAC Channel 2 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN2=0 and bit CEN2 =0 in the DAC_CR register). If EN2=1 or CEN2 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 2 mode: DAC Channel 2 in normal Mode DAC Channel 2 in sample &amp;amp; hold mode (3 bits)
+    static constexpr uint32_t MCR_MODE2 =               // DAC Channel 2 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN2=0 and bit CEN2 =0 in the DAC_CR register). If EN2=1 or CEN2 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 2 mode: DAC Channel 2 in normal Mode DAC Channel 2 in sample &amp;amp; hold mode (3 bits)
         bit_field_t<16, 0x7>::value<X>();
-    static constexpr uint32_t DAC_MCR_DMADOUBLE2 = 0x1000000;// DAC Channel2 DMA double data mode
-    static constexpr uint32_t DAC_MCR_SINFORMAT2 = 0x2000000;// Enable signed format for DAC channel2
-    static const uint32_t DAC_MCR_RESET_VALUE = 0x0;
+    static constexpr uint32_t MCR_DMADOUBLE2 = 0x1000000;// DAC Channel2 DMA double data mode
+    static constexpr uint32_t MCR_SINFORMAT2 = 0x2000000;// Enable signed format for DAC channel2
+    static const uint32_t MCR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHSR1_TSAMPLE1 =            // DAC Channel 1 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel1 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, If BWSTx=1, the write operation is ignored. (10 bits)
+    static constexpr uint32_t SHSR1_TSAMPLE1 =            // DAC Channel 1 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel1 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, If BWSTx=1, the write operation is ignored. (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
-    static const uint32_t DAC_SHSR1_RESET_VALUE = 0x0;
+    static const uint32_t SHSR1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHSR2_TSAMPLE2 =            // DAC Channel 2 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel2 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, if BWSTx=1, the write operation is ignored. (10 bits)
+    static constexpr uint32_t SHSR2_TSAMPLE2 =            // DAC Channel 2 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel2 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, if BWSTx=1, the write operation is ignored. (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
-    static const uint32_t DAC_SHSR2_RESET_VALUE = 0x0;
+    static const uint32_t SHSR2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHHR_THOLD1 =              // DAC Channel 1 hold Time (only valid in sample &amp;amp; hold mode) Hold time= (THOLD[9:0]) x T LSI (10 bits)
+    static constexpr uint32_t SHHR_THOLD1 =              // DAC Channel 1 hold Time (only valid in sample &amp;amp; hold mode) Hold time= (THOLD[9:0]) x T LSI (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHHR_THOLD2 =              // DAC Channel 2 hold time (only valid in sample &amp;amp; hold mode). Hold time= (THOLD[9:0]) x T LSI (10 bits)
+    static constexpr uint32_t SHHR_THOLD2 =              // DAC Channel 2 hold time (only valid in sample &amp;amp; hold mode). Hold time= (THOLD[9:0]) x T LSI (10 bits)
         bit_field_t<16, 0x3ff>::value<X>();
-    static const uint32_t DAC_SHHR_RESET_VALUE = 0x10001;
+    static const uint32_t SHHR_RESET_VALUE = 0x10001;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHRR_TREFRESH1 =           // DAC Channel 1 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
+    static constexpr uint32_t SHRR_TREFRESH1 =           // DAC Channel 1 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHRR_TREFRESH2 =           // DAC Channel 2 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
+    static constexpr uint32_t SHRR_TREFRESH2 =           // DAC Channel 2 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
         bit_field_t<16, 0xff>::value<X>();
-    static const uint32_t DAC_SHRR_RESET_VALUE = 0x10001;
+    static const uint32_t SHRR_RESET_VALUE = 0x10001;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR1_STRSTDATA1 =          // DAC Channel 1 Sawtooth reset value (12 bits)
+    static constexpr uint32_t STR1_STRSTDATA1 =          // DAC Channel 1 Sawtooth reset value (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
-    static constexpr uint32_t DAC_STR1_STDIR1 = 0x1000;      // DAC Channel1 Sawtooth direction setting
+    static constexpr uint32_t STR1_STDIR1 = 0x1000;      // DAC Channel1 Sawtooth direction setting
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR1_STINCDATA1 =          // DAC CH1 Sawtooth increment value (12.4 bit format) (16 bits)
+    static constexpr uint32_t STR1_STINCDATA1 =          // DAC CH1 Sawtooth increment value (12.4 bit format) (16 bits)
         bit_field_t<16, 0xffff>::value<X>();
-    static const uint32_t DAC_STR1_RESET_VALUE = 0x0;
+    static const uint32_t STR1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR2_STRSTDATA2 =          // DAC Channel 2 Sawtooth reset value (12 bits)
+    static constexpr uint32_t STR2_STRSTDATA2 =          // DAC Channel 2 Sawtooth reset value (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
-    static constexpr uint32_t DAC_STR2_STDIR2 = 0x1000;      // DAC Channel2 Sawtooth direction setting
+    static constexpr uint32_t STR2_STDIR2 = 0x1000;      // DAC Channel2 Sawtooth direction setting
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR2_STINCDATA2 =          // DAC CH2 Sawtooth increment value (12.4 bit format) (16 bits)
+    static constexpr uint32_t STR2_STINCDATA2 =          // DAC CH2 Sawtooth increment value (12.4 bit format) (16 bits)
         bit_field_t<16, 0xffff>::value<X>();
-    static const uint32_t DAC_STR2_RESET_VALUE = 0x0;
+    static const uint32_t STR2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STRSTTRIGSEL1 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STRSTTRIGSEL1 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
         bit_field_t<0, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STINCTRIGSEL1 =       // DAC Channel 1 Sawtooth Increment trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STINCTRIGSEL1 =       // DAC Channel 1 Sawtooth Increment trigger selection (4 bits)
         bit_field_t<8, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STRSTTRIGSEL2 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STRSTTRIGSEL2 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
         bit_field_t<16, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STINCTRIGSEL2 =       // DAC Channel 2 Sawtooth Increment trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STINCTRIGSEL2 =       // DAC Channel 2 Sawtooth Increment trigger selection (4 bits)
         bit_field_t<24, 0xf>::value<X>();
-    static const uint32_t DAC_STMODR_RESET_VALUE = 0x0;
+    static const uint32_t STMODR_RESET_VALUE = 0x0;
 };
 
 static dac3_t& DAC3 = *reinterpret_cast<dac3_t*>(0x50001000);
@@ -11696,247 +11696,247 @@ static dac3_t& DAC3 = *reinterpret_cast<dac3_t*>(0x50001000);
 
 struct dac4_t
 {
-    volatile uint32_t    DAC_CR;               // [Read-write] DAC control register
-    volatile uint32_t    DAC_SWTRGR;           // [Write-only] DAC software trigger register
-    volatile uint32_t    DAC_DHR12R1;          // [Read-write] DAC channel1 12-bit right-aligned data holding register
-    volatile uint32_t    DAC_DHR12L1;          // [Read-write] DAC channel1 12-bit left aligned data holding register
-    volatile uint32_t    DAC_DHR8R1;           // [Read-write] DAC channel1 8-bit right aligned data holding register
-    volatile uint32_t    DAC_DHR12R2;          // [Read-write] DAC channel2 12-bit right aligned data holding register
-    volatile uint32_t    DAC_DHR12L2;          // [Read-write] DAC channel2 12-bit left aligned data holding register
-    volatile uint32_t    DAC_DHR8R2;           // [Read-write] DAC channel2 8-bit right-aligned data holding register
-    volatile uint32_t    DAC_DHR12RD;          // [Read-write] Dual DAC 12-bit right-aligned data holding register
-    volatile uint32_t    DAC_DHR12LD;          // [Read-write] DUAL DAC 12-bit left aligned data holding register
-    volatile uint32_t    DAC_DHR8RD;           // [Read-write] DUAL DAC 8-bit right aligned data holding register
-    volatile uint32_t    DAC_DOR1;             // [Read-only] DAC channel1 data output register
-    volatile uint32_t    DAC_DOR2;             // [Read-only] DAC channel2 data output register
-    volatile uint32_t    DAC_SR;               // DAC status register
-    volatile uint32_t    DAC_CCR;              // [Read-write] DAC calibration control register
-    volatile uint32_t    DAC_MCR;              // [Read-write] DAC mode control register
-    volatile uint32_t    DAC_SHSR1;            // [Read-write] DAC Sample and Hold sample time register 1
-    volatile uint32_t    DAC_SHSR2;            // [Read-write] DAC Sample and Hold sample time register 2
-    volatile uint32_t    DAC_SHHR;             // [Read-write] DAC Sample and Hold hold time register
-    volatile uint32_t    DAC_SHRR;             // [Read-write] DAC Sample and Hold refresh time register
+    volatile uint32_t    CR;                   // [Read-write] DAC control register
+    volatile uint32_t    SWTRGR;               // [Write-only] DAC software trigger register
+    volatile uint32_t    DHR12R1;              // [Read-write] DAC channel1 12-bit right-aligned data holding register
+    volatile uint32_t    DHR12L1;              // [Read-write] DAC channel1 12-bit left aligned data holding register
+    volatile uint32_t    DHR8R1;               // [Read-write] DAC channel1 8-bit right aligned data holding register
+    volatile uint32_t    DHR12R2;              // [Read-write] DAC channel2 12-bit right aligned data holding register
+    volatile uint32_t    DHR12L2;              // [Read-write] DAC channel2 12-bit left aligned data holding register
+    volatile uint32_t    DHR8R2;               // [Read-write] DAC channel2 8-bit right-aligned data holding register
+    volatile uint32_t    DHR12RD;              // [Read-write] Dual DAC 12-bit right-aligned data holding register
+    volatile uint32_t    DHR12LD;              // [Read-write] DUAL DAC 12-bit left aligned data holding register
+    volatile uint32_t    DHR8RD;               // [Read-write] DUAL DAC 8-bit right aligned data holding register
+    volatile uint32_t    DOR1;                 // [Read-only] DAC channel1 data output register
+    volatile uint32_t    DOR2;                 // [Read-only] DAC channel2 data output register
+    volatile uint32_t    SR;                   // DAC status register
+    volatile uint32_t    CCR;                  // [Read-write] DAC calibration control register
+    volatile uint32_t    MCR;                  // [Read-write] DAC mode control register
+    volatile uint32_t    SHSR1;                // [Read-write] DAC Sample and Hold sample time register 1
+    volatile uint32_t    SHSR2;                // [Read-write] DAC Sample and Hold sample time register 2
+    volatile uint32_t    SHHR;                 // [Read-write] DAC Sample and Hold hold time register
+    volatile uint32_t    SHRR;                 // [Read-write] DAC Sample and Hold refresh time register
     reserved_t<2>        _0;
-    volatile uint32_t    DAC_STR1;             // [Read-write] Sawtooth register
-    volatile uint32_t    DAC_STR2;             // [Read-write] Sawtooth register
-    volatile uint32_t    DAC_STMODR;           // [Read-write] Sawtooth Mode register
+    volatile uint32_t    STR1;                 // [Read-write] Sawtooth register
+    volatile uint32_t    STR2;                 // [Read-write] Sawtooth register
+    volatile uint32_t    STMODR;               // [Read-write] Sawtooth Mode register
 
-    static constexpr uint32_t DAC_CR_EN1 = 0x1;            // DAC channel1 enable This bit is set and cleared by software to enable/disable DAC channel1.
-    static constexpr uint32_t DAC_CR_TEN1 = 0x2;           // DAC channel1 trigger enable
+    static constexpr uint32_t CR_EN1 = 0x1;            // DAC channel1 enable This bit is set and cleared by software to enable/disable DAC channel1.
+    static constexpr uint32_t CR_TEN1 = 0x2;           // DAC channel1 trigger enable
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_TSEL1 =               // DAC channel1 trigger selection These bits select the external event used to trigger DAC channel1. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (4 bits)
+    static constexpr uint32_t CR_TSEL1 =               // DAC channel1 trigger selection These bits select the external event used to trigger DAC channel1. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (4 bits)
         bit_field_t<2, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_WAVE1 =               // DAC channel1 noise/triangle wave generation enable These bits are set and cleared by software. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (2 bits)
+    static constexpr uint32_t CR_WAVE1 =               // DAC channel1 noise/triangle wave generation enable These bits are set and cleared by software. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (2 bits)
         bit_field_t<6, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_MAMP1 =               // DAC channel1 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
+    static constexpr uint32_t CR_MAMP1 =               // DAC channel1 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
         bit_field_t<8, 0xf>::value<X>();
-    static constexpr uint32_t DAC_CR_DMAEN1 = 0x1000;      // DAC channel1 DMA enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_DMAUDRIE1 = 0x2000;   // DAC channel1 DMA Underrun Interrupt enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_CEN1 = 0x4000;        // DAC Channel 1 calibration enable This bit is set and cleared by software to enable/disable DAC channel 1 calibration, it can be written only if bit EN1=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
-    static constexpr uint32_t DAC_CR_EN2 = 0x10000;        // DAC channel2 enable This bit is set and cleared by software to enable/disable DAC channel2.
-    static constexpr uint32_t DAC_CR_TEN2 = 0x20000;       // DAC channel2 trigger enable
+    static constexpr uint32_t CR_DMAEN1 = 0x1000;      // DAC channel1 DMA enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_DMAUDRIE1 = 0x2000;   // DAC channel1 DMA Underrun Interrupt enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_CEN1 = 0x4000;        // DAC Channel 1 calibration enable This bit is set and cleared by software to enable/disable DAC channel 1 calibration, it can be written only if bit EN1=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
+    static constexpr uint32_t CR_EN2 = 0x10000;        // DAC channel2 enable This bit is set and cleared by software to enable/disable DAC channel2.
+    static constexpr uint32_t CR_TEN2 = 0x20000;       // DAC channel2 trigger enable
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_TSEL2 =               // DAC channel2 trigger selection These bits select the external event used to trigger DAC channel2 Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled). (4 bits)
+    static constexpr uint32_t CR_TSEL2 =               // DAC channel2 trigger selection These bits select the external event used to trigger DAC channel2 Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled). (4 bits)
         bit_field_t<18, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_WAVE2 =               // DAC channel2 noise/triangle wave generation enable These bits are set/reset by software. 1x: Triangle wave generation enabled Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled) (2 bits)
+    static constexpr uint32_t CR_WAVE2 =               // DAC channel2 noise/triangle wave generation enable These bits are set/reset by software. 1x: Triangle wave generation enabled Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled) (2 bits)
         bit_field_t<22, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_MAMP2 =               // DAC channel2 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
+    static constexpr uint32_t CR_MAMP2 =               // DAC channel2 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
         bit_field_t<24, 0xf>::value<X>();
-    static constexpr uint32_t DAC_CR_DMAEN2 = 0x10000000;  // DAC channel2 DMA enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_DMAUDRIE2 = 0x20000000;// DAC channel2 DMA underrun interrupt enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_CEN2 = 0x40000000;    // DAC Channel 2 calibration enable This bit is set and cleared by software to enable/disable DAC channel 2 calibration, it can be written only if bit EN2=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
-    static const uint32_t DAC_CR_RESET_VALUE = 0x0;
+    static constexpr uint32_t CR_DMAEN2 = 0x10000000;  // DAC channel2 DMA enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_DMAUDRIE2 = 0x20000000;// DAC channel2 DMA underrun interrupt enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_CEN2 = 0x40000000;    // DAC Channel 2 calibration enable This bit is set and cleared by software to enable/disable DAC channel 2 calibration, it can be written only if bit EN2=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
+    static const uint32_t CR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DAC_SWTRGR_SWTRIG1 = 0x1;        // DAC channel1 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR1 register value has been loaded into the DAC_DOR1 register.
-    static constexpr uint32_t DAC_SWTRGR_SWTRIG2 = 0x2;        // DAC channel2 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR2 register value has been loaded into the DAC_DOR2 register.
-    static constexpr uint32_t DAC_SWTRGR_SWTRIGB1 = 0x10000;   // DAC channel1 software trigger B
-    static constexpr uint32_t DAC_SWTRGR_SWTRIGB2 = 0x20000;   // DAC channel2 software trigger B
-    static const uint32_t DAC_SWTRGR_RESET_VALUE = 0x0;
+    static constexpr uint32_t SWTRGR_SWTRIG1 = 0x1;        // DAC channel1 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR1 register value has been loaded into the DAC_DOR1 register.
+    static constexpr uint32_t SWTRGR_SWTRIG2 = 0x2;        // DAC channel2 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR2 register value has been loaded into the DAC_DOR2 register.
+    static constexpr uint32_t SWTRGR_SWTRIGB1 = 0x10000;   // DAC channel1 software trigger B
+    static constexpr uint32_t SWTRGR_SWTRIGB2 = 0x20000;   // DAC channel2 software trigger B
+    static const uint32_t SWTRGR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R1_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12R1_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R1_DACC1DHRB =           // DAC channel1 12-bit right-aligned data B (12 bits)
+    static constexpr uint32_t DHR12R1_DACC1DHRB =           // DAC channel1 12-bit right-aligned data B (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12R1_RESET_VALUE = 0x0;
+    static const uint32_t DHR12R1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L1_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12L1_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<4, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L1_DACC1DHRB =           // DAC channel1 12-bit left-aligned data B (12 bits)
+    static constexpr uint32_t DHR12L1_DACC1DHRB =           // DAC channel1 12-bit left-aligned data B (12 bits)
         bit_field_t<20, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12L1_RESET_VALUE = 0x0;
+    static const uint32_t DHR12L1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R1_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
+    static constexpr uint32_t DHR8R1_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R1_DACC1DHRB =           // DAC channel1 8-bit right-aligned data (8 bits)
+    static constexpr uint32_t DHR8R1_DACC1DHRB =           // DAC channel1 8-bit right-aligned data (8 bits)
         bit_field_t<8, 0xff>::value<X>();
-    static const uint32_t DAC_DHR8R1_RESET_VALUE = 0x0;
+    static const uint32_t DHR8R1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R2_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12R2_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R2_DACC2DHRB =           // DAC channel2 12-bit right-aligned data (12 bits)
+    static constexpr uint32_t DHR12R2_DACC2DHRB =           // DAC channel2 12-bit right-aligned data (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12R2_RESET_VALUE = 0x0;
+    static const uint32_t DHR12R2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L2_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specify 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12L2_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specify 12-bit data for DAC channel2. (12 bits)
         bit_field_t<4, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L2_DACC2DHRB =           // DAC channel2 12-bit left-aligned data B (12 bits)
+    static constexpr uint32_t DHR12L2_DACC2DHRB =           // DAC channel2 12-bit left-aligned data B (12 bits)
         bit_field_t<20, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12L2_RESET_VALUE = 0x0;
+    static const uint32_t DHR12L2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R2_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
+    static constexpr uint32_t DHR8R2_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R2_DACC2DHRB =           // DAC channel2 8-bit right-aligned data (8 bits)
+    static constexpr uint32_t DHR8R2_DACC2DHRB =           // DAC channel2 8-bit right-aligned data (8 bits)
         bit_field_t<8, 0xff>::value<X>();
-    static const uint32_t DAC_DHR8R2_RESET_VALUE = 0x0;
+    static const uint32_t DHR8R2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12RD_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12RD_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12RD_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12RD_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12RD_RESET_VALUE = 0x0;
+    static const uint32_t DHR12RD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12LD_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12LD_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<4, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12LD_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12LD_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
         bit_field_t<20, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12LD_RESET_VALUE = 0x0;
+    static const uint32_t DHR12LD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8RD_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
+    static constexpr uint32_t DHR8RD_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8RD_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
+    static constexpr uint32_t DHR8RD_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
         bit_field_t<8, 0xff>::value<X>();
-    static const uint32_t DAC_DHR8RD_RESET_VALUE = 0x0;
+    static const uint32_t DHR8RD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR1_DACC1DOR =            // DAC channel1 data output These bits are read-only, they contain data output for DAC channel1. (12 bits)
+    static constexpr uint32_t DOR1_DACC1DOR =            // DAC channel1 data output These bits are read-only, they contain data output for DAC channel1. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR1_DACC1DORB =           // DAC channel1 data output (12 bits)
+    static constexpr uint32_t DOR1_DACC1DORB =           // DAC channel1 data output (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DOR1_RESET_VALUE = 0x0;
+    static const uint32_t DOR1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR2_DACC2DOR =            // DAC channel2 data output These bits are read-only, they contain data output for DAC channel2. (12 bits)
+    static constexpr uint32_t DOR2_DACC2DOR =            // DAC channel2 data output These bits are read-only, they contain data output for DAC channel2. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR2_DACC2DORB =           // DAC channel2 data output (12 bits)
+    static constexpr uint32_t DOR2_DACC2DORB =           // DAC channel2 data output (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DOR2_RESET_VALUE = 0x0;
+    static const uint32_t DOR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DAC_SR_DAC1RDY = 0x800;      // DAC channel1 ready status bit, Read-write
-    static constexpr uint32_t DAC_SR_DORSTAT1 = 0x1000;    // DAC channel1 output register status bit, Read-write
-    static constexpr uint32_t DAC_SR_DMAUDR1 = 0x2000;     // DAC channel1 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
-    static constexpr uint32_t DAC_SR_CAL_FLAG1 = 0x4000;   // DAC Channel 1 calibration offset status This bit is set and cleared by hardware, Read-only
-    static constexpr uint32_t DAC_SR_BWST1 = 0x8000;       // DAC Channel 1 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR1, It is cleared by hardware when the write operation of DAC_SHSR1 is complete. (It takes about 3LSI periods of synchronization)., Read-only
-    static constexpr uint32_t DAC_SR_DAC2RDY = 0x8000000;  // DAC channel 2 ready status bit, Read-write
-    static constexpr uint32_t DAC_SR_DORSTAT2 = 0x10000000;// DAC channel 2 output register status bit, Read-write
-    static constexpr uint32_t DAC_SR_DMAUDR2 = 0x20000000; // DAC channel2 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
-    static constexpr uint32_t DAC_SR_CAL_FLAG2 = 0x40000000;// DAC Channel 2 calibration offset status This bit is set and cleared by hardware, Read-only
-    static constexpr uint32_t DAC_SR_BWST2 = 0x80000000;   // DAC Channel 2 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR2, It is cleared by hardware when the write operation of DAC_SHSR2 is complete. (It takes about 3 LSI periods of synchronization)., Read-only
-    static const uint32_t DAC_SR_RESET_VALUE = 0x0;
+    static constexpr uint32_t SR_DAC1RDY = 0x800;      // DAC channel1 ready status bit, Read-write
+    static constexpr uint32_t SR_DORSTAT1 = 0x1000;    // DAC channel1 output register status bit, Read-write
+    static constexpr uint32_t SR_DMAUDR1 = 0x2000;     // DAC channel1 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
+    static constexpr uint32_t SR_CAL_FLAG1 = 0x4000;   // DAC Channel 1 calibration offset status This bit is set and cleared by hardware, Read-only
+    static constexpr uint32_t SR_BWST1 = 0x8000;       // DAC Channel 1 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR1, It is cleared by hardware when the write operation of DAC_SHSR1 is complete. (It takes about 3LSI periods of synchronization)., Read-only
+    static constexpr uint32_t SR_DAC2RDY = 0x8000000;  // DAC channel 2 ready status bit, Read-write
+    static constexpr uint32_t SR_DORSTAT2 = 0x10000000;// DAC channel 2 output register status bit, Read-write
+    static constexpr uint32_t SR_DMAUDR2 = 0x20000000; // DAC channel2 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
+    static constexpr uint32_t SR_CAL_FLAG2 = 0x40000000;// DAC Channel 2 calibration offset status This bit is set and cleared by hardware, Read-only
+    static constexpr uint32_t SR_BWST2 = 0x80000000;   // DAC Channel 2 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR2, It is cleared by hardware when the write operation of DAC_SHSR2 is complete. (It takes about 3 LSI periods of synchronization)., Read-only
+    static const uint32_t SR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_CCR_OTRIM1 =              // DAC Channel 1 offset trimming value (5 bits)
+    static constexpr uint32_t CCR_OTRIM1 =              // DAC Channel 1 offset trimming value (5 bits)
         bit_field_t<0, 0x1f>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CCR_OTRIM2 =              // DAC Channel 2 offset trimming value (5 bits)
+    static constexpr uint32_t CCR_OTRIM2 =              // DAC Channel 2 offset trimming value (5 bits)
         bit_field_t<16, 0x1f>::value<X>();
-    static const uint32_t DAC_CCR_RESET_VALUE = 0x0;
+    static const uint32_t CCR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_MCR_MODE1 =               // DAC Channel 1 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN1=0 and bit CEN1 =0 in the DAC_CR register). If EN1=1 or CEN1 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 1 mode: DAC Channel 1 in normal Mode DAC Channel 1 in sample &amp;amp; hold mode (3 bits)
+    static constexpr uint32_t MCR_MODE1 =               // DAC Channel 1 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN1=0 and bit CEN1 =0 in the DAC_CR register). If EN1=1 or CEN1 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 1 mode: DAC Channel 1 in normal Mode DAC Channel 1 in sample &amp;amp; hold mode (3 bits)
         bit_field_t<0, 0x7>::value<X>();
-    static constexpr uint32_t DAC_MCR_DMADOUBLE1 = 0x100;   // DAC Channel1 DMA double data mode
-    static constexpr uint32_t DAC_MCR_SINFORMAT1 = 0x200;   // Enable signed format for DAC channel1
+    static constexpr uint32_t MCR_DMADOUBLE1 = 0x100;   // DAC Channel1 DMA double data mode
+    static constexpr uint32_t MCR_SINFORMAT1 = 0x200;   // Enable signed format for DAC channel1
     template<uint32_t X>
-    static constexpr uint32_t DAC_MCR_HFSEL =               // High frequency interface mode selection (2 bits)
+    static constexpr uint32_t MCR_HFSEL =               // High frequency interface mode selection (2 bits)
         bit_field_t<14, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_MCR_MODE2 =               // DAC Channel 2 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN2=0 and bit CEN2 =0 in the DAC_CR register). If EN2=1 or CEN2 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 2 mode: DAC Channel 2 in normal Mode DAC Channel 2 in sample &amp;amp; hold mode (3 bits)
+    static constexpr uint32_t MCR_MODE2 =               // DAC Channel 2 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN2=0 and bit CEN2 =0 in the DAC_CR register). If EN2=1 or CEN2 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 2 mode: DAC Channel 2 in normal Mode DAC Channel 2 in sample &amp;amp; hold mode (3 bits)
         bit_field_t<16, 0x7>::value<X>();
-    static constexpr uint32_t DAC_MCR_DMADOUBLE2 = 0x1000000;// DAC Channel2 DMA double data mode
-    static constexpr uint32_t DAC_MCR_SINFORMAT2 = 0x2000000;// Enable signed format for DAC channel2
-    static const uint32_t DAC_MCR_RESET_VALUE = 0x0;
+    static constexpr uint32_t MCR_DMADOUBLE2 = 0x1000000;// DAC Channel2 DMA double data mode
+    static constexpr uint32_t MCR_SINFORMAT2 = 0x2000000;// Enable signed format for DAC channel2
+    static const uint32_t MCR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHSR1_TSAMPLE1 =            // DAC Channel 1 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel1 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, If BWSTx=1, the write operation is ignored. (10 bits)
+    static constexpr uint32_t SHSR1_TSAMPLE1 =            // DAC Channel 1 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel1 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, If BWSTx=1, the write operation is ignored. (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
-    static const uint32_t DAC_SHSR1_RESET_VALUE = 0x0;
+    static const uint32_t SHSR1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHSR2_TSAMPLE2 =            // DAC Channel 2 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel2 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, if BWSTx=1, the write operation is ignored. (10 bits)
+    static constexpr uint32_t SHSR2_TSAMPLE2 =            // DAC Channel 2 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel2 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, if BWSTx=1, the write operation is ignored. (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
-    static const uint32_t DAC_SHSR2_RESET_VALUE = 0x0;
+    static const uint32_t SHSR2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHHR_THOLD1 =              // DAC Channel 1 hold Time (only valid in sample &amp;amp; hold mode) Hold time= (THOLD[9:0]) x T LSI (10 bits)
+    static constexpr uint32_t SHHR_THOLD1 =              // DAC Channel 1 hold Time (only valid in sample &amp;amp; hold mode) Hold time= (THOLD[9:0]) x T LSI (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHHR_THOLD2 =              // DAC Channel 2 hold time (only valid in sample &amp;amp; hold mode). Hold time= (THOLD[9:0]) x T LSI (10 bits)
+    static constexpr uint32_t SHHR_THOLD2 =              // DAC Channel 2 hold time (only valid in sample &amp;amp; hold mode). Hold time= (THOLD[9:0]) x T LSI (10 bits)
         bit_field_t<16, 0x3ff>::value<X>();
-    static const uint32_t DAC_SHHR_RESET_VALUE = 0x10001;
+    static const uint32_t SHHR_RESET_VALUE = 0x10001;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHRR_TREFRESH1 =           // DAC Channel 1 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
+    static constexpr uint32_t SHRR_TREFRESH1 =           // DAC Channel 1 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHRR_TREFRESH2 =           // DAC Channel 2 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
+    static constexpr uint32_t SHRR_TREFRESH2 =           // DAC Channel 2 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
         bit_field_t<16, 0xff>::value<X>();
-    static const uint32_t DAC_SHRR_RESET_VALUE = 0x10001;
+    static const uint32_t SHRR_RESET_VALUE = 0x10001;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR1_STRSTDATA1 =          // DAC Channel 1 Sawtooth reset value (12 bits)
+    static constexpr uint32_t STR1_STRSTDATA1 =          // DAC Channel 1 Sawtooth reset value (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
-    static constexpr uint32_t DAC_STR1_STDIR1 = 0x1000;      // DAC Channel1 Sawtooth direction setting
+    static constexpr uint32_t STR1_STDIR1 = 0x1000;      // DAC Channel1 Sawtooth direction setting
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR1_STINCDATA1 =          // DAC CH1 Sawtooth increment value (12.4 bit format) (16 bits)
+    static constexpr uint32_t STR1_STINCDATA1 =          // DAC CH1 Sawtooth increment value (12.4 bit format) (16 bits)
         bit_field_t<16, 0xffff>::value<X>();
-    static const uint32_t DAC_STR1_RESET_VALUE = 0x0;
+    static const uint32_t STR1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR2_STRSTDATA2 =          // DAC Channel 2 Sawtooth reset value (12 bits)
+    static constexpr uint32_t STR2_STRSTDATA2 =          // DAC Channel 2 Sawtooth reset value (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
-    static constexpr uint32_t DAC_STR2_STDIR2 = 0x1000;      // DAC Channel2 Sawtooth direction setting
+    static constexpr uint32_t STR2_STDIR2 = 0x1000;      // DAC Channel2 Sawtooth direction setting
     template<uint32_t X>
-    static constexpr uint32_t DAC_STR2_STINCDATA2 =          // DAC CH2 Sawtooth increment value (12.4 bit format) (16 bits)
+    static constexpr uint32_t STR2_STINCDATA2 =          // DAC CH2 Sawtooth increment value (12.4 bit format) (16 bits)
         bit_field_t<16, 0xffff>::value<X>();
-    static const uint32_t DAC_STR2_RESET_VALUE = 0x0;
+    static const uint32_t STR2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STRSTTRIGSEL1 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STRSTTRIGSEL1 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
         bit_field_t<0, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STINCTRIGSEL1 =       // DAC Channel 1 Sawtooth Increment trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STINCTRIGSEL1 =       // DAC Channel 1 Sawtooth Increment trigger selection (4 bits)
         bit_field_t<8, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STRSTTRIGSEL2 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STRSTTRIGSEL2 =       // DAC Channel 1 Sawtooth Reset trigger selection (4 bits)
         bit_field_t<16, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_STMODR_STINCTRIGSEL2 =       // DAC Channel 2 Sawtooth Increment trigger selection (4 bits)
+    static constexpr uint32_t STMODR_STINCTRIGSEL2 =       // DAC Channel 2 Sawtooth Increment trigger selection (4 bits)
         bit_field_t<24, 0xf>::value<X>();
-    static const uint32_t DAC_STMODR_RESET_VALUE = 0x0;
+    static const uint32_t STMODR_RESET_VALUE = 0x0;
 };
 
 static dac4_t& DAC4 = *reinterpret_cast<dac4_t*>(0x50001400);

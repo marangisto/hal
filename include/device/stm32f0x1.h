@@ -8437,44 +8437,44 @@ static crs_t& CRS = *reinterpret_cast<crs_t*>(0x40006c00);
 
 struct can_t
 {
-    volatile uint32_t    CAN_MCR;              // [Read-write] CAN_MCR
-    volatile uint32_t    CAN_MSR;              // CAN_MSR
-    volatile uint32_t    CAN_TSR;              // CAN_TSR
-    volatile uint32_t    CAN_RF0R;             // CAN_RF0R
-    volatile uint32_t    CAN_RF1R;             // CAN_RF1R
-    volatile uint32_t    CAN_IER;              // [Read-write] CAN_IER
-    volatile uint32_t    CAN_ESR;              // CAN_ESR
-    volatile uint32_t    CAN_BTR;              // [Read-write] CAN BTR
+    volatile uint32_t    MCR;                  // [Read-write] CAN_MCR
+    volatile uint32_t    MSR;                  // CAN_MSR
+    volatile uint32_t    TSR;                  // CAN_TSR
+    volatile uint32_t    RF0R;                 // CAN_RF0R
+    volatile uint32_t    RF1R;                 // CAN_RF1R
+    volatile uint32_t    IER;                  // [Read-write] CAN_IER
+    volatile uint32_t    ESR;                  // CAN_ESR
+    volatile uint32_t    BTR;                  // [Read-write] CAN BTR
     reserved_t<88>       _0;
-    volatile uint32_t    CAN_TI0R;             // [Read-write] CAN_TI0R
-    volatile uint32_t    CAN_TDT0R;            // [Read-write] CAN_TDT0R
-    volatile uint32_t    CAN_TDL0R;            // [Read-write] CAN_TDL0R
-    volatile uint32_t    CAN_TDH0R;            // [Read-write] CAN_TDH0R
-    volatile uint32_t    CAN_TI1R;             // [Read-write] CAN_TI1R
-    volatile uint32_t    CAN_TDT1R;            // [Read-write] CAN_TDT1R
-    volatile uint32_t    CAN_TDL1R;            // [Read-write] CAN_TDL1R
-    volatile uint32_t    CAN_TDH1R;            // [Read-write] CAN_TDH1R
-    volatile uint32_t    CAN_TI2R;             // [Read-write] CAN_TI2R
-    volatile uint32_t    CAN_TDT2R;            // [Read-write] CAN_TDT2R
-    volatile uint32_t    CAN_TDL2R;            // [Read-write] CAN_TDL2R
-    volatile uint32_t    CAN_TDH2R;            // [Read-write] CAN_TDH2R
-    volatile uint32_t    CAN_RI0R;             // [Read-only] CAN_RI0R
-    volatile uint32_t    CAN_RDT0R;            // [Read-only] CAN_RDT0R
-    volatile uint32_t    CAN_RDL0R;            // [Read-only] CAN_RDL0R
-    volatile uint32_t    CAN_RDH0R;            // [Read-only] CAN_RDH0R
-    volatile uint32_t    CAN_RI1R;             // [Read-only] CAN_RI1R
-    volatile uint32_t    CAN_RDT1R;            // [Read-only] CAN_RDT1R
-    volatile uint32_t    CAN_RDL1R;            // [Read-only] CAN_RDL1R
-    volatile uint32_t    CAN_RDH1R;            // [Read-only] CAN_RDH1R
+    volatile uint32_t    TI0R;                 // [Read-write] CAN_TI0R
+    volatile uint32_t    TDT0R;                // [Read-write] CAN_TDT0R
+    volatile uint32_t    TDL0R;                // [Read-write] CAN_TDL0R
+    volatile uint32_t    TDH0R;                // [Read-write] CAN_TDH0R
+    volatile uint32_t    TI1R;                 // [Read-write] CAN_TI1R
+    volatile uint32_t    TDT1R;                // [Read-write] CAN_TDT1R
+    volatile uint32_t    TDL1R;                // [Read-write] CAN_TDL1R
+    volatile uint32_t    TDH1R;                // [Read-write] CAN_TDH1R
+    volatile uint32_t    TI2R;                 // [Read-write] CAN_TI2R
+    volatile uint32_t    TDT2R;                // [Read-write] CAN_TDT2R
+    volatile uint32_t    TDL2R;                // [Read-write] CAN_TDL2R
+    volatile uint32_t    TDH2R;                // [Read-write] CAN_TDH2R
+    volatile uint32_t    RI0R;                 // [Read-only] CAN_RI0R
+    volatile uint32_t    RDT0R;                // [Read-only] CAN_RDT0R
+    volatile uint32_t    RDL0R;                // [Read-only] CAN_RDL0R
+    volatile uint32_t    RDH0R;                // [Read-only] CAN_RDH0R
+    volatile uint32_t    RI1R;                 // [Read-only] CAN_RI1R
+    volatile uint32_t    RDT1R;                // [Read-only] CAN_RDT1R
+    volatile uint32_t    RDL1R;                // [Read-only] CAN_RDL1R
+    volatile uint32_t    RDH1R;                // [Read-only] CAN_RDH1R
     reserved_t<12>       _1;
-    volatile uint32_t    CAN_FMR;              // [Read-write] CAN_FMR
-    volatile uint32_t    CAN_FM1R;             // [Read-write] CAN_FM1R
+    volatile uint32_t    FMR;                  // [Read-write] CAN_FMR
+    volatile uint32_t    FM1R;                 // [Read-write] CAN_FM1R
     reserved_t<1>        _2;
-    volatile uint32_t    CAN_FS1R;             // [Read-write] CAN_FS1R
+    volatile uint32_t    FS1R;                 // [Read-write] CAN_FS1R
     reserved_t<1>        _3;
-    volatile uint32_t    CAN_FFA1R;            // [Read-write] CAN_FFA1R
+    volatile uint32_t    FFA1R;                // [Read-write] CAN_FFA1R
     reserved_t<1>        _4;
-    volatile uint32_t    CAN_FA1R;             // [Read-write] CAN_FA1R
+    volatile uint32_t    FA1R;                 // [Read-write] CAN_FA1R
     reserved_t<8>        _5;
     volatile uint32_t    F0R1;                 // [Read-write] Filter bank 0 register 1
     volatile uint32_t    F0R2;                 // [Read-write] Filter bank 0 register 2
@@ -8533,484 +8533,484 @@ struct can_t
     volatile uint32_t    F27R1;                // [Read-write] Filter bank 27 register 1
     volatile uint32_t    F27R2;                // [Read-write] Filter bank 27 register 2
 
-    static constexpr uint32_t CAN_MCR_DBF = 0x10000;        // DBF
-    static constexpr uint32_t CAN_MCR_RESET = 0x8000;       // RESET
-    static constexpr uint32_t CAN_MCR_TTCM = 0x80;          // TTCM
-    static constexpr uint32_t CAN_MCR_ABOM = 0x40;          // ABOM
-    static constexpr uint32_t CAN_MCR_AWUM = 0x20;          // AWUM
-    static constexpr uint32_t CAN_MCR_NART = 0x10;          // NART
-    static constexpr uint32_t CAN_MCR_RFLM = 0x8;           // RFLM
-    static constexpr uint32_t CAN_MCR_TXFP = 0x4;           // TXFP
-    static constexpr uint32_t CAN_MCR_SLEEP = 0x2;          // SLEEP
-    static constexpr uint32_t CAN_MCR_INRQ = 0x1;           // INRQ
-    static const uint32_t CAN_MCR_RESET_VALUE = 0x0;
+    static constexpr uint32_t MCR_DBF = 0x10000;        // DBF
+    static constexpr uint32_t MCR_RESET = 0x8000;       // RESET
+    static constexpr uint32_t MCR_TTCM = 0x80;          // TTCM
+    static constexpr uint32_t MCR_ABOM = 0x40;          // ABOM
+    static constexpr uint32_t MCR_AWUM = 0x20;          // AWUM
+    static constexpr uint32_t MCR_NART = 0x10;          // NART
+    static constexpr uint32_t MCR_RFLM = 0x8;           // RFLM
+    static constexpr uint32_t MCR_TXFP = 0x4;           // TXFP
+    static constexpr uint32_t MCR_SLEEP = 0x2;          // SLEEP
+    static constexpr uint32_t MCR_INRQ = 0x1;           // INRQ
+    static const uint32_t MCR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_MSR_RX = 0x800;           // RX, Read-only
-    static constexpr uint32_t CAN_MSR_SAMP = 0x400;         // SAMP, Read-only
-    static constexpr uint32_t CAN_MSR_RXM = 0x200;          // RXM, Read-only
-    static constexpr uint32_t CAN_MSR_TXM = 0x100;          // TXM, Read-only
-    static constexpr uint32_t CAN_MSR_SLAKI = 0x10;         // SLAKI, Read-write
-    static constexpr uint32_t CAN_MSR_WKUI = 0x8;           // WKUI, Read-write
-    static constexpr uint32_t CAN_MSR_ERRI = 0x4;           // ERRI, Read-write
-    static constexpr uint32_t CAN_MSR_SLAK = 0x2;           // SLAK, Read-only
-    static constexpr uint32_t CAN_MSR_INAK = 0x1;           // INAK, Read-only
-    static const uint32_t CAN_MSR_RESET_VALUE = 0x0;
+    static constexpr uint32_t MSR_RX = 0x800;           // RX, Read-only
+    static constexpr uint32_t MSR_SAMP = 0x400;         // SAMP, Read-only
+    static constexpr uint32_t MSR_RXM = 0x200;          // RXM, Read-only
+    static constexpr uint32_t MSR_TXM = 0x100;          // TXM, Read-only
+    static constexpr uint32_t MSR_SLAKI = 0x10;         // SLAKI, Read-write
+    static constexpr uint32_t MSR_WKUI = 0x8;           // WKUI, Read-write
+    static constexpr uint32_t MSR_ERRI = 0x4;           // ERRI, Read-write
+    static constexpr uint32_t MSR_SLAK = 0x2;           // SLAK, Read-only
+    static constexpr uint32_t MSR_INAK = 0x1;           // INAK, Read-only
+    static const uint32_t MSR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_TSR_LOW2 = 0x80000000;    // Lowest priority flag for mailbox 2, Read-only
-    static constexpr uint32_t CAN_TSR_LOW1 = 0x40000000;    // Lowest priority flag for mailbox 1, Read-only
-    static constexpr uint32_t CAN_TSR_LOW0 = 0x20000000;    // Lowest priority flag for mailbox 0, Read-only
-    static constexpr uint32_t CAN_TSR_TME2 = 0x10000000;    // Lowest priority flag for mailbox 2, Read-only
-    static constexpr uint32_t CAN_TSR_TME1 = 0x8000000;     // Lowest priority flag for mailbox 1, Read-only
-    static constexpr uint32_t CAN_TSR_TME0 = 0x4000000;     // Lowest priority flag for mailbox 0, Read-only
+    static constexpr uint32_t TSR_LOW2 = 0x80000000;    // Lowest priority flag for mailbox 2, Read-only
+    static constexpr uint32_t TSR_LOW1 = 0x40000000;    // Lowest priority flag for mailbox 1, Read-only
+    static constexpr uint32_t TSR_LOW0 = 0x20000000;    // Lowest priority flag for mailbox 0, Read-only
+    static constexpr uint32_t TSR_TME2 = 0x10000000;    // Lowest priority flag for mailbox 2, Read-only
+    static constexpr uint32_t TSR_TME1 = 0x8000000;     // Lowest priority flag for mailbox 1, Read-only
+    static constexpr uint32_t TSR_TME0 = 0x4000000;     // Lowest priority flag for mailbox 0, Read-only
     template<uint32_t X>
-    static constexpr uint32_t CAN_TSR_CODE =                // CODE (2 bits), Read-only
+    static constexpr uint32_t TSR_CODE =                // CODE (2 bits), Read-only
         bit_field_t<24, 0x3>::value<X>();
-    static constexpr uint32_t CAN_TSR_ABRQ2 = 0x800000;     // ABRQ2, Read-write
-    static constexpr uint32_t CAN_TSR_TERR2 = 0x80000;      // TERR2, Read-write
-    static constexpr uint32_t CAN_TSR_ALST2 = 0x40000;      // ALST2, Read-write
-    static constexpr uint32_t CAN_TSR_TXOK2 = 0x20000;      // TXOK2, Read-write
-    static constexpr uint32_t CAN_TSR_RQCP2 = 0x10000;      // RQCP2, Read-write
-    static constexpr uint32_t CAN_TSR_ABRQ1 = 0x8000;       // ABRQ1, Read-write
-    static constexpr uint32_t CAN_TSR_TERR1 = 0x800;        // TERR1, Read-write
-    static constexpr uint32_t CAN_TSR_ALST1 = 0x400;        // ALST1, Read-write
-    static constexpr uint32_t CAN_TSR_TXOK1 = 0x200;        // TXOK1, Read-write
-    static constexpr uint32_t CAN_TSR_RQCP1 = 0x100;        // RQCP1, Read-write
-    static constexpr uint32_t CAN_TSR_ABRQ0 = 0x80;         // ABRQ0, Read-write
-    static constexpr uint32_t CAN_TSR_TERR0 = 0x8;          // TERR0, Read-write
-    static constexpr uint32_t CAN_TSR_ALST0 = 0x4;          // ALST0, Read-write
-    static constexpr uint32_t CAN_TSR_TXOK0 = 0x2;          // TXOK0, Read-write
-    static constexpr uint32_t CAN_TSR_RQCP0 = 0x1;          // RQCP0, Read-write
-    static const uint32_t CAN_TSR_RESET_VALUE = 0x0;
+    static constexpr uint32_t TSR_ABRQ2 = 0x800000;     // ABRQ2, Read-write
+    static constexpr uint32_t TSR_TERR2 = 0x80000;      // TERR2, Read-write
+    static constexpr uint32_t TSR_ALST2 = 0x40000;      // ALST2, Read-write
+    static constexpr uint32_t TSR_TXOK2 = 0x20000;      // TXOK2, Read-write
+    static constexpr uint32_t TSR_RQCP2 = 0x10000;      // RQCP2, Read-write
+    static constexpr uint32_t TSR_ABRQ1 = 0x8000;       // ABRQ1, Read-write
+    static constexpr uint32_t TSR_TERR1 = 0x800;        // TERR1, Read-write
+    static constexpr uint32_t TSR_ALST1 = 0x400;        // ALST1, Read-write
+    static constexpr uint32_t TSR_TXOK1 = 0x200;        // TXOK1, Read-write
+    static constexpr uint32_t TSR_RQCP1 = 0x100;        // RQCP1, Read-write
+    static constexpr uint32_t TSR_ABRQ0 = 0x80;         // ABRQ0, Read-write
+    static constexpr uint32_t TSR_TERR0 = 0x8;          // TERR0, Read-write
+    static constexpr uint32_t TSR_ALST0 = 0x4;          // ALST0, Read-write
+    static constexpr uint32_t TSR_TXOK0 = 0x2;          // TXOK0, Read-write
+    static constexpr uint32_t TSR_RQCP0 = 0x1;          // RQCP0, Read-write
+    static const uint32_t TSR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_RF0R_RFOM0 = 0x20;         // RFOM0, Read-write
-    static constexpr uint32_t CAN_RF0R_FOVR0 = 0x10;         // FOVR0, Read-write
-    static constexpr uint32_t CAN_RF0R_FULL0 = 0x8;          // FULL0, Read-write
+    static constexpr uint32_t RF0R_RFOM0 = 0x20;         // RFOM0, Read-write
+    static constexpr uint32_t RF0R_FOVR0 = 0x10;         // FOVR0, Read-write
+    static constexpr uint32_t RF0R_FULL0 = 0x8;          // FULL0, Read-write
     template<uint32_t X>
-    static constexpr uint32_t CAN_RF0R_FMP0 =                // FMP0 (2 bits), Read-only
+    static constexpr uint32_t RF0R_FMP0 =                // FMP0 (2 bits), Read-only
         bit_field_t<0, 0x3>::value<X>();
-    static const uint32_t CAN_RF0R_RESET_VALUE = 0x0;
+    static const uint32_t RF0R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_RF1R_RFOM1 = 0x20;         // RFOM1, Read-write
-    static constexpr uint32_t CAN_RF1R_FOVR1 = 0x10;         // FOVR1, Read-write
-    static constexpr uint32_t CAN_RF1R_FULL1 = 0x8;          // FULL1, Read-write
+    static constexpr uint32_t RF1R_RFOM1 = 0x20;         // RFOM1, Read-write
+    static constexpr uint32_t RF1R_FOVR1 = 0x10;         // FOVR1, Read-write
+    static constexpr uint32_t RF1R_FULL1 = 0x8;          // FULL1, Read-write
     template<uint32_t X>
-    static constexpr uint32_t CAN_RF1R_FMP1 =                // FMP1 (2 bits), Read-only
+    static constexpr uint32_t RF1R_FMP1 =                // FMP1 (2 bits), Read-only
         bit_field_t<0, 0x3>::value<X>();
-    static const uint32_t CAN_RF1R_RESET_VALUE = 0x0;
+    static const uint32_t RF1R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_IER_SLKIE = 0x20000;      // SLKIE
-    static constexpr uint32_t CAN_IER_WKUIE = 0x10000;      // WKUIE
-    static constexpr uint32_t CAN_IER_ERRIE = 0x8000;       // ERRIE
-    static constexpr uint32_t CAN_IER_LECIE = 0x800;        // LECIE
-    static constexpr uint32_t CAN_IER_BOFIE = 0x400;        // BOFIE
-    static constexpr uint32_t CAN_IER_EPVIE = 0x200;        // EPVIE
-    static constexpr uint32_t CAN_IER_EWGIE = 0x100;        // EWGIE
-    static constexpr uint32_t CAN_IER_FOVIE1 = 0x40;        // FOVIE1
-    static constexpr uint32_t CAN_IER_FFIE1 = 0x20;         // FFIE1
-    static constexpr uint32_t CAN_IER_FMPIE1 = 0x10;        // FMPIE1
-    static constexpr uint32_t CAN_IER_FOVIE0 = 0x8;         // FOVIE0
-    static constexpr uint32_t CAN_IER_FFIE0 = 0x4;          // FFIE0
-    static constexpr uint32_t CAN_IER_FMPIE0 = 0x2;         // FMPIE0
-    static constexpr uint32_t CAN_IER_TMEIE = 0x1;          // TMEIE
-    static const uint32_t CAN_IER_RESET_VALUE = 0x0;
+    static constexpr uint32_t IER_SLKIE = 0x20000;      // SLKIE
+    static constexpr uint32_t IER_WKUIE = 0x10000;      // WKUIE
+    static constexpr uint32_t IER_ERRIE = 0x8000;       // ERRIE
+    static constexpr uint32_t IER_LECIE = 0x800;        // LECIE
+    static constexpr uint32_t IER_BOFIE = 0x400;        // BOFIE
+    static constexpr uint32_t IER_EPVIE = 0x200;        // EPVIE
+    static constexpr uint32_t IER_EWGIE = 0x100;        // EWGIE
+    static constexpr uint32_t IER_FOVIE1 = 0x40;        // FOVIE1
+    static constexpr uint32_t IER_FFIE1 = 0x20;         // FFIE1
+    static constexpr uint32_t IER_FMPIE1 = 0x10;        // FMPIE1
+    static constexpr uint32_t IER_FOVIE0 = 0x8;         // FOVIE0
+    static constexpr uint32_t IER_FFIE0 = 0x4;          // FFIE0
+    static constexpr uint32_t IER_FMPIE0 = 0x2;         // FMPIE0
+    static constexpr uint32_t IER_TMEIE = 0x1;          // TMEIE
+    static const uint32_t IER_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_ESR_REC =                 // REC (8 bits), Read-only
+    static constexpr uint32_t ESR_REC =                 // REC (8 bits), Read-only
         bit_field_t<24, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_ESR_TEC =                 // TEC (8 bits), Read-only
+    static constexpr uint32_t ESR_TEC =                 // TEC (8 bits), Read-only
         bit_field_t<16, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_ESR_LEC =                 // LEC (3 bits), Read-write
+    static constexpr uint32_t ESR_LEC =                 // LEC (3 bits), Read-write
         bit_field_t<4, 0x7>::value<X>();
-    static constexpr uint32_t CAN_ESR_BOFF = 0x4;           // BOFF, Read-only
-    static constexpr uint32_t CAN_ESR_EPVF = 0x2;           // EPVF, Read-only
-    static constexpr uint32_t CAN_ESR_EWGF = 0x1;           // EWGF, Read-only
-    static const uint32_t CAN_ESR_RESET_VALUE = 0x0;
+    static constexpr uint32_t ESR_BOFF = 0x4;           // BOFF, Read-only
+    static constexpr uint32_t ESR_EPVF = 0x2;           // EPVF, Read-only
+    static constexpr uint32_t ESR_EWGF = 0x1;           // EWGF, Read-only
+    static const uint32_t ESR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_BTR_SILM = 0x80000000;    // SILM
-    static constexpr uint32_t CAN_BTR_LBKM = 0x40000000;    // LBKM
+    static constexpr uint32_t BTR_SILM = 0x80000000;    // SILM
+    static constexpr uint32_t BTR_LBKM = 0x40000000;    // LBKM
     template<uint32_t X>
-    static constexpr uint32_t CAN_BTR_SJW =                 // SJW (2 bits)
+    static constexpr uint32_t BTR_SJW =                 // SJW (2 bits)
         bit_field_t<24, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_BTR_TS2 =                 // TS2 (3 bits)
+    static constexpr uint32_t BTR_TS2 =                 // TS2 (3 bits)
         bit_field_t<20, 0x7>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_BTR_TS1 =                 // TS1 (4 bits)
+    static constexpr uint32_t BTR_TS1 =                 // TS1 (4 bits)
         bit_field_t<16, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_BTR_BRP =                 // BRP (10 bits)
+    static constexpr uint32_t BTR_BRP =                 // BRP (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
-    static const uint32_t CAN_BTR_RESET_VALUE = 0x0;
+    static const uint32_t BTR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_TI0R_STID =                // STID (11 bits)
+    static constexpr uint32_t TI0R_STID =                // STID (11 bits)
         bit_field_t<21, 0x7ff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TI0R_EXID =                // EXID (18 bits)
+    static constexpr uint32_t TI0R_EXID =                // EXID (18 bits)
         bit_field_t<3, 0x3ffff>::value<X>();
-    static constexpr uint32_t CAN_TI0R_IDE = 0x4;            // IDE
-    static constexpr uint32_t CAN_TI0R_RTR = 0x2;            // RTR
-    static constexpr uint32_t CAN_TI0R_TXRQ = 0x1;           // TXRQ
-    static const uint32_t CAN_TI0R_RESET_VALUE = 0x0;
+    static constexpr uint32_t TI0R_IDE = 0x4;            // IDE
+    static constexpr uint32_t TI0R_RTR = 0x2;            // RTR
+    static constexpr uint32_t TI0R_TXRQ = 0x1;           // TXRQ
+    static const uint32_t TI0R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDT0R_TIME =                // TIME (16 bits)
+    static constexpr uint32_t TDT0R_TIME =                // TIME (16 bits)
         bit_field_t<16, 0xffff>::value<X>();
-    static constexpr uint32_t CAN_TDT0R_TGT = 0x100;          // TGT
+    static constexpr uint32_t TDT0R_TGT = 0x100;          // TGT
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDT0R_DLC =                 // DLC (4 bits)
+    static constexpr uint32_t TDT0R_DLC =                 // DLC (4 bits)
         bit_field_t<0, 0xf>::value<X>();
-    static const uint32_t CAN_TDT0R_RESET_VALUE = 0x0;
+    static const uint32_t TDT0R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDL0R_DATA3 =               // DATA3 (8 bits)
+    static constexpr uint32_t TDL0R_DATA3 =               // DATA3 (8 bits)
         bit_field_t<24, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDL0R_DATA2 =               // DATA2 (8 bits)
+    static constexpr uint32_t TDL0R_DATA2 =               // DATA2 (8 bits)
         bit_field_t<16, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDL0R_DATA1 =               // DATA1 (8 bits)
+    static constexpr uint32_t TDL0R_DATA1 =               // DATA1 (8 bits)
         bit_field_t<8, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDL0R_DATA0 =               // DATA0 (8 bits)
+    static constexpr uint32_t TDL0R_DATA0 =               // DATA0 (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static const uint32_t CAN_TDL0R_RESET_VALUE = 0x0;
+    static const uint32_t TDL0R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDH0R_DATA7 =               // DATA7 (8 bits)
+    static constexpr uint32_t TDH0R_DATA7 =               // DATA7 (8 bits)
         bit_field_t<24, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDH0R_DATA6 =               // DATA6 (8 bits)
+    static constexpr uint32_t TDH0R_DATA6 =               // DATA6 (8 bits)
         bit_field_t<16, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDH0R_DATA5 =               // DATA5 (8 bits)
+    static constexpr uint32_t TDH0R_DATA5 =               // DATA5 (8 bits)
         bit_field_t<8, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDH0R_DATA4 =               // DATA4 (8 bits)
+    static constexpr uint32_t TDH0R_DATA4 =               // DATA4 (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static const uint32_t CAN_TDH0R_RESET_VALUE = 0x0;
+    static const uint32_t TDH0R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_TI1R_STID =                // STID (11 bits)
+    static constexpr uint32_t TI1R_STID =                // STID (11 bits)
         bit_field_t<21, 0x7ff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TI1R_EXID =                // EXID (18 bits)
+    static constexpr uint32_t TI1R_EXID =                // EXID (18 bits)
         bit_field_t<3, 0x3ffff>::value<X>();
-    static constexpr uint32_t CAN_TI1R_IDE = 0x4;            // IDE
-    static constexpr uint32_t CAN_TI1R_RTR = 0x2;            // RTR
-    static constexpr uint32_t CAN_TI1R_TXRQ = 0x1;           // TXRQ
-    static const uint32_t CAN_TI1R_RESET_VALUE = 0x0;
+    static constexpr uint32_t TI1R_IDE = 0x4;            // IDE
+    static constexpr uint32_t TI1R_RTR = 0x2;            // RTR
+    static constexpr uint32_t TI1R_TXRQ = 0x1;           // TXRQ
+    static const uint32_t TI1R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDT1R_TIME =                // TIME (16 bits)
+    static constexpr uint32_t TDT1R_TIME =                // TIME (16 bits)
         bit_field_t<16, 0xffff>::value<X>();
-    static constexpr uint32_t CAN_TDT1R_TGT = 0x100;          // TGT
+    static constexpr uint32_t TDT1R_TGT = 0x100;          // TGT
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDT1R_DLC =                 // DLC (4 bits)
+    static constexpr uint32_t TDT1R_DLC =                 // DLC (4 bits)
         bit_field_t<0, 0xf>::value<X>();
-    static const uint32_t CAN_TDT1R_RESET_VALUE = 0x0;
+    static const uint32_t TDT1R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDL1R_DATA3 =               // DATA3 (8 bits)
+    static constexpr uint32_t TDL1R_DATA3 =               // DATA3 (8 bits)
         bit_field_t<24, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDL1R_DATA2 =               // DATA2 (8 bits)
+    static constexpr uint32_t TDL1R_DATA2 =               // DATA2 (8 bits)
         bit_field_t<16, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDL1R_DATA1 =               // DATA1 (8 bits)
+    static constexpr uint32_t TDL1R_DATA1 =               // DATA1 (8 bits)
         bit_field_t<8, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDL1R_DATA0 =               // DATA0 (8 bits)
+    static constexpr uint32_t TDL1R_DATA0 =               // DATA0 (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static const uint32_t CAN_TDL1R_RESET_VALUE = 0x0;
+    static const uint32_t TDL1R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDH1R_DATA7 =               // DATA7 (8 bits)
+    static constexpr uint32_t TDH1R_DATA7 =               // DATA7 (8 bits)
         bit_field_t<24, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDH1R_DATA6 =               // DATA6 (8 bits)
+    static constexpr uint32_t TDH1R_DATA6 =               // DATA6 (8 bits)
         bit_field_t<16, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDH1R_DATA5 =               // DATA5 (8 bits)
+    static constexpr uint32_t TDH1R_DATA5 =               // DATA5 (8 bits)
         bit_field_t<8, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDH1R_DATA4 =               // DATA4 (8 bits)
+    static constexpr uint32_t TDH1R_DATA4 =               // DATA4 (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static const uint32_t CAN_TDH1R_RESET_VALUE = 0x0;
+    static const uint32_t TDH1R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_TI2R_STID =                // STID (11 bits)
+    static constexpr uint32_t TI2R_STID =                // STID (11 bits)
         bit_field_t<21, 0x7ff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TI2R_EXID =                // EXID (18 bits)
+    static constexpr uint32_t TI2R_EXID =                // EXID (18 bits)
         bit_field_t<3, 0x3ffff>::value<X>();
-    static constexpr uint32_t CAN_TI2R_IDE = 0x4;            // IDE
-    static constexpr uint32_t CAN_TI2R_RTR = 0x2;            // RTR
-    static constexpr uint32_t CAN_TI2R_TXRQ = 0x1;           // TXRQ
-    static const uint32_t CAN_TI2R_RESET_VALUE = 0x0;
+    static constexpr uint32_t TI2R_IDE = 0x4;            // IDE
+    static constexpr uint32_t TI2R_RTR = 0x2;            // RTR
+    static constexpr uint32_t TI2R_TXRQ = 0x1;           // TXRQ
+    static const uint32_t TI2R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDT2R_TIME =                // TIME (16 bits)
+    static constexpr uint32_t TDT2R_TIME =                // TIME (16 bits)
         bit_field_t<16, 0xffff>::value<X>();
-    static constexpr uint32_t CAN_TDT2R_TGT = 0x100;          // TGT
+    static constexpr uint32_t TDT2R_TGT = 0x100;          // TGT
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDT2R_DLC =                 // DLC (4 bits)
+    static constexpr uint32_t TDT2R_DLC =                 // DLC (4 bits)
         bit_field_t<0, 0xf>::value<X>();
-    static const uint32_t CAN_TDT2R_RESET_VALUE = 0x0;
+    static const uint32_t TDT2R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDL2R_DATA3 =               // DATA3 (8 bits)
+    static constexpr uint32_t TDL2R_DATA3 =               // DATA3 (8 bits)
         bit_field_t<24, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDL2R_DATA2 =               // DATA2 (8 bits)
+    static constexpr uint32_t TDL2R_DATA2 =               // DATA2 (8 bits)
         bit_field_t<16, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDL2R_DATA1 =               // DATA1 (8 bits)
+    static constexpr uint32_t TDL2R_DATA1 =               // DATA1 (8 bits)
         bit_field_t<8, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDL2R_DATA0 =               // DATA0 (8 bits)
+    static constexpr uint32_t TDL2R_DATA0 =               // DATA0 (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static const uint32_t CAN_TDL2R_RESET_VALUE = 0x0;
+    static const uint32_t TDL2R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDH2R_DATA7 =               // DATA7 (8 bits)
+    static constexpr uint32_t TDH2R_DATA7 =               // DATA7 (8 bits)
         bit_field_t<24, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDH2R_DATA6 =               // DATA6 (8 bits)
+    static constexpr uint32_t TDH2R_DATA6 =               // DATA6 (8 bits)
         bit_field_t<16, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDH2R_DATA5 =               // DATA5 (8 bits)
+    static constexpr uint32_t TDH2R_DATA5 =               // DATA5 (8 bits)
         bit_field_t<8, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_TDH2R_DATA4 =               // DATA4 (8 bits)
+    static constexpr uint32_t TDH2R_DATA4 =               // DATA4 (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static const uint32_t CAN_TDH2R_RESET_VALUE = 0x0;
+    static const uint32_t TDH2R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_RI0R_STID =                // STID (11 bits)
+    static constexpr uint32_t RI0R_STID =                // STID (11 bits)
         bit_field_t<21, 0x7ff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RI0R_EXID =                // EXID (18 bits)
+    static constexpr uint32_t RI0R_EXID =                // EXID (18 bits)
         bit_field_t<3, 0x3ffff>::value<X>();
-    static constexpr uint32_t CAN_RI0R_IDE = 0x4;            // IDE
-    static constexpr uint32_t CAN_RI0R_RTR = 0x2;            // RTR
-    static const uint32_t CAN_RI0R_RESET_VALUE = 0x0;
+    static constexpr uint32_t RI0R_IDE = 0x4;            // IDE
+    static constexpr uint32_t RI0R_RTR = 0x2;            // RTR
+    static const uint32_t RI0R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDT0R_TIME =                // TIME (16 bits)
+    static constexpr uint32_t RDT0R_TIME =                // TIME (16 bits)
         bit_field_t<16, 0xffff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDT0R_FMI =                 // FMI (8 bits)
+    static constexpr uint32_t RDT0R_FMI =                 // FMI (8 bits)
         bit_field_t<8, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDT0R_DLC =                 // DLC (4 bits)
+    static constexpr uint32_t RDT0R_DLC =                 // DLC (4 bits)
         bit_field_t<0, 0xf>::value<X>();
-    static const uint32_t CAN_RDT0R_RESET_VALUE = 0x0;
+    static const uint32_t RDT0R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDL0R_DATA3 =               // DATA3 (8 bits)
+    static constexpr uint32_t RDL0R_DATA3 =               // DATA3 (8 bits)
         bit_field_t<24, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDL0R_DATA2 =               // DATA2 (8 bits)
+    static constexpr uint32_t RDL0R_DATA2 =               // DATA2 (8 bits)
         bit_field_t<16, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDL0R_DATA1 =               // DATA1 (8 bits)
+    static constexpr uint32_t RDL0R_DATA1 =               // DATA1 (8 bits)
         bit_field_t<8, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDL0R_DATA0 =               // DATA0 (8 bits)
+    static constexpr uint32_t RDL0R_DATA0 =               // DATA0 (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static const uint32_t CAN_RDL0R_RESET_VALUE = 0x0;
+    static const uint32_t RDL0R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDH0R_DATA7 =               // DATA7 (8 bits)
+    static constexpr uint32_t RDH0R_DATA7 =               // DATA7 (8 bits)
         bit_field_t<24, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDH0R_DATA6 =               // DATA6 (8 bits)
+    static constexpr uint32_t RDH0R_DATA6 =               // DATA6 (8 bits)
         bit_field_t<16, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDH0R_DATA5 =               // DATA5 (8 bits)
+    static constexpr uint32_t RDH0R_DATA5 =               // DATA5 (8 bits)
         bit_field_t<8, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDH0R_DATA4 =               // DATA4 (8 bits)
+    static constexpr uint32_t RDH0R_DATA4 =               // DATA4 (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static const uint32_t CAN_RDH0R_RESET_VALUE = 0x0;
+    static const uint32_t RDH0R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_RI1R_STID =                // STID (11 bits)
+    static constexpr uint32_t RI1R_STID =                // STID (11 bits)
         bit_field_t<21, 0x7ff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RI1R_EXID =                // EXID (18 bits)
+    static constexpr uint32_t RI1R_EXID =                // EXID (18 bits)
         bit_field_t<3, 0x3ffff>::value<X>();
-    static constexpr uint32_t CAN_RI1R_IDE = 0x4;            // IDE
-    static constexpr uint32_t CAN_RI1R_RTR = 0x2;            // RTR
-    static const uint32_t CAN_RI1R_RESET_VALUE = 0x0;
+    static constexpr uint32_t RI1R_IDE = 0x4;            // IDE
+    static constexpr uint32_t RI1R_RTR = 0x2;            // RTR
+    static const uint32_t RI1R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDT1R_TIME =                // TIME (16 bits)
+    static constexpr uint32_t RDT1R_TIME =                // TIME (16 bits)
         bit_field_t<16, 0xffff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDT1R_FMI =                 // FMI (8 bits)
+    static constexpr uint32_t RDT1R_FMI =                 // FMI (8 bits)
         bit_field_t<8, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDT1R_DLC =                 // DLC (4 bits)
+    static constexpr uint32_t RDT1R_DLC =                 // DLC (4 bits)
         bit_field_t<0, 0xf>::value<X>();
-    static const uint32_t CAN_RDT1R_RESET_VALUE = 0x0;
+    static const uint32_t RDT1R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDL1R_DATA3 =               // DATA3 (8 bits)
+    static constexpr uint32_t RDL1R_DATA3 =               // DATA3 (8 bits)
         bit_field_t<24, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDL1R_DATA2 =               // DATA2 (8 bits)
+    static constexpr uint32_t RDL1R_DATA2 =               // DATA2 (8 bits)
         bit_field_t<16, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDL1R_DATA1 =               // DATA1 (8 bits)
+    static constexpr uint32_t RDL1R_DATA1 =               // DATA1 (8 bits)
         bit_field_t<8, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDL1R_DATA0 =               // DATA0 (8 bits)
+    static constexpr uint32_t RDL1R_DATA0 =               // DATA0 (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static const uint32_t CAN_RDL1R_RESET_VALUE = 0x0;
+    static const uint32_t RDL1R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDH1R_DATA7 =               // DATA7 (8 bits)
+    static constexpr uint32_t RDH1R_DATA7 =               // DATA7 (8 bits)
         bit_field_t<24, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDH1R_DATA6 =               // DATA6 (8 bits)
+    static constexpr uint32_t RDH1R_DATA6 =               // DATA6 (8 bits)
         bit_field_t<16, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDH1R_DATA5 =               // DATA5 (8 bits)
+    static constexpr uint32_t RDH1R_DATA5 =               // DATA5 (8 bits)
         bit_field_t<8, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CAN_RDH1R_DATA4 =               // DATA4 (8 bits)
+    static constexpr uint32_t RDH1R_DATA4 =               // DATA4 (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static const uint32_t CAN_RDH1R_RESET_VALUE = 0x0;
+    static const uint32_t RDH1R_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t CAN_FMR_CAN2SB =              // CAN2SB (6 bits)
+    static constexpr uint32_t FMR_CAN2SB =              // CAN2SB (6 bits)
         bit_field_t<8, 0x3f>::value<X>();
-    static constexpr uint32_t CAN_FMR_FINIT = 0x1;          // FINIT
-    static const uint32_t CAN_FMR_RESET_VALUE = 0x0;
+    static constexpr uint32_t FMR_FINIT = 0x1;          // FINIT
+    static const uint32_t FMR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_FM1R_FBM0 = 0x1;           // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM1 = 0x2;           // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM2 = 0x4;           // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM3 = 0x8;           // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM4 = 0x10;          // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM5 = 0x20;          // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM6 = 0x40;          // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM7 = 0x80;          // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM8 = 0x100;         // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM9 = 0x200;         // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM10 = 0x400;        // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM11 = 0x800;        // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM12 = 0x1000;       // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM13 = 0x2000;       // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM14 = 0x4000;       // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM15 = 0x8000;       // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM16 = 0x10000;      // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM17 = 0x20000;      // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM18 = 0x40000;      // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM19 = 0x80000;      // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM20 = 0x100000;     // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM21 = 0x200000;     // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM22 = 0x400000;     // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM23 = 0x800000;     // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM24 = 0x1000000;    // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM25 = 0x2000000;    // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM26 = 0x4000000;    // Filter mode
-    static constexpr uint32_t CAN_FM1R_FBM27 = 0x8000000;    // Filter mode
-    static const uint32_t CAN_FM1R_RESET_VALUE = 0x0;
+    static constexpr uint32_t FM1R_FBM0 = 0x1;           // Filter mode
+    static constexpr uint32_t FM1R_FBM1 = 0x2;           // Filter mode
+    static constexpr uint32_t FM1R_FBM2 = 0x4;           // Filter mode
+    static constexpr uint32_t FM1R_FBM3 = 0x8;           // Filter mode
+    static constexpr uint32_t FM1R_FBM4 = 0x10;          // Filter mode
+    static constexpr uint32_t FM1R_FBM5 = 0x20;          // Filter mode
+    static constexpr uint32_t FM1R_FBM6 = 0x40;          // Filter mode
+    static constexpr uint32_t FM1R_FBM7 = 0x80;          // Filter mode
+    static constexpr uint32_t FM1R_FBM8 = 0x100;         // Filter mode
+    static constexpr uint32_t FM1R_FBM9 = 0x200;         // Filter mode
+    static constexpr uint32_t FM1R_FBM10 = 0x400;        // Filter mode
+    static constexpr uint32_t FM1R_FBM11 = 0x800;        // Filter mode
+    static constexpr uint32_t FM1R_FBM12 = 0x1000;       // Filter mode
+    static constexpr uint32_t FM1R_FBM13 = 0x2000;       // Filter mode
+    static constexpr uint32_t FM1R_FBM14 = 0x4000;       // Filter mode
+    static constexpr uint32_t FM1R_FBM15 = 0x8000;       // Filter mode
+    static constexpr uint32_t FM1R_FBM16 = 0x10000;      // Filter mode
+    static constexpr uint32_t FM1R_FBM17 = 0x20000;      // Filter mode
+    static constexpr uint32_t FM1R_FBM18 = 0x40000;      // Filter mode
+    static constexpr uint32_t FM1R_FBM19 = 0x80000;      // Filter mode
+    static constexpr uint32_t FM1R_FBM20 = 0x100000;     // Filter mode
+    static constexpr uint32_t FM1R_FBM21 = 0x200000;     // Filter mode
+    static constexpr uint32_t FM1R_FBM22 = 0x400000;     // Filter mode
+    static constexpr uint32_t FM1R_FBM23 = 0x800000;     // Filter mode
+    static constexpr uint32_t FM1R_FBM24 = 0x1000000;    // Filter mode
+    static constexpr uint32_t FM1R_FBM25 = 0x2000000;    // Filter mode
+    static constexpr uint32_t FM1R_FBM26 = 0x4000000;    // Filter mode
+    static constexpr uint32_t FM1R_FBM27 = 0x8000000;    // Filter mode
+    static const uint32_t FM1R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_FS1R_FSC0 = 0x1;           // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC1 = 0x2;           // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC2 = 0x4;           // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC3 = 0x8;           // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC4 = 0x10;          // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC5 = 0x20;          // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC6 = 0x40;          // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC7 = 0x80;          // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC8 = 0x100;         // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC9 = 0x200;         // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC10 = 0x400;        // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC11 = 0x800;        // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC12 = 0x1000;       // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC13 = 0x2000;       // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC14 = 0x4000;       // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC15 = 0x8000;       // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC16 = 0x10000;      // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC17 = 0x20000;      // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC18 = 0x40000;      // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC19 = 0x80000;      // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC20 = 0x100000;     // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC21 = 0x200000;     // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC22 = 0x400000;     // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC23 = 0x800000;     // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC24 = 0x1000000;    // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC25 = 0x2000000;    // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC26 = 0x4000000;    // Filter scale configuration
-    static constexpr uint32_t CAN_FS1R_FSC27 = 0x8000000;    // Filter scale configuration
-    static const uint32_t CAN_FS1R_RESET_VALUE = 0x0;
+    static constexpr uint32_t FS1R_FSC0 = 0x1;           // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC1 = 0x2;           // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC2 = 0x4;           // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC3 = 0x8;           // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC4 = 0x10;          // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC5 = 0x20;          // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC6 = 0x40;          // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC7 = 0x80;          // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC8 = 0x100;         // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC9 = 0x200;         // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC10 = 0x400;        // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC11 = 0x800;        // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC12 = 0x1000;       // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC13 = 0x2000;       // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC14 = 0x4000;       // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC15 = 0x8000;       // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC16 = 0x10000;      // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC17 = 0x20000;      // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC18 = 0x40000;      // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC19 = 0x80000;      // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC20 = 0x100000;     // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC21 = 0x200000;     // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC22 = 0x400000;     // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC23 = 0x800000;     // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC24 = 0x1000000;    // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC25 = 0x2000000;    // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC26 = 0x4000000;    // Filter scale configuration
+    static constexpr uint32_t FS1R_FSC27 = 0x8000000;    // Filter scale configuration
+    static const uint32_t FS1R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_FFA1R_FFA0 = 0x1;           // Filter FIFO assignment for filter 0
-    static constexpr uint32_t CAN_FFA1R_FFA1 = 0x2;           // Filter FIFO assignment for filter 1
-    static constexpr uint32_t CAN_FFA1R_FFA2 = 0x4;           // Filter FIFO assignment for filter 2
-    static constexpr uint32_t CAN_FFA1R_FFA3 = 0x8;           // Filter FIFO assignment for filter 3
-    static constexpr uint32_t CAN_FFA1R_FFA4 = 0x10;          // Filter FIFO assignment for filter 4
-    static constexpr uint32_t CAN_FFA1R_FFA5 = 0x20;          // Filter FIFO assignment for filter 5
-    static constexpr uint32_t CAN_FFA1R_FFA6 = 0x40;          // Filter FIFO assignment for filter 6
-    static constexpr uint32_t CAN_FFA1R_FFA7 = 0x80;          // Filter FIFO assignment for filter 7
-    static constexpr uint32_t CAN_FFA1R_FFA8 = 0x100;         // Filter FIFO assignment for filter 8
-    static constexpr uint32_t CAN_FFA1R_FFA9 = 0x200;         // Filter FIFO assignment for filter 9
-    static constexpr uint32_t CAN_FFA1R_FFA10 = 0x400;        // Filter FIFO assignment for filter 10
-    static constexpr uint32_t CAN_FFA1R_FFA11 = 0x800;        // Filter FIFO assignment for filter 11
-    static constexpr uint32_t CAN_FFA1R_FFA12 = 0x1000;       // Filter FIFO assignment for filter 12
-    static constexpr uint32_t CAN_FFA1R_FFA13 = 0x2000;       // Filter FIFO assignment for filter 13
-    static constexpr uint32_t CAN_FFA1R_FFA14 = 0x4000;       // Filter FIFO assignment for filter 14
-    static constexpr uint32_t CAN_FFA1R_FFA15 = 0x8000;       // Filter FIFO assignment for filter 15
-    static constexpr uint32_t CAN_FFA1R_FFA16 = 0x10000;      // Filter FIFO assignment for filter 16
-    static constexpr uint32_t CAN_FFA1R_FFA17 = 0x20000;      // Filter FIFO assignment for filter 17
-    static constexpr uint32_t CAN_FFA1R_FFA18 = 0x40000;      // Filter FIFO assignment for filter 18
-    static constexpr uint32_t CAN_FFA1R_FFA19 = 0x80000;      // Filter FIFO assignment for filter 19
-    static constexpr uint32_t CAN_FFA1R_FFA20 = 0x100000;     // Filter FIFO assignment for filter 20
-    static constexpr uint32_t CAN_FFA1R_FFA21 = 0x200000;     // Filter FIFO assignment for filter 21
-    static constexpr uint32_t CAN_FFA1R_FFA22 = 0x400000;     // Filter FIFO assignment for filter 22
-    static constexpr uint32_t CAN_FFA1R_FFA23 = 0x800000;     // Filter FIFO assignment for filter 23
-    static constexpr uint32_t CAN_FFA1R_FFA24 = 0x1000000;    // Filter FIFO assignment for filter 24
-    static constexpr uint32_t CAN_FFA1R_FFA25 = 0x2000000;    // Filter FIFO assignment for filter 25
-    static constexpr uint32_t CAN_FFA1R_FFA26 = 0x4000000;    // Filter FIFO assignment for filter 26
-    static constexpr uint32_t CAN_FFA1R_FFA27 = 0x8000000;    // Filter FIFO assignment for filter 27
-    static const uint32_t CAN_FFA1R_RESET_VALUE = 0x0;
+    static constexpr uint32_t FFA1R_FFA0 = 0x1;           // Filter FIFO assignment for filter 0
+    static constexpr uint32_t FFA1R_FFA1 = 0x2;           // Filter FIFO assignment for filter 1
+    static constexpr uint32_t FFA1R_FFA2 = 0x4;           // Filter FIFO assignment for filter 2
+    static constexpr uint32_t FFA1R_FFA3 = 0x8;           // Filter FIFO assignment for filter 3
+    static constexpr uint32_t FFA1R_FFA4 = 0x10;          // Filter FIFO assignment for filter 4
+    static constexpr uint32_t FFA1R_FFA5 = 0x20;          // Filter FIFO assignment for filter 5
+    static constexpr uint32_t FFA1R_FFA6 = 0x40;          // Filter FIFO assignment for filter 6
+    static constexpr uint32_t FFA1R_FFA7 = 0x80;          // Filter FIFO assignment for filter 7
+    static constexpr uint32_t FFA1R_FFA8 = 0x100;         // Filter FIFO assignment for filter 8
+    static constexpr uint32_t FFA1R_FFA9 = 0x200;         // Filter FIFO assignment for filter 9
+    static constexpr uint32_t FFA1R_FFA10 = 0x400;        // Filter FIFO assignment for filter 10
+    static constexpr uint32_t FFA1R_FFA11 = 0x800;        // Filter FIFO assignment for filter 11
+    static constexpr uint32_t FFA1R_FFA12 = 0x1000;       // Filter FIFO assignment for filter 12
+    static constexpr uint32_t FFA1R_FFA13 = 0x2000;       // Filter FIFO assignment for filter 13
+    static constexpr uint32_t FFA1R_FFA14 = 0x4000;       // Filter FIFO assignment for filter 14
+    static constexpr uint32_t FFA1R_FFA15 = 0x8000;       // Filter FIFO assignment for filter 15
+    static constexpr uint32_t FFA1R_FFA16 = 0x10000;      // Filter FIFO assignment for filter 16
+    static constexpr uint32_t FFA1R_FFA17 = 0x20000;      // Filter FIFO assignment for filter 17
+    static constexpr uint32_t FFA1R_FFA18 = 0x40000;      // Filter FIFO assignment for filter 18
+    static constexpr uint32_t FFA1R_FFA19 = 0x80000;      // Filter FIFO assignment for filter 19
+    static constexpr uint32_t FFA1R_FFA20 = 0x100000;     // Filter FIFO assignment for filter 20
+    static constexpr uint32_t FFA1R_FFA21 = 0x200000;     // Filter FIFO assignment for filter 21
+    static constexpr uint32_t FFA1R_FFA22 = 0x400000;     // Filter FIFO assignment for filter 22
+    static constexpr uint32_t FFA1R_FFA23 = 0x800000;     // Filter FIFO assignment for filter 23
+    static constexpr uint32_t FFA1R_FFA24 = 0x1000000;    // Filter FIFO assignment for filter 24
+    static constexpr uint32_t FFA1R_FFA25 = 0x2000000;    // Filter FIFO assignment for filter 25
+    static constexpr uint32_t FFA1R_FFA26 = 0x4000000;    // Filter FIFO assignment for filter 26
+    static constexpr uint32_t FFA1R_FFA27 = 0x8000000;    // Filter FIFO assignment for filter 27
+    static const uint32_t FFA1R_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t CAN_FA1R_FACT0 = 0x1;          // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT1 = 0x2;          // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT2 = 0x4;          // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT3 = 0x8;          // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT4 = 0x10;         // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT5 = 0x20;         // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT6 = 0x40;         // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT7 = 0x80;         // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT8 = 0x100;        // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT9 = 0x200;        // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT10 = 0x400;       // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT11 = 0x800;       // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT12 = 0x1000;      // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT13 = 0x2000;      // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT14 = 0x4000;      // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT15 = 0x8000;      // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT16 = 0x10000;     // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT17 = 0x20000;     // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT18 = 0x40000;     // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT19 = 0x80000;     // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT20 = 0x100000;    // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT21 = 0x200000;    // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT22 = 0x400000;    // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT23 = 0x800000;    // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT24 = 0x1000000;   // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT25 = 0x2000000;   // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT26 = 0x4000000;   // Filter active
-    static constexpr uint32_t CAN_FA1R_FACT27 = 0x8000000;   // Filter active
-    static const uint32_t CAN_FA1R_RESET_VALUE = 0x0;
+    static constexpr uint32_t FA1R_FACT0 = 0x1;          // Filter active
+    static constexpr uint32_t FA1R_FACT1 = 0x2;          // Filter active
+    static constexpr uint32_t FA1R_FACT2 = 0x4;          // Filter active
+    static constexpr uint32_t FA1R_FACT3 = 0x8;          // Filter active
+    static constexpr uint32_t FA1R_FACT4 = 0x10;         // Filter active
+    static constexpr uint32_t FA1R_FACT5 = 0x20;         // Filter active
+    static constexpr uint32_t FA1R_FACT6 = 0x40;         // Filter active
+    static constexpr uint32_t FA1R_FACT7 = 0x80;         // Filter active
+    static constexpr uint32_t FA1R_FACT8 = 0x100;        // Filter active
+    static constexpr uint32_t FA1R_FACT9 = 0x200;        // Filter active
+    static constexpr uint32_t FA1R_FACT10 = 0x400;       // Filter active
+    static constexpr uint32_t FA1R_FACT11 = 0x800;       // Filter active
+    static constexpr uint32_t FA1R_FACT12 = 0x1000;      // Filter active
+    static constexpr uint32_t FA1R_FACT13 = 0x2000;      // Filter active
+    static constexpr uint32_t FA1R_FACT14 = 0x4000;      // Filter active
+    static constexpr uint32_t FA1R_FACT15 = 0x8000;      // Filter active
+    static constexpr uint32_t FA1R_FACT16 = 0x10000;     // Filter active
+    static constexpr uint32_t FA1R_FACT17 = 0x20000;     // Filter active
+    static constexpr uint32_t FA1R_FACT18 = 0x40000;     // Filter active
+    static constexpr uint32_t FA1R_FACT19 = 0x80000;     // Filter active
+    static constexpr uint32_t FA1R_FACT20 = 0x100000;    // Filter active
+    static constexpr uint32_t FA1R_FACT21 = 0x200000;    // Filter active
+    static constexpr uint32_t FA1R_FACT22 = 0x400000;    // Filter active
+    static constexpr uint32_t FA1R_FACT23 = 0x800000;    // Filter active
+    static constexpr uint32_t FA1R_FACT24 = 0x1000000;   // Filter active
+    static constexpr uint32_t FA1R_FACT25 = 0x2000000;   // Filter active
+    static constexpr uint32_t FA1R_FACT26 = 0x4000000;   // Filter active
+    static constexpr uint32_t FA1R_FACT27 = 0x8000000;   // Filter active
+    static const uint32_t FA1R_RESET_VALUE = 0x0;
 
     static constexpr uint32_t F0R1_FB0 = 0x1;            // Filter bits
     static constexpr uint32_t F0R1_FB1 = 0x2;            // Filter bits

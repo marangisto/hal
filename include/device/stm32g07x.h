@@ -1273,254 +1273,254 @@ static dma_t& DMA = *reinterpret_cast<dma_t*>(0x40020000);
 
 struct dmamux_t
 {
-    volatile uint32_t    DMAMUX_C0CR;          // [Read-write] DMAMux - DMA request line multiplexer channel x control register
-    volatile uint32_t    DMAMUX_C1CR;          // [Read-write] DMAMux - DMA request line multiplexer channel x control register
-    volatile uint32_t    DMAMUX_C2CR;          // [Read-write] DMAMux - DMA request line multiplexer channel x control register
-    volatile uint32_t    DMAMUX_C3CR;          // [Read-write] DMAMux - DMA request line multiplexer channel x control register
-    volatile uint32_t    DMAMUX_C4CR;          // [Read-write] DMAMux - DMA request line multiplexer channel x control register
-    volatile uint32_t    DMAMUX_C5CR;          // [Read-write] DMAMux - DMA request line multiplexer channel x control register
-    volatile uint32_t    DMAMUX_C6CR;          // [Read-write] DMAMux - DMA request line multiplexer channel x control register
+    volatile uint32_t    C0CR;                 // [Read-write] DMAMux - DMA request line multiplexer channel x control register
+    volatile uint32_t    C1CR;                 // [Read-write] DMAMux - DMA request line multiplexer channel x control register
+    volatile uint32_t    C2CR;                 // [Read-write] DMAMux - DMA request line multiplexer channel x control register
+    volatile uint32_t    C3CR;                 // [Read-write] DMAMux - DMA request line multiplexer channel x control register
+    volatile uint32_t    C4CR;                 // [Read-write] DMAMux - DMA request line multiplexer channel x control register
+    volatile uint32_t    C5CR;                 // [Read-write] DMAMux - DMA request line multiplexer channel x control register
+    volatile uint32_t    C6CR;                 // [Read-write] DMAMux - DMA request line multiplexer channel x control register
     reserved_t<25>       _0;
-    volatile uint32_t    DMAMUX_CSR;           // [Read-only] DMAMUX request line multiplexer interrupt channel status register
-    volatile uint32_t    DMAMUX_CFR;           // [Write-only] DMAMUX request line multiplexer interrupt clear flag register
+    volatile uint32_t    CSR;                  // [Read-only] DMAMUX request line multiplexer interrupt channel status register
+    volatile uint32_t    CFR;                  // [Write-only] DMAMUX request line multiplexer interrupt clear flag register
     reserved_t<30>       _1;
-    volatile uint32_t    DMAMUX_RG0CR;         // [Read-write] DMAMux - DMA request generator channel x control register
-    volatile uint32_t    DMAMUX_RG1CR;         // [Read-write] DMAMux - DMA request generator channel x control register
-    volatile uint32_t    DMAMUX_RG2CR;         // [Read-write] DMAMux - DMA request generator channel x control register
-    volatile uint32_t    DMAMUX_RG3CR;         // [Read-write] DMAMux - DMA request generator channel x control register
+    volatile uint32_t    RG0CR;                // [Read-write] DMAMux - DMA request generator channel x control register
+    volatile uint32_t    RG1CR;                // [Read-write] DMAMux - DMA request generator channel x control register
+    volatile uint32_t    RG2CR;                // [Read-write] DMAMux - DMA request generator channel x control register
+    volatile uint32_t    RG3CR;                // [Read-write] DMAMux - DMA request generator channel x control register
     reserved_t<12>       _2;
-    volatile uint32_t    DMAMUX_RGSR;          // [Read-only] DMAMux - DMA request generator status register
-    volatile uint32_t    DMAMUX_RGCFR;         // [Write-only] DMAMux - DMA request generator clear flag register
+    volatile uint32_t    RGSR;                 // [Read-only] DMAMux - DMA request generator status register
+    volatile uint32_t    RGCFR;                // [Write-only] DMAMux - DMA request generator clear flag register
     reserved_t<169>      _3;
-    volatile uint32_t    DMAMUX_HWCFGR2;       // [Read-only] DMAMUX hardware configuration 2 register
-    volatile uint32_t    DMAMUX_HWCFGR1;       // [Read-only] DMAMUX hardware configuration 1 register
-    volatile uint32_t    DMAMUX_VERR;          // [Read-only] DMAMUX version register
-    volatile uint32_t    DMAMUX_IPIDR;         // [Read-only] DMAMUX IP identification register
-    volatile uint32_t    DMAMUX_SIDR;          // [Read-only] DMAMUX size identification register
+    volatile uint32_t    HWCFGR2;              // [Read-only] DMAMUX hardware configuration 2 register
+    volatile uint32_t    HWCFGR1;              // [Read-only] DMAMUX hardware configuration 1 register
+    volatile uint32_t    VERR;                 // [Read-only] DMAMUX version register
+    volatile uint32_t    IPIDR;                // [Read-only] DMAMUX IP identification register
+    volatile uint32_t    SIDR;                 // [Read-only] DMAMUX size identification register
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C0CR_DMAREQ_ID =           // Input DMA request line selected (8 bits)
+    static constexpr uint32_t C0CR_DMAREQ_ID =           // Input DMA request line selected (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static constexpr uint32_t DMAMUX_C0CR_SOIE = 0x100;         // Interrupt enable at synchronization event overrun
-    static constexpr uint32_t DMAMUX_C0CR_EGE = 0x200;          // Event generation enable/disable
-    static constexpr uint32_t DMAMUX_C0CR_SE = 0x10000;         // Synchronous operating mode enable/disable
+    static constexpr uint32_t C0CR_SOIE = 0x100;         // Interrupt enable at synchronization event overrun
+    static constexpr uint32_t C0CR_EGE = 0x200;          // Event generation enable/disable
+    static constexpr uint32_t C0CR_SE = 0x10000;         // Synchronous operating mode enable/disable
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C0CR_SPOL =                // Synchronization event type selector Defines the synchronization event on the selected synchronization input: (2 bits)
+    static constexpr uint32_t C0CR_SPOL =                // Synchronization event type selector Defines the synchronization event on the selected synchronization input: (2 bits)
         bit_field_t<17, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C0CR_NBREQ =               // Number of DMA requests to forward Defines the number of DMA requests forwarded before output event is generated. In synchronous mode, it also defines the number of DMA requests to forward after a synchronization event, then stop forwarding. The actual number of DMA requests forwarded is NBREQ+1. Note: This field can only be written when both SE and EGE bits are reset. (5 bits)
+    static constexpr uint32_t C0CR_NBREQ =               // Number of DMA requests to forward Defines the number of DMA requests forwarded before output event is generated. In synchronous mode, it also defines the number of DMA requests to forward after a synchronization event, then stop forwarding. The actual number of DMA requests forwarded is NBREQ+1. Note: This field can only be written when both SE and EGE bits are reset. (5 bits)
         bit_field_t<19, 0x1f>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C0CR_SYNC_ID =             // Synchronization input selected (5 bits)
+    static constexpr uint32_t C0CR_SYNC_ID =             // Synchronization input selected (5 bits)
         bit_field_t<24, 0x1f>::value<X>();
-    static const uint32_t DMAMUX_C0CR_RESET_VALUE = 0x0;
+    static const uint32_t C0CR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C1CR_DMAREQ_ID =           // Input DMA request line selected (8 bits)
+    static constexpr uint32_t C1CR_DMAREQ_ID =           // Input DMA request line selected (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static constexpr uint32_t DMAMUX_C1CR_SOIE = 0x100;         // Interrupt enable at synchronization event overrun
-    static constexpr uint32_t DMAMUX_C1CR_EGE = 0x200;          // Event generation enable/disable
-    static constexpr uint32_t DMAMUX_C1CR_SE = 0x10000;         // Synchronous operating mode enable/disable
+    static constexpr uint32_t C1CR_SOIE = 0x100;         // Interrupt enable at synchronization event overrun
+    static constexpr uint32_t C1CR_EGE = 0x200;          // Event generation enable/disable
+    static constexpr uint32_t C1CR_SE = 0x10000;         // Synchronous operating mode enable/disable
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C1CR_SPOL =                // Synchronization event type selector Defines the synchronization event on the selected synchronization input: (2 bits)
+    static constexpr uint32_t C1CR_SPOL =                // Synchronization event type selector Defines the synchronization event on the selected synchronization input: (2 bits)
         bit_field_t<17, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C1CR_NBREQ =               // Number of DMA requests to forward Defines the number of DMA requests forwarded before output event is generated. In synchronous mode, it also defines the number of DMA requests to forward after a synchronization event, then stop forwarding. The actual number of DMA requests forwarded is NBREQ+1. Note: This field can only be written when both SE and EGE bits are reset. (5 bits)
+    static constexpr uint32_t C1CR_NBREQ =               // Number of DMA requests to forward Defines the number of DMA requests forwarded before output event is generated. In synchronous mode, it also defines the number of DMA requests to forward after a synchronization event, then stop forwarding. The actual number of DMA requests forwarded is NBREQ+1. Note: This field can only be written when both SE and EGE bits are reset. (5 bits)
         bit_field_t<19, 0x1f>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C1CR_SYNC_ID =             // Synchronization input selected (5 bits)
+    static constexpr uint32_t C1CR_SYNC_ID =             // Synchronization input selected (5 bits)
         bit_field_t<24, 0x1f>::value<X>();
-    static const uint32_t DMAMUX_C1CR_RESET_VALUE = 0x0;
+    static const uint32_t C1CR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C2CR_DMAREQ_ID =           // Input DMA request line selected (8 bits)
+    static constexpr uint32_t C2CR_DMAREQ_ID =           // Input DMA request line selected (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static constexpr uint32_t DMAMUX_C2CR_SOIE = 0x100;         // Interrupt enable at synchronization event overrun
-    static constexpr uint32_t DMAMUX_C2CR_EGE = 0x200;          // Event generation enable/disable
-    static constexpr uint32_t DMAMUX_C2CR_SE = 0x10000;         // Synchronous operating mode enable/disable
+    static constexpr uint32_t C2CR_SOIE = 0x100;         // Interrupt enable at synchronization event overrun
+    static constexpr uint32_t C2CR_EGE = 0x200;          // Event generation enable/disable
+    static constexpr uint32_t C2CR_SE = 0x10000;         // Synchronous operating mode enable/disable
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C2CR_SPOL =                // Synchronization event type selector Defines the synchronization event on the selected synchronization input: (2 bits)
+    static constexpr uint32_t C2CR_SPOL =                // Synchronization event type selector Defines the synchronization event on the selected synchronization input: (2 bits)
         bit_field_t<17, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C2CR_NBREQ =               // Number of DMA requests to forward Defines the number of DMA requests forwarded before output event is generated. In synchronous mode, it also defines the number of DMA requests to forward after a synchronization event, then stop forwarding. The actual number of DMA requests forwarded is NBREQ+1. Note: This field can only be written when both SE and EGE bits are reset. (5 bits)
+    static constexpr uint32_t C2CR_NBREQ =               // Number of DMA requests to forward Defines the number of DMA requests forwarded before output event is generated. In synchronous mode, it also defines the number of DMA requests to forward after a synchronization event, then stop forwarding. The actual number of DMA requests forwarded is NBREQ+1. Note: This field can only be written when both SE and EGE bits are reset. (5 bits)
         bit_field_t<19, 0x1f>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C2CR_SYNC_ID =             // Synchronization input selected (5 bits)
+    static constexpr uint32_t C2CR_SYNC_ID =             // Synchronization input selected (5 bits)
         bit_field_t<24, 0x1f>::value<X>();
-    static const uint32_t DMAMUX_C2CR_RESET_VALUE = 0x0;
+    static const uint32_t C2CR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C3CR_DMAREQ_ID =           // Input DMA request line selected (8 bits)
+    static constexpr uint32_t C3CR_DMAREQ_ID =           // Input DMA request line selected (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static constexpr uint32_t DMAMUX_C3CR_SOIE = 0x100;         // Interrupt enable at synchronization event overrun
-    static constexpr uint32_t DMAMUX_C3CR_EGE = 0x200;          // Event generation enable/disable
-    static constexpr uint32_t DMAMUX_C3CR_SE = 0x10000;         // Synchronous operating mode enable/disable
+    static constexpr uint32_t C3CR_SOIE = 0x100;         // Interrupt enable at synchronization event overrun
+    static constexpr uint32_t C3CR_EGE = 0x200;          // Event generation enable/disable
+    static constexpr uint32_t C3CR_SE = 0x10000;         // Synchronous operating mode enable/disable
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C3CR_SPOL =                // Synchronization event type selector Defines the synchronization event on the selected synchronization input: (2 bits)
+    static constexpr uint32_t C3CR_SPOL =                // Synchronization event type selector Defines the synchronization event on the selected synchronization input: (2 bits)
         bit_field_t<17, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C3CR_NBREQ =               // Number of DMA requests to forward Defines the number of DMA requests forwarded before output event is generated. In synchronous mode, it also defines the number of DMA requests to forward after a synchronization event, then stop forwarding. The actual number of DMA requests forwarded is NBREQ+1. Note: This field can only be written when both SE and EGE bits are reset. (5 bits)
+    static constexpr uint32_t C3CR_NBREQ =               // Number of DMA requests to forward Defines the number of DMA requests forwarded before output event is generated. In synchronous mode, it also defines the number of DMA requests to forward after a synchronization event, then stop forwarding. The actual number of DMA requests forwarded is NBREQ+1. Note: This field can only be written when both SE and EGE bits are reset. (5 bits)
         bit_field_t<19, 0x1f>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C3CR_SYNC_ID =             // Synchronization input selected (5 bits)
+    static constexpr uint32_t C3CR_SYNC_ID =             // Synchronization input selected (5 bits)
         bit_field_t<24, 0x1f>::value<X>();
-    static const uint32_t DMAMUX_C3CR_RESET_VALUE = 0x0;
+    static const uint32_t C3CR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C4CR_DMAREQ_ID =           // Input DMA request line selected (8 bits)
+    static constexpr uint32_t C4CR_DMAREQ_ID =           // Input DMA request line selected (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static constexpr uint32_t DMAMUX_C4CR_SOIE = 0x100;         // Interrupt enable at synchronization event overrun
-    static constexpr uint32_t DMAMUX_C4CR_EGE = 0x200;          // Event generation enable/disable
-    static constexpr uint32_t DMAMUX_C4CR_SE = 0x10000;         // Synchronous operating mode enable/disable
+    static constexpr uint32_t C4CR_SOIE = 0x100;         // Interrupt enable at synchronization event overrun
+    static constexpr uint32_t C4CR_EGE = 0x200;          // Event generation enable/disable
+    static constexpr uint32_t C4CR_SE = 0x10000;         // Synchronous operating mode enable/disable
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C4CR_SPOL =                // Synchronization event type selector Defines the synchronization event on the selected synchronization input: (2 bits)
+    static constexpr uint32_t C4CR_SPOL =                // Synchronization event type selector Defines the synchronization event on the selected synchronization input: (2 bits)
         bit_field_t<17, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C4CR_NBREQ =               // Number of DMA requests to forward Defines the number of DMA requests forwarded before output event is generated. In synchronous mode, it also defines the number of DMA requests to forward after a synchronization event, then stop forwarding. The actual number of DMA requests forwarded is NBREQ+1. Note: This field can only be written when both SE and EGE bits are reset. (5 bits)
+    static constexpr uint32_t C4CR_NBREQ =               // Number of DMA requests to forward Defines the number of DMA requests forwarded before output event is generated. In synchronous mode, it also defines the number of DMA requests to forward after a synchronization event, then stop forwarding. The actual number of DMA requests forwarded is NBREQ+1. Note: This field can only be written when both SE and EGE bits are reset. (5 bits)
         bit_field_t<19, 0x1f>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C4CR_SYNC_ID =             // Synchronization input selected (5 bits)
+    static constexpr uint32_t C4CR_SYNC_ID =             // Synchronization input selected (5 bits)
         bit_field_t<24, 0x1f>::value<X>();
-    static const uint32_t DMAMUX_C4CR_RESET_VALUE = 0x0;
+    static const uint32_t C4CR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C5CR_DMAREQ_ID =           // Input DMA request line selected (8 bits)
+    static constexpr uint32_t C5CR_DMAREQ_ID =           // Input DMA request line selected (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static constexpr uint32_t DMAMUX_C5CR_SOIE = 0x100;         // Interrupt enable at synchronization event overrun
-    static constexpr uint32_t DMAMUX_C5CR_EGE = 0x200;          // Event generation enable/disable
-    static constexpr uint32_t DMAMUX_C5CR_SE = 0x10000;         // Synchronous operating mode enable/disable
+    static constexpr uint32_t C5CR_SOIE = 0x100;         // Interrupt enable at synchronization event overrun
+    static constexpr uint32_t C5CR_EGE = 0x200;          // Event generation enable/disable
+    static constexpr uint32_t C5CR_SE = 0x10000;         // Synchronous operating mode enable/disable
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C5CR_SPOL =                // Synchronization event type selector Defines the synchronization event on the selected synchronization input: (2 bits)
+    static constexpr uint32_t C5CR_SPOL =                // Synchronization event type selector Defines the synchronization event on the selected synchronization input: (2 bits)
         bit_field_t<17, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C5CR_NBREQ =               // Number of DMA requests to forward Defines the number of DMA requests forwarded before output event is generated. In synchronous mode, it also defines the number of DMA requests to forward after a synchronization event, then stop forwarding. The actual number of DMA requests forwarded is NBREQ+1. Note: This field can only be written when both SE and EGE bits are reset. (5 bits)
+    static constexpr uint32_t C5CR_NBREQ =               // Number of DMA requests to forward Defines the number of DMA requests forwarded before output event is generated. In synchronous mode, it also defines the number of DMA requests to forward after a synchronization event, then stop forwarding. The actual number of DMA requests forwarded is NBREQ+1. Note: This field can only be written when both SE and EGE bits are reset. (5 bits)
         bit_field_t<19, 0x1f>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C5CR_SYNC_ID =             // Synchronization input selected (5 bits)
+    static constexpr uint32_t C5CR_SYNC_ID =             // Synchronization input selected (5 bits)
         bit_field_t<24, 0x1f>::value<X>();
-    static const uint32_t DMAMUX_C5CR_RESET_VALUE = 0x0;
+    static const uint32_t C5CR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C6CR_DMAREQ_ID =           // Input DMA request line selected (8 bits)
+    static constexpr uint32_t C6CR_DMAREQ_ID =           // Input DMA request line selected (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static constexpr uint32_t DMAMUX_C6CR_SOIE = 0x100;         // Interrupt enable at synchronization event overrun
-    static constexpr uint32_t DMAMUX_C6CR_EGE = 0x200;          // Event generation enable/disable
-    static constexpr uint32_t DMAMUX_C6CR_SE = 0x10000;         // Synchronous operating mode enable/disable
+    static constexpr uint32_t C6CR_SOIE = 0x100;         // Interrupt enable at synchronization event overrun
+    static constexpr uint32_t C6CR_EGE = 0x200;          // Event generation enable/disable
+    static constexpr uint32_t C6CR_SE = 0x10000;         // Synchronous operating mode enable/disable
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C6CR_SPOL =                // Synchronization event type selector Defines the synchronization event on the selected synchronization input: (2 bits)
+    static constexpr uint32_t C6CR_SPOL =                // Synchronization event type selector Defines the synchronization event on the selected synchronization input: (2 bits)
         bit_field_t<17, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C6CR_NBREQ =               // Number of DMA requests to forward Defines the number of DMA requests forwarded before output event is generated. In synchronous mode, it also defines the number of DMA requests to forward after a synchronization event, then stop forwarding. The actual number of DMA requests forwarded is NBREQ+1. Note: This field can only be written when both SE and EGE bits are reset. (5 bits)
+    static constexpr uint32_t C6CR_NBREQ =               // Number of DMA requests to forward Defines the number of DMA requests forwarded before output event is generated. In synchronous mode, it also defines the number of DMA requests to forward after a synchronization event, then stop forwarding. The actual number of DMA requests forwarded is NBREQ+1. Note: This field can only be written when both SE and EGE bits are reset. (5 bits)
         bit_field_t<19, 0x1f>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_C6CR_SYNC_ID =             // Synchronization input selected (5 bits)
+    static constexpr uint32_t C6CR_SYNC_ID =             // Synchronization input selected (5 bits)
         bit_field_t<24, 0x1f>::value<X>();
-    static const uint32_t DMAMUX_C6CR_RESET_VALUE = 0x0;
+    static const uint32_t C6CR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_CSR_SOF =                 // Synchronization overrun event flag (7 bits)
+    static constexpr uint32_t CSR_SOF =                 // Synchronization overrun event flag (7 bits)
         bit_field_t<0, 0x7f>::value<X>();
-    static const uint32_t DMAMUX_CSR_RESET_VALUE = 0x0;
+    static const uint32_t CSR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_CFR_CSOF =                // Clear synchronization overrun event flag (7 bits)
+    static constexpr uint32_t CFR_CSOF =                // Clear synchronization overrun event flag (7 bits)
         bit_field_t<0, 0x7f>::value<X>();
-    static const uint32_t DMAMUX_CFR_RESET_VALUE = 0x0;
+    static const uint32_t CFR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_RG0CR_SIG_ID =              // DMA request trigger input selected (5 bits)
+    static constexpr uint32_t RG0CR_SIG_ID =              // DMA request trigger input selected (5 bits)
         bit_field_t<0, 0x1f>::value<X>();
-    static constexpr uint32_t DMAMUX_RG0CR_OIE = 0x100;          // Interrupt enable at trigger event overrun
-    static constexpr uint32_t DMAMUX_RG0CR_GE = 0x10000;         // DMA request generator channel enable/disable
+    static constexpr uint32_t RG0CR_OIE = 0x100;          // Interrupt enable at trigger event overrun
+    static constexpr uint32_t RG0CR_GE = 0x10000;         // DMA request generator channel enable/disable
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_RG0CR_GPOL =                // DMA request generator trigger event type selection Defines the trigger event on the selected DMA request trigger input (2 bits)
+    static constexpr uint32_t RG0CR_GPOL =                // DMA request generator trigger event type selection Defines the trigger event on the selected DMA request trigger input (2 bits)
         bit_field_t<17, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_RG0CR_GNBREQ =              // Number of DMA requests to generate Defines the number of DMA requests generated after a trigger event, then stop generating. The actual number of generated DMA requests is GNBREQ+1. Note: This field can only be written when GE bit is reset. (5 bits)
+    static constexpr uint32_t RG0CR_GNBREQ =              // Number of DMA requests to generate Defines the number of DMA requests generated after a trigger event, then stop generating. The actual number of generated DMA requests is GNBREQ+1. Note: This field can only be written when GE bit is reset. (5 bits)
         bit_field_t<19, 0x1f>::value<X>();
-    static const uint32_t DMAMUX_RG0CR_RESET_VALUE = 0x0;
+    static const uint32_t RG0CR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_RG1CR_SIG_ID =              // DMA request trigger input selected (5 bits)
+    static constexpr uint32_t RG1CR_SIG_ID =              // DMA request trigger input selected (5 bits)
         bit_field_t<0, 0x1f>::value<X>();
-    static constexpr uint32_t DMAMUX_RG1CR_OIE = 0x100;          // Interrupt enable at trigger event overrun
-    static constexpr uint32_t DMAMUX_RG1CR_GE = 0x10000;         // DMA request generator channel enable/disable
+    static constexpr uint32_t RG1CR_OIE = 0x100;          // Interrupt enable at trigger event overrun
+    static constexpr uint32_t RG1CR_GE = 0x10000;         // DMA request generator channel enable/disable
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_RG1CR_GPOL =                // DMA request generator trigger event type selection Defines the trigger event on the selected DMA request trigger input (2 bits)
+    static constexpr uint32_t RG1CR_GPOL =                // DMA request generator trigger event type selection Defines the trigger event on the selected DMA request trigger input (2 bits)
         bit_field_t<17, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_RG1CR_GNBREQ =              // Number of DMA requests to generate Defines the number of DMA requests generated after a trigger event, then stop generating. The actual number of generated DMA requests is GNBREQ+1. Note: This field can only be written when GE bit is reset. (5 bits)
+    static constexpr uint32_t RG1CR_GNBREQ =              // Number of DMA requests to generate Defines the number of DMA requests generated after a trigger event, then stop generating. The actual number of generated DMA requests is GNBREQ+1. Note: This field can only be written when GE bit is reset. (5 bits)
         bit_field_t<19, 0x1f>::value<X>();
-    static const uint32_t DMAMUX_RG1CR_RESET_VALUE = 0x0;
+    static const uint32_t RG1CR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_RG2CR_SIG_ID =              // DMA request trigger input selected (5 bits)
+    static constexpr uint32_t RG2CR_SIG_ID =              // DMA request trigger input selected (5 bits)
         bit_field_t<0, 0x1f>::value<X>();
-    static constexpr uint32_t DMAMUX_RG2CR_OIE = 0x100;          // Interrupt enable at trigger event overrun
-    static constexpr uint32_t DMAMUX_RG2CR_GE = 0x10000;         // DMA request generator channel enable/disable
+    static constexpr uint32_t RG2CR_OIE = 0x100;          // Interrupt enable at trigger event overrun
+    static constexpr uint32_t RG2CR_GE = 0x10000;         // DMA request generator channel enable/disable
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_RG2CR_GPOL =                // DMA request generator trigger event type selection Defines the trigger event on the selected DMA request trigger input (2 bits)
+    static constexpr uint32_t RG2CR_GPOL =                // DMA request generator trigger event type selection Defines the trigger event on the selected DMA request trigger input (2 bits)
         bit_field_t<17, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_RG2CR_GNBREQ =              // Number of DMA requests to generate Defines the number of DMA requests generated after a trigger event, then stop generating. The actual number of generated DMA requests is GNBREQ+1. Note: This field can only be written when GE bit is reset. (5 bits)
+    static constexpr uint32_t RG2CR_GNBREQ =              // Number of DMA requests to generate Defines the number of DMA requests generated after a trigger event, then stop generating. The actual number of generated DMA requests is GNBREQ+1. Note: This field can only be written when GE bit is reset. (5 bits)
         bit_field_t<19, 0x1f>::value<X>();
-    static const uint32_t DMAMUX_RG2CR_RESET_VALUE = 0x0;
+    static const uint32_t RG2CR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_RG3CR_SIG_ID =              // DMA request trigger input selected (5 bits)
+    static constexpr uint32_t RG3CR_SIG_ID =              // DMA request trigger input selected (5 bits)
         bit_field_t<0, 0x1f>::value<X>();
-    static constexpr uint32_t DMAMUX_RG3CR_OIE = 0x100;          // Interrupt enable at trigger event overrun
-    static constexpr uint32_t DMAMUX_RG3CR_GE = 0x10000;         // DMA request generator channel enable/disable
+    static constexpr uint32_t RG3CR_OIE = 0x100;          // Interrupt enable at trigger event overrun
+    static constexpr uint32_t RG3CR_GE = 0x10000;         // DMA request generator channel enable/disable
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_RG3CR_GPOL =                // DMA request generator trigger event type selection Defines the trigger event on the selected DMA request trigger input (2 bits)
+    static constexpr uint32_t RG3CR_GPOL =                // DMA request generator trigger event type selection Defines the trigger event on the selected DMA request trigger input (2 bits)
         bit_field_t<17, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_RG3CR_GNBREQ =              // Number of DMA requests to generate Defines the number of DMA requests generated after a trigger event, then stop generating. The actual number of generated DMA requests is GNBREQ+1. Note: This field can only be written when GE bit is reset. (5 bits)
+    static constexpr uint32_t RG3CR_GNBREQ =              // Number of DMA requests to generate Defines the number of DMA requests generated after a trigger event, then stop generating. The actual number of generated DMA requests is GNBREQ+1. Note: This field can only be written when GE bit is reset. (5 bits)
         bit_field_t<19, 0x1f>::value<X>();
-    static const uint32_t DMAMUX_RG3CR_RESET_VALUE = 0x0;
+    static const uint32_t RG3CR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_RGSR_OF =                  // Trigger event overrun flag The flag is set when a trigger event occurs on DMA request generator channel x, while the DMA request generator counter value is lower than GNBREQ. The flag is cleared by writing 1 to the corresponding COFx bit in DMAMUX_RGCFR register. (4 bits)
+    static constexpr uint32_t RGSR_OF =                  // Trigger event overrun flag The flag is set when a trigger event occurs on DMA request generator channel x, while the DMA request generator counter value is lower than GNBREQ. The flag is cleared by writing 1 to the corresponding COFx bit in DMAMUX_RGCFR register. (4 bits)
         bit_field_t<0, 0xf>::value<X>();
-    static const uint32_t DMAMUX_RGSR_RESET_VALUE = 0x0;
+    static const uint32_t RGSR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_RGCFR_COF =                 // Clear trigger event overrun flag Upon setting, this bit clears the corresponding overrun flag OFx in the DMAMUX_RGCSR register. (4 bits)
+    static constexpr uint32_t RGCFR_COF =                 // Clear trigger event overrun flag Upon setting, this bit clears the corresponding overrun flag OFx in the DMAMUX_RGCSR register. (4 bits)
         bit_field_t<0, 0xf>::value<X>();
-    static const uint32_t DMAMUX_RGCFR_RESET_VALUE = 0x0;
+    static const uint32_t RGCFR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_HWCFGR2_NUM_DMA_EXT_REQ =     // Number of DMA request trigger inputs (8 bits)
+    static constexpr uint32_t HWCFGR2_NUM_DMA_EXT_REQ =     // Number of DMA request trigger inputs (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static const uint32_t DMAMUX_HWCFGR2_RESET_VALUE = 0x17;
+    static const uint32_t HWCFGR2_RESET_VALUE = 0x17;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_HWCFGR1_NUM_DMA_STREAMS =     // number of DMA request line multiplexer (output) channels (8 bits)
+    static constexpr uint32_t HWCFGR1_NUM_DMA_STREAMS =     // number of DMA request line multiplexer (output) channels (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_HWCFGR1_NUM_DMA_PERIPH_REQ =  // number of DMA request lines from peripherals (8 bits)
+    static constexpr uint32_t HWCFGR1_NUM_DMA_PERIPH_REQ =  // number of DMA request lines from peripherals (8 bits)
         bit_field_t<8, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_HWCFGR1_NUM_DMA_TRIG =        // number of synchronization inputs (8 bits)
+    static constexpr uint32_t HWCFGR1_NUM_DMA_TRIG =        // number of synchronization inputs (8 bits)
         bit_field_t<16, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_HWCFGR1_NUM_DMA_REQGEN =      // number of DMA request generator channels (8 bits)
+    static constexpr uint32_t HWCFGR1_NUM_DMA_REQGEN =      // number of DMA request generator channels (8 bits)
         bit_field_t<24, 0xff>::value<X>();
-    static const uint32_t DMAMUX_HWCFGR1_RESET_VALUE = 0x4173907;
+    static const uint32_t HWCFGR1_RESET_VALUE = 0x4173907;
 
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_VERR_MINREV =              // Minor IP revision (4 bits)
+    static constexpr uint32_t VERR_MINREV =              // Minor IP revision (4 bits)
         bit_field_t<0, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DMAMUX_VERR_MAJREV =              // Major IP revision (4 bits)
+    static constexpr uint32_t VERR_MAJREV =              // Major IP revision (4 bits)
         bit_field_t<4, 0xf>::value<X>();
-    static const uint32_t DMAMUX_VERR_RESET_VALUE = 0x11;
+    static const uint32_t VERR_RESET_VALUE = 0x11;
 
 
-    static const uint32_t DMAMUX_IPIDR_RESET_VALUE = 0x100011;
+    static const uint32_t IPIDR_RESET_VALUE = 0x100011;
 
 
-    static const uint32_t DMAMUX_SIDR_RESET_VALUE = 0xa3c5dd01;
+    static const uint32_t SIDR_RESET_VALUE = 0xa3c5dd01;
 
     static constexpr uint8_t DMA_CHANNEL4_5_6_7 = 11; // DMA channel 4, 5, 6 &amp; 7 and DMAMUX
 };
@@ -7619,179 +7619,179 @@ static hdmi_cec_t& HDMI_CEC = *reinterpret_cast<hdmi_cec_t*>(0x40007800);
 
 struct dac_t
 {
-    volatile uint32_t    DAC_CR;               // [Read-write] DAC control register
-    volatile uint32_t    DAC_SWTRGR;           // [Write-only] DAC software trigger register
-    volatile uint32_t    DAC_DHR12R1;          // [Read-write] DAC channel1 12-bit right-aligned data holding register
-    volatile uint32_t    DAC_DHR12L1;          // [Read-write] DAC channel1 12-bit left aligned data holding register
-    volatile uint32_t    DAC_DHR8R1;           // [Read-write] DAC channel1 8-bit right aligned data holding register
-    volatile uint32_t    DAC_DHR12R2;          // [Read-write] DAC channel2 12-bit right aligned data holding register
-    volatile uint32_t    DAC_DHR12L2;          // [Read-write] DAC channel2 12-bit left aligned data holding register
-    volatile uint32_t    DAC_DHR8R2;           // [Read-write] DAC channel2 8-bit right-aligned data holding register
-    volatile uint32_t    DAC_DHR12RD;          // [Read-write] Dual DAC 12-bit right-aligned data holding register
-    volatile uint32_t    DAC_DHR12LD;          // [Read-write] DUAL DAC 12-bit left aligned data holding register
-    volatile uint32_t    DAC_DHR8RD;           // [Read-write] DUAL DAC 8-bit right aligned data holding register
-    volatile uint32_t    DAC_DOR1;             // [Read-only] DAC channel1 data output register
-    volatile uint32_t    DAC_DOR2;             // [Read-only] DAC channel2 data output register
-    volatile uint32_t    DAC_SR;               // DAC status register
-    volatile uint32_t    DAC_CCR;              // [Read-write] DAC calibration control register
-    volatile uint32_t    DAC_MCR;              // [Read-write] DAC mode control register
-    volatile uint32_t    DAC_SHSR1;            // [Read-write] DAC Sample and Hold sample time register 1
-    volatile uint32_t    DAC_SHSR2;            // [Read-write] DAC Sample and Hold sample time register 2
-    volatile uint32_t    DAC_SHHR;             // [Read-write] DAC Sample and Hold hold time register
-    volatile uint32_t    DAC_SHRR;             // [Read-write] DAC Sample and Hold refresh time register
+    volatile uint32_t    CR;                   // [Read-write] DAC control register
+    volatile uint32_t    SWTRGR;               // [Write-only] DAC software trigger register
+    volatile uint32_t    DHR12R1;              // [Read-write] DAC channel1 12-bit right-aligned data holding register
+    volatile uint32_t    DHR12L1;              // [Read-write] DAC channel1 12-bit left aligned data holding register
+    volatile uint32_t    DHR8R1;               // [Read-write] DAC channel1 8-bit right aligned data holding register
+    volatile uint32_t    DHR12R2;              // [Read-write] DAC channel2 12-bit right aligned data holding register
+    volatile uint32_t    DHR12L2;              // [Read-write] DAC channel2 12-bit left aligned data holding register
+    volatile uint32_t    DHR8R2;               // [Read-write] DAC channel2 8-bit right-aligned data holding register
+    volatile uint32_t    DHR12RD;              // [Read-write] Dual DAC 12-bit right-aligned data holding register
+    volatile uint32_t    DHR12LD;              // [Read-write] DUAL DAC 12-bit left aligned data holding register
+    volatile uint32_t    DHR8RD;               // [Read-write] DUAL DAC 8-bit right aligned data holding register
+    volatile uint32_t    DOR1;                 // [Read-only] DAC channel1 data output register
+    volatile uint32_t    DOR2;                 // [Read-only] DAC channel2 data output register
+    volatile uint32_t    SR;                   // DAC status register
+    volatile uint32_t    CCR;                  // [Read-write] DAC calibration control register
+    volatile uint32_t    MCR;                  // [Read-write] DAC mode control register
+    volatile uint32_t    SHSR1;                // [Read-write] DAC Sample and Hold sample time register 1
+    volatile uint32_t    SHSR2;                // [Read-write] DAC Sample and Hold sample time register 2
+    volatile uint32_t    SHHR;                 // [Read-write] DAC Sample and Hold hold time register
+    volatile uint32_t    SHRR;                 // [Read-write] DAC Sample and Hold refresh time register
     reserved_t<232>      _0;
     volatile uint32_t    IP_HWCFGR0;           // [Read-write] DAC IP Hardware Configuration Register
     volatile uint32_t    VERR;                 // [Read-only] EXTI IP Version register
     volatile uint32_t    IPIDR;                // [Read-only] EXTI Identification register
     volatile uint32_t    SIDR;                 // [Read-only] EXTI Size ID register
 
-    static constexpr uint32_t DAC_CR_EN1 = 0x1;            // DAC channel1 enable This bit is set and cleared by software to enable/disable DAC channel1.
-    static constexpr uint32_t DAC_CR_TEN1 = 0x2;           // DAC channel1 trigger enable
+    static constexpr uint32_t CR_EN1 = 0x1;            // DAC channel1 enable This bit is set and cleared by software to enable/disable DAC channel1.
+    static constexpr uint32_t CR_TEN1 = 0x2;           // DAC channel1 trigger enable
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_TSEL1 =               // DAC channel1 trigger selection These bits select the external event used to trigger DAC channel1. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (4 bits)
+    static constexpr uint32_t CR_TSEL1 =               // DAC channel1 trigger selection These bits select the external event used to trigger DAC channel1. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (4 bits)
         bit_field_t<2, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_WAVE1 =               // DAC channel1 noise/triangle wave generation enable These bits are set and cleared by software. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (2 bits)
+    static constexpr uint32_t CR_WAVE1 =               // DAC channel1 noise/triangle wave generation enable These bits are set and cleared by software. Note: Only used if bit TEN1 = 1 (DAC channel1 trigger enabled). (2 bits)
         bit_field_t<6, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_MAMP1 =               // DAC channel1 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
+    static constexpr uint32_t CR_MAMP1 =               // DAC channel1 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
         bit_field_t<8, 0xf>::value<X>();
-    static constexpr uint32_t DAC_CR_DMAEN1 = 0x1000;      // DAC channel1 DMA enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_DMAUDRIE1 = 0x2000;   // DAC channel1 DMA Underrun Interrupt enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_CEN1 = 0x4000;        // DAC Channel 1 calibration enable This bit is set and cleared by software to enable/disable DAC channel 1 calibration, it can be written only if bit EN1=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
-    static constexpr uint32_t DAC_CR_EN2 = 0x10000;        // DAC channel2 enable This bit is set and cleared by software to enable/disable DAC channel2.
-    static constexpr uint32_t DAC_CR_TEN2 = 0x20000;       // DAC channel2 trigger enable
+    static constexpr uint32_t CR_DMAEN1 = 0x1000;      // DAC channel1 DMA enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_DMAUDRIE1 = 0x2000;   // DAC channel1 DMA Underrun Interrupt enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_CEN1 = 0x4000;        // DAC Channel 1 calibration enable This bit is set and cleared by software to enable/disable DAC channel 1 calibration, it can be written only if bit EN1=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
+    static constexpr uint32_t CR_EN2 = 0x10000;        // DAC channel2 enable This bit is set and cleared by software to enable/disable DAC channel2.
+    static constexpr uint32_t CR_TEN2 = 0x20000;       // DAC channel2 trigger enable
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_TSEL2 =               // DAC channel2 trigger selection These bits select the external event used to trigger DAC channel2 Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled). (4 bits)
+    static constexpr uint32_t CR_TSEL2 =               // DAC channel2 trigger selection These bits select the external event used to trigger DAC channel2 Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled). (4 bits)
         bit_field_t<18, 0xf>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_WAVE2 =               // DAC channel2 noise/triangle wave generation enable These bits are set/reset by software. 1x: Triangle wave generation enabled Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled) (2 bits)
+    static constexpr uint32_t CR_WAVE2 =               // DAC channel2 noise/triangle wave generation enable These bits are set/reset by software. 1x: Triangle wave generation enabled Note: Only used if bit TEN2 = 1 (DAC channel2 trigger enabled) (2 bits)
         bit_field_t<22, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CR_MAMP2 =               // DAC channel2 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
+    static constexpr uint32_t CR_MAMP2 =               // DAC channel2 mask/amplitude selector These bits are written by software to select mask in wave generation mode or amplitude in triangle generation mode. = 1011: Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095 (4 bits)
         bit_field_t<24, 0xf>::value<X>();
-    static constexpr uint32_t DAC_CR_DMAEN2 = 0x10000000;  // DAC channel2 DMA enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_DMAUDRIE2 = 0x20000000;// DAC channel2 DMA underrun interrupt enable This bit is set and cleared by software.
-    static constexpr uint32_t DAC_CR_CEN2 = 0x40000000;    // DAC Channel 2 calibration enable This bit is set and cleared by software to enable/disable DAC channel 2 calibration, it can be written only if bit EN2=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
-    static const uint32_t DAC_CR_RESET_VALUE = 0x0;
+    static constexpr uint32_t CR_DMAEN2 = 0x10000000;  // DAC channel2 DMA enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_DMAUDRIE2 = 0x20000000;// DAC channel2 DMA underrun interrupt enable This bit is set and cleared by software.
+    static constexpr uint32_t CR_CEN2 = 0x40000000;    // DAC Channel 2 calibration enable This bit is set and cleared by software to enable/disable DAC channel 2 calibration, it can be written only if bit EN2=0 into DAC_CR (the calibration mode can be entered/exit only when the DAC channel is disabled) Otherwise, the write operation is ignored.
+    static const uint32_t CR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DAC_SWTRGR_SWTRIG1 = 0x1;        // DAC channel1 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR1 register value has been loaded into the DAC_DOR1 register.
-    static constexpr uint32_t DAC_SWTRGR_SWTRIG2 = 0x2;        // DAC channel2 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR2 register value has been loaded into the DAC_DOR2 register.
-    static const uint32_t DAC_SWTRGR_RESET_VALUE = 0x0;
+    static constexpr uint32_t SWTRGR_SWTRIG1 = 0x1;        // DAC channel1 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR1 register value has been loaded into the DAC_DOR1 register.
+    static constexpr uint32_t SWTRGR_SWTRIG2 = 0x2;        // DAC channel2 software trigger This bit is set by software to trigger the DAC in software trigger mode. Note: This bit is cleared by hardware (one APB1 clock cycle later) once the DAC_DHR2 register value has been loaded into the DAC_DOR2 register.
+    static const uint32_t SWTRGR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R1_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12R1_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12R1_RESET_VALUE = 0x0;
+    static const uint32_t DHR12R1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L1_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12L1_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<4, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12L1_RESET_VALUE = 0x0;
+    static const uint32_t DHR12L1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R1_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
+    static constexpr uint32_t DHR8R1_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static const uint32_t DAC_DHR8R1_RESET_VALUE = 0x0;
+    static const uint32_t DHR8R1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12R2_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12R2_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12R2_RESET_VALUE = 0x0;
+    static const uint32_t DHR12R2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12L2_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specify 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12L2_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specify 12-bit data for DAC channel2. (12 bits)
         bit_field_t<4, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12L2_RESET_VALUE = 0x0;
+    static const uint32_t DHR12L2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8R2_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
+    static constexpr uint32_t DHR8R2_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static const uint32_t DAC_DHR8R2_RESET_VALUE = 0x0;
+    static const uint32_t DHR8R2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12RD_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12RD_DACC1DHR =            // DAC channel1 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12RD_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12RD_DACC2DHR =            // DAC channel2 12-bit right-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
         bit_field_t<16, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12RD_RESET_VALUE = 0x0;
+    static const uint32_t DHR12RD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12LD_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
+    static constexpr uint32_t DHR12LD_DACC1DHR =            // DAC channel1 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel1. (12 bits)
         bit_field_t<4, 0xfff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR12LD_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
+    static constexpr uint32_t DHR12LD_DACC2DHR =            // DAC channel2 12-bit left-aligned data These bits are written by software which specifies 12-bit data for DAC channel2. (12 bits)
         bit_field_t<20, 0xfff>::value<X>();
-    static const uint32_t DAC_DHR12LD_RESET_VALUE = 0x0;
+    static const uint32_t DHR12LD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8RD_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
+    static constexpr uint32_t DHR8RD_DACC1DHR =            // DAC channel1 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel1. (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_DHR8RD_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
+    static constexpr uint32_t DHR8RD_DACC2DHR =            // DAC channel2 8-bit right-aligned data These bits are written by software which specifies 8-bit data for DAC channel2. (8 bits)
         bit_field_t<8, 0xff>::value<X>();
-    static const uint32_t DAC_DHR8RD_RESET_VALUE = 0x0;
+    static const uint32_t DHR8RD_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR1_DACC1DOR =            // DAC channel1 data output These bits are read-only, they contain data output for DAC channel1. (12 bits)
+    static constexpr uint32_t DOR1_DACC1DOR =            // DAC channel1 data output These bits are read-only, they contain data output for DAC channel1. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
-    static const uint32_t DAC_DOR1_RESET_VALUE = 0x0;
+    static const uint32_t DOR1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_DOR2_DACC2DOR =            // DAC channel2 data output These bits are read-only, they contain data output for DAC channel2. (12 bits)
+    static constexpr uint32_t DOR2_DACC2DOR =            // DAC channel2 data output These bits are read-only, they contain data output for DAC channel2. (12 bits)
         bit_field_t<0, 0xfff>::value<X>();
-    static const uint32_t DAC_DOR2_RESET_VALUE = 0x0;
+    static const uint32_t DOR2_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t DAC_SR_DMAUDR1 = 0x2000;     // DAC channel1 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
-    static constexpr uint32_t DAC_SR_CAL_FLAG1 = 0x4000;   // DAC Channel 1 calibration offset status This bit is set and cleared by hardware, Read-only
-    static constexpr uint32_t DAC_SR_BWST1 = 0x8000;       // DAC Channel 1 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR1, It is cleared by hardware when the write operation of DAC_SHSR1 is complete. (It takes about 3LSI periods of synchronization)., Read-only
-    static constexpr uint32_t DAC_SR_DMAUDR2 = 0x20000000; // DAC channel2 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
-    static constexpr uint32_t DAC_SR_CAL_FLAG2 = 0x40000000;// DAC Channel 2 calibration offset status This bit is set and cleared by hardware, Read-only
-    static constexpr uint32_t DAC_SR_BWST2 = 0x80000000;   // DAC Channel 2 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR2, It is cleared by hardware when the write operation of DAC_SHSR2 is complete. (It takes about 3 LSI periods of synchronization)., Read-only
-    static const uint32_t DAC_SR_RESET_VALUE = 0x0;
+    static constexpr uint32_t SR_DMAUDR1 = 0x2000;     // DAC channel1 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
+    static constexpr uint32_t SR_CAL_FLAG1 = 0x4000;   // DAC Channel 1 calibration offset status This bit is set and cleared by hardware, Read-only
+    static constexpr uint32_t SR_BWST1 = 0x8000;       // DAC Channel 1 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR1, It is cleared by hardware when the write operation of DAC_SHSR1 is complete. (It takes about 3LSI periods of synchronization)., Read-only
+    static constexpr uint32_t SR_DMAUDR2 = 0x20000000; // DAC channel2 DMA underrun flag This bit is set by hardware and cleared by software (by writing it to 1)., Read-write
+    static constexpr uint32_t SR_CAL_FLAG2 = 0x40000000;// DAC Channel 2 calibration offset status This bit is set and cleared by hardware, Read-only
+    static constexpr uint32_t SR_BWST2 = 0x80000000;   // DAC Channel 2 busy writing sample time flag This bit is systematically set just after Sample &amp; Hold mode enable and is set each time the software writes the register DAC_SHSR2, It is cleared by hardware when the write operation of DAC_SHSR2 is complete. (It takes about 3 LSI periods of synchronization)., Read-only
+    static const uint32_t SR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_CCR_OTRIM1 =              // DAC Channel 1 offset trimming value (5 bits)
+    static constexpr uint32_t CCR_OTRIM1 =              // DAC Channel 1 offset trimming value (5 bits)
         bit_field_t<0, 0x1f>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_CCR_OTRIM2 =              // DAC Channel 2 offset trimming value (5 bits)
+    static constexpr uint32_t CCR_OTRIM2 =              // DAC Channel 2 offset trimming value (5 bits)
         bit_field_t<16, 0x1f>::value<X>();
-    static const uint32_t DAC_CCR_RESET_VALUE = 0x0;
+    static const uint32_t CCR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_MCR_MODE1 =               // DAC Channel 1 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN1=0 and bit CEN1 =0 in the DAC_CR register). If EN1=1 or CEN1 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 1 mode: DAC Channel 1 in normal Mode DAC Channel 1 in sample &amp;amp; hold mode (3 bits)
+    static constexpr uint32_t MCR_MODE1 =               // DAC Channel 1 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN1=0 and bit CEN1 =0 in the DAC_CR register). If EN1=1 or CEN1 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 1 mode: DAC Channel 1 in normal Mode DAC Channel 1 in sample &amp;amp; hold mode (3 bits)
         bit_field_t<0, 0x7>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_MCR_MODE2 =               // DAC Channel 2 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN2=0 and bit CEN2 =0 in the DAC_CR register). If EN2=1 or CEN2 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 2 mode: DAC Channel 2 in normal Mode DAC Channel 2 in sample &amp;amp; hold mode (3 bits)
+    static constexpr uint32_t MCR_MODE2 =               // DAC Channel 2 mode These bits can be written only when the DAC is disabled and not in the calibration mode (when bit EN2=0 and bit CEN2 =0 in the DAC_CR register). If EN2=1 or CEN2 =1 the write operation is ignored. They can be set and cleared by software to select the DAC Channel 2 mode: DAC Channel 2 in normal Mode DAC Channel 2 in sample &amp;amp; hold mode (3 bits)
         bit_field_t<16, 0x7>::value<X>();
-    static const uint32_t DAC_MCR_RESET_VALUE = 0x0;
+    static const uint32_t MCR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHSR1_TSAMPLE1 =            // DAC Channel 1 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel1 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, If BWSTx=1, the write operation is ignored. (10 bits)
+    static constexpr uint32_t SHSR1_TSAMPLE1 =            // DAC Channel 1 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel1 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, If BWSTx=1, the write operation is ignored. (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
-    static const uint32_t DAC_SHSR1_RESET_VALUE = 0x0;
+    static const uint32_t SHSR1_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHSR2_TSAMPLE2 =            // DAC Channel 2 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel2 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, if BWSTx=1, the write operation is ignored. (10 bits)
+    static constexpr uint32_t SHSR2_TSAMPLE2 =            // DAC Channel 2 sample Time (only valid in sample &amp;amp; hold mode) These bits can be written when the DAC channel2 is disabled or also during normal operation. in the latter case, the write can be done only when BWSTx of DAC_SR register is low, if BWSTx=1, the write operation is ignored. (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
-    static const uint32_t DAC_SHSR2_RESET_VALUE = 0x0;
+    static const uint32_t SHSR2_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHHR_THOLD1 =              // DAC Channel 1 hold Time (only valid in sample &amp;amp; hold mode) Hold time= (THOLD[9:0]) x T LSI (10 bits)
+    static constexpr uint32_t SHHR_THOLD1 =              // DAC Channel 1 hold Time (only valid in sample &amp;amp; hold mode) Hold time= (THOLD[9:0]) x T LSI (10 bits)
         bit_field_t<0, 0x3ff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHHR_THOLD2 =              // DAC Channel 2 hold time (only valid in sample &amp;amp; hold mode). Hold time= (THOLD[9:0]) x T LSI (10 bits)
+    static constexpr uint32_t SHHR_THOLD2 =              // DAC Channel 2 hold time (only valid in sample &amp;amp; hold mode). Hold time= (THOLD[9:0]) x T LSI (10 bits)
         bit_field_t<16, 0x3ff>::value<X>();
-    static const uint32_t DAC_SHHR_RESET_VALUE = 0x10001;
+    static const uint32_t SHHR_RESET_VALUE = 0x10001;
 
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHRR_TREFRESH1 =           // DAC Channel 1 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
+    static constexpr uint32_t SHRR_TREFRESH1 =           // DAC Channel 1 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
         bit_field_t<0, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t DAC_SHRR_TREFRESH2 =           // DAC Channel 2 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
+    static constexpr uint32_t SHRR_TREFRESH2 =           // DAC Channel 2 refresh Time (only valid in sample &amp;amp; hold mode) Refresh time= (TREFRESH[7:0]) x T LSI (8 bits)
         bit_field_t<16, 0xff>::value<X>();
-    static const uint32_t DAC_SHRR_RESET_VALUE = 0x10001;
+    static const uint32_t SHRR_RESET_VALUE = 0x10001;
 
     template<uint32_t X>
     static constexpr uint32_t IP_HWCFGR0_DUAL =                // Dual DAC capability (4 bits)
@@ -9471,58 +9471,58 @@ static nvic_t& NVIC = *reinterpret_cast<nvic_t*>(0xe000e100);
 
 struct mpu_t
 {
-    volatile uint32_t    MPU_TYPER;            // [Read-only] MPU type register
-    volatile uint32_t    MPU_CTRL;             // [Read-only] MPU control register
-    volatile uint32_t    MPU_RNR;              // [Read-write] MPU region number register
-    volatile uint32_t    MPU_RBAR;             // [Read-write] MPU region base address register
-    volatile uint32_t    MPU_RASR;             // [Read-write] MPU region attribute and size register
+    volatile uint32_t    TYPER;                // [Read-only] MPU type register
+    volatile uint32_t    CTRL;                 // [Read-only] MPU control register
+    volatile uint32_t    RNR;                  // [Read-write] MPU region number register
+    volatile uint32_t    RBAR;                 // [Read-write] MPU region base address register
+    volatile uint32_t    RASR;                 // [Read-write] MPU region attribute and size register
 
-    static constexpr uint32_t MPU_TYPER_SEPARATE = 0x1;       // Separate flag
+    static constexpr uint32_t TYPER_SEPARATE = 0x1;       // Separate flag
     template<uint32_t X>
-    static constexpr uint32_t MPU_TYPER_DREGION =             // Number of MPU data regions (8 bits)
+    static constexpr uint32_t TYPER_DREGION =             // Number of MPU data regions (8 bits)
         bit_field_t<8, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t MPU_TYPER_IREGION =             // Number of MPU instruction regions (8 bits)
+    static constexpr uint32_t TYPER_IREGION =             // Number of MPU instruction regions (8 bits)
         bit_field_t<16, 0xff>::value<X>();
-    static const uint32_t MPU_TYPER_RESET_VALUE = 0x800;
+    static const uint32_t TYPER_RESET_VALUE = 0x800;
 
-    static constexpr uint32_t MPU_CTRL_ENABLE = 0x1;         // Enables the MPU
-    static constexpr uint32_t MPU_CTRL_HFNMIENA = 0x2;       // Enables the operation of MPU during hard fault
-    static constexpr uint32_t MPU_CTRL_PRIVDEFENA = 0x4;     // Enable priviliged software access to default memory map
-    static const uint32_t MPU_CTRL_RESET_VALUE = 0x0;
+    static constexpr uint32_t CTRL_ENABLE = 0x1;         // Enables the MPU
+    static constexpr uint32_t CTRL_HFNMIENA = 0x2;       // Enables the operation of MPU during hard fault
+    static constexpr uint32_t CTRL_PRIVDEFENA = 0x4;     // Enable priviliged software access to default memory map
+    static const uint32_t CTRL_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t MPU_RNR_REGION =              // MPU region (8 bits)
+    static constexpr uint32_t RNR_REGION =              // MPU region (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static const uint32_t MPU_RNR_RESET_VALUE = 0x0;
+    static const uint32_t RNR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t MPU_RBAR_REGION =              // MPU region field (4 bits)
+    static constexpr uint32_t RBAR_REGION =              // MPU region field (4 bits)
         bit_field_t<0, 0xf>::value<X>();
-    static constexpr uint32_t MPU_RBAR_VALID = 0x10;         // MPU region number valid
+    static constexpr uint32_t RBAR_VALID = 0x10;         // MPU region number valid
     template<uint32_t X>
-    static constexpr uint32_t MPU_RBAR_ADDR =                // Region base address field (27 bits)
+    static constexpr uint32_t RBAR_ADDR =                // Region base address field (27 bits)
         bit_field_t<5, 0x7ffffff>::value<X>();
-    static const uint32_t MPU_RBAR_RESET_VALUE = 0x0;
+    static const uint32_t RBAR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t MPU_RASR_ENABLE = 0x1;         // Region enable bit.
+    static constexpr uint32_t RASR_ENABLE = 0x1;         // Region enable bit.
     template<uint32_t X>
-    static constexpr uint32_t MPU_RASR_SIZE =                // Size of the MPU protection region (5 bits)
+    static constexpr uint32_t RASR_SIZE =                // Size of the MPU protection region (5 bits)
         bit_field_t<1, 0x1f>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t MPU_RASR_SRD =                 // Subregion disable bits (8 bits)
+    static constexpr uint32_t RASR_SRD =                 // Subregion disable bits (8 bits)
         bit_field_t<8, 0xff>::value<X>();
-    static constexpr uint32_t MPU_RASR_B = 0x10000;          // memory attribute
-    static constexpr uint32_t MPU_RASR_C = 0x20000;          // memory attribute
-    static constexpr uint32_t MPU_RASR_S = 0x40000;          // Shareable memory attribute
+    static constexpr uint32_t RASR_B = 0x10000;          // memory attribute
+    static constexpr uint32_t RASR_C = 0x20000;          // memory attribute
+    static constexpr uint32_t RASR_S = 0x40000;          // Shareable memory attribute
     template<uint32_t X>
-    static constexpr uint32_t MPU_RASR_TEX =                 // memory attribute (3 bits)
+    static constexpr uint32_t RASR_TEX =                 // memory attribute (3 bits)
         bit_field_t<19, 0x7>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t MPU_RASR_AP =                  // Access permission (3 bits)
+    static constexpr uint32_t RASR_AP =                  // Access permission (3 bits)
         bit_field_t<24, 0x7>::value<X>();
-    static constexpr uint32_t MPU_RASR_XN = 0x10000000;      // Instruction access disable bit
-    static const uint32_t MPU_RASR_RESET_VALUE = 0x0;
+    static constexpr uint32_t RASR_XN = 0x10000000;      // Instruction access disable bit
+    static const uint32_t RASR_RESET_VALUE = 0x0;
 };
 
 static mpu_t& MPU = *reinterpret_cast<mpu_t*>(0xe000ed90);

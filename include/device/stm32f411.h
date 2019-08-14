@@ -10070,58 +10070,58 @@ static fpu_t& FPU = *reinterpret_cast<fpu_t*>(0xe000ef34);
 
 struct mpu_t
 {
-    volatile uint32_t    MPU_TYPER;            // [Read-only] MPU type register
-    volatile uint32_t    MPU_CTRL;             // [Read-only] MPU control register
-    volatile uint32_t    MPU_RNR;              // [Read-write] MPU region number register
-    volatile uint32_t    MPU_RBAR;             // [Read-write] MPU region base address register
-    volatile uint32_t    MPU_RASR;             // [Read-write] MPU region attribute and size register
+    volatile uint32_t    TYPER;                // [Read-only] MPU type register
+    volatile uint32_t    CTRL;                 // [Read-only] MPU control register
+    volatile uint32_t    RNR;                  // [Read-write] MPU region number register
+    volatile uint32_t    RBAR;                 // [Read-write] MPU region base address register
+    volatile uint32_t    RASR;                 // [Read-write] MPU region attribute and size register
 
-    static constexpr uint32_t MPU_TYPER_SEPARATE = 0x1;       // Separate flag
+    static constexpr uint32_t TYPER_SEPARATE = 0x1;       // Separate flag
     template<uint32_t X>
-    static constexpr uint32_t MPU_TYPER_DREGION =             // Number of MPU data regions (8 bits)
+    static constexpr uint32_t TYPER_DREGION =             // Number of MPU data regions (8 bits)
         bit_field_t<8, 0xff>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t MPU_TYPER_IREGION =             // Number of MPU instruction regions (8 bits)
+    static constexpr uint32_t TYPER_IREGION =             // Number of MPU instruction regions (8 bits)
         bit_field_t<16, 0xff>::value<X>();
-    static const uint32_t MPU_TYPER_RESET_VALUE = 0x800;
+    static const uint32_t TYPER_RESET_VALUE = 0x800;
 
-    static constexpr uint32_t MPU_CTRL_ENABLE = 0x1;         // Enables the MPU
-    static constexpr uint32_t MPU_CTRL_HFNMIENA = 0x2;       // Enables the operation of MPU during hard fault
-    static constexpr uint32_t MPU_CTRL_PRIVDEFENA = 0x4;     // Enable priviliged software access to default memory map
-    static const uint32_t MPU_CTRL_RESET_VALUE = 0x0;
+    static constexpr uint32_t CTRL_ENABLE = 0x1;         // Enables the MPU
+    static constexpr uint32_t CTRL_HFNMIENA = 0x2;       // Enables the operation of MPU during hard fault
+    static constexpr uint32_t CTRL_PRIVDEFENA = 0x4;     // Enable priviliged software access to default memory map
+    static const uint32_t CTRL_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t MPU_RNR_REGION =              // MPU region (8 bits)
+    static constexpr uint32_t RNR_REGION =              // MPU region (8 bits)
         bit_field_t<0, 0xff>::value<X>();
-    static const uint32_t MPU_RNR_RESET_VALUE = 0x0;
+    static const uint32_t RNR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t MPU_RBAR_REGION =              // MPU region field (4 bits)
+    static constexpr uint32_t RBAR_REGION =              // MPU region field (4 bits)
         bit_field_t<0, 0xf>::value<X>();
-    static constexpr uint32_t MPU_RBAR_VALID = 0x10;         // MPU region number valid
+    static constexpr uint32_t RBAR_VALID = 0x10;         // MPU region number valid
     template<uint32_t X>
-    static constexpr uint32_t MPU_RBAR_ADDR =                // Region base address field (27 bits)
+    static constexpr uint32_t RBAR_ADDR =                // Region base address field (27 bits)
         bit_field_t<5, 0x7ffffff>::value<X>();
-    static const uint32_t MPU_RBAR_RESET_VALUE = 0x0;
+    static const uint32_t RBAR_RESET_VALUE = 0x0;
 
-    static constexpr uint32_t MPU_RASR_ENABLE = 0x1;         // Region enable bit.
+    static constexpr uint32_t RASR_ENABLE = 0x1;         // Region enable bit.
     template<uint32_t X>
-    static constexpr uint32_t MPU_RASR_SIZE =                // Size of the MPU protection region (5 bits)
+    static constexpr uint32_t RASR_SIZE =                // Size of the MPU protection region (5 bits)
         bit_field_t<1, 0x1f>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t MPU_RASR_SRD =                 // Subregion disable bits (8 bits)
+    static constexpr uint32_t RASR_SRD =                 // Subregion disable bits (8 bits)
         bit_field_t<8, 0xff>::value<X>();
-    static constexpr uint32_t MPU_RASR_B = 0x10000;          // memory attribute
-    static constexpr uint32_t MPU_RASR_C = 0x20000;          // memory attribute
-    static constexpr uint32_t MPU_RASR_S = 0x40000;          // Shareable memory attribute
+    static constexpr uint32_t RASR_B = 0x10000;          // memory attribute
+    static constexpr uint32_t RASR_C = 0x20000;          // memory attribute
+    static constexpr uint32_t RASR_S = 0x40000;          // Shareable memory attribute
     template<uint32_t X>
-    static constexpr uint32_t MPU_RASR_TEX =                 // memory attribute (3 bits)
+    static constexpr uint32_t RASR_TEX =                 // memory attribute (3 bits)
         bit_field_t<19, 0x7>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t MPU_RASR_AP =                  // Access permission (3 bits)
+    static constexpr uint32_t RASR_AP =                  // Access permission (3 bits)
         bit_field_t<24, 0x7>::value<X>();
-    static constexpr uint32_t MPU_RASR_XN = 0x10000000;      // Instruction access disable bit
-    static const uint32_t MPU_RASR_RESET_VALUE = 0x0;
+    static constexpr uint32_t RASR_XN = 0x10000000;      // Instruction access disable bit
+    static const uint32_t RASR_RESET_VALUE = 0x0;
 };
 
 static mpu_t& MPU = *reinterpret_cast<mpu_t*>(0xe000ed90);
