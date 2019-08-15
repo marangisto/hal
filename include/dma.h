@@ -24,6 +24,7 @@ template<> struct dmamux_traits<1, 4> { static inline volatile uint32_t& CCR() {
 template<> struct dmamux_traits<1, 5> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C4CR; } };
 template<> struct dmamux_traits<1, 6> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C5CR; } };
 template<> struct dmamux_traits<1, 7> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C6CR; } };
+#if defined(STM32G431)
 template<> struct dmamux_traits<1, 8> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C7CR; } };
 template<> struct dmamux_traits<2, 1> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C8CR; } };
 template<> struct dmamux_traits<2, 2> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C9CR; } };
@@ -33,9 +34,11 @@ template<> struct dmamux_traits<2, 5> { static inline volatile uint32_t& CCR() {
 template<> struct dmamux_traits<2, 6> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C13CR; } };
 template<> struct dmamux_traits<2, 7> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C14CR; } };
 template<> struct dmamux_traits<2, 8> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C15CR; } };
+#endif
 
 template<uint8_t NO> struct dma_traits {};
 
+#if defined(HAVE_PERIPHERAL_DMA2)
 template<> struct dma_traits<1>
 {
     typedef device::dma1_t T;
@@ -47,6 +50,13 @@ template<> struct dma_traits<2>
     typedef device::dma2_t T;
     static inline T& DMA() { return device::DMA2; }
 };
+#else
+template<> struct dma_traits<1>
+{
+    typedef device::dma_t T;
+    static inline T& DMA() { return device::DMA; }
+};
+#endif
 
 template<uint8_t NO, uint8_t CH> struct dma_channel_traits {};
 
@@ -239,7 +249,9 @@ struct dma_t
 
     static void setup()
     {
+#if !defined(STM32G070)                                         // no separate dmamux clock enable
         device::peripheral_traits<MUX>::enable();               // enable dma multiplexer
+#endif
         device::peripheral_traits<_>::enable();                 // enable dma clock
     }
 
