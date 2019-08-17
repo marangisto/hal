@@ -24,7 +24,7 @@ static const uint8_t adc_dma_ch = 2;
 static const uint16_t half_buffer_size = 32;
 static const uint16_t buffer_size = half_buffer_size * 2;
 static uint16_t buffer[buffer_size];
-static const uint32_t sample_freq = 96000;
+static const uint32_t sample_freq = 32000;
 
 typedef button_t<PC13> btn;
 typedef output_t<PA5> led;
@@ -54,6 +54,16 @@ template<> void handler<interrupt::DMA_CHANNEL1>()
         probe::write(sts & dma_transfer_complete);
 }
 
+template<> void handler<interrupt::DMA_CHANNEL2_3>()
+{
+    uint32_t sts = dma::interrupt_status<adc_dma_ch>();
+
+    dma::clear_interrupt_flags<adc_dma_ch>();
+
+    if (sts & (dma_half_transfer | dma_transfer_complete))
+        led::write(sts & dma_transfer_complete);
+}
+
 int main()
 {
     btn::setup<pull_down>();
@@ -71,13 +81,14 @@ int main()
     tim6::master_mode<tim6::mm_update>();
 
     // enable for sampling frequency probe
-    tim6::update_interrupt_enable();
-    hal::nvic<interrupt::TIM6_DAC_LPTIM1>::enable();
+    //tim6::update_interrupt_enable();
+    //hal::nvic<interrupt::TIM6_DAC_LPTIM1>::enable();
 
     interrupt::enable();
 
     dma::setup();
     hal::nvic<interrupt::DMA_CHANNEL1>::enable();
+    hal::nvic<interrupt::DMA_CHANNEL2_3>::enable();
 
     dac::setup();
     dac::enable_trigger<1, 5>();    // FIXME: use constant for TIM6_TRGO
@@ -93,7 +104,8 @@ int main()
     for (;;)
     {
         if (btn::read())
-            led::toggle();
+        {
+        }
     }
 }
 
