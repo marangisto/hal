@@ -17,11 +17,14 @@ typedef timer_t<3> aux;
 
 typedef hal::adc::adc_t<1> adc;
 typedef hal::dac::dac_t<1> dac;
-typedef hal::dma::dma_t<1> dac_dma;
+typedef hal::dma::dma_t<1> dma;
 
-constexpr uint8_t dac_dma_ch = 1;
-
-constexpr uint32_t sample_freq = 32000;
+static const uint8_t dac_dma_ch = 1;
+static const uint8_t adc_dma_ch = 2;
+static const uint16_t half_buffer_size = 32;
+static const uint16_t buffer_size = half_buffer_size * 2;
+static uint16_t buffer[buffer_size];
+static const uint32_t sample_freq = 96000;
 
 typedef button_t<PC13> btn;
 typedef output_t<PA5> led;
@@ -41,13 +44,15 @@ template<> void handler<interrupt::TIM6_DAC_LPTIM1>()
     probe::clear();
 }
 
-static uint16_t sine[60] =
-    { 0x07ff,0x08cb,0x0994,0x0a5a,0x0b18,0x0bce,0x0c79,0x0d18,0x0da8,0x0e29,0x0e98,0x0ef4
-    , 0x0f3e,0x0f72,0x0f92,0x0f9d,0x0f92,0x0f72,0x0f3e,0x0ef4,0x0e98,0x0e29,0x0da8,0x0d18
-    , 0x0c79,0x0bce,0x0b18,0x0a5a,0x0994,0x08cb,0x07ff,0x0733,0x066a,0x05a4,0x04e6,0x0430
-    , 0x0385,0x02e6,0x0256,0x01d5,0x0166,0x010a,0x00c0,0x008c,0x006c,0x0061,0x006c,0x008c
-    , 0x00c0,0x010a,0x0166,0x01d5,0x0256,0x02e6,0x0385,0x0430,0x04e6,0x05a4,0x066a,0x0733
-    };
+template<> void handler<interrupt::DMA_CHANNEL1>()
+{
+    uint32_t sts = dma::interrupt_status<dac_dma_ch>();
+
+    dma::clear_interrupt_flags<dac_dma_ch>();
+
+    if (sts & (dma_half_transfer | dma_transfer_complete))
+        probe::write(sts & dma_transfer_complete);
+}
 
 int main()
 {
@@ -71,11 +76,19 @@ int main()
 
     interrupt::enable();
 
-    dac_dma::setup();
+    dma::setup();
+    hal::nvic<interrupt::DMA_CHANNEL1>::enable();
 
     dac::setup();
     dac::enable_trigger<1, 5>();    // FIXME: use constant for TIM6_TRGO
-    dac::enable_dma<1, dac_dma, dac_dma_ch, uint16_t>(sine, sizeof(sine) / sizeof(*sine));
+    dac::enable_dma<1, dma, dac_dma_ch, uint16_t>(buffer, buffer_size);
+
+    adc::setup();
+    adc::sequence<0>();
+    adc::dma<dma, adc_dma_ch, uint16_t>(buffer, buffer_size);
+    adc::trigger<0x5>();            // FIXME: use constant for TIM6_TRGO
+    adc::enable();
+    adc::start_conversion();
 
     for (;;)
     {
