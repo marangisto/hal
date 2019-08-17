@@ -137,7 +137,11 @@ struct dac_t
         DMA::template disable<DMACH>();                                 // disable dma channel
         DMA::template mem_to_periph<DMACH>(source, nelem, &reg);    // configure dma from memory
         DMA::template enable<DMACH>();                                  // enable dma channel
+#if defined(STM32G431)
         dma::dmamux_traits<DMA::INST, DMACH>::CCR() = device::dmamux_t::C0CR_DMAREQ_ID<6>;
+#elif defined(STM32G070)
+        dma::dmamux_traits<DMA::INST, DMACH>::CCR() = device::dmamux_t::C0CR_DMAREQ_ID<8>;
+#endif
         enable<CH>();                                               // enable dac channel
     }
 
