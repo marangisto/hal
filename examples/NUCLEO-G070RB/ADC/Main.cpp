@@ -18,12 +18,12 @@ typedef analog_t<PA0> ain0;
 typedef analog_t<PA1> ain1;
 typedef output_t<PA10> probe;
 
-static const uint8_t adc_dma_ch = 1;
+static const uint8_t adc_dma_ch = 2;
 static const uint16_t half_buffer_size = 32;
 static const uint16_t buffer_size = half_buffer_size * 2;
 static uint16_t adc_buf[buffer_size];
 
-template<> void handler<interrupt::DMA_CHANNEL1>()
+template<> void handler<interrupt::DMA_CHANNEL2_3>()
 {
     uint32_t sts = dma::interrupt_status<adc_dma_ch>();
 
@@ -44,7 +44,7 @@ int main()
     interrupt::enable();
 
     dma::setup();
-    hal::nvic<interrupt::DMA_CHANNEL1>::enable();
+    hal::nvic<interrupt::DMA_CHANNEL2_3>::enable();
 
     trig::setup(0, 64);
     trig::master_mode<trig::mm_update>();

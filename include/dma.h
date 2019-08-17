@@ -249,6 +249,27 @@ template<uint8_t NO> struct dma_channel_traits<NO, 1>
     static inline volatile uint32_t& CPAR() { return DMA().CPAR1; }
     static inline volatile uint32_t& CMAR() { return DMA().CMAR1; }
 };
+
+template<uint8_t NO> struct dma_channel_traits<NO, 2>
+{
+    typedef typename dma_traits<NO>::T _;
+    static inline typename dma_traits<NO>::T& DMA() { return dma_traits<NO>::DMA(); }
+
+    static constexpr uint32_t ISR_TEIF = _::ISR_TEIF7;
+    static constexpr uint32_t ISR_HTIF = _::ISR_HTIF6;
+    static constexpr uint32_t ISR_TCIF = _::ISR_TCIF5;
+    static constexpr uint32_t ISR_GIF = _::ISR_GIF4;
+
+    static constexpr uint32_t IFCR_TEIF = _::IFCR_CTEIF7;
+    static constexpr uint32_t IFCR_HTIF = _::IFCR_CHTIF6;
+    static constexpr uint32_t IFCR_TCIF = _::IFCR_CTCIF5;
+    static constexpr uint32_t IFCR_GIF = _::IFCR_CGIF4;
+
+    static inline volatile uint32_t& CCR() { return DMA().CCR2; }
+    static inline volatile uint32_t& CNDTR() { return DMA().CNDTR2; }
+    static inline volatile uint32_t& CPAR() { return DMA().CPAR2; }
+    static inline volatile uint32_t& CMAR() { return DMA().CMAR2; }
+};
 #endif
 
 template<uint8_t W> struct dma_size_bits {};
