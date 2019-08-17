@@ -165,36 +165,23 @@ struct adc_t
     {
         using namespace device;
 
-        peripheral_traits<_>::enable();                         // enable common adc clock
-
+        peripheral_traits<_>::enable();                         // enable adc clock
         ADC().CR = _::CR_RESET_VALUE;                           // reset control register
-        ADC().CFGR1 = _::CFGR1_RESET_VALUE                      // reset configuration register
-                  | _::CFGR1_OVRMOD                             // overwrite on overrun
-                  | _::CFGR1_CHSELRMOD                          // use alternate channel selection mode
-                  ;
-
-        ADC().SMPR = _::SMPR_RESET_VALUE                        // reset sample time register
-                   | _::template SMPR_SMP1<0x0>                 // max sample time    FIXME: enum & parameterize!
-                   ;
-
+        ADC().CFGR1 = _::CFGR1_RESET_VALUE                      // reset configuration register 1
+                    | _::CFGR1_CHSELRMOD                        // use alternate channel selection mode
+                    | _::CFGR1_OVRMOD                           // overwrite on overrun
+                    ;
         ADC().CFGR2 = _::CFGR2_RESET_VALUE                      // reset configuration register 2
                     | _::template CFGR2_CKMODE<0x3>             // use PCLK synchronous mode
                     ;
-
-        ADC().IER = _::IER_RESET_VALUE;                         // reset interrupt register
-        ADC().CR |= _::CR_ADVREGEN;                             // enable adc voltage regulator
-        sys_clock::delay_us(10);                                // wait for regulator to stabilize
-        ADC().CR |= _::CR_ADCAL;                                // start calibration
-        while (ADC().CR & _::CR_ADCAL);                         // wait for calibration to complete
-        for (volatile uint8_t i = 0; i < 4; ++i);               // cycles between calibration and adc enable
-        ADC().CR |= _::CR_ADEN;                                 // enable adc 
-        while (!(ADC().ISR & _::ISR_ADRDY));                    // wait for adc ready 
     }
 
     template< uint8_t S1, uint8_t S2 = 0xf, uint8_t S3 = 0xf, uint8_t S4 = 0xf
             , uint8_t S5 = 0xf, uint8_t S6 = 0xf, uint8_t S7 = 0xf, uint8_t S8 = 0xf>
     static void sequence()
     {
+        using namespace device;
+
         ADC().ISR &= ~_::ISR_CCRDY;                             // clear channel config ready flag
         ADC().CHSELR = _::template CHSELR_SQ1<S1>               // sequence slot 1
                      | _::template CHSELR_SQ2<S2>               // sequence slot 2
@@ -209,8 +196,10 @@ struct adc_t
     }
 
     template<typename DMA, uint8_t DMACH, typename T>
-    static inline void enable_dma(volatile T *dest, uint16_t nelem)
+    static inline void dma(volatile T *dest, uint16_t nelem)
     {
+        using namespace device;
+
         ADC().CFGR1 |= _::CFGR1_DMAEN                               // enable adc channel dma
                     |  _::CFGR1_DMACFG                              // select circular mode
                     ;
@@ -218,82 +207,47 @@ struct adc_t
         DMA::template periph_to_mem<DMACH>(&ADC().DR, dest, nelem); // configure dma from memory
         DMA::template enable<DMACH>();                              // enable dma channel
         dma::dmamux_traits<DMA::INST, DMACH>::CCR() = device::dmamux_t::C0CR_DMAREQ_ID<5>;
+        DMA::template enable_interrupt<DMACH, true>();
     }
 
     template<uint8_t SEL>
-    static inline void enable_trigger()
+    static inline void trigger()
     {
-#if defined(STM32G070)
+        using namespace device;
+
         ADC().CFGR1 |= _::template CFGR1_EXTEN<0x1>                 // hardware trigger on rising edge
                     |  _::template CFGR1_EXTSEL<SEL>                // trigger source selection
                     ;
-#endif
     }
 
-    template<typename DMA, uint8_t DMACH>
-    static inline void disable_dma()
+    static void enable()
     {
-        /*
-        ADC().CFGR &= ~_::CFGR_DMAEN;                               // disable adc channel dma
-        DMA::template abort<DMACH>();                               // stop dma on relevant dma channel
-        */
-    }
+        using namespace device;
+        uint32_t saved_dmaen = ADC().CFGR1 & _::CFGR1_DMAEN;    // save DMA flag 
 
-    static inline void enable_interrupt()
-    {
-        ADC().IER = 0x7ff;
-    }
-
-    static inline uint32_t interrupt_status()
-    {
-        return ADC().ISR;
-    }
-
-    static inline uint32_t clear_interrupt_flags()
-    {
-        return ADC().ISR = 0x7ff;                   
+        ADC().CR |= _::CR_ADVREGEN;                             // enable adc voltage regulator
+        sys_clock::delay_us(10);                                // wait for regulator to stabilize
+        ADC().CFGR1 &= ~_::CFGR1_DMAEN;                         // ensure DMA is disabled during calibration
+        ADC().CR |= _::CR_ADCAL;                                // start calibration
+        while (ADC().CR & _::CR_ADCAL);                         // wait for calibration to complete
+        ADC().CFGR1 |= saved_dmaen;                             // restore DMA setting
+        for (volatile uint8_t i = 0; i < 4; ++i);               // cycles between calibration and adc enable
+        ADC().CR |= _::CR_ADEN;                                 // enable adc 
+        while (!(ADC().ISR & _::ISR_ADRDY));                    // wait for adc ready 
     }
 
     static inline void start_conversion()
     {
-        using namespace device;
-
-        ADC().CR |= _::CR_ADSTART;                              // start conversions
-    }
-
-    static inline bool conversion_complete()
-    {
-        using namespace device;
-
-        return (ADC().ISR & _::ISR_EOC) != 0;                   // conversion complete
-    }
-
-    static inline bool sequence_complete()
-    {
-        using namespace device;
-
-        return (ADC().ISR & _::ISR_EOS) != 0;                   // conversion sequence complete
-    }
-
-    static inline bool ready()
-    {
-        using namespace device;
-
-        return (ADC().ISR & _::ISR_ADRDY) != 0;                 // adc ready to accept conversion requests
-    }
-
-    static inline uint32_t isr()
-    {
-        return ADC().ISR;
+        ADC().CR |= _::CR_ADSTART;                              // start conversion
     }
 
     static inline uint16_t read()
     {
         using namespace device;
 
-        start_conversion();
-        while (!conversion_complete());
-        return ADC().DR;
+        start_conversion();                                     // start conversion
+        while (!(ADC().ISR & _::ISR_EOC));                      // conversion complete
+        return ADC().DR;                                        // read data register
     }
 };
 #endif
