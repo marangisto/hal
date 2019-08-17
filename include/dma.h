@@ -324,7 +324,11 @@ struct dma_t
     template<uint8_t CH>
     static inline void clear_interrupt_flags()
     {
+#if defined(STM32G431)
         DMA().IFCR |= dma_channel_traits<NO, CH>::IFCR_GIF;     // clear general interrupt flag
+#else
+        // FIXME!
+#endif
     }
 
     template<uint8_t CH>

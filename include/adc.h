@@ -178,7 +178,7 @@ struct adc_t
                    ;
 
         ADC().CFGR2 = _::CFGR2_RESET_VALUE                      // reset configuration register 2
-                    | _::template CFGR2_CKMODE<0x2>             // use PCLK/4 synchronous mode: FIXME: we can run faster?
+                    | _::template CFGR2_CKMODE<0x3>             // use PCLK synchronous mode
                     ;
 
         ADC().IER = _::IER_RESET_VALUE;                         // reset interrupt register
@@ -211,13 +211,9 @@ struct adc_t
     template<typename DMA, uint8_t DMACH, typename T>
     static inline void enable_dma(volatile T *dest, uint16_t nelem)
     {
-        /*
-        ADC().CFGR |= _::CFGR_DMAEN                                 // enable adc channel dma
-                   |  _::CFGR_DMACFG                                // select circular mode
-                   |  _::CFGR_CONT                                  // continuous conversion mode
-                   |  _::CFGR_AUTDLY                                // conversion auto-delay
-                   ;
-        */
+        ADC().CFGR1 |= _::CFGR1_DMAEN                               // enable adc channel dma
+                    |  _::CFGR1_DMACFG                              // select circular mode
+                    ;
         DMA::template disable<DMACH>();                             // disable dma channel
         DMA::template periph_to_mem<DMACH>(&ADC().DR, dest, nelem); // configure dma from memory
         DMA::template enable<DMACH>();                              // enable dma channel
@@ -265,7 +261,7 @@ struct adc_t
         ADC().CR |= _::CR_ADSTART;                              // start conversions
     }
 
-    static inline bool end_of_conversion()
+    static inline bool conversion_complete()
     {
         using namespace device;
 
@@ -277,7 +273,7 @@ struct adc_t
         using namespace device;
 
         start_conversion();
-        while (!end_of_conversion());
+        while (!conversion_complete());
         return ADC().DR;
     }
 };
