@@ -223,11 +223,11 @@ struct adc_t
     template<uint8_t SEL>
     static inline void enable_trigger()
     {
-        /*
-        ADC().CFGR |= _::template CFGR_EXTEN<0x1>                   // hardware trigger on rising edge
-                   |  _::template CFGR_EXTSEL<SEL>                  // trigger source selection
-                   ;
-        */
+#if defined(STM32G070)
+        ADC().CFGR1 |= _::template CFGR1_EXTEN<0x1>                 // hardware trigger on rising edge
+                    |  _::template CFGR1_EXTSEL<SEL>                // trigger source selection
+                    ;
+#endif
     }
 
     template<typename DMA, uint8_t DMACH>
@@ -266,6 +266,25 @@ struct adc_t
         using namespace device;
 
         return (ADC().ISR & _::ISR_EOC) != 0;                   // conversion complete
+    }
+
+    static inline bool sequence_complete()
+    {
+        using namespace device;
+
+        return (ADC().ISR & _::ISR_EOS) != 0;                   // conversion sequence complete
+    }
+
+    static inline bool ready()
+    {
+        using namespace device;
+
+        return (ADC().ISR & _::ISR_ADRDY) != 0;                 // adc ready to accept conversion requests
+    }
+
+    static inline uint32_t isr()
+    {
+        return ADC().ISR;
     }
 
     static inline uint16_t read()

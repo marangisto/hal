@@ -60,6 +60,7 @@ template<> struct dma_traits<1>
 
 template<uint8_t NO, uint8_t CH> struct dma_channel_traits {};
 
+#if defined(STM32G431)
 template<uint8_t NO> struct dma_channel_traits<NO, 1>
 {
     typedef typename dma_traits<NO>::T _;
@@ -227,6 +228,28 @@ template<uint8_t NO> struct dma_channel_traits<NO, 8>
     static inline volatile uint32_t& CPAR() { return DMA().CPAR8; }
     static inline volatile uint32_t& CMAR() { return DMA().CMAR8; }
 };
+#elif defined(STM32G070)
+template<uint8_t NO> struct dma_channel_traits<NO, 1>
+{
+    typedef typename dma_traits<NO>::T _;
+    static inline typename dma_traits<NO>::T& DMA() { return dma_traits<NO>::DMA(); }
+
+    static constexpr uint32_t ISR_TEIF = _::ISR_TEIF3;
+    static constexpr uint32_t ISR_HTIF = _::ISR_HTIF2;
+    static constexpr uint32_t ISR_TCIF = _::ISR_TCIF1;
+    static constexpr uint32_t ISR_GIF = _::ISR_GIF0;
+
+    static constexpr uint32_t IFCR_TEIF = _::IFCR_CTEIF3;
+    static constexpr uint32_t IFCR_HTIF = _::IFCR_CHTIF2;
+    static constexpr uint32_t IFCR_TCIF = _::IFCR_CTCIF1;
+    static constexpr uint32_t IFCR_GIF = _::IFCR_CGIF0;
+
+    static inline volatile uint32_t& CCR() { return DMA().CCR1; }
+    static inline volatile uint32_t& CNDTR() { return DMA().CNDTR1; }
+    static inline volatile uint32_t& CPAR() { return DMA().CPAR1; }
+    static inline volatile uint32_t& CMAR() { return DMA().CMAR1; }
+};
+#endif
 
 template<uint8_t W> struct dma_size_bits {};
 
@@ -324,11 +347,7 @@ struct dma_t
     template<uint8_t CH>
     static inline void clear_interrupt_flags()
     {
-#if defined(STM32G431)
         DMA().IFCR |= dma_channel_traits<NO, CH>::IFCR_GIF;     // clear general interrupt flag
-#else
-        // FIXME!
-#endif
     }
 
     template<uint8_t CH>
