@@ -45,18 +45,14 @@ int main()
 
 void loop()
 {
-    //char buf[256];
-
-    //printf("> ");
-    //fflush(stdout);
-    //if (fgets(buf, sizeof(buf), stdin))
     {
         probe::set();
         uint16_t y = adc::read();
+        uint16_t z = adc::read();
         probe::clear();
 
-     //   printf("adc = %d\n", y);
-        printf("%.*s\n", y >> 6, "############################################################");
+        printf("%-64.*s  ", y >> 6, "############################################################");
+        printf("%-64.*s\n", z >> 6, "############################################################");
         sys_tick::delay_ms(20);
     }
 }
