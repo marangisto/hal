@@ -9864,6 +9864,20 @@ template<> struct peripheral_traits<lptim2_t>
     static void reset() { RCC.APBRSTR1 |= rcc_t::APBRSTR1_LPTIM2RST; }
 };
 
+template<> struct peripheral_traits<lpuart_t>
+{
+    static void enable() { RCC.APBENR1 |= rcc_t::APBENR1_LPUART1EN; }
+    static void disable() { RCC.APBENR1 &= ~rcc_t::APBENR1_LPUART1EN; }
+    static void reset() { RCC.APBRSTR1 |= rcc_t::APBRSTR1_LPUART1RST; }
+};
+
+template<> struct peripheral_traits<dac_t>
+{
+    static void enable() { RCC.APBENR1 |= rcc_t::APBENR1_DAC1EN; }
+    static void disable() { RCC.APBENR1 &= ~rcc_t::APBENR1_DAC1EN; }
+    static void reset() { RCC.APBRSTR1 |= rcc_t::APBRSTR1_DAC1RST; }
+};
+
 template<> struct peripheral_traits<i2c1_t>
 {
     static void enable() { RCC.APBENR1 |= rcc_t::APBENR1_I2C1EN; }

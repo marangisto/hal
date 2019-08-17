@@ -15961,6 +15961,7 @@ template<> struct peripheral_traits<dmamux_t>
 {
     static void enable() { RCC.AHB1ENR |= rcc_t::AHB1ENR_DMAMUXEN; }
     static void disable() { RCC.AHB1ENR &= ~rcc_t::AHB1ENR_DMAMUXEN; }
+    static void reset() { RCC.AHB1RSTR |= rcc_t::AHB1RSTR_DMAMUX1RST; }
 };
 
 template<> struct peripheral_traits<syscfg_t>
@@ -16015,6 +16016,13 @@ template<> struct peripheral_traits<cordic_t>
     static void enable() { RCC.AHB1ENR |= rcc_t::AHB1ENR_CORDICEN; }
     static void disable() { RCC.AHB1ENR &= ~rcc_t::AHB1ENR_CORDICEN; }
     static void reset() { RCC.AHB1RSTR |= rcc_t::AHB1RSTR_CORDICRST; }
+};
+
+template<> struct peripheral_traits<sai_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_SAI1EN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_SAI1EN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_SAI1RST; }
 };
 
 template<> struct peripheral_traits<fdcan_t>
