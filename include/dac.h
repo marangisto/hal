@@ -12,6 +12,15 @@ namespace dac
 
 template<uint8_t NO> struct dac_traits {};
 
+#if defined(HAVE_PERIPHERAL_DAC)
+template<> struct dac_traits<1>
+{
+    typedef device::dac_t T;
+    static inline T& DAC() { return device::DAC; }
+    static constexpr gpio::gpio_pin_t ch1_pin = gpio::PA4;
+    static constexpr gpio::gpio_pin_t ch2_pin = gpio::PA5;
+};
+#elif defined(HAVE_PERIPHERAL_DAC1)
 template<> struct dac_traits<1>
 {
     typedef device::dac1_t T;
@@ -19,6 +28,7 @@ template<> struct dac_traits<1>
     static constexpr gpio::gpio_pin_t ch1_pin = gpio::PA4;
     static constexpr gpio::gpio_pin_t ch2_pin = gpio::PA5;
 };
+#endif
 
 #if defined(HAVE_PERIPHERAL_DAC2)
 template<> struct dac_traits<2>
@@ -81,8 +91,10 @@ struct dac_t
 
         DAC().CR = _::CR_RESET_VALUE;                   // reset control register
         DAC().MCR = _::MCR_RESET_VALUE                  // reset mode control register
-                      | _::template MCR_HFSEL<0x2>          // high-frequency mode (AHB > 160MHz)
-                      ;
+#if !defined(STM32G070)
+                  | _::template MCR_HFSEL<0x2>          // high-frequency mode (AHB > 160MHz)
+#endif
+                  ;
     }
 
     template<uint8_t CH>
