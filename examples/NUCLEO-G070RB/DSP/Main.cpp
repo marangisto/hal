@@ -80,16 +80,9 @@ int main()
     probe::setup();
     led::setup();
 
-    adc::setup();
-    ain::setup();
-
     aux::setup(100, 1000);
     aux::update_interrupt_enable();
     hal::nvic<interrupt::TIM3>::enable();
-
-    // enable for sampling frequency probe
-    //tim6::update_interrupt_enable();
-    //hal::nvic<interrupt::TIM6_DAC_LPTIM1>::enable();
 
     interrupt::enable();
 
@@ -102,6 +95,7 @@ int main()
     dac::enable_dma<1, dma, dac_dma_ch, uint16_t>(output_buffer, buffer_size);
     dma::enable_interrupt<dac_dma_ch, true>();
 
+    ain::setup();
     adc::setup();
     adc::sequence<0>();
     adc::dma<dma, adc_dma_ch, uint16_t>(input_buffer, buffer_size);
@@ -111,6 +105,9 @@ int main()
 
     tim6::setup(0, sys_clock::freq() / sample_freq - 1);
     tim6::master_mode<tim6::mm_update>();
+    // enable for sampling frequency probe
+    //tim6::update_interrupt_enable();
+    //hal::nvic<interrupt::TIM6_DAC_LPTIM1>::enable();
 
     for (;;)
     {

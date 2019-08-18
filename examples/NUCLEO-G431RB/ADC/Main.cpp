@@ -15,8 +15,6 @@ typedef output_t<PA10> d2;
 typedef analog_t<PA0> ain;
 typedef adc_t<1> adc;
 
-void loop();
-
 template<> void handler<interrupt::USART2>()
 {
     ld4::toggle();
@@ -25,8 +23,6 @@ template<> void handler<interrupt::USART2>()
 
 int main()
 {
-    adc::setup();
-    ain::setup();
     ld4::setup();
     d2::setup();
     serial::setup<230400>();
@@ -35,22 +31,18 @@ int main()
     stdio_t::bind<serial>();
     printf("Welcome to the STM32G431!\n");
 
+    ain::setup();
+    adc::setup();
+    adc::sequence<1>();
+    adc::enable();
+
     for (;;)
-        loop();
-}
-
-void loop()
-{
-    char buf[256];
-
-    printf("> \n");
-    if (fgets(buf, sizeof(buf), stdin))
     {
         d2::toggle();
         uint16_t y = adc::read();
         d2::toggle();
-
         printf("adc = %d\n", y);
+        sys_tick::delay_ms(50);
     }
 }
 

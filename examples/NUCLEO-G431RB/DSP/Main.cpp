@@ -15,14 +15,17 @@ using hal::sys_clock;
 typedef timer_t<6> tim6;
 typedef timer_t<3> aux;
 
-typedef adc_t<1> adc;
-typedef dac_t<1> dac;
-typedef dma_t<1> dac_dma;
+typedef hal::adc::adc_t<1> adc;
+typedef hal::dac::dac_t<1> dac;
+typedef hal::dma::dma_t<1> dma;
 
-constexpr uint8_t dac_dma_ch = 1;
-
-constexpr uint32_t sample_freq = 96000;
-
+static const uint8_t dac_dma_ch = 1;
+static const uint8_t adc_dma_ch = 2;
+static const uint16_t half_buffer_size = 128;
+static const uint16_t buffer_size = half_buffer_size * 2;
+static uint16_t input_buffer[buffer_size];
+static uint16_t output_buffer[buffer_size] = { 4095, 0, 4095, 0, 4095 };
+static const uint32_t sample_freq = 96000;
 
 typedef button_t<PC13> btn;
 typedef output_t<PA5> led;
@@ -42,13 +45,34 @@ template<> void handler<interrupt::TIM6_DACUNDER>()
     probe::clear();
 }
 
-static uint16_t sine[60] =
-    { 0x07ff,0x08cb,0x0994,0x0a5a,0x0b18,0x0bce,0x0c79,0x0d18,0x0da8,0x0e29,0x0e98,0x0ef4
-    , 0x0f3e,0x0f72,0x0f92,0x0f9d,0x0f92,0x0f72,0x0f3e,0x0ef4,0x0e98,0x0e29,0x0da8,0x0d18
-    , 0x0c79,0x0bce,0x0b18,0x0a5a,0x0994,0x08cb,0x07ff,0x0733,0x066a,0x05a4,0x04e6,0x0430
-    , 0x0385,0x02e6,0x0256,0x01d5,0x0166,0x010a,0x00c0,0x008c,0x006c,0x0061,0x006c,0x008c
-    , 0x00c0,0x010a,0x0166,0x01d5,0x0256,0x02e6,0x0385,0x0430,0x04e6,0x05a4,0x066a,0x0733
-    };
+template<> void handler<interrupt::DMA1_CH1>()
+{
+    uint32_t sts = dma::interrupt_status<dac_dma_ch>();
+
+    dma::clear_interrupt_flags<dac_dma_ch>();
+
+    if (sts & (dma_half_transfer | dma_transfer_complete))
+        probe::write(sts & dma_transfer_complete);
+}
+
+template<> void handler<interrupt::DMA1_CH2>()
+{
+    uint32_t sts = dma::interrupt_status<adc_dma_ch>();
+
+    dma::clear_interrupt_flags<adc_dma_ch>();
+    led::set();
+
+    if (sts & (dma_half_transfer | dma_transfer_complete))
+    {
+        uint16_t *p = input_buffer + (sts & dma_transfer_complete ? half_buffer_size : 0);
+        uint16_t *q = output_buffer + (sts & dma_transfer_complete ? half_buffer_size : 0);
+
+        for (uint16_t i = 0; i < half_buffer_size; ++i)
+            *q++ = *p++;
+    }
+
+    led::clear();
+}
 
 int main()
 {
@@ -56,32 +80,40 @@ int main()
     probe::setup();
     led::setup();
 
-    adc::setup();
-    ain::setup();
-
     aux::setup(100, 1000);
     aux::update_interrupt_enable();
     hal::nvic<interrupt::TIM3>::enable();
 
-    tim6::setup(0, sys_clock::freq() / sample_freq - 1);
-    tim6::master_mode<tim6::mm_update>();
-
-    // enable for sampling frequency probe
-    tim6::update_interrupt_enable();
-    hal::nvic<interrupt::TIM6_DACUNDER>::enable();
-
     interrupt::enable();
 
-    dac_dma::setup();
+    dma::setup();
+    hal::nvic<interrupt::DMA1_CH1>::enable();
+    hal::nvic<interrupt::DMA1_CH2>::enable();
 
     dac::setup();
     dac::enable_trigger<1, 7>();    // FIXME: use constant for TIM6_TRGO
-    dac::enable_dma<1, dac_dma, dac_dma_ch, uint16_t>(sine, sizeof(sine) / sizeof(*sine));
+    dac::enable_dma<1, dma, dac_dma_ch, uint16_t>(output_buffer, buffer_size);
+    dma::enable_interrupt<dac_dma_ch, true>();
+
+    ain::setup();
+    adc::setup();
+    adc::sequence<1>();
+    adc::dma<dma, adc_dma_ch, uint16_t>(input_buffer, buffer_size);
+    adc::trigger<0xd>();            // FIXME: use constant for TIM6_TRGO
+    adc::enable();
+    adc::start_conversion();
+
+    tim6::setup(0, sys_clock::freq() / sample_freq - 1);
+    tim6::master_mode<tim6::mm_update>();
+    // enable for sampling frequency probe
+    //tim6::update_interrupt_enable();
+    //hal::nvic<interrupt::TIM6_DACUNDER>::enable();
 
     for (;;)
     {
         if (btn::read())
-            led::toggle();
+        {
+        }
     }
 }
 

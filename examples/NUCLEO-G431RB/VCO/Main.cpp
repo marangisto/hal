@@ -165,8 +165,10 @@ int main()
 
     sig_gen.setup();
 
-    adc::setup();
     ain::setup();
+    adc::setup();
+    adc::sequence<1>();
+    adc::enable();
 
     aux::setup(100, 1000);
     aux::update_interrupt_enable();
