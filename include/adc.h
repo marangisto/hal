@@ -104,6 +104,7 @@ struct adc_t
         while (ADC().CR & _::CR_ADCAL);                         // wait for calibration to complete
         ADC().CFGR |= saved_dmaen;                              // restore DMA setting
         for (volatile uint8_t i = 0; i < 4; ++i);               // cycles between calibration and adc enable
+        ADC().ISR |= _::ISR_ADRDY;                              // clear ready flag by writing '1'
         ADC().CR |= _::CR_ADEN;                                 // enable adc 
         while (!(ADC().ISR & _::ISR_ADRDY));                    // wait for adc ready 
 #else
