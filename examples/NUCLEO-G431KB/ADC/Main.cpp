@@ -12,6 +12,7 @@ using namespace hal::adc;
 typedef usart_t<2, PA2, PA3> serial;
 typedef output_t<PB8> led;
 typedef hal::adc::adc_t<1> adc;
+typedef analog_t<PB0> ain3;
 
 template<> void handler<interrupt::USART2>()
 {
@@ -29,8 +30,10 @@ int main()
     stdio_t::bind<serial>();
     printf("Welcome to the STM32G431!\n");
 
+    ain3::setup();
+
     adc::setup();
-    adc::sequence<1, 2>();
+    adc::sequence<1, 2, 15>();
     adc::enable();
 
     for (;;)

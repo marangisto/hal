@@ -113,12 +113,18 @@ struct adc_t
     }
 
 #if defined(STM32G070)
-    template< uint8_t S1, uint8_t S2 = 0xf, uint8_t S3 = 0xf, uint8_t S4 = 0xf
-            , uint8_t S5 = 0xf, uint8_t S6 = 0xf, uint8_t S7 = 0xf, uint8_t S8 = 0xf>
+    static constexpr uint8_t NO_CHANNEL = 0xf;
+#elif defined(STM32G431)
+    static constexpr uint8_t NO_CHANNEL = 0x1f;
+#endif
+
+    template< uint8_t S1, uint8_t S2 = NO_CHANNEL, uint8_t S3 = NO_CHANNEL, uint8_t S4 = NO_CHANNEL
+            , uint8_t S5 = NO_CHANNEL, uint8_t S6 = NO_CHANNEL, uint8_t S7 = NO_CHANNEL, uint8_t S8 = NO_CHANNEL>
     static void sequence()
     {
         using namespace device;
 
+#if defined(STM32G070)
         ADC().ISR &= ~_::ISR_CCRDY;                             // clear channel config ready flag
         ADC().CHSELR = _::template CHSELR_SQ1<S1>               // sequence slot 1
                      | _::template CHSELR_SQ2<S2>               // sequence slot 2
@@ -131,33 +137,27 @@ struct adc_t
                   ;
         while (!(ADC().ISR & _::ISR_CCRDY));                    // wait for channel selection to be ready
 #elif defined(STM32G431)
-    template< uint8_t S1, uint8_t S2 = 0, uint8_t S3 = 0, uint8_t S4 = 0
-            , uint8_t S5 = 0, uint8_t S6 = 0, uint8_t S7 = 0, uint8_t S8 = 0>
-    static void sequence()
-    {
-        using namespace device;
+        static constexpr uint8_t L = (S2 != NO_CHANNEL ? 1 : 0)
+                                   + (S3 != NO_CHANNEL ? 1 : 0)
+                                   + (S4 != NO_CHANNEL ? 1 : 0)
+                                   + (S5 != NO_CHANNEL ? 1 : 0)
+                                   + (S6 != NO_CHANNEL ? 1 : 0)
+                                   + (S7 != NO_CHANNEL ? 1 : 0)
+                                   + (S8 != NO_CHANNEL ? 1 : 0)
+                                   ;
 
-        constexpr uint8_t L = (S2 != 0 ? 1 : 0)
-                            + (S3 != 0 ? 1 : 0)
-                            + (S4 != 0 ? 1 : 0)
-                            + (S5 != 0 ? 1 : 0)
-                            + (S6 != 0 ? 1 : 0)
-                            + (S7 != 0 ? 1 : 0)
-                            + (S8 != 0 ? 1 : 0)
-                            ;
-
-        ADC().SQR1 = _::SQR1_RESET_VALUE                        // reset sequence register
+        ADC().SQR1 = _::SQR1_RESET_VALUE                        // reset sequence 1 register
                   | _::template SQR1_L<L>                       // sequence length less one
-                  | _::template SQR1_SQ1<S1>                    // sequence channel 1
-                  | _::template SQR1_SQ2<S2>                    // sequence channel 1
-                  | _::template SQR1_SQ3<S3>                    // sequence channel 1
-                  | _::template SQR1_SQ4<S4>                    // sequence channel 1
+                  | _::template SQR1_SQ1<S1>                    // sequence slot 1
+                  | _::template SQR1_SQ2<S2>                    // sequence slot 2
+                  | _::template SQR1_SQ3<S3>                    // sequence slot 2
+                  | _::template SQR1_SQ4<S4>                    // sequence slot 4
                   ;
-        ADC().SQR1 = _::SQR1_RESET_VALUE                        // reset sequence register
-                  | _::template SQR2_SQ5<S5>                    // sequence channel 1
-                  | _::template SQR2_SQ6<S6>                    // sequence channel 1
-                  | _::template SQR2_SQ7<S7>                    // sequence channel 1
-                  | _::template SQR2_SQ8<S8>                    // sequence channel 1
+        ADC().SQR2 = _::SQR1_RESET_VALUE                        // reset sequence 2 register
+                  | _::template SQR2_SQ5<S5>                    // sequence slot 5
+                  | _::template SQR2_SQ6<S6>                    // sequence slot 6
+                  | _::template SQR2_SQ7<S7>                    // sequence slot 7
+                  | _::template SQR2_SQ8<S8>                    // sequence slot 8
                   ;
 #else
         static_assert(false, "ADC driver not implemented");
