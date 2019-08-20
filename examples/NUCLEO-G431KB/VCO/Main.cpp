@@ -167,8 +167,8 @@ template<> void handler<interrupt::DMA2_CH1>()
 
 static float freq(uint16_t cv)
 {
-    // cv = [0..4096] corresponding to [-5..5]V
-    static const float one_volt = 4096. / 10;
+    // cv = [0..4096] corresponding to [-2.5..2.5]V
+    static const float one_volt = 4096. / 5;
 
     return 440. * pow(2., (cv - 2047) / one_volt);
 }
