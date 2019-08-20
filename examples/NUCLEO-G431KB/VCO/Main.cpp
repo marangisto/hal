@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <math.h>
 #include <usart.h>
 #include <redirect.h>
 #include <cordic.h>
@@ -145,7 +146,7 @@ struct square
     }
 };
 
-static signal_generator_t<triangle> sig_gen;
+static signal_generator_t<sine> sig_gen;
 
 template<> void handler<interrupt::DMA2_CH1>()
 {
@@ -162,6 +163,14 @@ template<> void handler<interrupt::DMA2_CH1>()
             *p++ = (sig_gen.sample() + 1.01) * 2010.;            // FIXME: correct for clipping
         probe::clear();
     }
+}
+
+static float freq(uint16_t cv)
+{
+    // cv = [0..4096] corresponding to [-5..5]V
+    static const float one_volt = 4096. / 10;
+
+    return 440. * pow(2., (cv - 2047) / one_volt);
 }
 
 int main()
@@ -216,19 +225,18 @@ int main()
     dac::enable_dma<1, dac_dma, dac_dma_ch, uint16_t>(output_buffer, buffer_size);
     dac_dma::enable_interrupt<dac_dma_ch, true>();
 
-    float f = 440.;
-
     for (;;)
     {
         if (btn::read())
         {    
-            f = led::read() ? 440 : 4186.009;   // A4 : C8
-            led::toggle();
         }
 
+        float f = freq(adc_buf[2]);
         float x = adc_buf[0] * (1./2048.) - 1.;
 
         sig_gen.set_freq(f * (1 + 0.5 * x));
+
+//        printf("%f\n", f);
     }
 }
 
