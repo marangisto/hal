@@ -26263,8 +26263,8 @@
                   <field>
                      <name>EXTSEL</name>
                      <description>EXTSEL</description>
-                     <bitOffset>6</bitOffset>
-                     <bitWidth>4</bitWidth>
+                     <bitOffset>5</bitOffset>
+                     <bitWidth>5</bitWidth>
                   </field>
                   <field>
                      <name>ALIGN_5</name>

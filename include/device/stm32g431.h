@@ -12050,8 +12050,8 @@ struct adc1_t
     static constexpr uint32_t CFGR_EXTEN =               // EXTEN (2 bits)
         bit_field_t<10, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CFGR_EXTSEL =              // EXTSEL (4 bits)
-        bit_field_t<6, 0xf>::value<X>();
+    static constexpr uint32_t CFGR_EXTSEL =              // EXTSEL (5 bits)
+        bit_field_t<5, 0x1f>::value<X>();
     static constexpr uint32_t CFGR_ALIGN_5 = 0x20;       // ALIGN_5
     template<uint32_t X>
     static constexpr uint32_t CFGR_RES =                 // RES (2 bits)
@@ -12459,8 +12459,8 @@ struct adc2_t
     static constexpr uint32_t CFGR_EXTEN =               // EXTEN (2 bits)
         bit_field_t<10, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t CFGR_EXTSEL =              // EXTSEL (4 bits)
-        bit_field_t<6, 0xf>::value<X>();
+    static constexpr uint32_t CFGR_EXTSEL =              // EXTSEL (5 bits)
+        bit_field_t<5, 0x1f>::value<X>();
     static constexpr uint32_t CFGR_ALIGN_5 = 0x20;       // ALIGN_5
     template<uint32_t X>
     static constexpr uint32_t CFGR_RES =                 // RES (2 bits)
