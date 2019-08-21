@@ -44,7 +44,7 @@ constexpr uint16_t buffer_size = half_buffer_size * 2;
 
 static uint16_t output_buffer[buffer_size];
 
-constexpr uint32_t adc_sample_freq = 48000;
+constexpr uint32_t adc_sample_freq = 10000;
 static const uint8_t adc_buf_size = 3;
 static uint16_t adc_buf[adc_buf_size] = { 2047, 2047, 2047 };
 
@@ -69,14 +69,20 @@ template<> void handler<interrupt::TIM3>()
 template<> void handler<interrupt::TIM4>()
 {
     adc_tim::clear_uif();
-    led::toggle();
+    probe::set();
+}
+
+template<> void handler<interrupt::ADC1_2>()
+{
+    device::ADC1.ISR |= device::adc1_t::ISR_EOS; // clear end of sequence flag
+    probe::clear();
 }
 
 template<> void handler<interrupt::TIM6_DACUNDER>()
 {
     dac_tim::clear_uif();
-    probe::set();
-    probe::clear();
+    //probe::set();
+    //probe::clear();
 }
 
 template<typename WAVEGEN>
@@ -158,10 +164,10 @@ template<> void handler<interrupt::DMA2_CH1>()
     {
         uint16_t *p = output_buffer + (sts & dma_transfer_complete ? half_buffer_size : 0);
 
-        probe::set();
+        //probe::set();
         for (uint16_t i = 0; i < half_buffer_size; ++i)
             *p++ = (sig_gen.sample() + 1.01) * 2010.;            // FIXME: correct for clipping
-        probe::clear();
+        //probe::clear();
     }
 }
 
@@ -199,12 +205,21 @@ int main()
 
     adc_tim::setup(0, sys_clock::freq() / adc_sample_freq - 1);
     adc_tim::master_mode<adc_tim::mm_update>();
-    adc_tim::update_interrupt_enable();
-    hal::nvic<interrupt::TIM4>::enable();
+    //adc_tim::update_interrupt_enable();
+    //hal::nvic<interrupt::TIM4>::enable();
 
     adc_dma::setup();
     adc::setup();
     adc::sequence<1, 2, 15>();
+
+    device::ADC1.CFGR2 |= device::adc1_t::CFGR2_ROVSE
+                       |  device::adc1_t::CFGR2_OVSR<0x3>
+                       |  device::adc1_t::CFGR2_OVSS<0x4>
+                       ;
+
+    //device::ADC1.IER |= device::adc1_t::IER_EOSIE; // enable end of sequence interrupt
+    //hal::nvic<interrupt::ADC1_2>::enable();
+
     adc::dma<adc_dma, adc_dma_ch>(adc_buf, adc_buf_size);
     adc::trigger<0xc>();        // TIM4_TRGO
     adc::enable();
@@ -236,7 +251,7 @@ int main()
 
         sig_gen.set_freq(f * (1 + 0.5 * x));
 
-//        printf("%f\n", f);
+        printf("%7.2f %7.5f\n", f, x);
     }
 }
 
