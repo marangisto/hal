@@ -54,6 +54,8 @@ typedef output_t<PA10> probe;
 typedef analog_t<PA0> ain1;
 typedef analog_t<PA1> ain2;
 typedef analog_t<PB0> ain3;
+typedef output_t<PA6> ch1;
+typedef output_t<PA7> ch2;
 
 template<> void handler<interrupt::USART2>()
 {
@@ -152,7 +154,26 @@ struct square
     }
 };
 
-static signal_generator_t<sine> sig_gen;
+struct mixed
+{
+    static inline float value(float phi)
+    {
+        switch (m_mode)
+        {
+            case 0: return sine::value(phi);
+            case 1: return triangle::value(phi);
+            case 2: return sawtooth::value(phi);
+            case 3: return square::value(phi);
+            default: return 0;
+        }
+    }
+
+    static uint8_t m_mode;
+};
+
+uint8_t mixed::m_mode = 0;
+
+static signal_generator_t<mixed> sig_gen;
 
 template<> void handler<interrupt::DMA2_CH1>()
 {
@@ -203,6 +224,9 @@ int main()
     ain2::setup();
     ain3::setup();
 
+    ch1::setup();
+    ch2::setup();
+
     adc_tim::setup(0, sys_clock::freq() / adc_sample_freq - 1);
     adc_tim::master_mode<adc_tim::mm_update>();
     //adc_tim::update_interrupt_enable();
@@ -243,8 +267,7 @@ int main()
     for (;;)
     {
         if (btn::read())
-        {    
-        }
+            mixed::m_mode = (mixed::m_mode + 1) & 0x3;
 
         float f = freq(adc_buf[2]);
         float x = adc_buf[0] * (1./2048.) - 1.;
@@ -252,6 +275,9 @@ int main()
         sig_gen.set_freq(f * (1 + 0.5 * x));
 
         printf("%7.2f %7.5f\n", f, x);
+        ch1::toggle();
+        if (ch1::read())
+            ch2::toggle();
     }
 }
 
