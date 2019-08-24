@@ -26,7 +26,7 @@ using hal::sys_clock;
 
 typedef usart_t<2, PA2, PA3> serial;
 typedef hal::timer::timer_t<6> dac_tim;
-typedef hal::timer::timer_t<3> aux_tim;
+typedef hal::timer::timer_t<7> aux_tim;
 typedef hal::timer::timer_t<4> adc_tim;
 
 typedef adc_t<1> adc;
@@ -48,24 +48,26 @@ constexpr uint32_t adc_sample_freq = 10000;
 static const uint8_t adc_buf_size = 3;
 static uint16_t adc_buf[adc_buf_size] = { 2047, 2047, 2047 };
 
-typedef button_t<PB3> btn;
 typedef output_t<PB8> led;
 typedef output_t<PA10> probe;
 typedef analog_t<PA0> ain1;
 typedef analog_t<PA1> ain2;
 typedef analog_t<PB0> ain3;
-typedef output_t<PA6> ch1;
-typedef output_t<PA7> ch2;
+
+typedef encoder_t<3, PA6, PA7> encoder;
+typedef button_t<PB5> encoder_btn;
+typedef button_t<PB3> push_btn;
 
 template<> void handler<interrupt::USART2>()
 {
     serial::isr();
 }
 
-template<> void handler<interrupt::TIM3>()
+template<> void handler<interrupt::TIM7>()
 {
     aux_tim::clear_uif();
-    btn::update();
+    encoder_btn::update();
+    push_btn::update();
 }
 
 template<> void handler<interrupt::TIM4>()
@@ -208,13 +210,12 @@ int main()
     stdio_t::bind<serial>();
     printf("Welcome to the STM32G431!\n");
 
-    btn::setup<pull_up>();
     probe::setup();
     led::setup();
 
     aux_tim::setup(100, 1000);
     aux_tim::update_interrupt_enable();
-    hal::nvic<interrupt::TIM3>::enable();
+    hal::nvic<interrupt::TIM7>::enable();
 
     cordic::setup<cordic::sine, 4>();
 
@@ -224,8 +225,9 @@ int main()
     ain2::setup();
     ain3::setup();
 
-    ch1::setup();
-    ch2::setup();
+    encoder::setup<pull_up>(65535);
+    encoder_btn::setup<pull_up>();
+    push_btn::setup<pull_up>();
 
     adc_tim::setup(0, sys_clock::freq() / adc_sample_freq - 1);
     adc_tim::master_mode<adc_tim::mm_update>();
@@ -266,18 +268,15 @@ int main()
 
     for (;;)
     {
-        if (btn::read())
+        if (push_btn::read())
             mixed::m_mode = (mixed::m_mode + 1) & 0x3;
 
-        float f = freq(adc_buf[2]);
+        float f = freq(adc_buf[2]) + encoder::count();
         float x = adc_buf[0] * (1./2048.) - 1.;
 
         sig_gen.set_freq(f * (1 + 0.5 * x));
 
-        printf("%7.2f %7.5f\n", f, x);
-        ch1::toggle();
-        if (ch1::read())
-            ch2::toggle();
+        printf("%7.2f %7.5f %d\n", f, x, encoder::count());
     }
 }
 
