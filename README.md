@@ -1,7 +1,7 @@
 # HAL
 Device support and HAL for MCUs
 
-A complete bottom-up from bare-metal HAL in C++. The low-level device layer is generated from vendor supplied SVD. Each peripheral is declared as a structure with register members including all defined field constants. The peripheral itself is then defined as a single global instance of this structure. In the HAL layer perihperals are treated as static resources and are accessed as such, i.e. via static methods. Generalization across multiple peripherals is done by templating over integers enumerating instances.
+A bottom-up from bare-metal HAL in C++. The low-level device layer is generated from vendor supplied SVD. Each peripheral is declared as a structure with register members including all defined field constants. The peripheral itself is then defined as a single global instance of this structure. In the HAL layer perihperals are treated as static resources and are accessed as such, i.e. via static methods. Generalization across multiple peripherals is done by templating over integers enumerating instances.
 
 The package relies on the https://github.com/marangisto/karakul build tool. There are examples for various boards in the examples directory. To build and run an example, e.g. for the NUCLEO-G431KB board, simply run:
 
