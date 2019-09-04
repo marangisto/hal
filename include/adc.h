@@ -37,6 +37,17 @@ template<> struct adc_traits<1>
 };
 #endif
 
+template<uint16_t> struct oversampling_traits {};
+
+template<> struct oversampling_traits<2> { static const uint8_t ratio = 0x0; };
+template<> struct oversampling_traits<4> { static const uint8_t ratio = 0x1; };
+template<> struct oversampling_traits<8> { static const uint8_t ratio = 0x2; };
+template<> struct oversampling_traits<16> { static const uint8_t ratio = 0x3; };
+template<> struct oversampling_traits<32> { static const uint8_t ratio = 0x4; };
+template<> struct oversampling_traits<64> { static const uint8_t ratio = 0x5; };
+template<> struct oversampling_traits<128> { static const uint8_t ratio = 0x6; };
+template<> struct oversampling_traits<256> { static const uint8_t ratio = 0x7; };
+
 template<uint8_t NO>
 struct adc_t
 {
@@ -111,6 +122,22 @@ struct adc_t
         static_assert(false, "ADC driver not implemented");
 #endif
     }
+
+
+#if defined(STM32G070)
+#elif defined(STM32G431)
+    template<uint16_t K>
+    static void oversample()
+    {
+        using namespace device;
+
+        ADC().CFGR2 |= _::CFGR2_ROVSE
+                    |  _::template CFGR2_OVSR<oversampling_traits<K>::ratio>
+                    |  _::template CFGR2_OVSS<oversampling_traits<K>::ratio + 1>
+                    ;
+    }
+#endif
+
 
 #if defined(STM32G070)
     static constexpr uint8_t NO_CHANNEL = 0xf;

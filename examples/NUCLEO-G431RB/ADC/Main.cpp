@@ -25,7 +25,7 @@ int main()
 {
     ld4::setup();
     d2::setup();
-    serial::setup<230400>();
+    serial::setup<115200>();
     hal::nvic<interrupt::USART2>::enable();
     interrupt::enable();
     stdio_t::bind<serial>();
@@ -33,6 +33,7 @@ int main()
 
     ain::setup();
     adc::setup();
+    adc::oversample<16>();
     adc::sequence<1>();
     adc::enable();
 
@@ -41,8 +42,8 @@ int main()
         d2::toggle();
         uint16_t y = adc::read();
         d2::toggle();
-        printf("adc = %d\n", y);
-        sys_tick::delay_ms(50);
+        printf("%d\n", y);
+        sys_tick::delay_ms(1);
     }
 }
 
