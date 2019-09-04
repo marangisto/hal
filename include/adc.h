@@ -37,6 +37,21 @@ template<> struct adc_traits<1>
 };
 #endif
 
+template<uint16_t> struct prescale_traits {};
+
+template<> struct prescale_traits<1> { static const uint8_t presc = 0x0; };
+template<> struct prescale_traits<2> { static const uint8_t presc = 0x1; };
+template<> struct prescale_traits<4> { static const uint8_t presc = 0x2; };
+template<> struct prescale_traits<6> { static const uint8_t presc = 0x3; };
+template<> struct prescale_traits<8> { static const uint8_t presc = 0x4; };
+template<> struct prescale_traits<10> { static const uint8_t presc = 0x5; };
+template<> struct prescale_traits<12> { static const uint8_t presc = 0x6; };
+template<> struct prescale_traits<16> { static const uint8_t presc = 0x7; };
+template<> struct prescale_traits<32> { static const uint8_t presc = 0x8; };
+template<> struct prescale_traits<64> { static const uint8_t presc = 0x9; };
+template<> struct prescale_traits<128> { static const uint8_t presc = 0xa; };
+template<> struct prescale_traits<256> { static const uint8_t presc = 0xb; };
+
 template<uint16_t> struct oversampling_traits {};
 
 template<> struct oversampling_traits<2> { static const uint8_t ratio = 0x0; };
@@ -58,6 +73,7 @@ struct adc_t
     static inline typename adc_traits<NO>::C& COMMON() { return adc_traits<NO>::COMMON(); }
 #endif
 
+    template<uint16_t PRESCALE = 4>
     static void setup()
     {
         using namespace device;
@@ -77,9 +93,9 @@ struct adc_t
         ADC().CFGR = _::CFGR_RESET_VALUE                        // reset configuration register 1
                     | _::CFGR_OVRMOD                            // overwrite on overrun
                     ;
-        RCC.CCIPR1 |= rcc_t::template CCIPR1_ADCSEL<0x1>;       // use pll P clock  FIXME: does not seem to have any effect!
+        RCC.CCIPR1 |= rcc_t::template CCIPR1_ADCSEL<0x1>;       // use pll P clock
         COMMON().CCR = __::CCR_RESET_VALUE                      // reset common control register
-                     | __::template CCR_CKMODE<0x3>;            // divide clock by 4
+                     | __::template CCR_PRESC<prescale_traits<PRESCALE>::presc>
                      ;
         ADC().DIFSEL = _::DIFSEL_RESET_VALUE;                   // differential mode register
         ADC().GCOMP = _::GCOMP_RESET_VALUE;                     // reset gain compensation register

@@ -32,7 +32,7 @@ int main()
     printf("Welcome to the STM32G431!\n");
 
     ain::setup();
-    adc::setup();
+    adc::setup<16>();
     adc::oversample<16>();
     adc::sequence<1>();
     adc::enable();
