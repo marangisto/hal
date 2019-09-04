@@ -152,6 +152,23 @@ struct adc_t
                     |  _::template CFGR2_OVSS<oversampling_traits<K>::ratio + 1>
                     ;
     }
+
+    template<uint8_t X>
+    static void sample_time()
+    {
+        ADC().SMPR1 = _::SMPR1_RESET_VALUE
+                    | _::template SMPR1_SMP0<X>
+                    | _::template SMPR1_SMP1<X>
+                    | _::template SMPR1_SMP2<X>
+                    | _::template SMPR1_SMP3<X>
+                    | _::template SMPR1_SMP4<X>
+                    | _::template SMPR1_SMP5<X>
+                    | _::template SMPR1_SMP6<X>
+                    | _::template SMPR1_SMP7<X>
+                    | _::template SMPR1_SMP8<X>
+                    | _::template SMPR1_SMP9<X>
+                    ;
+    }
 #endif
 
 
@@ -196,7 +213,7 @@ struct adc_t
                   | _::template SQR1_SQ3<S3>                    // sequence slot 2
                   | _::template SQR1_SQ4<S4>                    // sequence slot 4
                   ;
-        ADC().SQR2 = _::SQR1_RESET_VALUE                        // reset sequence 2 register
+        ADC().SQR2 = _::SQR2_RESET_VALUE                        // reset sequence 2 register
                   | _::template SQR2_SQ5<S5>                    // sequence slot 5
                   | _::template SQR2_SQ6<S6>                    // sequence slot 6
                   | _::template SQR2_SQ7<S7>                    // sequence slot 7

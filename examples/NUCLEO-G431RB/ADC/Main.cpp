@@ -33,6 +33,7 @@ int main()
 
     ain::setup();
     adc::setup<16>();
+    adc::sample_time<1>();
     adc::oversample<16>();
     adc::sequence<1>();
     adc::enable();
