@@ -124,12 +124,21 @@ public:
     static inline void setup()
     {
         peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
+#if defined(STM32F103)
+        volatile uint32_t& CR = pin::bit_pos < 8 ? pin::gpio().CRL : pin::gpio().CRH;
+        constexpr uint8_t shift = (pin::bit_pos < 8 ? pin::bit_pos : (pin::bit_pos - 8)) << 2;
+        constexpr uint32_t bits = (speed == low_speed ? 0x2 : 0x3) | (output_type == open_drain ? 0x4 : 0);
+
+        CR &= ~(0xf << shift);
+        CR |= (bits << shift);
+#else
         pin::gpio().MODER &= ~(0x3 << (pin::bit_pos*2));
         pin::gpio().MODER |= pin::output_mode << (pin::bit_pos*2);
         if (speed != low_speed)
             pin::gpio().OSPEEDR |= speed << (pin::bit_pos*2);
         if (output_type == open_drain)
             pin::gpio().OTYPER |= pin::bit_mask;
+#endif
     }
 
     static inline void set() { pin::gpio().BSRR = pin::bit_mask; }

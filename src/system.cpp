@@ -94,6 +94,10 @@ void sys_clock::init()
     // wait for PLL as system clock
 
     while ((RCC.CFGR & _::CFGR_SWS<0x3>) != _::CFGR_SWS<0x2>);
+#elif defined(STM32F103)
+    m_freq = 72000000;
+
+    RCC.CR = _::CR_RESET_VALUE;
 #elif defined(STM32F411)
     m_freq = 100000000;
 
@@ -232,7 +236,6 @@ void sys_clock::init()
     FPU_CPACR.CPACR |= fpu_cpacr_t::CPACR_CP<0xf>;      // enable co-processors
     __asm volatile ("dsb");                             // data pipe-line reset
     __asm volatile ("isb");                             // instruction pipe-line reset
-
 #else
     static_assert(false, "no featured clock initialzation");
 #endif
