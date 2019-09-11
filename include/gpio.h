@@ -415,10 +415,19 @@ template<gpio_pin_t PIN, alternate_function_t ALT>
 class alternate_t
 {
 public:
-    template<output_speed_t speed = low_speed>
+    template<output_speed_t speed = low_speed>  // FIXME: should we not have output_type option here?
     static inline void setup()
     {
         peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
+#if defined(STM32F103)
+        volatile uint32_t& CR = pin::bit_pos < 8 ? pin::gpio().CRL : pin::gpio().CRH;
+        constexpr uint8_t shift = (pin::bit_pos < 8 ? pin::bit_pos : (pin::bit_pos - 8)) << 2;
+        constexpr uint32_t bits = 0x8 | (speed == low_speed ? 0x2 : 0x3); // | (output_type == open_drain ? 0x4 : 0);
+        // FIXME: validate existing alternate functions!
+
+        CR &= ~(0xf << shift);
+        CR |= (bits << shift);
+#else
         pin::gpio().MODER &= ~(0x3 << (pin::bit_pos*2));
         pin::gpio().MODER |= pin::alternate_mode << (pin::bit_pos*2);
         if (speed != low_speed)
@@ -427,6 +436,7 @@ public:
             pin::gpio().AFRL |= alt_fun_traits<PIN, ALT>::AF() << (pin::bit_pos*4);
         else
             pin::gpio().AFRH |= alt_fun_traits<PIN, ALT>::AF() << ((pin::bit_pos-8)*4);
+#endif
     }
 
     template<input_type_t input_type = floating>

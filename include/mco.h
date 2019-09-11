@@ -8,8 +8,19 @@ namespace hal
 namespace mco
 {
 
-//using namespace gpio;
-
+#if defined(STM32F103)
+enum mco_sel_t
+    { mco_off       = 0x0
+    , mco_sysclk    = 0x4
+    , mco_hsi       = 0x5
+    , mco_hse       = 0x6
+    , mco_pll       = 0x7   // divided by 2
+    , mco_pll2      = 0x8
+    , mco_pll3      = 0x9   // divided by 2
+    , mco_xt1       = 0xa
+    , mco_pll3e     = 0xb   // pll3 for ethernet
+    };
+#elif
 enum mco_sel_t
     { mco_off       = 0
     , mco_sysclk    = 1
@@ -20,10 +31,13 @@ enum mco_sel_t
     , mco_lse       = 7
     , mco_hsi48     = 8     // only on STM32G4
     };
+#endif
 
 template<int> struct mco_prescale {};
 
-#if defined(STM32G070)
+#if defined(STM32F103)
+template<> struct mco_prescale<1> { static const uint8_t value = 0; };
+#elif defined(STM32G070)
 template<> struct mco_prescale<1> { static const uint8_t value = 0; };
 template<> struct mco_prescale<2> { static const uint8_t value = 1; };
 template<> struct mco_prescale<4> { static const uint8_t value = 2; };
@@ -40,7 +54,7 @@ template<> struct mco_prescale<8> { static const uint8_t value = 3; };
 template<> struct mco_prescale<16> { static const uint8_t value = 4; };
 #endif
 
-template<gpio::gpio_pin_t PIN, mco_sel_t SEL, int PRESCALE>
+template<gpio::gpio_pin_t PIN, mco_sel_t SEL, int PRESCALE = 1>
 struct mco_t
 {
     typedef gpio::internal::alternate_t<PIN, gpio::internal::MCO> mco;
@@ -50,8 +64,13 @@ struct mco_t
     {
         using device::RCC;
 
+#if defined(STM32F103)
+        static_assert(mco_prescale<PRESCALE>::value == 0, "illegal PRESCALE for this MCU");
+        RCC.CFGR |= _::CFGR_MCO<SEL>;
+#else
         RCC.CFGR |= _::CFGR_MCOPRE<mco_prescale<PRESCALE>::value>;
         RCC.CFGR |= _::CFGR_MCOSEL<SEL>;
+#endif
         mco::template setup<gpio::high_speed>();
     }
 };
