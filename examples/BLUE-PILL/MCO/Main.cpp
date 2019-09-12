@@ -6,7 +6,7 @@ using namespace hal::gpio;
 using namespace hal::mco;
 
 typedef output_t<PC13> led;
-typedef mco_t<PA8, mco_hsi> mco;
+typedef mco_t<PA8, mco_sysclk> mco;
 
 void loop();
 
@@ -22,6 +22,6 @@ int main()
 void loop()
 {
     led::toggle();
-    sys_tick::delay_ms(250);
+    sys_tick::delay_ms(1000);
 }
 

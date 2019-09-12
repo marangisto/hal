@@ -97,7 +97,25 @@ void sys_clock::init()
 #elif defined(STM32F103)
     m_freq = 72000000;
 
-    RCC.CR = _::CR_RESET_VALUE;
+    // set system clock to HSE-PLL 72MHz
+ 
+    FLASH.ACR |= flash_t::ACR_PRFTBE | flash_t::template ACR_LATENCY<0x2>;
+
+    RCC.CR = _::CR_RESET_VALUE;             // reset control register
+    RCC.CFGR = _::CFGR_RESET_VALUE;         // reset configuration register
+    RCC.CR |= _::CR_HSEON;                  // enable external clock
+    while (!(RCC.CR & _::CR_HSERDY));       // wait for HSE ready
+    RCC.CFGR |= _::CFGR_PLLSRC              // clock from PREDIV1
+              | _::CFGR_PLLMUL<0x7>         // pll multiplier = 9
+              | _::CFGR_PPRE1<0x4>          // APB low-speed prescale = 2
+              ;
+    RCC.CR |= _::CR_PLLON;                  // enable external clock
+    while (!(RCC.CR & _::CR_PLLRDY));       // wait for pll ready
+    RCC.CFGR |= _::CFGR_SW<0x2>;            // use pll as clock source
+
+    // wait for clock switch completion
+
+    while ((RCC.CFGR & _::CFGR_SWS<0x3>) != _::CFGR_SWS<0x2>);
 #elif defined(STM32F411)
     m_freq = 100000000;
 
