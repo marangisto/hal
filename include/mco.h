@@ -20,7 +20,7 @@ enum mco_sel_t
     , mco_xt1       = 0xa
     , mco_pll3e     = 0xb   // pll3 for ethernet
     };
-#elif
+#else
 enum mco_sel_t
     { mco_off       = 0
     , mco_sysclk    = 1
