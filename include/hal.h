@@ -73,8 +73,23 @@ private:
 
 template<bool> struct is_in_range;
 
+template<typename T>
+struct always_false_t
+{
+    static const bool value = false;
+};
+
+template<int I>
+struct always_false_i
+{
+    static const bool value = false;
+};
+
 template<interrupt::interrupt_t POS, typename = is_in_range<true> >
-struct nvic {};
+struct nvic
+{
+    static_assert(always_false_i<POS>::value, "nvic capability undefined for mcu");
+};
 
 #if defined(STM32F051) || defined(STM32G070)
 template<interrupt::interrupt_t POS>
