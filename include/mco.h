@@ -33,7 +33,10 @@ enum mco_sel_t
     };
 #endif
 
-template<int> struct mco_prescale {};
+template<int PRESCALE> struct mco_prescale
+{
+    static_assert(always_false_i<PRESCALE>::value, "illegal prescaler value");
+};
 
 #if defined(STM32F103)
 template<> struct mco_prescale<1> { static const uint8_t value = 0; };
