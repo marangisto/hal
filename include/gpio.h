@@ -110,7 +110,7 @@ struct pin_t
     typedef typename port_traits<pin_port(PIN)>::gpio_t gpio_t;
 
     static_assert(pin_bit(PIN) < 16, "pin_t bit out of range");
- 
+
     static inline gpio_t& gpio() { return port_traits<pin_port(PIN)>::gpio(); }
     static const uint8_t bit_pos = pin_bit(PIN);
     static const uint32_t bit_mask = 1 << bit_pos;
@@ -418,17 +418,20 @@ enum alternate_function_t
     };
 
 template<gpio_pin_t PIN, alternate_function_t ALT>
-struct alt_fun_traits {};
+struct alt_fun_traits
+{
+    static_assert(always_false_i<PIN>::value, "selected alternate function is not available on this pin!");
+};
 
 #define ALT_FUN_TRAIT(PIN, ALT_FUN, AFNO)           \
 template<> struct alt_fun_traits<PIN, ALT_FUN>      \
 {                                                   \
-    static inline alt_fun_t AF() { return AFNO; }   \
+    static const alt_fun_t AF = AFNO;               \
 }
 
 #if defined(STM32F051)
 #include "gpio/stm32f051.h"
-#elif defined(STM32f103)
+#elif defined(STM32F103)
 #include "gpio/stm32f103.h"
 #elif defined(STM32G070)
 #include "gpio/stm32g070.h"
@@ -448,7 +451,8 @@ public:
         volatile uint32_t& CR = pin::bit_pos < 8 ? pin::gpio().CRL : pin::gpio().CRH;
         constexpr uint8_t shift = (pin::bit_pos < 8 ? pin::bit_pos : (pin::bit_pos - 8)) << 2;
         constexpr uint32_t bits = 0x8 | (speed == low_speed ? 0x2 : 0x3); // | (output_type == open_drain ? 0x4 : 0);
-        // FIXME: validate existing alternate functions!
+
+        static_assert(alt_fun_traits<PIN, ALT>::AF == AF0, "invalid alternate function (remap not yet supported)");
 
         CR &= ~(0xf << shift);
         CR |= (bits << shift);
@@ -458,9 +462,9 @@ public:
         if (speed != low_speed)
             pin::gpio().OSPEEDR |= speed << (pin::bit_pos*2);
         if (pin::bit_pos < 8)
-            pin::gpio().AFRL |= alt_fun_traits<PIN, ALT>::AF() << (pin::bit_pos*4);
+            pin::gpio().AFRL |= alt_fun_traits<PIN, ALT>::AF << (pin::bit_pos*4);
         else
-            pin::gpio().AFRH |= alt_fun_traits<PIN, ALT>::AF() << ((pin::bit_pos-8)*4);
+            pin::gpio().AFRH |= alt_fun_traits<PIN, ALT>::AF << ((pin::bit_pos-8)*4);
 #endif
     }
 
@@ -473,9 +477,9 @@ public:
         if (input_type != floating)
             pin::gpio().PUPDR |= input_type << (pin::bit_pos*2);
         if (pin::bit_pos < 8)
-            pin::gpio().AFRL |= alt_fun_traits<PIN, ALT>::AF() << (pin::bit_pos*4);
+            pin::gpio().AFRL |= alt_fun_traits<PIN, ALT>::AF << (pin::bit_pos*4);
         else
-            pin::gpio().AFRH |= alt_fun_traits<PIN, ALT>::AF() << ((pin::bit_pos-8)*4);
+            pin::gpio().AFRH |= alt_fun_traits<PIN, ALT>::AF << ((pin::bit_pos-8)*4);
     }
 
 private:

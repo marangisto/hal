@@ -265,7 +265,7 @@ public:
         peripheral_traits<_>::enable();
         TIM().CCMR1 = _::CCMR1_RESET_VALUE          // reset register
                     | _::template CCMR1_CC1S<0x1>   // TI1 as input
-                    ; 
+                    ;
         TIM().CCER  = _::CCER_RESET_VALUE           // reset register
                     | _::CCER_CC1E                  // enable capture
                     ;
@@ -295,11 +295,13 @@ template<typename TIMER, gpio::gpio_pin_t PIN>
 class pwm_t
 {
 public:
+    typedef gpio::internal::alternate_t<PIN, gpio::internal::TIM1_CH4> pin; // FIXME: channel from traits
+
     static void setup(typename TIMER::count_t initial_duty = 0)
     {
         using namespace gpio::internal;
 
-        alternate_t<PIN, TIM1_CH4>::template setup<gpio::high_speed>(); // FIXME: channel from traits
+        pin::template setup<gpio::high_speed>();
 
         TIMER::TIM().CCMR2 |= _::template CCMR2_OC4M<0x6>   // channel 4 pwm mode 1
                            |  _::CCMR2_OC4PE                // channel 4 preload enable
