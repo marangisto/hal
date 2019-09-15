@@ -145,10 +145,13 @@ template<> struct timer_traits<17>
 };
 #endif
 
+template<typename, gpio::gpio_pin_t> class pwm_t;
+
 template<int TN>
 class timer_t
 {
 public:
+    static const int TNO = TN;
     typedef typename timer_traits<TN>::count_t count_t;
     enum master_mode_t { mm_reset, mm_enable, mm_update };
 
@@ -199,6 +202,7 @@ public:
     }
 
 private:
+    template<typename, gpio::gpio_pin_t> friend class pwm_t;
     static inline typename timer_traits<TN>::T& TIM() { return timer_traits<TN>::TIM(); }
     typedef typename timer_traits<TN>::T _;
 };
@@ -285,6 +289,33 @@ public:
 
 private:
     static inline typename timer_traits<TN>::T& TIM() { return timer_traits<TN>::TIM(); }
+};
+
+template<typename TIMER, gpio::gpio_pin_t PIN>
+class pwm_t
+{
+public:
+    static void setup(typename TIMER::count_t initial_duty = 0)
+    {
+        using namespace gpio::internal;
+
+        alternate_t<PIN, TIM1_CH4>::template setup<gpio::high_speed>(); // FIXME: channel from traits
+
+        TIMER::TIM().CCMR2 |= _::template CCMR2_OC4M<0x6>   // channel 4 pwm mode 1
+                           |  _::CCMR2_OC4PE                // channel 4 preload enable
+                           ;
+        TIMER::TIM().CCER |= _::CCER_CC4E;                  // channel 4 cc output enable
+        TIMER::TIM().CCR4 = initial_duty;                   // starting duty cycle
+        TIMER::TIM().BDTR |= _::BDTR_MOE;                   // main output enable
+    }
+
+    static void set_duty(typename TIMER::count_t x)
+    {
+        TIMER::TIM().CCR4 = x;
+    }
+
+private:
+    typedef typename TIMER::_ _;
 };
 
 } // namespace timer
