@@ -279,6 +279,11 @@ public:
         return TIM().CNT;
     }
 
+    static inline void main_output_enable()
+    {
+        TIM().BDTR |= _::BDTR_MOE;
+    }
+
 private:
     template<typename, channel_t, gpio::gpio_pin_t> friend class pwm_t;
     static inline typename timer_traits<TN>::T& TIM() { return timer_traits<TN>::TIM(); }
@@ -388,7 +393,6 @@ public:
                    ;
         __::CCR() = initial_duty;                   // set initial duty cycle
         TIMER::TIM().CCER |= __::CCER_CCE;          // channel capture compare output enable
-        TIMER::TIM().BDTR |= _::BDTR_MOE;           // main output enable
     }
 
     static void set_duty(typename TIMER::count_t x)
