@@ -9,7 +9,7 @@ typedef timer_t<1> tim;
 typedef timer_t<2> aux;
 
 typedef output_t<PC13> led;
-typedef pwm_t<tim, PA11> pwm;
+typedef pwm_t<tim, 4, PA11> pwm;
 
 template<> void handler<interrupt::TIM2>()
 {
