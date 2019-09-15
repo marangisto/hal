@@ -85,6 +85,13 @@ struct always_false_i
     static const bool value = false;
 };
 
+enum channel_t
+    { CH1
+    , CH2
+    , CH3
+    , CH4
+    };
+
 template<interrupt::interrupt_t POS, typename = is_in_range<true> >
 struct nvic
 {

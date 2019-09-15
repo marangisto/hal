@@ -12,7 +12,7 @@ namespace timer
 using namespace device;
 
 template<int TN> struct timer_traits {};
-template<typename T, int CH> struct timer_channel_traits
+template<typename T, channel_t CH> struct timer_channel_traits
 {
     static_assert(always_false_t<T>::value, "channel number not available on this timer");
 };
@@ -25,10 +25,10 @@ template<> struct timer_traits<1>
     static inline T& TIM() { return TIM1; }
 };
 
-template<> struct timer_channel_traits<tim1_t, 1> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH1; };
-template<> struct timer_channel_traits<tim1_t, 2> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH2; };
-template<> struct timer_channel_traits<tim1_t, 3> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH3; };
-template<> struct timer_channel_traits<tim1_t, 4> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH4; };
+template<> struct timer_channel_traits<tim1_t, CH1> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH1; };
+template<> struct timer_channel_traits<tim1_t, CH2> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH2; };
+template<> struct timer_channel_traits<tim1_t, CH3> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH3; };
+template<> struct timer_channel_traits<tim1_t, CH4> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH4; };
 #endif
 
 #if defined(HAVE_PERIPHERAL_TIM2)
@@ -39,8 +39,8 @@ template<> struct timer_traits<2>
     static inline T& TIM() { return TIM2; }
 };
 
-template<> struct timer_channel_traits<tim2_t, 1> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM2_CH1_ETR; };
-template<> struct timer_channel_traits<tim2_t, 2> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM2_CH2; };
+template<> struct timer_channel_traits<tim2_t, CH1> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM2_CH1_ETR; };
+template<> struct timer_channel_traits<tim2_t, CH2> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM2_CH2; };
 #endif
 
 #if defined(HAVE_PERIPHERAL_TIM3)
@@ -51,8 +51,8 @@ template<> struct timer_traits<3>
     static inline T& TIM() { return TIM3; }
 };
 
-template<> struct timer_channel_traits<tim3_t, 1> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM3_CH1; };
-template<> struct timer_channel_traits<tim3_t, 2> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM3_CH2; };
+template<> struct timer_channel_traits<tim3_t, CH1> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM3_CH1; };
+template<> struct timer_channel_traits<tim3_t, CH2> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM3_CH2; };
 #endif
 
 #if defined(HAVE_PERIPHERAL_TIM4)
@@ -154,7 +154,7 @@ template<> struct timer_traits<17>
 };
 #endif
 
-template<typename, uint8_t, gpio::gpio_pin_t> class pwm_t;
+template<typename, channel_t, gpio::gpio_pin_t> class pwm_t;
 
 template<int TN>
 class timer_t
@@ -211,7 +211,7 @@ public:
     }
 
 private:
-    template<typename, uint8_t, gpio::gpio_pin_t> friend class pwm_t;
+    template<typename, channel_t, gpio::gpio_pin_t> friend class pwm_t;
     static inline typename timer_traits<TN>::T& TIM() { return timer_traits<TN>::TIM(); }
     typedef typename timer_traits<TN>::T _;
 };
@@ -228,8 +228,8 @@ public:
     {
         using namespace gpio::internal;
 
-        alternate_t<PIN1, timer_channel_traits<_, 1>::altfun>::template setup<input_type>();
-        alternate_t<PIN2, timer_channel_traits<_, 2>::altfun>::template setup<input_type>();
+        alternate_t<PIN1, timer_channel_traits<_, CH1>::altfun>::template setup<input_type>();
+        alternate_t<PIN2, timer_channel_traits<_, CH2>::altfun>::template setup<input_type>();
 
         peripheral_traits<_>::enable();
         TIM().CCMR1 = _::CCMR1_RESET_VALUE
@@ -300,7 +300,7 @@ private:
     static inline typename timer_traits<TN>::T& TIM() { return timer_traits<TN>::TIM(); }
 };
 
-template<typename TIMER, uint8_t CH, gpio::gpio_pin_t PIN>
+template<typename TIMER, channel_t CH, gpio::gpio_pin_t PIN>
 class pwm_t
 {
 private:
