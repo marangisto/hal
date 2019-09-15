@@ -25,10 +25,45 @@ template<> struct timer_traits<1>
     static inline T& TIM() { return TIM1; }
 };
 
-template<> struct timer_channel_traits<tim1_t, CH1> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH1; };
-template<> struct timer_channel_traits<tim1_t, CH2> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH2; };
-template<> struct timer_channel_traits<tim1_t, CH3> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH3; };
-template<> struct timer_channel_traits<tim1_t, CH4> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH4; };
+template<> struct timer_channel_traits<tim1_t, CH1>
+{
+    static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH1;
+    static const uint32_t CCER_CCE = tim1_t::CCER_CC1E;
+    static const uint32_t CCMR_OCPE = tim1_t::CCMR1_OC1PE;
+    template<uint32_t X> static const uint32_t CCMR_OCM = tim1_t::CCMR1_OC1M<X>;
+    static inline volatile uint32_t& CCR() { return timer_traits<1>::TIM().CCR1; }
+    static inline volatile uint32_t& CCMR() { return timer_traits<1>::TIM().CCMR1; }
+};
+
+template<> struct timer_channel_traits<tim1_t, CH2>
+{
+    static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH2;
+    static const uint32_t CCER_CCE = tim1_t::CCER_CC2E;
+    static const uint32_t CCMR_OCPE = tim1_t::CCMR1_OC2PE;
+    template<uint32_t X> static const uint32_t CCMR_OCM = tim1_t::CCMR1_OC2M<X>;
+    static inline volatile uint32_t& CCR() { return timer_traits<1>::TIM().CCR2; }
+    static inline volatile uint32_t& CCMR() { return timer_traits<1>::TIM().CCMR1; }
+};
+
+template<> struct timer_channel_traits<tim1_t, CH3>
+{
+    static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH3;
+    static const uint32_t CCER_CCE = tim1_t::CCER_CC3E;
+    static const uint32_t CCMR_OCPE = tim1_t::CCMR2_OC3PE;
+    template<uint32_t X> static const uint32_t CCMR_OCM = tim1_t::CCMR2_OC3M<X>;
+    static inline volatile uint32_t& CCR() { return timer_traits<1>::TIM().CCR3; }
+    static inline volatile uint32_t& CCMR() { return timer_traits<1>::TIM().CCMR2; }
+};
+
+template<> struct timer_channel_traits<tim1_t, CH4>
+{
+    static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH4;
+    static const uint32_t CCER_CCE = tim1_t::CCER_CC4E;
+    static const uint32_t CCMR_OCPE = tim1_t::CCMR2_OC4PE;
+    template<uint32_t X> static const uint32_t CCMR_OCM = tim1_t::CCMR2_OC4M<X>;
+    static inline volatile uint32_t& CCR() { return timer_traits<1>::TIM().CCR4; }
+    static inline volatile uint32_t& CCMR() { return timer_traits<1>::TIM().CCMR2; }
+};
 #endif
 
 #if defined(HAVE_PERIPHERAL_TIM2)
@@ -39,8 +74,25 @@ template<> struct timer_traits<2>
     static inline T& TIM() { return TIM2; }
 };
 
-template<> struct timer_channel_traits<tim2_t, CH1> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM2_CH1_ETR; };
-template<> struct timer_channel_traits<tim2_t, CH2> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM2_CH2; };
+template<> struct timer_channel_traits<tim2_t, CH1>
+{
+    static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM2_CH1_ETR;
+    static const uint32_t CCER_CCE = tim2_t::CCER_CC1E;
+    static const uint32_t CCMR_OCPE = tim2_t::CCMR1_OC1PE;
+    template<uint32_t X> static const uint32_t CCMR_OCM = tim2_t::CCMR1_OC1M<X>;
+    static inline volatile uint32_t& CCR() { return timer_traits<2>::TIM().CCR1; }
+    static inline volatile uint32_t& CCMR() { return timer_traits<2>::TIM().CCMR1; }
+};
+
+template<> struct timer_channel_traits<tim2_t, CH2>
+{
+    static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM2_CH2;
+    static const uint32_t CCER_CCE = tim2_t::CCER_CC2E;
+    static const uint32_t CCMR_OCPE = tim2_t::CCMR1_OC2PE;
+    template<uint32_t X> static const uint32_t CCMR_OCM = tim2_t::CCMR1_OC2M<X>;
+    static inline volatile uint32_t& CCR() { return timer_traits<2>::TIM().CCR2; }
+    static inline volatile uint32_t& CCMR() { return timer_traits<2>::TIM().CCMR1; }
+};
 #endif
 
 #if defined(HAVE_PERIPHERAL_TIM3)
@@ -51,8 +103,25 @@ template<> struct timer_traits<3>
     static inline T& TIM() { return TIM3; }
 };
 
-template<> struct timer_channel_traits<tim3_t, CH1> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM3_CH1; };
-template<> struct timer_channel_traits<tim3_t, CH2> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM3_CH2; };
+template<> struct timer_channel_traits<tim3_t, CH1>
+{
+    static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM3_CH1;
+    static const uint32_t CCER_CCE = tim3_t::CCER_CC1E;
+    static const uint32_t CCMR_OCPE = tim3_t::CCMR1_OC1PE;
+    template<uint32_t X> static const uint32_t CCMR_OCM = tim3_t::CCMR1_OC1M<X>;
+    static inline volatile uint32_t& CCR() { return timer_traits<3>::TIM().CCR1; }
+    static inline volatile uint32_t& CCMR() { return timer_traits<3>::TIM().CCMR1; }
+};
+
+template<> struct timer_channel_traits<tim3_t, CH2>
+{
+    static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM3_CH2;
+    static const uint32_t CCER_CCE = tim3_t::CCER_CC2E;
+    static const uint32_t CCMR_OCPE = tim3_t::CCMR1_OC2PE;
+    template<uint32_t X> static const uint32_t CCMR_OCM = tim3_t::CCMR1_OC2M<X>;
+    static inline volatile uint32_t& CCR() { return timer_traits<3>::TIM().CCR2; }
+    static inline volatile uint32_t& CCMR() { return timer_traits<3>::TIM().CCMR1; }
+};
 #endif
 
 #if defined(HAVE_PERIPHERAL_TIM4)
@@ -305,26 +374,26 @@ class pwm_t
 {
 private:
     typedef typename TIMER::_ _;
-    typedef gpio::internal::alternate_t<PIN, timer_channel_traits<_, CH>::altfun> pin;
+    typedef timer_channel_traits<_, CH> __;
+    typedef gpio::internal::alternate_t<PIN, __::altfun> pin;
 
 public:
     static void setup(typename TIMER::count_t initial_duty = 0)
     {
         using namespace gpio::internal;
 
-        pin::template setup<gpio::high_speed>();
-
-        TIMER::TIM().CCMR2 |= _::template CCMR2_OC4M<0x6>   // channel 4 pwm mode 1
-                           |  _::CCMR2_OC4PE                // channel 4 preload enable
-                           ;
-        TIMER::TIM().CCER |= _::CCER_CC4E;                  // channel 4 cc output enable
-        TIMER::TIM().CCR4 = initial_duty;                   // starting duty cycle
-        TIMER::TIM().BDTR |= _::BDTR_MOE;                   // main output enable
+        pin::template setup<gpio::high_speed>();    // initialize output pin
+        __::CCMR() |= __::template CCMR_OCM<0x6>    // channel 4 pwm mode 1
+                   |  __::CCMR_OCPE                 // channel preload enable
+                   ;
+        __::CCR() = initial_duty;                   // set initial duty cycle
+        TIMER::TIM().CCER |= __::CCER_CCE;          // channel capture compare output enable
+        TIMER::TIM().BDTR |= _::BDTR_MOE;           // main output enable
     }
 
     static void set_duty(typename TIMER::count_t x)
     {
-        TIMER::TIM().CCR4 = x;
+        __::CCR() = x;
     }
 };
 
