@@ -195,7 +195,23 @@ namespace internal
 enum alt_fun_t { AF0, AF1, AF2, AF3, AF4, AF5, AF6, AF7, AF8, AF9, AF10, AF11, AF12, AF13, AF14, AF15 };
 
 enum alternate_function_t
-    { CAN_RX
+    { ADC12_IN0
+    , ADC12_IN1
+    , ADC12_IN10
+    , ADC12_IN11
+    , ADC12_IN12
+    , ADC12_IN13
+    , ADC12_IN14
+    , ADC12_IN15
+    , ADC12_IN2
+    , ADC12_IN3
+    , ADC12_IN4
+    , ADC12_IN5
+    , ADC12_IN6
+    , ADC12_IN7
+    , ADC12_IN8
+    , ADC12_IN9
+    , CAN_RX
     , CAN_TX
     , CEC
     , COMP1_OUT
@@ -248,6 +264,8 @@ enum alternate_function_t
     , MCO
     , OSC_EN
     , OSC32_EN
+    , OSC32_IN
+    , OSC32_OUT
     , RTC_OUT2
     , RTC_REFIN
     , SAI1_CK1
@@ -279,6 +297,7 @@ enum alternate_function_t
     , SWCLK_JTCK
     , SWDIO
     , SWDIO_JTMS
+    , TAMPER_RTC
     , TIM1_BKIN
     , TIM1_BKIN2
     , TIM1_CH1
@@ -380,6 +399,7 @@ enum alternate_function_t
     , USART2_TX
     , USART3_CK
     , USART3_CTS
+    , USART3_RTS
     , USART3_RTS_DE
     , USART3_RTS_DE_CK
     , USART3_RX
@@ -392,6 +412,9 @@ enum alternate_function_t
     , USART6_RX
     , USART6_TX
     , USB_CRS_SYNC
+    , USBDM
+    , USBDP
+    , WKUP
     };
 
 template<gpio_pin_t PIN, alternate_function_t ALT>
@@ -405,6 +428,8 @@ template<> struct alt_fun_traits<PIN, ALT_FUN>      \
 
 #if defined(STM32F051)
 #include "gpio/stm32f051.h"
+#elif defined(STM32f103)
+#include "gpio/stm32f103.h"
 #elif defined(STM32G070)
 #include "gpio/stm32g070.h"
 #elif defined(STM32G431)
