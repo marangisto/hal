@@ -12,6 +12,10 @@ namespace timer
 using namespace device;
 
 template<int TN> struct timer_traits {};
+template<int TN, int CH> struct timer_channel_traits
+{
+    static_assert(always_false_i<TN>::value, "channel number not available on this timer");
+};
 
 #if defined(HAVE_PERIPHERAL_TIM1)
 template<> struct timer_traits<1>
@@ -19,9 +23,12 @@ template<> struct timer_traits<1>
     typedef tim1_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM1; }
-    static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM1_CH1;
-    static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM1_CH2;
 };
+
+template<> struct timer_channel_traits<1, 1> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH1; };
+template<> struct timer_channel_traits<1, 2> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH2; };
+template<> struct timer_channel_traits<1, 3> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH3; };
+template<> struct timer_channel_traits<1, 4> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM1_CH4; };
 #endif
 
 #if defined(HAVE_PERIPHERAL_TIM2)
@@ -30,9 +37,10 @@ template<> struct timer_traits<2>
     typedef tim2_t T;
     typedef uint32_t count_t;
     static inline T& TIM() { return TIM2; }
-    static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM2_CH1_ETR;
-    static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM2_CH2;
 };
+
+template<> struct timer_channel_traits<2, 1> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM2_CH1_ETR; };
+template<> struct timer_channel_traits<2, 2> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM2_CH2; };
 #endif
 
 #if defined(HAVE_PERIPHERAL_TIM3)
@@ -41,9 +49,10 @@ template<> struct timer_traits<3>
     typedef tim3_t T;
     typedef uint16_t count_t;
     static inline T& TIM() { return TIM3; }
-    static const gpio::internal::alternate_function_t ch1 = gpio::internal::TIM3_CH1;
-    static const gpio::internal::alternate_function_t ch2 = gpio::internal::TIM3_CH2;
 };
+
+template<> struct timer_channel_traits<3, 1> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM3_CH1; };
+template<> struct timer_channel_traits<3, 2> { static const gpio::internal::alternate_function_t altfun = gpio::internal::TIM3_CH2; };
 #endif
 
 #if defined(HAVE_PERIPHERAL_TIM4)
@@ -207,7 +216,7 @@ private:
     typedef typename timer_traits<TN>::T _;
 };
 
-template<int TN, gpio::gpio_pin_t CH1, gpio::gpio_pin_t CH2>
+template<int TN, gpio::gpio_pin_t PIN1, gpio::gpio_pin_t PIN2>
 class encoder_t
 {
 public:
@@ -219,8 +228,8 @@ public:
     {
         using namespace gpio::internal;
 
-        alternate_t<CH1, timer_traits<TN>::ch1>::template setup<input_type>();
-        alternate_t<CH2, timer_traits<TN>::ch2>::template setup<input_type>();
+        alternate_t<PIN1, timer_channel_traits<TN, 1>::altfun>::template setup<input_type>();
+        alternate_t<PIN2, timer_channel_traits<TN, 2>::altfun>::template setup<input_type>();
 
         peripheral_traits<_>::enable();
         TIM().CCMR1 = _::CCMR1_RESET_VALUE
