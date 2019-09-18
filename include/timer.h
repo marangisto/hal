@@ -378,7 +378,12 @@ public:
         TIMER::TIM().CCER |= __::CCER_CCE;          // channel capture compare output enable
     }
 
-    static void set_duty(typename TIMER::count_t x)
+    static typename TIMER::count_t duty()
+    {
+        return __::CCR();
+    }
+
+    static void duty(typename TIMER::count_t x)
     {
         __::CCR() = x;
     }

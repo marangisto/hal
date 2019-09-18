@@ -42,8 +42,8 @@ void loop()
 {
     static uint16_t duty = 0;
 
-    pwma::set_duty(duty += 32);
-    pwmb::set_duty(65535 - duty);
+    pwma::duty(duty += 32);
+    pwmb::duty(65535 - duty);
     sys_tick::delay_ms(1);
 }
 
