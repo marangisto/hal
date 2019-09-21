@@ -121,7 +121,9 @@ public:
         SPI().CR1 |= _::CR1_BIDIMODE;           // simplex transmission
         SPI().CR1 |= _::CR1_BIDIOE;             // simplex output enabled
         SPI().CR2 |= _::CR2_SSOE;               // ss output enable
-        SPI().CR2 |= _::CR2_FRXTH;              // fifo 1/4 (8-bit)
+#if !defined(STM32F103)
+        //SPI().CR2 |= _::CR2_FRXTH;              // fifo 1/4 (8-bit)
+#endif
         //SPI().CR2 |= _::CR2_DS<0x7>;          // 8-bit data size (FIXME: has no effect on 8 vs 16-bit writes!)
         SPI().CR1 |= _::CR1_SPE;                // enable spi
     }
