@@ -110,21 +110,15 @@ public:
         alternate_t<SCK, spi_traits<NO>::sck>::template setup<speed>();
         alternate_t<MOSI, spi_traits<NO>::mosi>::template setup<speed>();
 
-        peripheral_traits<_>::enable();         // enable spi clock
-        SPI().CR1 = _::CR1_RESET_VALUE;         // reset control register 1
+        peripheral_traits<_>::enable();                         // enable spi clock
+        SPI().CR1 = _::CR1_RESET_VALUE                          // reset control register 1
+                  | _::CR1_MSTR                                 // master mode
+                  | _::template CR1_BR<divider>                 // clock divider
+                  | spi_mode_traits<mode>::template mode<_>()   // SPI-mode
+                  | (order == lsb_first ?  _::CR1_LSBFIRST : 0) // lsb first
+                  ;
         SPI().CR2 = _::CR2_RESET_VALUE;         // reset control register 2
-        SPI().CR1 |= _::CR1_MSTR;               // master mode
-        SPI().CR1 |= _::template CR1_BR<divider>;        // clock divider
-        SPI().CR1 |= spi_mode_traits<mode>::template mode<_>();     // SPI-mode
-        if (order == lsb_first)                 // choose bit order
-            SPI().CR1 |= _::CR1_LSBFIRST;       // lsb first
-        SPI().CR1 |= _::CR1_BIDIMODE;           // simplex transmission
-        SPI().CR1 |= _::CR1_BIDIOE;             // simplex output enabled
         SPI().CR2 |= _::CR2_SSOE;               // ss output enable
-#if !defined(STM32F103)
-        //SPI().CR2 |= _::CR2_FRXTH;              // fifo 1/4 (8-bit)
-#endif
-        //SPI().CR2 |= _::CR2_DS<0x7>;          // 8-bit data size (FIXME: has no effect on 8 vs 16-bit writes!)
         SPI().CR1 |= _::CR1_SPE;                // enable spi
     }
 
@@ -151,7 +145,7 @@ public:
     __attribute__((always_inline))
     static inline void wait_idle()
     {
-        while (busy());
+        while ((SPI().SR & (_::SR_BSY | _::SR_TXE)) != _::SR_TXE);
     }
 
     enum interrupt_t
