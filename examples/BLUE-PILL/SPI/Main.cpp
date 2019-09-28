@@ -34,7 +34,7 @@ void loop()
     if (!(i & 0x0f))
         led::toggle();
 
-    hc595::write(i++);
+    hc595::write8(i++);
     hc595::wait_idle();
     latch::set();
     latch::clear();

@@ -123,14 +123,14 @@ public:
     }
 
     __attribute__((always_inline))
-    static inline void write(uint8_t x)
+    static inline void write8(uint8_t x)
     {
         while (!(SPI().SR & _::SR_TXE));        // wait until tx buffer is empty
         *reinterpret_cast<volatile uint8_t*>(&SPI().DR) = x;
     }
 
     __attribute__((always_inline))
-    static inline void write(uint16_t x)
+    static inline void write16(uint16_t x)
     {
         while (!(SPI().SR & _::SR_TXE));        // wait until tx buffer is empty
         SPI().DR = x;
