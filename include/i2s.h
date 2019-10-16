@@ -60,7 +60,6 @@ public:
         , i2s_clock_polarity_t  polarity
         , i2s_format_t          format
         , uint8_t               divider
-        , bool                  oddity = false
         , output_speed_t        speed = high_speed
         >
     static inline void setup()
@@ -84,13 +83,13 @@ public:
                       | ((format & 0x4) ? _::I2SCFGR_CHLEN : 0)         // 32-bit channel width
                       ;
 
-        static_assert(divider > 1, "I2S divider must be strictly larger than one");
+        static_assert(divider > 3, "I2S clock division must be strictly larger than 3");
 
-        I2S().I2SPR = _::template I2SPR_I2SDIV<divider>         // linear prescaler = divider * 2
-                    | (oddity ? _::I2SPR_ODD : 0)               // odd prescaler = (divider * 2) + 1
-                    ;                                           // FIXME: master clock output enable option
+        I2S().I2SPR = _::template I2SPR_I2SDIV<(divider >> 1)>          // linear prescaler
+                    | ((divider & 0x1) ? _::I2SPR_ODD : 0)              // odd prescaler
+                    ;                                                   // FIXME: master clock output enable option
 
-        I2S().I2SCFGR |= _::I2SCFGR_I2SE;                       // enable i2s peripheral
+        I2S().I2SCFGR |= _::I2SCFGR_I2SE;                               // enable i2s peripheral
 
         // note dma and interrupt enable flags are in CR2
     }
