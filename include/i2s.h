@@ -20,7 +20,12 @@ enum i2s_standard_t
 
 enum i2s_clock_polarity_t { low_level, high_level };
 
-enum i2s_format_t { format_16 = 0x0, format_24 = 0x1, format_32 = 0x2 };
+enum i2s_format_t
+    { format_16_16 = 0x0
+    , format_16_32 = 0x4
+    , format_24_32 = 0x1
+    , format_32_32 = 0x2
+    };
 
 template<int NO> struct i2s_traits {};
 
@@ -66,17 +71,18 @@ public:
         alternate_t<WS, i2s_traits<NO>::ws>::template setup<speed>();
         alternate_t<CK, i2s_traits<NO>::ck>::template setup<speed>();
 
-        peripheral_traits<_>::enable();                         // enable i2s clock
+        peripheral_traits<_>::enable();                                 // enable i2s clock
 
-        I2S().CR1 = _::CR1_RESET_VALUE;                         // reset control register 1
-        I2S().CR2 = _::CR2_RESET_VALUE;                         // reset control register 2
-        I2S().I2SCFGR = _::I2SCFGR_RESET_VALUE                  // reset i2s configuration register
-                      | _::I2SCFGR_I2SMOD                       // enable i2s mode
-                      | _::template I2SCFGR_I2SCFG<0x2>         // master transmit
-                      | _::template I2SCFGR_I2SSTD<standard>    // standard selection
-                      | (polarity == high_level ? _::I2SCFGR_CKPOL : 0)  // enable i2s mode
-                      | _::template I2SCFGR_DATLEN<format>      // data length
-                      ;                                         // FIXME: encode CHLEN via additional format
+        I2S().CR1 = _::CR1_RESET_VALUE;                                 // reset control register 1
+        I2S().CR2 = _::CR2_RESET_VALUE;                                 // reset control register 2
+        I2S().I2SCFGR = _::I2SCFGR_RESET_VALUE                          // reset i2s configuration register
+                      | _::I2SCFGR_I2SMOD                               // enable i2s mode
+                      | _::template I2SCFGR_I2SCFG<0x2>                 // master transmit
+                      | _::template I2SCFGR_I2SSTD<standard>            // standard selection
+                      | (polarity == high_level ? _::I2SCFGR_CKPOL : 0) // enable i2s mode
+                      | _::template I2SCFGR_DATLEN<format & 0x3>        // data length
+                      | ((format & 0x4) ? _::I2SCFGR_CHLEN : 0)         // 32-bit channel width
+                      ;
 
         static_assert(divider > 1, "I2S divider must be strictly larger than one");
 
@@ -94,6 +100,24 @@ public:
     {
         while (!(I2S().SR & _::SR_TXE));        // wait until tx buffer is empty
         I2S().DR = x;
+    }
+
+    __attribute__((always_inline))
+    static inline void write24(uint32_t x)
+    {
+        while (!(I2S().SR & _::SR_TXE));        // wait until tx buffer is empty
+        I2S().DR = x >> 8;
+        while (!(I2S().SR & _::SR_TXE));        // wait until tx buffer is empty
+        I2S().DR = (x & 0xffff) << 8;
+    }
+
+    __attribute__((always_inline))
+    static inline void write32(uint32_t x)
+    {
+        while (!(I2S().SR & _::SR_TXE));        // wait until tx buffer is empty
+        I2S().DR = x >> 16;
+        while (!(I2S().SR & _::SR_TXE));        // wait until tx buffer is empty
+        I2S().DR = x & 0xffff;
     }
 
     __attribute__((always_inline))
