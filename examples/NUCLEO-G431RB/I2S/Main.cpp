@@ -28,8 +28,10 @@ int main()
 void loop()
 {
     static uint16_t i = 0;
+
     ld4::toggle();
-    i2s::write16(i++);
-    sys_tick::delay_ms(100);
+    i2s::write16(0xffff - i);
+    i2s::write16(i+= 256);
+    //sys_tick::delay_ms(100);
 }
 
