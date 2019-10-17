@@ -114,9 +114,9 @@ public:
     static inline void write32(uint32_t x)
     {
         while (!(I2S().SR & _::SR_TXE));        // wait until tx buffer is empty
-        I2S().DR = x >> 16;
-        while (!(I2S().SR & _::SR_TXE));        // wait until tx buffer is empty
         I2S().DR = x & 0xffff;
+        while (!(I2S().SR & _::SR_TXE));        // wait until tx buffer is empty
+        I2S().DR = x >> 16;
     }
 
     __attribute__((always_inline))

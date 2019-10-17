@@ -18,7 +18,7 @@ void loop();
 
 int main()
 {
-    i2s::setup<philips_i2s, low_level, format_16_16, 55>();
+    i2s::setup<philips_i2s, low_level, format_32_32, 55>();
     ld4::setup();
 
     for (;;)
@@ -30,8 +30,8 @@ void loop()
     static uint16_t i = 0;
 
     ld4::toggle();
-    i2s::write16(0xffff - i);
-    i2s::write16(i+= 256);
+    i2s::write32(0xffff - i);
+    i2s::write32(i+= 256);
     //sys_tick::delay_ms(100);
 }
 
