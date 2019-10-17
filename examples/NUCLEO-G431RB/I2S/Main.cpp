@@ -18,7 +18,7 @@ void loop();
 
 int main()
 {
-    i2s::setup<philips_i2s, low_level, format_32_32, 55>();
+    i2s::setup<philips_i2s, low_level, format_32_32, 27>();
     ld4::setup();
 
     for (;;)
