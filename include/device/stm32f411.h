@@ -10669,6 +10669,8 @@ struct interrupt
     , I2C2_ER = 34
     , SPI1 = 35
     , SPI2 = 36
+    , USART1 = 37
+    , USART2 = 38
     , EXTI15_10 = 40
     , RTC_ALARM = 41
     , OTG_FS_WKUP = 42

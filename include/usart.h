@@ -87,7 +87,11 @@ public:
     static inline void write(uint8_t x)
     {
         while (!tx_empty());
-        USART2.TDR = x;
+#if defined(STM32F411)
+        USART().DR = x;
+#else
+        USART().TDR = x;
+#endif
     }
 
     static inline void write(const char *s)
@@ -107,7 +111,11 @@ public:
     __attribute__((always_inline))
     static inline void isr()
     {
-        fifo::put(USART2.RDR);
+#if defined(STM32F411)
+        fifo::put(USART().DR);
+#else
+        fifo::put(USART().RDR);
+#endif
     }
 
     __attribute__((always_inline))
@@ -119,13 +127,21 @@ public:
     __attribute__((always_inline))
     static inline bool tx_empty()
     {
+#if defined(STM32F411)
+        return USART().SR & _::SR_TXE;
+#else
         return USART().ISR & _::ISR_TXE;
+#endif
     }
 
     __attribute__((always_inline))
     static inline bool rx_not_empty()
     {
+#if defined(STM32F411)
+        return USART().SR & _::SR_RXNE;
+#else
         return USART().ISR & _::ISR_RXNE;
+#endif
     }
 
 private:

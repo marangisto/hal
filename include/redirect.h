@@ -4,10 +4,6 @@
 
 using hal::sys_tick;
 using namespace hal::gpio;
-using namespace hal::usart;
-
-typedef usart_t<2, PA2, PA3> serial;
-typedef output_t<PA5> ld4;
 
 class stdio_t
 {

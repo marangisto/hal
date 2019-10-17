@@ -238,13 +238,23 @@ enum alternate_function_t
     , I2S1_SD
     , I2S1_WS
     , I2S2_CK
+    , I2S2_CKIN
     , I2S2_MCK
     , I2S2_SD
     , I2S2_WS
+    , I2S2ext_SD
     , I2S3_CK
     , I2S3_MCK
     , I2S3_SD
     , I2S3_WS
+    , I2S3ext_SD
+    , I2S4_CK
+    , I2S4_MCK
+    , I2S4_SD
+    , I2S4_WS
+    , I2S5_CK
+    , I2S5_SD
+    , I2S5_WS
     , I2SCKIN
     , IR_OUT
     , JTCK
@@ -262,10 +272,13 @@ enum alternate_function_t
     , LPUART1_RX
     , LPUART1_TX
     , MCO
+    , MCO_1
+    , MCO_2
     , OSC_EN
     , OSC32_EN
     , OSC32_IN
     , OSC32_OUT
+    , RTC_50H
     , RTC_OUT2
     , RTC_REFIN
     , SAI1_CK1
@@ -281,6 +294,17 @@ enum alternate_function_t
     , SAI1_SCK_B
     , SAI1_SD_A
     , SAI1_SD_B
+    , SDIO_CK
+    , SDIO_CMd
+    , SDIO_CMD
+    , SDIO_D0
+    , SDIO_D1
+    , SDIO_D2
+    , SDIO_D3
+    , SDIO_D4
+    , SDIO_D5
+    , SDIO_D6
+    , SDIO_D7
     , SPI1_MISO
     , SPI1_MOSI
     , SPI1_NSS
@@ -293,10 +317,19 @@ enum alternate_function_t
     , SPI3_MOSI
     , SPI3_NSS
     , SPI3_SCK
+    , SPI4_MISO
+    , SPI4_MOSI
+    , SPI4_NSS
+    , SPI4_SCK
+    , SPI5_MISO
+    , SPI5_MOSI
+    , SPI5_NSS
+    , SPI5_SCK
     , SWCLK
     , SWCLK_JTCK
     , SWDIO
     , SWDIO_JTMS
+    , SWO
     , TAMPER_RTC
     , TIM1_BKIN
     , TIM1_BKIN2
@@ -309,6 +342,8 @@ enum alternate_function_t
     , TIM1_CH4
     , TIM1_CH4N
     , TIM1_ETR
+    , TIM10_CH1
+    , TIM11_CH1
     , TIM14_CH1
     , TIM15_BKIN
     , TIM15_CH1
@@ -336,6 +371,10 @@ enum alternate_function_t
     , TIM4_CH3
     , TIM4_CH4
     , TIM4_ETR
+    , TIM5_CH1
+    , TIM5_CH2
+    , TIM5_CH3
+    , TIM5_CH4
     , TIM8_BKIN
     , TIM8_BKIN2
     , TIM8_CH1
@@ -347,7 +386,10 @@ enum alternate_function_t
     , TIM8_CH4
     , TIM8_CH4N
     , TIM8_ETR
+    , TIM9_CH1
+    , TIM9_CH2
     , TRACECK
+    , TRACECLK
     , TRACED0
     , TRACED1
     , TRACED2
@@ -409,9 +451,15 @@ enum alternate_function_t
     , USART4_RTS_DE_CK
     , USART4_RX
     , USART4_TX
+    , USART6_CK
     , USART6_RX
     , USART6_TX
     , USB_CRS_SYNC
+    , USB_FS_DM
+    , USB_FS_DP
+    , USB_FS_ID
+    , USB_FS_SOF
+    , USB_FS_VBUS
     , USBDM
     , USBDP
     , WKUP
@@ -433,6 +481,8 @@ template<> struct alt_fun_traits<PIN, ALT_FUN>      \
 #include "gpio/stm32f051.h"
 #elif defined(STM32F103)
 #include "gpio/stm32f103.h"
+#elif defined(STM32F411)
+#include "gpio/stm32f411.h"
 #elif defined(STM32G070)
 #include "gpio/stm32g070.h"
 #elif defined(STM32G431)

@@ -16,6 +16,7 @@ void __throw_bad_function_call() { for (;;); }
 }
 #include <functional>
 
+using namespace hal::usart;
 using namespace hal::cordic;
 using namespace hal::timer;
 using namespace hal::gpio;
