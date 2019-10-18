@@ -16869,6 +16869,11 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
         <usage>registers</usage>
       </addressBlock>
       <interrupt>
+        <name>USART1</name>
+        <description>USART1 event interrupt</description>
+        <value>37</value>
+      </interrupt>
+      <interrupt>
         <name>OTG_FS_WKUP</name>
         <description>USB On-The-Go FS Wakeup through EXTI line
         interrupt</description>
@@ -17299,6 +17304,11 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
         <size>0x400</size>
         <usage>registers</usage>
       </addressBlock>
+      <interrupt>
+        <name>USART2</name>
+        <description>USART2 event interrupt</description>
+        <value>38</value>
+      </interrupt>
       <interrupt>
         <name>PVD</name>
         <description>PVD through EXTI line detection

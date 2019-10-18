@@ -21,12 +21,12 @@ template<> void handler<interrupt::USART2>()
 int main()
 {
     ld4::setup();
-    serial::setup<230400>();
+    serial::setup<115200>();
     hal::nvic<interrupt::USART2>::enable();
     stdio_t::bind<serial>();
     interrupt::enable();
 
-    printf("Hello STM32G070!\n");
+    printf("Hello STM32G431!\n");
 
     for (;;)
         loop();

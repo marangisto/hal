@@ -38,6 +38,8 @@ template<> void handler<interrupt::I2C2_EV>() __attribute__ ((weak, alias("_Z17_
 template<> void handler<interrupt::I2C2_ER>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
 template<> void handler<interrupt::SPI1>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
 template<> void handler<interrupt::SPI2>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
+template<> void handler<interrupt::USART1>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
+template<> void handler<interrupt::USART2>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
 template<> void handler<interrupt::EXTI15_10>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
 template<> void handler<interrupt::RTC_ALARM>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
 template<> void handler<interrupt::OTG_FS_WKUP>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
@@ -104,8 +106,8 @@ void (*vectors[])(void) __attribute__ ((section(".vectors"))) =
     , handler<interrupt::I2C2_ER>                   // 34: I2C2 error interrupt
     , handler<interrupt::SPI1>                      // 35: SPI1 global interrupt
     , handler<interrupt::SPI2>                      // 36: SPI2 global interrupt
-    , 0x0
-    , 0x0
+    , handler<interrupt::USART1>                    // 37: USART1 event interrupt
+    , handler<interrupt::USART2>                    // 38: USART2 event interrupt
     , 0x0
     , handler<interrupt::EXTI15_10>                 // 40: EXTI Line[15:10] interrupts
     , handler<interrupt::RTC_ALARM>                 // 41: RTC Alarms (A and B) through EXTI line interrupt

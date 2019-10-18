@@ -5005,6 +5005,7 @@ struct usart1_t
 
     static constexpr uint8_t OTG_FS = 67; // USB On The Go FS global interrupt
     static constexpr uint8_t OTG_FS_WKUP = 42; // USB On-The-Go FS Wakeup through EXTI line interrupt
+    static constexpr uint8_t USART1 = 37; // USART1 event interrupt
 };
 
 static usart1_t& USART1 = *reinterpret_cast<usart1_t*>(0x40011000);
@@ -5244,6 +5245,7 @@ struct wwdg_t
     static const uint32_t SR_RESET_VALUE = 0x0;
 
     static constexpr uint8_t PVD = 1; // PVD through EXTI line detection interrupt
+    static constexpr uint8_t USART2 = 38; // USART2 event interrupt
 };
 
 static wwdg_t& WWDG = *reinterpret_cast<wwdg_t*>(0x40002c00);
