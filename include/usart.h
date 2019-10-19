@@ -87,7 +87,7 @@ public:
     static inline void write(uint8_t x)
     {
         while (!tx_empty());
-#if defined(STM32F411)
+#if defined(STM32F411) || defined(STM32F103)
         USART().DR = x;
 #else
         USART().TDR = x;
@@ -111,7 +111,7 @@ public:
     __attribute__((always_inline))
     static inline void isr()
     {
-#if defined(STM32F411)
+#if defined(STM32F411) || defined(STM32F103)
         fifo::put(USART().DR);
 #else
         fifo::put(USART().RDR);
@@ -127,7 +127,7 @@ public:
     __attribute__((always_inline))
     static inline bool tx_empty()
     {
-#if defined(STM32F411)
+#if defined(STM32F411) || defined(STM32F103)
         return USART().SR & _::SR_TXE;
 #else
         return USART().ISR & _::ISR_TXE;
@@ -137,7 +137,7 @@ public:
     __attribute__((always_inline))
     static inline bool rx_not_empty()
     {
-#if defined(STM32F411)
+#if defined(STM32F411) || defined(STM32F103)
         return USART().SR & _::SR_RXNE;
 #else
         return USART().ISR & _::ISR_RXNE;
