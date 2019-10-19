@@ -49,7 +49,7 @@ template<> struct i2s_traits<2>
     static const gpio::internal::alternate_function_t ws = gpio::internal::I2S2_WS;
 };
 
-template<int NO, gpio_pin_t SD, gpio_pin_t WS, gpio_pin_t CK> struct i2s_t
+template<int NO, gpio_pin_t CK, gpio_pin_t SD, gpio_pin_t WS> struct i2s_t
 {
 private:
     typedef typename i2s_traits<NO>::T _;

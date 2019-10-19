@@ -11,7 +11,7 @@ using hal::sys_tick;
 using namespace hal::gpio;
 using namespace hal::i2s;
 
-typedef i2s_t<2, PA11, PB12, PB13> i2s;
+typedef i2s_t<2, PB13, PA11, PB12> i2s;
 typedef output_t<PA5> ld4;
 
 void loop();
