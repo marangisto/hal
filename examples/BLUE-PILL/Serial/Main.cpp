@@ -9,6 +9,7 @@ using namespace hal::usart;
 
 typedef usart_t<1, PA9, PA10> serial;
 //typedef usart_t<2, PA2, PA3> serial;
+//typedef usart_t<3, PB10, PB11> serial;
 typedef output_t<PC13> led;
 
 void loop();
