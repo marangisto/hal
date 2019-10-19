@@ -7,12 +7,13 @@ using hal::sys_tick;
 using namespace hal::gpio;
 using namespace hal::usart;
 
-typedef usart_t<2, PA2, PA3> serial;
+typedef usart_t<1, PB6, PB7> serial;
+//typedef usart_t<2, PA2, PA3> serial;
 typedef output_t<PD12> ld4;
 
 void loop();
 
-template<> void handler<interrupt::USART2>()
+template<> void handler<interrupt::USART1>()
 {
     ld4::toggle();
     serial::isr();
@@ -22,11 +23,11 @@ int main()
 {
     ld4::setup();
     serial::setup<115200>();
-    hal::nvic<interrupt::USART2>::enable();
+    hal::nvic<interrupt::USART1>::enable();
     stdio_t::bind<serial>();
     interrupt::enable();
 
-    printf("Hello STM32G431!\n");
+    printf("Hello STM32F411!\n");
 
     for (;;)
         loop();
