@@ -51980,8 +51980,8 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           </fields>
         </register>
         <register>
-          <name>HR0</name>
-          <displayName>HR0</displayName>
+          <name>_HR0</name>
+          <displayName>_HR0</displayName>
           <description>digest registers</description>
           <addressOffset>0xC</addressOffset>
           <size>0x20</size>
@@ -51997,8 +51997,8 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           </fields>
         </register>
         <register>
-          <name>HR1</name>
-          <displayName>HR1</displayName>
+          <name>_HR1</name>
+          <displayName>_HR1</displayName>
           <description>digest registers</description>
           <addressOffset>0x10</addressOffset>
           <size>0x20</size>
@@ -52014,8 +52014,8 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           </fields>
         </register>
         <register>
-          <name>HR2</name>
-          <displayName>HR2</displayName>
+          <name>_HR2</name>
+          <displayName>_HR2</displayName>
           <description>digest registers</description>
           <addressOffset>0x14</addressOffset>
           <size>0x20</size>
@@ -52031,8 +52031,8 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           </fields>
         </register>
         <register>
-          <name>HR3</name>
-          <displayName>HR3</displayName>
+          <name>_HR3</name>
+          <displayName>_HR3</displayName>
           <description>digest registers</description>
           <addressOffset>0x18</addressOffset>
           <size>0x20</size>
@@ -52048,8 +52048,8 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           </fields>
         </register>
         <register>
-          <name>HR4</name>
-          <displayName>HR4</displayName>
+          <name>_HR4</name>
+          <displayName>_HR4</displayName>
           <description>digest registers</description>
           <addressOffset>0x1C</addressOffset>
           <size>0x20</size>
