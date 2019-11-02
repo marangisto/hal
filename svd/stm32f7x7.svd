@@ -37725,7 +37725,7 @@
             <value>88</value>
          </interrupt>
          <interrupt>
-            <name>LCD_TFT</name>
+            <name>LCD_TFT_ERR</name>
             <description>LCD-TFT global Error interrupt</description>
             <value>89</value>
          </interrupt>

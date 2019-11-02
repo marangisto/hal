@@ -19943,6 +19943,7 @@ struct ltcd_t
     static const uint32_t L2CLUTWR_RESET_VALUE = 0x0;
 
     static constexpr uint8_t LCD_TFT = 88; // LTDC global interrupt
+    static constexpr uint8_t LCD_TFT_ERR = 89; // LCD-TFT global Error interrupt
 };
 
 static ltcd_t& LTCD = *reinterpret_cast<ltcd_t*>(0x40016800);
@@ -35209,7 +35210,7 @@ struct interrupt
     , SPI6 = 86
     , SAI1 = 87
     , LCD_TFT = 88
-    , LCD_TFT = 89
+    , LCD_TFT_ERR = 89
     , DMA2D = 90
     , SAI2 = 91
     , QUADSPI = 92

@@ -102,7 +102,7 @@ template<> void handler<interrupt::SPI5>() __attribute__ ((weak, alias("_Z17__de
 template<> void handler<interrupt::SPI6>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
 template<> void handler<interrupt::SAI1>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
 template<> void handler<interrupt::LCD_TFT>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
-template<> void handler<interrupt::LCD_TFT>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
+template<> void handler<interrupt::LCD_TFT_ERR>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
 template<> void handler<interrupt::DMA2D>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
 template<> void handler<interrupt::SAI2>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
 template<> void handler<interrupt::QUADSPI>() __attribute__ ((weak, alias("_Z17__default_handlerv")));
@@ -229,7 +229,7 @@ void (*vectors[])(void) __attribute__ ((section(".vectors"))) =
     , handler<interrupt::SPI6>                      // 86: SPI 6 global interrupt
     , handler<interrupt::SAI1>                      // 87: SAI1 global interrupt
     , handler<interrupt::LCD_TFT>                   // 88: LTDC global interrupt
-    , handler<interrupt::LCD_TFT>                   // 89: LCD-TFT global Error interrupt
+    , handler<interrupt::LCD_TFT_ERR>               // 89: LCD-TFT global Error interrupt
     , handler<interrupt::DMA2D>                     // 90: DMA2D global interrupt
     , handler<interrupt::SAI2>                      // 91: SAI2 global interrupt
     , handler<interrupt::QUADSPI>                   // 92: QuadSPI global interrupt
