@@ -3384,7 +3384,7 @@ struct gpiod_t
 {
     volatile uint32_t    MODER;                // [Read-write] GPIO port mode register
     volatile uint32_t    OTYPER;               // [Read-write] GPIO port output type register
-    volatile uint32_t    GPIOB_OSPEEDR;        // [Read-write] GPIO port output speed register
+    volatile uint32_t    OSPEEDR;              // [Read-write] GPIO port output speed register
     volatile uint32_t    PUPDR;                // [Read-write] GPIO port pull-up/pull-down register
     volatile uint32_t    IDR;                  // [Read-only] GPIO port input data register
     volatile uint32_t    ODR;                  // [Read-write] GPIO port output data register
@@ -3463,54 +3463,54 @@ struct gpiod_t
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<30, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<28, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<26, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<24, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<22, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<20, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<18, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<16, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<14, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<12, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<10, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<8, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<6, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<4, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<2, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<0, 0x3>::value<X>();
-    static const uint32_t GPIOB_OSPEEDR_RESET_VALUE = 0x0;
+    static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
     static constexpr uint32_t PUPDR_PUPDR15 =             // Port x configuration bits (y = 0..15) (2 bits)
@@ -3737,7 +3737,7 @@ struct gpioc_t
 {
     volatile uint32_t    MODER;                // [Read-write] GPIO port mode register
     volatile uint32_t    OTYPER;               // [Read-write] GPIO port output type register
-    volatile uint32_t    GPIOB_OSPEEDR;        // [Read-write] GPIO port output speed register
+    volatile uint32_t    OSPEEDR;              // [Read-write] GPIO port output speed register
     volatile uint32_t    PUPDR;                // [Read-write] GPIO port pull-up/pull-down register
     volatile uint32_t    IDR;                  // [Read-only] GPIO port input data register
     volatile uint32_t    ODR;                  // [Read-write] GPIO port output data register
@@ -3816,54 +3816,54 @@ struct gpioc_t
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<30, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<28, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<26, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<24, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<22, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<20, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<18, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<16, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<14, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<12, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<10, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<8, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<6, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<4, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<2, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<0, 0x3>::value<X>();
-    static const uint32_t GPIOB_OSPEEDR_RESET_VALUE = 0x0;
+    static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
     static constexpr uint32_t PUPDR_PUPDR15 =             // Port x configuration bits (y = 0..15) (2 bits)
@@ -4090,7 +4090,7 @@ struct gpiok_t
 {
     volatile uint32_t    MODER;                // [Read-write] GPIO port mode register
     volatile uint32_t    OTYPER;               // [Read-write] GPIO port output type register
-    volatile uint32_t    GPIOB_OSPEEDR;        // [Read-write] GPIO port output speed register
+    volatile uint32_t    OSPEEDR;              // [Read-write] GPIO port output speed register
     volatile uint32_t    PUPDR;                // [Read-write] GPIO port pull-up/pull-down register
     volatile uint32_t    IDR;                  // [Read-only] GPIO port input data register
     volatile uint32_t    ODR;                  // [Read-write] GPIO port output data register
@@ -4169,54 +4169,54 @@ struct gpiok_t
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<30, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<28, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<26, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<24, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<22, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<20, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<18, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<16, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<14, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<12, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<10, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<8, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<6, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<4, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<2, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<0, 0x3>::value<X>();
-    static const uint32_t GPIOB_OSPEEDR_RESET_VALUE = 0x0;
+    static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
     static constexpr uint32_t PUPDR_PUPDR15 =             // Port x configuration bits (y = 0..15) (2 bits)
@@ -4443,7 +4443,7 @@ struct gpioj_t
 {
     volatile uint32_t    MODER;                // [Read-write] GPIO port mode register
     volatile uint32_t    OTYPER;               // [Read-write] GPIO port output type register
-    volatile uint32_t    GPIOB_OSPEEDR;        // [Read-write] GPIO port output speed register
+    volatile uint32_t    OSPEEDR;              // [Read-write] GPIO port output speed register
     volatile uint32_t    PUPDR;                // [Read-write] GPIO port pull-up/pull-down register
     volatile uint32_t    IDR;                  // [Read-only] GPIO port input data register
     volatile uint32_t    ODR;                  // [Read-write] GPIO port output data register
@@ -4522,54 +4522,54 @@ struct gpioj_t
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<30, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<28, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<26, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<24, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<22, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<20, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<18, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<16, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<14, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<12, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<10, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<8, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<6, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<4, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<2, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<0, 0x3>::value<X>();
-    static const uint32_t GPIOB_OSPEEDR_RESET_VALUE = 0x0;
+    static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
     static constexpr uint32_t PUPDR_PUPDR15 =             // Port x configuration bits (y = 0..15) (2 bits)
@@ -4796,7 +4796,7 @@ struct gpioi_t
 {
     volatile uint32_t    MODER;                // [Read-write] GPIO port mode register
     volatile uint32_t    OTYPER;               // [Read-write] GPIO port output type register
-    volatile uint32_t    GPIOB_OSPEEDR;        // [Read-write] GPIO port output speed register
+    volatile uint32_t    OSPEEDR;              // [Read-write] GPIO port output speed register
     volatile uint32_t    PUPDR;                // [Read-write] GPIO port pull-up/pull-down register
     volatile uint32_t    IDR;                  // [Read-only] GPIO port input data register
     volatile uint32_t    ODR;                  // [Read-write] GPIO port output data register
@@ -4875,54 +4875,54 @@ struct gpioi_t
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<30, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<28, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<26, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<24, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<22, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<20, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<18, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<16, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<14, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<12, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<10, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<8, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<6, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<4, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<2, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<0, 0x3>::value<X>();
-    static const uint32_t GPIOB_OSPEEDR_RESET_VALUE = 0x0;
+    static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
     static constexpr uint32_t PUPDR_PUPDR15 =             // Port x configuration bits (y = 0..15) (2 bits)
@@ -5149,7 +5149,7 @@ struct gpioh_t
 {
     volatile uint32_t    MODER;                // [Read-write] GPIO port mode register
     volatile uint32_t    OTYPER;               // [Read-write] GPIO port output type register
-    volatile uint32_t    GPIOB_OSPEEDR;        // [Read-write] GPIO port output speed register
+    volatile uint32_t    OSPEEDR;              // [Read-write] GPIO port output speed register
     volatile uint32_t    PUPDR;                // [Read-write] GPIO port pull-up/pull-down register
     volatile uint32_t    IDR;                  // [Read-only] GPIO port input data register
     volatile uint32_t    ODR;                  // [Read-write] GPIO port output data register
@@ -5228,54 +5228,54 @@ struct gpioh_t
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<30, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<28, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<26, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<24, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<22, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<20, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<18, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<16, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<14, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<12, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<10, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<8, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<6, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<4, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<2, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<0, 0x3>::value<X>();
-    static const uint32_t GPIOB_OSPEEDR_RESET_VALUE = 0x0;
+    static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
     static constexpr uint32_t PUPDR_PUPDR15 =             // Port x configuration bits (y = 0..15) (2 bits)
@@ -5502,7 +5502,7 @@ struct gpiog_t
 {
     volatile uint32_t    MODER;                // [Read-write] GPIO port mode register
     volatile uint32_t    OTYPER;               // [Read-write] GPIO port output type register
-    volatile uint32_t    GPIOB_OSPEEDR;        // [Read-write] GPIO port output speed register
+    volatile uint32_t    OSPEEDR;              // [Read-write] GPIO port output speed register
     volatile uint32_t    PUPDR;                // [Read-write] GPIO port pull-up/pull-down register
     volatile uint32_t    IDR;                  // [Read-only] GPIO port input data register
     volatile uint32_t    ODR;                  // [Read-write] GPIO port output data register
@@ -5581,54 +5581,54 @@ struct gpiog_t
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<30, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<28, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<26, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<24, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<22, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<20, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<18, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<16, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<14, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<12, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<10, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<8, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<6, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<4, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<2, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<0, 0x3>::value<X>();
-    static const uint32_t GPIOB_OSPEEDR_RESET_VALUE = 0x0;
+    static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
     static constexpr uint32_t PUPDR_PUPDR15 =             // Port x configuration bits (y = 0..15) (2 bits)
@@ -5855,7 +5855,7 @@ struct gpiof_t
 {
     volatile uint32_t    MODER;                // [Read-write] GPIO port mode register
     volatile uint32_t    OTYPER;               // [Read-write] GPIO port output type register
-    volatile uint32_t    GPIOB_OSPEEDR;        // [Read-write] GPIO port output speed register
+    volatile uint32_t    OSPEEDR;              // [Read-write] GPIO port output speed register
     volatile uint32_t    PUPDR;                // [Read-write] GPIO port pull-up/pull-down register
     volatile uint32_t    IDR;                  // [Read-only] GPIO port input data register
     volatile uint32_t    ODR;                  // [Read-write] GPIO port output data register
@@ -5934,54 +5934,54 @@ struct gpiof_t
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<30, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<28, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<26, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<24, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<22, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<20, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<18, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<16, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<14, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<12, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<10, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<8, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<6, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<4, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<2, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<0, 0x3>::value<X>();
-    static const uint32_t GPIOB_OSPEEDR_RESET_VALUE = 0x0;
+    static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
     static constexpr uint32_t PUPDR_PUPDR15 =             // Port x configuration bits (y = 0..15) (2 bits)
@@ -6208,7 +6208,7 @@ struct gpioe_t
 {
     volatile uint32_t    MODER;                // [Read-write] GPIO port mode register
     volatile uint32_t    OTYPER;               // [Read-write] GPIO port output type register
-    volatile uint32_t    GPIOB_OSPEEDR;        // [Read-write] GPIO port output speed register
+    volatile uint32_t    OSPEEDR;              // [Read-write] GPIO port output speed register
     volatile uint32_t    PUPDR;                // [Read-write] GPIO port pull-up/pull-down register
     volatile uint32_t    IDR;                  // [Read-only] GPIO port input data register
     volatile uint32_t    ODR;                  // [Read-write] GPIO port output data register
@@ -6287,54 +6287,54 @@ struct gpioe_t
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<30, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<28, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<26, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<24, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<22, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<20, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<18, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<16, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<14, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<12, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<10, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<8, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<6, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<4, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<2, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<0, 0x3>::value<X>();
-    static const uint32_t GPIOB_OSPEEDR_RESET_VALUE = 0x0;
+    static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
     static constexpr uint32_t PUPDR_PUPDR15 =             // Port x configuration bits (y = 0..15) (2 bits)
@@ -6914,7 +6914,7 @@ struct gpioa_t
 {
     volatile uint32_t    MODER;                // [Read-write] GPIO port mode register
     volatile uint32_t    OTYPER;               // [Read-write] GPIO port output type register
-    volatile uint32_t    GPIOB_OSPEEDR;        // [Read-write] GPIO port output speed register
+    volatile uint32_t    OSPEEDR;              // [Read-write] GPIO port output speed register
     volatile uint32_t    PUPDR;                // [Read-write] GPIO port pull-up/pull-down register
     volatile uint32_t    IDR;                  // [Read-only] GPIO port input data register
     volatile uint32_t    ODR;                  // [Read-write] GPIO port output data register
@@ -6993,54 +6993,54 @@ struct gpioa_t
     static const uint32_t OTYPER_RESET_VALUE = 0x0;
 
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR15 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<30, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR14 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<28, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR13 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<26, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR12 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<24, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR11 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<22, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR10 =           // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<20, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR9 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<18, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR8 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<16, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR7 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<14, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR6 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<12, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR5 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<10, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR4 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<8, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR3 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<6, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR2 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<4, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR1 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<2, 0x3>::value<X>();
     template<uint32_t X>
-    static constexpr uint32_t GPIOB_OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
+    static constexpr uint32_t OSPEEDR_OSPEEDR0 =            // Port x configuration bits (y = 0..15) (2 bits)
         bit_field_t<0, 0x3>::value<X>();
-    static const uint32_t GPIOB_OSPEEDR_RESET_VALUE = 0x0;
+    static const uint32_t OSPEEDR_RESET_VALUE = 0x0;
 
     template<uint32_t X>
     static constexpr uint32_t PUPDR_PUPDR15 =             // Port x configuration bits (y = 0..15) (2 bits)
