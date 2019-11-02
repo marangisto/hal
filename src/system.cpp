@@ -41,7 +41,7 @@ void sys_tick::init(uint32_t n)
 
     ms_counter = 0;                             // start new epoq
 
-#if defined(STM32F051) || defined (STM32F767) || defined(STM32G070)
+#if defined(STM32F051) || defined (STM32F767) || defined(STM32H743) || defined(STM32G070)
     STK.CSR = _::CSR_RESET_VALUE;               // reset controls
     STK.RVR = n - 1;                            // reload value
     STK.CVR = _::CVR_RESET_VALUE;               // current counter value
@@ -162,6 +162,8 @@ void sys_clock::init()
 
     while ((RCC.CFGR & encode<0x3, _::CFGR_SWS0, 2>()) != encode<0x2, _::CFGR_SWS0, 2>());
 #elif defined(STM32F767)
+    m_freq = 8000000;
+#elif defined(STM32H743)
     m_freq = 8000000;
 #elif defined(STM32G070)
     m_freq = 64000000;
