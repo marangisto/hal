@@ -17657,7 +17657,6 @@
                <name>CCMR1_Input</name>
                <displayName>CCMR1_Input</displayName>
                <description>capture/compare mode register 1 (input           mode)</description>
-               <alternateRegister>CCMR1_Output</alternateRegister>
                <addressOffset>0x18</addressOffset>
                <size>0x20</size>
                <access>read-write</access>
@@ -17776,7 +17775,6 @@
                <name>CCMR2_Input</name>
                <displayName>CCMR2_Input</displayName>
                <description>capture/compare mode register 2 (input           mode)</description>
-               <alternateRegister>CCMR2_Output</alternateRegister>
                <addressOffset>0x1C</addressOffset>
                <size>0x20</size>
                <access>read-write</access>
@@ -18817,7 +18815,6 @@
                <name>CCMR1_Input</name>
                <displayName>CCMR1_Input</displayName>
                <description>capture/compare mode register 1 (input           mode)</description>
-               <alternateRegister>CCMR1_Output</alternateRegister>
                <addressOffset>0x18</addressOffset>
                <size>0x20</size>
                <access>read-write</access>
@@ -18936,7 +18933,6 @@
                <name>CCMR2_Input</name>
                <displayName>CCMR2_Input</displayName>
                <description>capture/compare mode register 2 (input           mode)</description>
-               <alternateRegister>CCMR2_Output</alternateRegister>
                <addressOffset>0x1C</addressOffset>
                <size>0x20</size>
                <access>read-write</access>
@@ -19739,7 +19735,6 @@
                <name>CCMR1_Input</name>
                <displayName>CCMR1_Input</displayName>
                <description>capture/compare mode register 1 (input           mode)</description>
-               <alternateRegister>CCMR1_Output</alternateRegister>
                <addressOffset>0x18</addressOffset>
                <size>0x20</size>
                <access>read-write</access>
@@ -19858,7 +19853,6 @@
                <name>CCMR2_Input</name>
                <displayName>CCMR2_Input</displayName>
                <description>capture/compare mode register 2 (input           mode)</description>
-               <alternateRegister>CCMR2_Output</alternateRegister>
                <addressOffset>0x1C</addressOffset>
                <size>0x20</size>
                <access>read-write</access>
@@ -20649,7 +20643,6 @@
                <name>CCMR1_Input</name>
                <displayName>CCMR1_Input</displayName>
                <description>capture/compare mode register 1 (input           mode)</description>
-               <alternateRegister>CCMR1_Output</alternateRegister>
                <addressOffset>0x18</addressOffset>
                <size>0x20</size>
                <access>read-write</access>
@@ -20768,7 +20761,6 @@
                <name>CCMR2_Input</name>
                <displayName>CCMR2_Input</displayName>
                <description>capture/compare mode register 2 (input           mode)</description>
-               <alternateRegister>CCMR2_Output</alternateRegister>
                <addressOffset>0x1C</addressOffset>
                <size>0x20</size>
                <access>read-write</access>
@@ -21363,7 +21355,6 @@
                <name>CCMR1_Input</name>
                <displayName>CCMR1_Input</displayName>
                <description>capture/compare mode register 1 (input           mode)</description>
-               <alternateRegister>CCMR1_Output</alternateRegister>
                <addressOffset>0x18</addressOffset>
                <size>0x20</size>
                <access>read-write</access>
@@ -21716,7 +21707,6 @@
                <name>CCMR1_Input</name>
                <displayName>CCMR1_Input</displayName>
                <description>capture/compare mode register 1 (input           mode)</description>
-               <alternateRegister>CCMR1_Output</alternateRegister>
                <addressOffset>0x18</addressOffset>
                <size>0x20</size>
                <access>read-write</access>
@@ -46407,7 +46397,6 @@
                <name>OTG_FS_GRXSTSR_Host</name>
                <displayName>OTG_FS_GRXSTSR_Host</displayName>
                <description>OTG_FS Receive status debug read(Host           mode)</description>
-               <alternateRegister>OTG_FS_GRXSTSR_Device</alternateRegister>
                <addressOffset>0x1C</addressOffset>
                <size>0x20</size>
                <access>read-only</access>
@@ -46483,7 +46472,6 @@
                <name>OTG_FS_HNPTXFSIZ_Host</name>
                <displayName>OTG_FS_HNPTXFSIZ_Host</displayName>
                <description>OTG_FS Host non-periodic transmit FIFO size           register</description>
-               <alternateRegister>OTG_FS_DIEPTXF0_Device</alternateRegister>
                <addressOffset>0x28</addressOffset>
                <size>0x20</size>
                <access>read-write</access>
@@ -46757,7 +46745,6 @@
                <name>OTG_FS_GRXSTSP_Host</name>
                <displayName>OTG_FS_GRXSTSP_Host</displayName>
                <description>OTG status read and pop register (Host           mode)</description>
-               <alternateRegister>OTG_FS_GRXSTSP_Device</alternateRegister>
                <addressOffset>0x20</addressOffset>
                <size>0x20</size>
                <access>read-only</access>
@@ -48071,7 +48058,6 @@
                <name>OTG_HS_DIEPTXF0_Device</name>
                <displayName>OTG_HS_DIEPTXF0_Device</displayName>
                <description>Endpoint 0 transmit FIFO size (peripheral           mode)</description>
-               <alternateRegister>OTG_HS_HNPTXFSIZ_Host</alternateRegister>
                <addressOffset>0x28</addressOffset>
                <size>32</size>
                <access>read-write</access>
@@ -48396,7 +48382,6 @@
                <name>OTG_HS_GRXSTSR_Device</name>
                <displayName>OTG_HS_GRXSTSR_Device</displayName>
                <description>OTG_HS Receive status debug read register           (peripheral mode mode)</description>
-               <alternateRegister>OTG_HS_GRXSTSR_Host</alternateRegister>
                <addressOffset>0x1C</addressOffset>
                <size>32</size>
                <access>read-only</access>
@@ -48438,7 +48423,6 @@
                <name>OTG_HS_GRXSTSP_Device</name>
                <displayName>OTG_HS_GRXSTSP_Device</displayName>
                <description>OTG_HS status read and pop register           (peripheral mode)</description>
-               <alternateRegister>OTG_HS_GRXSTSP_Host</alternateRegister>
                <addressOffset>0x20</addressOffset>
                <size>32</size>
                <access>read-only</access>
@@ -52652,7 +52636,6 @@
                <name>DFSDM1_RDATAR</name>
                <displayName>DFSDM1_RDATAR</displayName>
                <description>DFSDM data register for the regular           channel</description>
-               <alternateRegister>DFSDM1_JDATAR</alternateRegister>
                <addressOffset>0x198</addressOffset>
                <size>0x20</size>
                <access>read-only</access>
@@ -52682,7 +52665,6 @@
                <name>DFSDM2_RDATAR</name>
                <displayName>DFSDM2_RDATAR</displayName>
                <description>DFSDM data register for the regular           channel</description>
-               <alternateRegister>DFSDM2_JDATAR</alternateRegister>
                <addressOffset>0x218</addressOffset>
                <size>0x20</size>
                <access>read-only</access>
@@ -52712,7 +52694,6 @@
                <name>DFSDM3_RDATAR</name>
                <displayName>DFSDM3_RDATAR</displayName>
                <description>DFSDM data register for the regular           channel</description>
-               <alternateRegister>DFSDM3_JDATAR</alternateRegister>
                <addressOffset>0x318</addressOffset>
                <size>0x20</size>
                <access>read-only</access>
@@ -77719,7 +77700,6 @@
                <name>OTG_HS_DIEPTSIZ6</name>
                <displayName>OTG_HS_DIEPTSIZ6</displayName>
                <description>OTG_HS device endpoint transfer size           register</description>
-               <alternateRegister>OTG_HS_DIEPCTL5</alternateRegister>
                <addressOffset>0x1A0</addressOffset>
                <size>32</size>
                <access>read-write</access>
@@ -77766,7 +77746,6 @@
                <name>OTG_HS_DIEPTSIZ7</name>
                <displayName>OTG_HS_DIEPTSIZ7</displayName>
                <description>OTG_HS device endpoint transfer size           register</description>
-               <alternateRegister>OTG_HS_DIEPINT5</alternateRegister>
                <addressOffset>0x1A8</addressOffset>
                <size>32</size>
                <access>read-write</access>

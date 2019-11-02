@@ -34700,7 +34700,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <name>DR_01</name>
           <displayName>DR_01</displayName>
           <description>Data input register</description>
-          <alternateRegister>DR_00</alternateRegister>
           <addressOffset>0x10</addressOffset>
           <size>0x20</size>
           <access>read-only</access>
@@ -34748,8 +34747,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <name>DR_10</name>
           <displayName>DR_10</displayName>
           <description>Data input register</description>
-          <alternateRegister>DR_00</alternateRegister>
-          <alternateRegister>DR_01</alternateRegister>
           <addressOffset>0x10</addressOffset>
           <size>0x20</size>
           <access>read-only</access>
@@ -50563,7 +50560,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>PRAR_PRG2</displayName>
           <description>FLASH protection address for bank
           2</description>
-          <alternateRegister>PRAR_PRG1</alternateRegister>
           <addressOffset>0x2C</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -57583,8 +57579,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>OTG_HS_DIEPTXF0_Device</displayName>
           <description>Endpoint 0 transmit FIFO size (peripheral
           mode)</description>
-          <alternateRegister>
-          OTG_HS_HNPTXFSIZ_Host</alternateRegister>
           <addressOffset>0x28</addressOffset>
           <size>32</size>
           <access>read-write</access>
@@ -57940,8 +57934,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>OTG_HS_GRXSTSR_Device</displayName>
           <description>OTG_HS Receive status debug read register
           (peripheral mode mode)</description>
-          <alternateRegister>
-          OTG_HS_GRXSTSR_Host</alternateRegister>
           <addressOffset>0x1C</addressOffset>
           <size>32</size>
           <access>read-only</access>
@@ -57984,8 +57976,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>OTG_HS_GRXSTSP_Device</displayName>
           <description>OTG_HS status read and pop register
           (peripheral mode)</description>
-          <alternateRegister>
-          OTG_HS_GRXSTSP_Host</alternateRegister>
           <addressOffset>0x20</addressOffset>
           <size>32</size>
           <access>read-only</access>
@@ -67076,7 +67066,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>OTG_HS_DIEPTSIZ6</displayName>
           <description>OTG_HS device endpoint transfer size
           register</description>
-          <alternateRegister>OTG_HS_DIEPCTL5</alternateRegister>
           <addressOffset>0x1A0</addressOffset>
           <size>32</size>
           <access>read-write</access>
@@ -67126,7 +67115,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>OTG_HS_DIEPTSIZ7</displayName>
           <description>OTG_HS device endpoint transfer size
           register</description>
-          <alternateRegister>OTG_HS_DIEPINT5</alternateRegister>
           <addressOffset>0x1A8</addressOffset>
           <size>32</size>
           <access>read-write</access>
@@ -94234,7 +94222,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR1_Input</displayName>
           <description>capture/compare mode register 1 (input
           mode)</description>
-          <alternateRegister>CCMR1_Output</alternateRegister>
           <addressOffset>0x18</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -94873,7 +94860,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR1_Input</displayName>
           <description>capture/compare mode register 1 (input
           mode)</description>
-          <alternateRegister>CCMR1_Output</alternateRegister>
           <addressOffset>0x18</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -95666,7 +95652,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR1_Input</displayName>
           <description>capture/compare mode register 1 (input
           mode)</description>
-          <alternateRegister>CCMR1_Output</alternateRegister>
           <addressOffset>0x18</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -97793,7 +97778,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR1_Input</displayName>
           <description>capture/compare mode register 1 (input
           mode)</description>
-          <alternateRegister>CCMR1_Output</alternateRegister>
           <addressOffset>0x18</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -97938,7 +97922,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR2_Input</displayName>
           <description>capture/compare mode register 2 (input
           mode)</description>
-          <alternateRegister>CCMR2_Output</alternateRegister>
           <addressOffset>0x1C</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -104752,7 +104735,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR1_Input</displayName>
           <description>capture/compare mode register 1 (input
           mode)</description>
-          <alternateRegister>CCMR1_Output</alternateRegister>
           <addressOffset>0x18</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
@@ -104889,7 +104871,6 @@ xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_1.xsd">
           <displayName>CCMR2_Input</displayName>
           <description>capture/compare mode register 2 (input
           mode)</description>
-          <alternateRegister>CCMR2_Output</alternateRegister>
           <addressOffset>0x1C</addressOffset>
           <size>0x20</size>
           <access>read-write</access>
