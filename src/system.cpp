@@ -41,7 +41,7 @@ void sys_tick::init(uint32_t n)
 
     ms_counter = 0;                             // start new epoq
 
-#if defined(STM32F051) || defined(STM32G070)
+#if defined(STM32F051) || defined (STM32F767) || defined(STM32G070)
     STK.CSR = _::CSR_RESET_VALUE;               // reset controls
     STK.RVR = n - 1;                            // reload value
     STK.CVR = _::CVR_RESET_VALUE;               // current counter value
@@ -70,13 +70,16 @@ void sys_clock::init()
     using namespace hal;
     typedef rcc_t _;
 
+    // reset clock control registers (common for all families)
+
+    RCC.CR = _::CR_RESET_VALUE;
+    RCC.CFGR = _::CFGR_RESET_VALUE;
+
 #if defined(STM32F051)
     m_freq = 48000000;
 
     // reset clock control registers
 
-    RCC.CR = _::CR_RESET_VALUE;
-    RCC.CFGR = _::CFGR_RESET_VALUE;
     RCC.CFGR2 = _::CFGR2_RESET_VALUE;
     RCC.CFGR3 = _::CFGR3_RESET_VALUE;
     RCC.CR2 = _::CR2_RESET_VALUE;
@@ -101,8 +104,6 @@ void sys_clock::init()
  
     FLASH.ACR |= flash_t::ACR_PRFTBE | flash_t::template ACR_LATENCY<0x2>;
 
-    RCC.CR = _::CR_RESET_VALUE;             // reset control register
-    RCC.CFGR = _::CFGR_RESET_VALUE;         // reset configuration register
     RCC.CR |= _::CR_HSEON;                  // enable external clock
     while (!(RCC.CR & _::CR_HSERDY));       // wait for HSE ready
     RCC.CFGR |= _::CFGR_PLLSRC              // clock from PREDIV1
@@ -121,8 +122,6 @@ void sys_clock::init()
 
     // reset clock control registers
 
-    RCC.CR = _::CR_RESET_VALUE;
-    RCC.CFGR = _::CFGR_RESET_VALUE;
     RCC.CIR = _::CIR_RESET_VALUE;
 
     // set system clock to HSI-PLL 100MHz
@@ -162,13 +161,10 @@ void sys_clock::init()
     // wait for PLL as system clock
 
     while ((RCC.CFGR & encode<0x3, _::CFGR_SWS0, 2>()) != encode<0x2, _::CFGR_SWS0, 2>());
+#elif defined(STM32F767)
+    m_freq = 8000000;
 #elif defined(STM32G070)
     m_freq = 64000000;
-
-    // reset clock control registers
-
-    RCC.CR = _::CR_RESET_VALUE;
-    RCC.CFGR = _::CFGR_RESET_VALUE;
 
     // set system clock to HSI-PLL 64MHz and p-clock = 64MHz
 
@@ -207,11 +203,6 @@ void sys_clock::init()
     while ((RCC.CFGR & _::CFGR_SWS<0x3>) != _::CFGR_SWS<0x2>);
 #elif defined(STM32G431)
     m_freq = 170000000;
-
-    // reset clock control registers
-
-    RCC.CR = _::CR_RESET_VALUE;
-    RCC.CFGR = _::CFGR_RESET_VALUE;
 
     // set system clock to HSI-PLL 170MHz (R) and same for P and Q clocks
 

@@ -40,6 +40,10 @@ extern void __default_handler(void) {}
 #include "vector/stm32f411.cpp"
 #elif defined (STM32F412)
 #include "vector/stm32f412.cpp"
+#elif defined (STM32F767)
+#include "vector/stm32f7x7.cpp"
+#elif defined (STM32H743)
+#include "vector/stm32h7x3.cpp"
 #elif defined (STM32G070)
 #include "vector/stm32g07x.cpp"
 #elif defined (STM32G431)
