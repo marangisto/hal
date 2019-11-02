@@ -12,6 +12,12 @@
 #elif defined(STM32F411)
     #include <device/stm32f411.h>
     namespace device = stm32f411;
+#elif defined(STM32F767)
+    #include <device/stm32f7x7.h>
+    namespace device = stm32f7x7;
+#elif defined(STM32H743)
+    #include <device/stm32h7x3.h>
+    namespace device = stm32h7x3;
 #elif defined(STM32G070)
     #include <device/stm32g07x.h>
     namespace device = stm32g07x;

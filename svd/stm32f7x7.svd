@@ -258,7 +258,7 @@
                </fields>
             </register>
             <register>
-               <name>HR0</name>
+               <name>_HR0</name>
                <displayName>HR0</displayName>
                <description>digest registers</description>
                <addressOffset>0xC</addressOffset>
@@ -275,7 +275,7 @@
                </fields>
             </register>
             <register>
-               <name>HR1</name>
+               <name>_HR1</name>
                <displayName>HR1</displayName>
                <description>digest registers</description>
                <addressOffset>0x10</addressOffset>
@@ -292,7 +292,7 @@
                </fields>
             </register>
             <register>
-               <name>HR2</name>
+               <name>_HR2</name>
                <displayName>HR2</displayName>
                <description>digest registers</description>
                <addressOffset>0x14</addressOffset>
@@ -309,7 +309,7 @@
                </fields>
             </register>
             <register>
-               <name>HR3</name>
+               <name>_HR3</name>
                <displayName>HR3</displayName>
                <description>digest registers</description>
                <addressOffset>0x18</addressOffset>
@@ -326,7 +326,7 @@
                </fields>
             </register>
             <register>
-               <name>HR4</name>
+               <name>_HR4</name>
                <displayName>HR4</displayName>
                <description>digest registers</description>
                <addressOffset>0x1C</addressOffset>

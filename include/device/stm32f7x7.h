@@ -77,11 +77,11 @@ struct hash_t
     volatile uint32_t    CR;                   // control register
     volatile uint32_t    DIN;                  // [Read-write] data input register
     volatile uint32_t    STR;                  // start register
-    volatile uint32_t    HR0;                  // [Read-only] digest registers
-    volatile uint32_t    HR1;                  // [Read-only] digest registers
-    volatile uint32_t    HR2;                  // [Read-only] digest registers
-    volatile uint32_t    HR3;                  // [Read-only] digest registers
-    volatile uint32_t    HR4;                  // [Read-only] digest registers
+    volatile uint32_t    _HR0;                 // [Read-only] digest registers
+    volatile uint32_t    _HR1;                 // [Read-only] digest registers
+    volatile uint32_t    _HR2;                 // [Read-only] digest registers
+    volatile uint32_t    _HR3;                 // [Read-only] digest registers
+    volatile uint32_t    _HR4;                 // [Read-only] digest registers
     volatile uint32_t    IMR;                  // [Read-write] interrupt enable register
     volatile uint32_t    SR;                   // status register
     reserved_t<52>       _0;
@@ -175,19 +175,19 @@ struct hash_t
     static const uint32_t STR_RESET_VALUE = 0x0;
 
 
-    static const uint32_t HR0_RESET_VALUE = 0x0;
+    static const uint32_t _HR0_RESET_VALUE = 0x0;
 
 
-    static const uint32_t HR1_RESET_VALUE = 0x0;
+    static const uint32_t _HR1_RESET_VALUE = 0x0;
 
 
-    static const uint32_t HR2_RESET_VALUE = 0x0;
+    static const uint32_t _HR2_RESET_VALUE = 0x0;
 
 
-    static const uint32_t HR3_RESET_VALUE = 0x0;
+    static const uint32_t _HR3_RESET_VALUE = 0x0;
 
 
-    static const uint32_t HR4_RESET_VALUE = 0x0;
+    static const uint32_t _HR4_RESET_VALUE = 0x0;
 
     static constexpr uint32_t IMR_DCIE = 0x2;           // Digest calculation completion interrupt enable
     static constexpr uint32_t IMR_DINIE = 0x1;          // Data input interrupt enable
