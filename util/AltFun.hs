@@ -2,9 +2,11 @@ module AltFun (main) where
 
 import System.Environment
 import Data.Maybe
+import System.IO
 
 main :: IO ()
 main = do
+    hSetNewlineMode stdout noNewlineTranslation
     [file] <- getArgs
     xs <- lines <$> readFile file
     let ys = concatMap (process . words) xs
