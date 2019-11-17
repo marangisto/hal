@@ -1116,7 +1116,7 @@ struct rcc_t
     static constexpr uint32_t APB1ENR1_RTCAPBEN = 0x400;     // RTC APB clock enable
     static constexpr uint32_t APB1ENR1_WWDGEN = 0x800;       // Window watchdog clock enable
     static constexpr uint32_t APB1ENR1_SPI2EN = 0x4000;      // SPI2 clock enable
-    static constexpr uint32_t APB1ENR1_SP3EN = 0x8000;       // SPI3 clock enable
+    static constexpr uint32_t APB1ENR1_SPI3EN = 0x8000;      // SPI3 clock enable
     static constexpr uint32_t APB1ENR1_USART2EN = 0x20000;   // USART2 clock enable
     static constexpr uint32_t APB1ENR1_USART3EN = 0x40000;   // USART3 clock enable
     static constexpr uint32_t APB1ENR1_UART4EN = 0x80000;    // UART4 clock enable
@@ -1192,7 +1192,7 @@ struct rcc_t
     static constexpr uint32_t APB1SMENR1_RTCAPBSMEN = 0x400;   // RTC APB clock enable during Sleep and Stop modes
     static constexpr uint32_t APB1SMENR1_WWDGSMEN = 0x800;     // Window watchdog clocks enable during Sleep and Stop modes
     static constexpr uint32_t APB1SMENR1_SPI2SMEN = 0x4000;    // SPI2 clocks enable during Sleep and Stop modes
-    static constexpr uint32_t APB1SMENR1_SP3SMEN = 0x8000;     // SPI3 clocks enable during Sleep and Stop modes
+    static constexpr uint32_t APB1SMENR1_SPI3SMEN = 0x8000;    // SPI3 clocks enable during Sleep and Stop modes
     static constexpr uint32_t APB1SMENR1_USART2SMEN = 0x20000; // USART2 clocks enable during Sleep and Stop modes
     static constexpr uint32_t APB1SMENR1_USART3SMEN = 0x40000; // USART3 clocks enable during Sleep and Stop modes
     static constexpr uint32_t APB1SMENR1_UART4SMEN = 0x80000;  // UART4 clocks enable during Sleep and Stop modes
@@ -15933,6 +15933,8 @@ template<> struct peripheral_traits<spi1_t>
 
 template<> struct peripheral_traits<spi3_t>
 {
+    static void enable() { RCC.APB1ENR1 |= rcc_t::APB1ENR1_SPI3EN; }
+    static void disable() { RCC.APB1ENR1 &= ~rcc_t::APB1ENR1_SPI3EN; }
     static void reset() { RCC.APB1RSTR1 |= rcc_t::APB1RSTR1_SPI3RST; }
 };
 

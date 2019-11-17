@@ -49,6 +49,16 @@ template<> struct i2s_traits<2>
     static const gpio::internal::alternate_function_t ws = gpio::internal::I2S2_WS;
 };
 
+template<> struct i2s_traits<3>
+{
+    typedef spi3_t T;
+    static inline T& I2S() { return SPI3; }
+    static const gpio::internal::alternate_function_t ck = gpio::internal::I2S3_CK;
+    static const gpio::internal::alternate_function_t mck = gpio::internal::I2S3_MCK;
+    static const gpio::internal::alternate_function_t sd = gpio::internal::I2S3_SD;
+    static const gpio::internal::alternate_function_t ws = gpio::internal::I2S3_WS;
+};
+
 template<int NO, gpio_pin_t CK, gpio_pin_t SD, gpio_pin_t WS> struct i2s_t
 {
 private:

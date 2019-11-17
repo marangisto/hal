@@ -2923,7 +2923,7 @@
                      <bitWidth>1</bitWidth>
                   </field>
                   <field>
-                     <name>SP3EN</name>
+                     <name>SPI3EN</name>
                      <description>SPI3 clock enable</description>
                      <bitOffset>15</bitOffset>
                      <bitWidth>1</bitWidth>
@@ -3373,7 +3373,7 @@
                      <bitWidth>1</bitWidth>
                   </field>
                   <field>
-                     <name>SP3SMEN</name>
+                     <name>SPI3SMEN</name>
                      <description>SPI3 clocks enable during Sleep and Stop               modes</description>
                      <bitOffset>15</bitOffset>
                      <bitWidth>1</bitWidth>
