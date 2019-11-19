@@ -114,6 +114,7 @@ public:
         DMA::template mem_to_periph<DMACH>(source, nelem, &I2S().DR);   // configure dma from memory
         DMA::template enable<DMACH>();                                  // enable dma channel
 #if defined(STM32G431)
+        // FIXME: request-id depends on the spi instance so must be a trait!
         dma::dmamux_traits<DMA::INST, DMACH>::CCR() = device::dmamux_t::C0CR_DMAREQ_ID<13>;
 #endif
     }
