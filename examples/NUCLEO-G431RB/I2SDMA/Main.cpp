@@ -17,7 +17,7 @@ typedef hal::dma::dma_t<1> i2sdma;
 static const uint8_t i2sdma_ch = 1;
 
 static const uint16_t buf_size = 128;   // samples per channel
-static uint16_t bufa[buf_size * 2];     // interleave both channels
+static uint32_t bufa[buf_size * 2];     // interleave both channels
 
 void loop();
 
@@ -33,8 +33,8 @@ int main()
     }
 
     i2sdma::setup();
-    i2s::setup<philips_i2s, low_level, format_16_16, 27>();
-    i2s::enable_dma<i2sdma, i2sdma_ch>(bufa, buf_size * 2);
+    i2s::setup<philips_i2s, low_level, format_32_32, 27>();
+    i2s::enable_dma<i2sdma, i2sdma_ch>(reinterpret_cast<uint16_t*>(bufa), buf_size * 4);
 
     for (;;)
         loop();
