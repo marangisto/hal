@@ -19,6 +19,8 @@ static const uint8_t i2sdma_ch = 1;
 static const uint16_t buf_size = 128;   // samples per channel
 static uint32_t bufa[buf_size * 2];     // interleave both channels
 
+static inline uint32_t swap(uint32_t x) { return x << 16 | x >> 16; }
+
 void loop();
 
 int main()
@@ -28,8 +30,10 @@ int main()
     for (uint16_t i = 0; i < buf_size; ++i)
     {
         uint16_t j = i << 1;
-        bufa[j] = i * (0xffff / buf_size);
-        bufa[j + 1] = 0xffff - bufa[j];
+        uint32_t y = i * (0xffffffff / buf_size);
+
+        bufa[j] = swap(y);
+        bufa[j + 1] = swap(0xffffffff - y);
     }
 
     i2sdma::setup();
