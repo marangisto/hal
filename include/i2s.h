@@ -1,6 +1,7 @@
 #pragma once
 
 #include <gpio.h>
+#include "dma.h"
 
 namespace hal
 {
@@ -102,6 +103,19 @@ public:
         I2S().I2SCFGR |= _::I2SCFGR_I2SE;                               // enable i2s peripheral
 
         // note dma and interrupt enable flags are in CR2
+    }
+
+    template<typename DMA, uint8_t DMACH, typename T>
+    static inline void enable_dma(const T *source, uint16_t nelem)
+    {
+        I2S().CR2 |= _::CR2_TXDMAEN                                     // enable dma transmission
+                  ;
+        DMA::template disable<DMACH>();                                 // disable dma channel
+        DMA::template mem_to_periph<DMACH>(source, nelem, &I2S().DR);   // configure dma from memory
+        DMA::template enable<DMACH>();                                  // enable dma channel
+#if defined(STM32G431)
+        dma::dmamux_traits<DMA::INST, DMACH>::CCR() = device::dmamux_t::C0CR_DMAREQ_ID<13>;
+#endif
     }
 
     __attribute__((always_inline))
