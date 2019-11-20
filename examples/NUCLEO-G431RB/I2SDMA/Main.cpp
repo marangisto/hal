@@ -6,18 +6,22 @@
 
 #include <i2s.h>
 #include <gpio.h>
+#include <fixed.h>
+#include <math.h>
 
 using hal::sys_tick;
 using namespace hal::gpio;
 using namespace hal::i2s;
+using namespace fixed;
 
+static const float pi = 3.14159265358979323846;
 typedef output_t<PA5> ld4;
 typedef i2s_t<2, PB13, PA11, PB12> i2s;
 typedef hal::dma::dma_t<1> i2sdma;
 static const uint8_t i2sdma_ch = 1;
 
 static const uint16_t buf_size = 128;   // samples per channel
-static uint32_t bufa[buf_size * 2];     // interleave both channels
+static int32_t bufa[buf_size * 2];      // interleave both channels
 
 static inline uint32_t swap(uint32_t x) { return x << 16 | x >> 16; }
 
@@ -30,10 +34,11 @@ int main()
     for (uint16_t i = 0; i < buf_size; ++i)
     {
         uint16_t j = i << 1;
-        uint32_t y = i * (0xffffffff / buf_size);
+        float x = -1. + 2 * static_cast<float>(i) / static_cast<float>(buf_size);
+        float y = sin(x*pi);
 
-        bufa[j] = swap(y);
-        bufa[j + 1] = swap(0xffffffff - y);
+        bufa[j] = swap(ftoq31(y));
+        bufa[j + 1] = swap(ftoq31(-y * 0.25));
     }
 
     i2sdma::setup();

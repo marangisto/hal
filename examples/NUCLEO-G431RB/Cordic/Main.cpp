@@ -2,6 +2,7 @@
 #include <usart.h>
 #include <redirect.h>
 #include <cordic.h>
+#include <fixed.h>
 #include <cstring>
 #include <math.h>
 #include <utility>
@@ -10,6 +11,7 @@ using hal::sys_tick;
 using namespace hal::gpio;
 using namespace hal::usart;
 using namespace hal::cordic;
+using namespace fixed;
 
 typedef usart_t<2, PA2, PA3> serial;
 typedef output_t<PA5> ld4;

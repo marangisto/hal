@@ -2,6 +2,7 @@
 #include <usart.h>
 #include <redirect.h>
 #include <cordic.h>
+#include <fixed.h>
 #include <timer.h>
 #include <button.h>
 #include <gpio.h>
@@ -22,6 +23,7 @@ using namespace hal::gpio;
 using namespace hal::adc;
 using namespace hal::dac;
 using namespace hal::dma;
+using namespace fixed;
 using hal::sys_clock;
 
 typedef usart_t<2, PA2, PA3> serial;
