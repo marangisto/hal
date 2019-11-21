@@ -38,6 +38,7 @@ template<> struct i2s_traits<1>
     static const gpio::internal::alternate_function_t mck = gpio::internal::I2S1_MCK;
     static const gpio::internal::alternate_function_t sd = gpio::internal::I2S1_SD;
     static const gpio::internal::alternate_function_t ws = gpio::internal::I2S1_WS;
+    static const dma::resource_t tx_request = dma::SPI1_TX;
 };
 
 template<> struct i2s_traits<2>
@@ -48,6 +49,7 @@ template<> struct i2s_traits<2>
     static const gpio::internal::alternate_function_t mck = gpio::internal::I2S2_MCK;
     static const gpio::internal::alternate_function_t sd = gpio::internal::I2S2_SD;
     static const gpio::internal::alternate_function_t ws = gpio::internal::I2S2_WS;
+    static const dma::resource_t tx_request = dma::SPI2_TX;
 };
 
 template<> struct i2s_traits<3>
@@ -58,6 +60,7 @@ template<> struct i2s_traits<3>
     static const gpio::internal::alternate_function_t mck = gpio::internal::I2S3_MCK;
     static const gpio::internal::alternate_function_t sd = gpio::internal::I2S3_SD;
     static const gpio::internal::alternate_function_t ws = gpio::internal::I2S3_WS;
+    static const dma::resource_t tx_request = dma::SPI3_TX;
 };
 
 template<int NO, gpio_pin_t CK, gpio_pin_t SD, gpio_pin_t WS> struct i2s_t
@@ -114,8 +117,7 @@ public:
         DMA::template mem_to_periph<DMACH>(source, nelem, &I2S().DR);   // configure dma from memory
         DMA::template enable<DMACH>();                                  // enable dma channel
 #if defined(STM32G431)
-        // FIXME: request-id depends on the spi instance so must be a trait!
-        dma::dmamux_traits<DMA::INST, DMACH>::CCR() = device::dmamux_t::C0CR_DMAREQ_ID<13>;
+        dma::dmamux_traits<DMA::INST, DMACH>::CCR() = device::dmamux_t::C0CR_DMAREQ_ID<i2s_traits<NO>::tx_request>;
 #endif
     }
 
