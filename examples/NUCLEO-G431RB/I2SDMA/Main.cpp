@@ -16,7 +16,8 @@ using namespace fixed;
 
 static const float pi = 3.14159265358979323846;
 typedef output_t<PA5> ld4;
-typedef i2s_t<2, PB13, PA11, PB12> i2s;
+//typedef i2s_t<2, PB13, PA11, PB12> i2s;
+typedef i2s_t<3, PC10, PC12, PA15> i2s;
 typedef hal::dma::dma_t<1> i2sdma;
 static const uint8_t i2sdma_ch = 1;
 
