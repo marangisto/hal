@@ -2,11 +2,12 @@
 #include <mco.h>
 
 using hal::sys_tick;
+using hal::sys_clock;
 using namespace hal::gpio;
 using namespace hal::mco;
 
-typedef output_t<PA5> ld4;
-typedef mco_t<PA8, mco_sysclk, 16> mco;
+typedef output_t<PB10> ld4;
+typedef mco_t<PA8, mco_pll, 16> mco;
 
 void loop();
 

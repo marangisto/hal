@@ -213,14 +213,27 @@ void sys_clock::init()
     FLASH.ACR = flash_t::ACR_PRFTEN | flash_t::ACR_LATENCY<wait_states>;
     while ((FLASH.ACR & flash_t::ACR_LATENCY<0xf>) != flash_t::ACR_LATENCY<wait_states>); // wait to take effect
 
-    // pllN = 85.0, pllM = 4.0, pllP = 7.0, pllPDIV = 2.0, pllQ = 2.0, pllR = 2.0, fSYS = 1.7e8, fPllP = 1.7e8, fPllQ = 1.7e8, fVCO = 3.4e8
+#if defined(HSE)
+    RCC.CR |= _::CR_HSEON;                              // enable external clock
+    while (!(RCC.CR & _::CR_HSERDY));                   // wait for HSE ready
 
-    constexpr uint16_t pllN = 85;                       // 7 bits, valid range [8..127]
+#if HSE == 24000000
+    constexpr uint8_t pllM = 6 - 1;                     // 3 bits, valid range [1..15]-1
+#elif HSE == 8000000
+    constexpr uint8_t pllM = 2 - 1;                     // 3 bits, valid range [1..15]-1
+#else
+    static_assert(false, "unsupported HSE frequency");
+#endif
+    constexpr uint8_t pllSRC = 3;                       // 2 bits, 2 = HSI16, 3 = HSE
+#else
+    // pllN = 85.0, pllM = 4.0, pllP = 7.0, pllPDIV = 2.0, pllQ = 2.0, pllR = 2.0, fSYS = 1.7e8, fPllP = 1.7e8, fPllQ = 1.7e8, fVCO = 3.4e8
     constexpr uint8_t pllM = 4 - 1;                     // 3 bits, valid range [1..15]-1
+    constexpr uint8_t pllSRC = 2;                       // 2 bits, 2 = HSI16, 3 = HSE
+#endif
+    constexpr uint16_t pllN = 85;                       // 7 bits, valid range [8..127]
     constexpr uint8_t pllPDIV = 2;                      // 5 bits, valid range [2..31]
     constexpr uint8_t pllR = 0;                         // 2 bits, 0 = 2, 1 = 4, 2 = 6, 3 = 8
     constexpr uint8_t pllQ = 0;                         // 2 bits, 0 = 2, 1 = 4, 2 = 6, 3 = 8
-    constexpr uint8_t pllSRC = 2;                       // 2 bits, 2 = HSI16, 3 = HSE
 
     RCC.PLLSYSCFGR = _::PLLSYSCFGR_PLLSRC<pllSRC>
                    | _::PLLSYSCFGR_PLLSYSN<pllN>
