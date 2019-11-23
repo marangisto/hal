@@ -27,6 +27,7 @@ struct cordic_t
     static void setup()
     {
         typedef device::cordic_t _;
+        using namespace device;
         
         /*
     static constexpr uint32_t CSR_IEN = 0x10000;        // IEN
@@ -49,6 +50,8 @@ struct cordic_t
     __attribute__((always_inline))
     static inline int32_t compute(int32_t x)
     {
+        using namespace device;
+
         CORDIC.WDATA = x;
         return CORDIC.RDATA;
     }

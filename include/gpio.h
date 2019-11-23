@@ -8,8 +8,6 @@ namespace hal
 namespace gpio
 {
 
-using namespace device;
-
 enum gpio_port_t { PA, PB, PC, PD, PE, PF, PG, PH };
 
 enum gpio_pin_t
@@ -42,64 +40,64 @@ template<gpio_port_t PORT> struct port_traits {};
 #if defined(HAVE_PERIPHERAL_GPIOA)
 template<> struct port_traits<PA>
 {
-    typedef gpioa_t gpio_t;
-    static inline gpio_t& gpio() { return GPIOA; }
+    typedef device::gpioa_t gpio_t;
+    static inline gpio_t& gpio() { return device::GPIOA; }
 };
 #endif
 
 #if defined(HAVE_PERIPHERAL_GPIOB)
 template<> struct port_traits<PB>
 {
-    typedef gpiob_t gpio_t;
-    static inline gpio_t& gpio() { return GPIOB; }
+    typedef device::gpiob_t gpio_t;
+    static inline gpio_t& gpio() { return device::GPIOB; }
 };
 #endif
 
 #if defined(HAVE_PERIPHERAL_GPIOC)
 template<> struct port_traits<PC>
 {
-    typedef gpioc_t gpio_t;
-    static inline gpio_t& gpio() { return GPIOC; }
+    typedef device::gpioc_t gpio_t;
+    static inline gpio_t& gpio() { return device::GPIOC; }
 };
 #endif
 
 #if defined(HAVE_PERIPHERAL_GPIOD)
 template<> struct port_traits<PD>
 {
-    typedef gpiod_t gpio_t;
-    static inline gpio_t& gpio() { return GPIOD; }
+    typedef device::gpiod_t gpio_t;
+    static inline gpio_t& gpio() { return device::GPIOD; }
 };
 #endif
 
 #if defined(HAVE_PERIPHERAL_GPIOE)
 template<> struct port_traits<PE>
 {
-    typedef gpioe_t gpio_t;
-    static inline gpio_t& gpio() { return GPIOE; }
+    typedef device::gpioe_t gpio_t;
+    static inline gpio_t& gpio() { return device::GPIOE; }
 };
 #endif
 
 #if defined(HAVE_PERIPHERAL_GPIOF)
 template<> struct port_traits<PF>
 {
-    typedef gpiof_t gpio_t;
-    static inline gpio_t& gpio() { return GPIOF; }
+    typedef device::gpiof_t gpio_t;
+    static inline gpio_t& gpio() { return device::GPIOF; }
 };
 #endif
 
 #if defined(HAVE_PERIPHERAL_GPIOG)
 template<> struct port_traits<PG>
 {
-    typedef gpiog_t gpio_t;
-    static inline gpio_t& gpio() { return GPIOG; }
+    typedef device::gpiog_t gpio_t;
+    static inline gpio_t& gpio() { return device::GPIOG; }
 };
 #endif
 
 #if defined(HAVE_PERIPHERAL_GPIOH)
 template<> struct port_traits<PH>
 {
-    typedef gpioh_t gpio_t;
-    static inline gpio_t& gpio() { return GPIOH; }
+    typedef device::gpioh_t gpio_t;
+    static inline gpio_t& gpio() { return device::GPIOH; }
 };
 #endif
 
@@ -123,7 +121,7 @@ public:
     template<output_type_t output_type = push_pull, output_speed_t speed = low_speed>
     static inline void setup()
     {
-        peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
+        device::peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
 #if defined(STM32F103)
         volatile uint32_t& CR = pin::bit_pos < 8 ? pin::gpio().CRL : pin::gpio().CRH;
         constexpr uint8_t shift = (pin::bit_pos < 8 ? pin::bit_pos : (pin::bit_pos - 8)) << 2;
@@ -170,7 +168,7 @@ public:
         else
             pin::gpio().ODR &= ~pin::bit_mask;
 #else
-        peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
+        device::peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
         pin::gpio().MODER &= ~(0x3 << (pin::bit_pos*2));
         // pin::gpio().MODER |= pin::input_mode << (pin::bit_pos*2); redundant since == 0
         if (input_type != floating)
@@ -191,7 +189,7 @@ public:
     template<input_type_t input_type = floating>
     static inline void setup()
     {
-        peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
+        device::peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
         pin::gpio().MODER |= 0x3 << (pin::bit_pos*2);
         static_assert(input_type != pull_up, "only floating or pull-down modes allowed for analog pins");
         if (input_type != floating)
@@ -509,7 +507,7 @@ public:
     template<output_speed_t speed = low_speed>  // FIXME: should we not have output_type option here?
     static inline void setup()
     {
-        peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
+        device::peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
 #if defined(STM32F103)
         volatile uint32_t& CR = pin::bit_pos < 8 ? pin::gpio().CRL : pin::gpio().CRH;
         constexpr uint8_t shift = (pin::bit_pos < 8 ? pin::bit_pos : (pin::bit_pos - 8)) << 2;
@@ -549,7 +547,7 @@ public:
         else
             pin::gpio().ODR &= ~pin::bit_mask;
 #else
-        peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
+        device::peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
         pin::gpio().MODER &= ~(0x3 << (pin::bit_pos*2));
         pin::gpio().MODER |= pin::alternate_mode << (pin::bit_pos*2);
         if (input_type != floating)
