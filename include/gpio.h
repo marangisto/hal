@@ -34,6 +34,7 @@ static inline constexpr int pin_bit(gpio_pin_t p)
 enum output_type_t { push_pull, open_drain };
 enum output_speed_t { low_speed = 0x0, medium_speed = 0x1, high_speed = 0x3 };
 enum input_type_t { floating, pull_up, pull_down };
+enum trigger_edge_t { rising_edge, falling_edge, both_edges };
 
 template<gpio_port_t PORT> struct port_traits {};
 
@@ -149,6 +150,38 @@ private:
     typedef pin_t<PIN> pin;
 };
 
+#if defined(STM32G431)
+template<int POS, typename = is_in_range<true> >
+struct syscfg_traits
+{
+    static_assert(always_false_i<POS>::value, "pin out of range for syscfg exticr");
+};
+
+template<int POS>
+struct syscfg_traits<POS, is_in_range<(0 <= POS && POS < 4)> >
+{
+    static volatile uint32_t& EXTICR() { return device::SYSCFG.EXTICR1; }
+};
+
+template<int POS>
+struct syscfg_traits<POS, is_in_range<(4 <= POS && POS < 8)> >
+{
+    static volatile uint32_t& EXTICR() { return device::SYSCFG.EXTICR2; }
+};
+
+template<int POS>
+struct syscfg_traits<POS, is_in_range<(8 <= POS && POS < 12)> >
+{
+    static volatile uint32_t& EXTICR() { return device::SYSCFG.EXTICR3; }
+};
+
+template<int POS>
+struct syscfg_traits<POS, is_in_range<(12 <= POS && POS < 16)> >
+{
+    static volatile uint32_t& EXTICR() { return device::SYSCFG.EXTICR4; }
+};
+#endif
+
 template<gpio_pin_t PIN>
 class input_t
 {
@@ -156,6 +189,7 @@ public:
     template<input_type_t input_type = floating>
     static inline void setup()
     {
+        device::peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
 #if defined(STM32F103)
         volatile uint32_t& CR = pin::bit_pos < 8 ? pin::gpio().CRL : pin::gpio().CRH;
         constexpr uint8_t shift = (pin::bit_pos < 8 ? pin::bit_pos : (pin::bit_pos - 8)) << 2;
@@ -168,7 +202,6 @@ public:
         else
             pin::gpio().ODR &= ~pin::bit_mask;
 #else
-        device::peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
         pin::gpio().MODER &= ~(0x3 << (pin::bit_pos*2));
         // pin::gpio().MODER |= pin::input_mode << (pin::bit_pos*2); redundant since == 0
         if (input_type != floating)
@@ -177,6 +210,31 @@ public:
     }
 
     static inline bool read() { return (pin::gpio().IDR & pin::bit_mask) != 0; }
+
+#if defined(STM32G431)
+    template<trigger_edge_t EDGE = rising_edge>
+    static void enable_interrupt()
+    {
+        using namespace device;
+
+        peripheral_traits<syscfg_t>::enable();
+        constexpr gpio_port_t port = pin_port(PIN);
+        constexpr uint8_t shift = (pin_bit(PIN) & 0x3) << 2;
+        volatile uint32_t& EXTICR = syscfg_traits<pin_bit(PIN)>::EXTICR();
+
+        EXTICR &= ~(0xf << shift);
+        EXTICR |= (port << shift);
+        EXTI.IMR1 |= pin::bit_mask;
+        if (EDGE == rising_edge || EDGE == both_edges)
+            EXTI.RTSR1 |= pin::bit_mask;
+        if (EDGE == falling_edge || EDGE == both_edges)
+            EXTI.FTSR1 |= pin::bit_mask;
+
+    }
+
+    static inline bool interrupt_pending() { return (device::EXTI.PR1 & pin::bit_mask) != 0; }
+    static inline void clear_interrupt() { device::EXTI.PR1 |= pin::bit_mask; }
+#endif
 
 private:
     typedef pin_t<PIN> pin;
