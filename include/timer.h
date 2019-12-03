@@ -257,9 +257,14 @@ public:
         TIM().SR &= ~_::SR_UIF;
     }
 
-    static inline volatile count_t cnt()
+    static inline volatile count_t count()
     {
         return TIM().CNT;
+    }
+
+    static inline void set_count(count_t x)
+    {
+        TIM().CNT = x;
     }
 
     static inline void main_output_enable()
