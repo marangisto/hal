@@ -569,7 +569,7 @@ public:
 #if defined(STM32F103)
         volatile uint32_t& CR = pin::bit_pos < 8 ? pin::gpio().CRL : pin::gpio().CRH;
         constexpr uint8_t shift = (pin::bit_pos < 8 ? pin::bit_pos : (pin::bit_pos - 8)) << 2;
-        constexpr uint32_t bits = 0x8 | (speed == low_speed ? 0x2 : 0x3 | (output_type == open_drain ? 0x4 : 0);
+        constexpr uint32_t bits = 0x8 | (speed == low_speed ? 0x2 : 0x3) | (output_type == open_drain ? 0x4 : 0);
 
         static_assert(alt_fun_traits<PIN, ALT>::AF == AF0, "invalid alternate function (remap not yet supported)");
 
