@@ -562,14 +562,14 @@ template<gpio_pin_t PIN, alternate_function_t ALT>
 class alternate_t
 {
 public:
-    template<output_speed_t speed = low_speed>  // FIXME: should we not have output_type option here?
+    template<output_speed_t speed = low_speed, output_type_t output_type = push_pull>  // FIXME: should we not have output_type option here?
     static inline void setup()
     {
         device::peripheral_traits<typename port_traits<pin_port(PIN)>::gpio_t>::enable();
 #if defined(STM32F103)
         volatile uint32_t& CR = pin::bit_pos < 8 ? pin::gpio().CRL : pin::gpio().CRH;
         constexpr uint8_t shift = (pin::bit_pos < 8 ? pin::bit_pos : (pin::bit_pos - 8)) << 2;
-        constexpr uint32_t bits = 0x8 | (speed == low_speed ? 0x2 : 0x3); // | (output_type == open_drain ? 0x4 : 0);
+        constexpr uint32_t bits = 0x8 | (speed == low_speed ? 0x2 : 0x3 | (output_type == open_drain ? 0x4 : 0);
 
         static_assert(alt_fun_traits<PIN, ALT>::AF == AF0, "invalid alternate function (remap not yet supported)");
 
@@ -580,6 +580,8 @@ public:
         pin::gpio().MODER |= pin::alternate_mode << (pin::bit_pos*2);
         if (speed != low_speed)
             pin::gpio().OSPEEDR |= speed << (pin::bit_pos*2);
+        if (output_type == open_drain)
+            pin::gpio().OTYPER |= pin::bit_mask;
         if (pin::bit_pos < 8)
             pin::gpio().AFRL |= alt_fun_traits<PIN, ALT>::AF << (pin::bit_pos*4);
         else
