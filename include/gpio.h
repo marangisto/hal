@@ -233,7 +233,7 @@ public:
     }
 
     static inline bool interrupt_pending() { return (device::EXTI.PR1 & pin::bit_mask) != 0; }
-    static inline void clear_interrupt() { device::EXTI.PR1 |= pin::bit_mask; }
+    static inline void clear_interrupt() { device::EXTI.PR1 = pin::bit_mask; }
 #endif
 
 private:
