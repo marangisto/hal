@@ -77,6 +77,21 @@ struct q_t
     T q;
 };
 
+inline int32_t __smmul(int32_t x, int32_t y)
+{
+    int32_t z;
+
+    asm //  volatile
+    (
+        "smmul %0, %1, %2"
+            : "=r" (z)
+            : "r" (x), "r" (y)
+            : "r0"
+    );
+
+    return z;
+}
+
 template<typename T>
 inline constexpr bool operator<(q_t<T> x, q_t<T> y)
 {
@@ -104,7 +119,8 @@ inline constexpr q_t<T> operator-(q_t<T> x, q_t<T> y)
 template<typename T>
 inline constexpr q_t<T> operator*(q_t<T> x, q_t<T> y)
 {
-    return q_t((int32_t) (((int64_t) x.q * y.q) >> 32));
+    // FIXME: this will be wrong for q15!
+    return q_t<T>::lshift(q_t(__smmul(x.q, y.q)), 1);
 }
 
 template<typename T>
