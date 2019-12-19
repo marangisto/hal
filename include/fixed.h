@@ -77,11 +77,11 @@ struct q_t
     T q;
 };
 
-inline int32_t __smmul(int32_t x, int32_t y)
+static inline int32_t signed_multiply(int32_t x, int32_t y)
 {
     int32_t z;
 
-    asm //  volatile
+    asm
     (
         "smmul %0, %1, %2"
             : "=r" (z)
@@ -89,7 +89,7 @@ inline int32_t __smmul(int32_t x, int32_t y)
             : "r0"
     );
 
-    return z;
+    return z << 1;
 }
 
 template<typename T>
@@ -120,7 +120,7 @@ template<typename T>
 inline constexpr q_t<T> operator*(q_t<T> x, q_t<T> y)
 {
     // FIXME: this will be wrong for q15!
-    return q_t<T>::lshift(q_t(__smmul(x.q, y.q)), 1);
+    return q_t(signed_multiply(x.q, y.q));
 }
 
 template<typename T>
