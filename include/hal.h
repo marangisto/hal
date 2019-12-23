@@ -6,6 +6,9 @@
     #include <device/stm32f0x1.h>
 //    #undef HAVE_PERIPHERAL_GPIOE    // should not be present
     namespace device = stm32f0x1;
+#elif defined(STM32F072)
+    #include <device/stm32f0x2.h>
+    namespace device = stm32f0x2;
 #elif defined(STM32F103)
     #include <device/stm32f103.h>
     namespace device = stm32f103;
@@ -104,7 +107,7 @@ struct nvic
     static_assert(always_false_i<POS>::value, "nvic capability undefined for mcu");
 };
 
-#if defined(STM32F051) || defined(STM32G070)
+#if defined(STM32F051) || defined(STM32F072) || defined(STM32G070)
 template<interrupt::interrupt_t POS>
 struct nvic<POS, is_in_range<(0 <= POS && POS < 32)> >
 {

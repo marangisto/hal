@@ -34,6 +34,8 @@ extern void __default_handler(void) {}
 
 #if defined(STM32F051)
 #include "vector/stm32f0x1.cpp"
+#elif defined(STM32F072)
+#include "vector/stm32f0x2.cpp"
 #elif defined (STM32F103)
 #include "vector/stm32f103.cpp"
 #elif defined (STM32F411)
