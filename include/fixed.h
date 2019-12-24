@@ -101,32 +101,32 @@ inline constexpr bool operator<(q_t<T> x, q_t<T> y)
 template<typename T>
 inline constexpr q_t<T> operator-(q_t<T> x)
 {
-    return q_t(-x.q);
+    return q_t<T>(-x.q);
 }
 
 template<typename T>
 inline constexpr q_t<T> operator+(q_t<T> x, q_t<T> y)
 {
-    return q_t(x.q + y.q);
+    return q_t<T>(x.q + y.q);
 }
 
 template<typename T>
 inline constexpr q_t<T> operator-(q_t<T> x, q_t<T> y)
 {
-    return q_t(x.q - y.q);
+    return q_t<T>(x.q - y.q);
 }
 
 template<typename T>
 inline constexpr q_t<T> operator*(q_t<T> x, q_t<T> y)
 {
     // FIXME: this will be wrong for q15!
-    return q_t(signed_multiply(x.q, y.q));
+    return q_t<T>(signed_multiply(x.q, y.q));
 }
 
 template<typename T>
 inline constexpr q_t<T> operator/(q_t<T> x, q_t<T> y)
 {
-    return q_t(x.q / y.q);
+    return q_t<T>(x.q / y.q);
 }
 
 static inline float q31tof(int32_t x)
