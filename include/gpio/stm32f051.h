@@ -1,166 +1,292 @@
-ALT_FUN_TRAIT(PA0, USART2_CTS, AF1);
-ALT_FUN_TRAIT(PA0, TIM2_CH1_ETR, AF2);
-ALT_FUN_TRAIT(PA0, TSC_G1_IO1, AF3);
-ALT_FUN_TRAIT(PA0, USART4_TX, AF4);
-ALT_FUN_TRAIT(PA0, COMP1_OUT, AF7);
-ALT_FUN_TRAIT(PA1, EVENTOUT, AF0);
-ALT_FUN_TRAIT(PA1, USART2_RTS, AF1);
-ALT_FUN_TRAIT(PA1, TIM2_CH2, AF2);
-ALT_FUN_TRAIT(PA1, TSC_G1_IO2, AF3);
-ALT_FUN_TRAIT(PA1, USART4_RX, AF4);
-ALT_FUN_TRAIT(PA1, TIM15_CH1N, AF5);
-ALT_FUN_TRAIT(PA2, TIM15_CH1, AF0);
-ALT_FUN_TRAIT(PA2, USART2_TX, AF1);
-ALT_FUN_TRAIT(PA2, TIM2_CH3, AF2);
-ALT_FUN_TRAIT(PA2, TSC_G1_IO3, AF3);
-ALT_FUN_TRAIT(PA2, COMP2_OUT, AF7);
-ALT_FUN_TRAIT(PA3, TIM15_CH2, AF0);
-ALT_FUN_TRAIT(PA3, USART2_RX, AF1);
-ALT_FUN_TRAIT(PA3, TIM2_CH4, AF2);
-ALT_FUN_TRAIT(PA3, TSC_G1_IO4, AF3);
-ALT_FUN_TRAIT(PA4, SPI1_NSS, AF0);
-ALT_FUN_TRAIT(PA4, I2S1_WS, AF0);
-ALT_FUN_TRAIT(PA4, USART2_CK, AF1);
-ALT_FUN_TRAIT(PA4, TSC_G2_IO1, AF3);
-ALT_FUN_TRAIT(PA4, TIM14_CH1, AF4);
-ALT_FUN_TRAIT(PA4, USART6_TX, AF5);
-ALT_FUN_TRAIT(PA5, SPI1_SCK, AF0);
-ALT_FUN_TRAIT(PA5, I2S1_CK, AF0);
-ALT_FUN_TRAIT(PA5, CEC, AF1);
-ALT_FUN_TRAIT(PA5, TIM2_CH1_ETR, AF2);
-ALT_FUN_TRAIT(PA5, TSC_G2_IO2, AF3);
-ALT_FUN_TRAIT(PA5, USART6_RX, AF5);
-ALT_FUN_TRAIT(PA6, SPI1_MISO, AF0);
-ALT_FUN_TRAIT(PA6, I2S1_MCK, AF0);
-ALT_FUN_TRAIT(PA6, TIM3_CH1, AF1);
-ALT_FUN_TRAIT(PA6, TIM1_BKIN, AF2);
-ALT_FUN_TRAIT(PA6, TSC_G2_IO3, AF3);
-ALT_FUN_TRAIT(PA6, USART3_CTS, AF4);
-ALT_FUN_TRAIT(PA6, TIM16_CH1, AF5);
-ALT_FUN_TRAIT(PA6, EVENTOUT, AF6);
-ALT_FUN_TRAIT(PA6, COMP1_OUT, AF7);
-ALT_FUN_TRAIT(PA7, SPI1_MOSI, AF0);
-ALT_FUN_TRAIT(PA7, I2S1_SD, AF0);
-ALT_FUN_TRAIT(PA7, TIM3_CH2, AF1);
-ALT_FUN_TRAIT(PA7, TIM1_CH1N, AF2);
-ALT_FUN_TRAIT(PA7, TSC_G2_IO4, AF3);
-ALT_FUN_TRAIT(PA7, TIM14_CH1, AF4);
-ALT_FUN_TRAIT(PA7, TIM17_CH1, AF5);
-ALT_FUN_TRAIT(PA7, EVENTOUT, AF6);
-ALT_FUN_TRAIT(PA7, COMP2_OUT, AF7);
-ALT_FUN_TRAIT(PA8, MCO, AF0);
-ALT_FUN_TRAIT(PA8, USART1_CK, AF1);
-ALT_FUN_TRAIT(PA8, TIM1_CH1, AF2);
-ALT_FUN_TRAIT(PA8, EVENTOUT, AF3);
-ALT_FUN_TRAIT(PA8, CRS_SYNC, AF4);
-ALT_FUN_TRAIT(PA9, TIM15_BKIN, AF0);
-ALT_FUN_TRAIT(PA9, USART1_TX, AF1);
-ALT_FUN_TRAIT(PA9, TIM1_CH2, AF2);
-ALT_FUN_TRAIT(PA9, TSC_G4_IO1, AF3);
-ALT_FUN_TRAIT(PA9, I2C1_SCL, AF4);
-ALT_FUN_TRAIT(PA9, MCO, AF5);
-ALT_FUN_TRAIT(PA10, TIM17_BKIN, AF0);
-ALT_FUN_TRAIT(PA10, USART1_RX, AF1);
-ALT_FUN_TRAIT(PA10, TIM1_CH3, AF2);
-ALT_FUN_TRAIT(PA10, TSC_G4_IO2, AF3);
-ALT_FUN_TRAIT(PA10, I2C1_SDA, AF4);
-ALT_FUN_TRAIT(PA11, EVENTOUT, AF0);
-ALT_FUN_TRAIT(PA11, USART1_CTS, AF1);
-ALT_FUN_TRAIT(PA11, TIM1_CH4, AF2);
-ALT_FUN_TRAIT(PA11, TSC_G4_IO3, AF3);
-ALT_FUN_TRAIT(PA11, CAN_RX, AF4);
-ALT_FUN_TRAIT(PA11, I2C2_SCL, AF5);
-ALT_FUN_TRAIT(PA11, COMP1_OUT, AF7);
-ALT_FUN_TRAIT(PA12, EVENTOUT, AF0);
-ALT_FUN_TRAIT(PA12, USART1_RTS, AF1);
-ALT_FUN_TRAIT(PA12, TIM1_ETR, AF2);
-ALT_FUN_TRAIT(PA12, TSC_G4_IO4, AF3);
-ALT_FUN_TRAIT(PA12, CAN_TX, AF4);
-ALT_FUN_TRAIT(PA12, I2C2_SDA, AF5);
-ALT_FUN_TRAIT(PA12, COMP2_OUT, AF7);
-ALT_FUN_TRAIT(PA13, SWDIO, AF0);
-ALT_FUN_TRAIT(PA13, IR_OUT, AF1);
-ALT_FUN_TRAIT(PA14, SWCLK, AF0);
-ALT_FUN_TRAIT(PA14, USART2_TX, AF1);
-ALT_FUN_TRAIT(PA15, SPI1_NSS, AF0);
-ALT_FUN_TRAIT(PA15, I2S1_WS, AF0);
-ALT_FUN_TRAIT(PA15, USART2_RX, AF1);
-ALT_FUN_TRAIT(PA15, TIM2_CH1_ETR, AF2);
-ALT_FUN_TRAIT(PA15, EVENTOUT, AF3);
-ALT_FUN_TRAIT(PA15, USART4_RTS, AF4);
-ALT_FUN_TRAIT(PB0, EVENTOUT, AF0);
-ALT_FUN_TRAIT(PB0, TIM3_CH3, AF1);
-ALT_FUN_TRAIT(PB0, TIM1_CH2N, AF2);
-ALT_FUN_TRAIT(PB0, TSC_G3_IO2, AF3);
-ALT_FUN_TRAIT(PB1, TIM14_CH1, AF0);
-ALT_FUN_TRAIT(PB1, TIM3_CH4, AF1);
-ALT_FUN_TRAIT(PB1, TIM1_CH3N, AF2);
-ALT_FUN_TRAIT(PB1, TSC_G3_IO3, AF3);
-ALT_FUN_TRAIT(PB2, TSC_G3_IO4, AF3);
-ALT_FUN_TRAIT(PB3, SPI1_SCK, AF0);
-ALT_FUN_TRAIT(PB3, I2S1_CK, AF0);
-ALT_FUN_TRAIT(PB3, EVENTOUT, AF1);
-ALT_FUN_TRAIT(PB3, TIM2_CH2, AF2);
-ALT_FUN_TRAIT(PB3, TSC_G5_IO1, AF3);
-ALT_FUN_TRAIT(PB4, SPI1_MISO, AF0);
-ALT_FUN_TRAIT(PB4, I2S1_MCK, AF0);
-ALT_FUN_TRAIT(PB4, TIM3_CH1, AF1);
-ALT_FUN_TRAIT(PB4, EVENTOUT, AF2);
-ALT_FUN_TRAIT(PB4, TSC_G5_IO2, AF3);
-ALT_FUN_TRAIT(PB5, SPI1_MOSI, AF0);
-ALT_FUN_TRAIT(PB5, I2S1_SD, AF0);
-ALT_FUN_TRAIT(PB5, TIM3_CH2, AF1);
-ALT_FUN_TRAIT(PB5, TIM16_BKIN, AF2);
-ALT_FUN_TRAIT(PB5, I2C1_SMBA, AF3);
-ALT_FUN_TRAIT(PB6, USART1_TX, AF0);
-ALT_FUN_TRAIT(PB6, I2C1_SCL, AF1);
-ALT_FUN_TRAIT(PB6, TIM16_CH1N, AF2);
-ALT_FUN_TRAIT(PB6, TSC_G5_IO3, AF3);
-ALT_FUN_TRAIT(PB7, USART1_RX, AF0);
-ALT_FUN_TRAIT(PB7, I2C1_SDA, AF1);
-ALT_FUN_TRAIT(PB7, TIM17_CH1N, AF2);
-ALT_FUN_TRAIT(PB7, TSC_G5_IO4, AF3);
-ALT_FUN_TRAIT(PB8, CEC, AF0);
-ALT_FUN_TRAIT(PB8, I2C1_SCL, AF1);
-ALT_FUN_TRAIT(PB8, TIM16_CH1, AF2);
-ALT_FUN_TRAIT(PB8, TSC_SYNC, AF3);
-ALT_FUN_TRAIT(PB9, IR_OUT, AF0);
-ALT_FUN_TRAIT(PB9, I2C1_SDA, AF1);
-ALT_FUN_TRAIT(PB9, TIM17_CH1, AF2);
-ALT_FUN_TRAIT(PB9, EVENTOUT, AF3);
-ALT_FUN_TRAIT(PB10, CEC, AF0);
-ALT_FUN_TRAIT(PB10, I2C2_SCL, AF1);
-ALT_FUN_TRAIT(PB10, TIM2_CH3, AF2);
-ALT_FUN_TRAIT(PB10, TSC_SYNC, AF3);
-ALT_FUN_TRAIT(PB11, EVENTOUT, AF0);
-ALT_FUN_TRAIT(PB11, I2C2_SDA, AF1);
-ALT_FUN_TRAIT(PB11, TIM2_CH4, AF2);
-ALT_FUN_TRAIT(PB11, TSC_G6_IO1, AF3);
-ALT_FUN_TRAIT(PB12, SPI2_NSS, AF0);
-ALT_FUN_TRAIT(PB12, EVENTOUT, AF1);
-ALT_FUN_TRAIT(PB12, TIM1_BKIN, AF2);
-ALT_FUN_TRAIT(PB12, TSC_G6_IO2, AF3);
-ALT_FUN_TRAIT(PB13, SPI2_SCK, AF0);
-ALT_FUN_TRAIT(PB13, TIM1_CH1N, AF2);
-ALT_FUN_TRAIT(PB13, TSC_G6_IO3, AF3);
-ALT_FUN_TRAIT(PB14, SPI2_MISO, AF0);
-ALT_FUN_TRAIT(PB14, TIM15_CH1, AF1);
-ALT_FUN_TRAIT(PB14, TIM1_CH2N, AF2);
-ALT_FUN_TRAIT(PB14, TSC_G6_IO4, AF3);
-ALT_FUN_TRAIT(PB15, SPI2_MOSI, AF0);
-ALT_FUN_TRAIT(PB15, TIM15_CH2, AF1);
-ALT_FUN_TRAIT(PB15, TIM1_CH3N, AF2);
-ALT_FUN_TRAIT(PB15, TIM15_CH1N, AF3);
-ALT_FUN_TRAIT(PC0, EVENTOUT, AF0);
-ALT_FUN_TRAIT(PC1, EVENTOUT, AF0);
-ALT_FUN_TRAIT(PC2, EVENTOUT, AF0);
-ALT_FUN_TRAIT(PC3, EVENTOUT, AF0);
-ALT_FUN_TRAIT(PC4, EVENTOUT, AF0);
-ALT_FUN_TRAIT(PC5, TSC_G3_IO1, AF0);
-ALT_FUN_TRAIT(PC6, TIM3_CH1, AF0);
-ALT_FUN_TRAIT(PC7, TIM3_CH2, AF0);
-ALT_FUN_TRAIT(PC8, TIM3_CH3, AF0);
-ALT_FUN_TRAIT(PC9, TIM3_CH4, AF0);
-ALT_FUN_TRAIT(PD2, TIM3_ETR, AF0);
-ALT_FUN_TRAIT(PF6, I2C2_SCL, AF0);
-ALT_FUN_TRAIT(PF7, I2C2_SDA, AF0);
+enum alt_fun_t
+    { AF0
+    , AF1
+    , AF2
+    , AF3
+    , AF4
+    , AF5
+    , AF6
+    , AF7
+    , AF8
+    , AF9
+    , AF10
+    , AF11
+    , AF12
+    , AF13
+    , AF14
+    , AF15
+    };
+
+enum alternate_function_t
+    { CAN_RX
+    , CAN_TX
+    , CEC
+    , COMP1_OUT
+    , COMP2_OUT
+    , CRS_SYNC
+    , EVENTOUT
+    , I2C1_SCL
+    , I2C1_SDA
+    , I2C1_SMBA
+    , I2C2_SCL
+    , I2C2_SDA
+    , I2S1_CK
+    , I2S1_MCK
+    , I2S1_SD
+    , I2S1_WS
+    , IR_OUT
+    , MCO
+    , SPI1_MISO
+    , SPI1_MOSI
+    , SPI1_NSS
+    , SPI1_SCK
+    , SPI2_MISO
+    , SPI2_MOSI
+    , SPI2_NSS
+    , SPI2_SCK
+    , SWCLK
+    , SWDIO
+    , TIM14_CH1
+    , TIM15_BKIN
+    , TIM15_CH1
+    , TIM15_CH1N
+    , TIM15_CH2
+    , TIM16_BKIN
+    , TIM16_CH1
+    , TIM16_CH1N
+    , TIM17_BKIN
+    , TIM17_CH1
+    , TIM17_CH1N
+    , TIM1_BKIN
+    , TIM1_CH1
+    , TIM1_CH1N
+    , TIM1_CH2
+    , TIM1_CH2N
+    , TIM1_CH3
+    , TIM1_CH3N
+    , TIM1_CH4
+    , TIM1_ETR
+    , TIM2_CH1_ETR
+    , TIM2_CH2
+    , TIM2_CH3
+    , TIM2_CH4
+    , TIM3_CH1
+    , TIM3_CH2
+    , TIM3_CH3
+    , TIM3_CH4
+    , TIM3_ETR
+    , TSC_G1_IO1
+    , TSC_G1_IO2
+    , TSC_G1_IO3
+    , TSC_G1_IO4
+    , TSC_G2_IO1
+    , TSC_G2_IO2
+    , TSC_G2_IO3
+    , TSC_G2_IO4
+    , TSC_G3_IO1
+    , TSC_G3_IO2
+    , TSC_G3_IO3
+    , TSC_G3_IO4
+    , TSC_G4_IO1
+    , TSC_G4_IO2
+    , TSC_G4_IO3
+    , TSC_G4_IO4
+    , TSC_G5_IO1
+    , TSC_G5_IO2
+    , TSC_G5_IO3
+    , TSC_G5_IO4
+    , TSC_G6_IO1
+    , TSC_G6_IO2
+    , TSC_G6_IO3
+    , TSC_G6_IO4
+    , TSC_SYNC
+    , USART1_CK
+    , USART1_CTS
+    , USART1_RTS
+    , USART1_RX
+    , USART1_TX
+    , USART2_CK
+    , USART2_CTS
+    , USART2_RTS
+    , USART2_RX
+    , USART2_TX
+    , USART3_CTS
+    , USART4_RTS
+    , USART4_RX
+    , USART4_TX
+    , USART6_RX
+    , USART6_TX
+    };
+
+template<gpio_pin_t PIN, alternate_function_t ALT>
+struct alt_fun_traits
+{
+    static_assert(always_false_i<PIN>::value, "selected alternate function is not available on this pin!");
+};
+
+template<> struct alt_fun_traits<PA0, USART2_CTS> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA0, TIM2_CH1_ETR> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA0, TSC_G1_IO1> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PA0, USART4_TX> { static const alt_fun_t AF = AF4; };
+template<> struct alt_fun_traits<PA0, COMP1_OUT> { static const alt_fun_t AF = AF7; };
+template<> struct alt_fun_traits<PA1, EVENTOUT> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA1, USART2_RTS> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA1, TIM2_CH2> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA1, TSC_G1_IO2> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PA1, USART4_RX> { static const alt_fun_t AF = AF4; };
+template<> struct alt_fun_traits<PA1, TIM15_CH1N> { static const alt_fun_t AF = AF5; };
+template<> struct alt_fun_traits<PA2, TIM15_CH1> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA2, USART2_TX> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA2, TIM2_CH3> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA2, TSC_G1_IO3> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PA2, COMP2_OUT> { static const alt_fun_t AF = AF7; };
+template<> struct alt_fun_traits<PA3, TIM15_CH2> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA3, USART2_RX> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA3, TIM2_CH4> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA3, TSC_G1_IO4> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PA4, SPI1_NSS> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA4, I2S1_WS> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA4, USART2_CK> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA4, TSC_G2_IO1> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PA4, TIM14_CH1> { static const alt_fun_t AF = AF4; };
+template<> struct alt_fun_traits<PA4, USART6_TX> { static const alt_fun_t AF = AF5; };
+template<> struct alt_fun_traits<PA5, SPI1_SCK> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA5, I2S1_CK> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA5, CEC> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA5, TIM2_CH1_ETR> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA5, TSC_G2_IO2> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PA5, USART6_RX> { static const alt_fun_t AF = AF5; };
+template<> struct alt_fun_traits<PA6, SPI1_MISO> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA6, I2S1_MCK> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA6, TIM3_CH1> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA6, TIM1_BKIN> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA6, TSC_G2_IO3> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PA6, USART3_CTS> { static const alt_fun_t AF = AF4; };
+template<> struct alt_fun_traits<PA6, TIM16_CH1> { static const alt_fun_t AF = AF5; };
+template<> struct alt_fun_traits<PA6, EVENTOUT> { static const alt_fun_t AF = AF6; };
+template<> struct alt_fun_traits<PA6, COMP1_OUT> { static const alt_fun_t AF = AF7; };
+template<> struct alt_fun_traits<PA7, SPI1_MOSI> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA7, I2S1_SD> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA7, TIM3_CH2> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA7, TIM1_CH1N> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA7, TSC_G2_IO4> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PA7, TIM14_CH1> { static const alt_fun_t AF = AF4; };
+template<> struct alt_fun_traits<PA7, TIM17_CH1> { static const alt_fun_t AF = AF5; };
+template<> struct alt_fun_traits<PA7, EVENTOUT> { static const alt_fun_t AF = AF6; };
+template<> struct alt_fun_traits<PA7, COMP2_OUT> { static const alt_fun_t AF = AF7; };
+template<> struct alt_fun_traits<PA8, MCO> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA8, USART1_CK> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA8, TIM1_CH1> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA8, EVENTOUT> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PA8, CRS_SYNC> { static const alt_fun_t AF = AF4; };
+template<> struct alt_fun_traits<PA9, TIM15_BKIN> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA9, USART1_TX> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA9, TIM1_CH2> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA9, TSC_G4_IO1> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PA9, I2C1_SCL> { static const alt_fun_t AF = AF4; };
+template<> struct alt_fun_traits<PA9, MCO> { static const alt_fun_t AF = AF5; };
+template<> struct alt_fun_traits<PA10, TIM17_BKIN> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA10, USART1_RX> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA10, TIM1_CH3> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA10, TSC_G4_IO2> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PA10, I2C1_SDA> { static const alt_fun_t AF = AF4; };
+template<> struct alt_fun_traits<PA11, EVENTOUT> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA11, USART1_CTS> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA11, TIM1_CH4> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA11, TSC_G4_IO3> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PA11, CAN_RX> { static const alt_fun_t AF = AF4; };
+template<> struct alt_fun_traits<PA11, I2C2_SCL> { static const alt_fun_t AF = AF5; };
+template<> struct alt_fun_traits<PA11, COMP1_OUT> { static const alt_fun_t AF = AF7; };
+template<> struct alt_fun_traits<PA12, EVENTOUT> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA12, USART1_RTS> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA12, TIM1_ETR> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA12, TSC_G4_IO4> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PA12, CAN_TX> { static const alt_fun_t AF = AF4; };
+template<> struct alt_fun_traits<PA12, I2C2_SDA> { static const alt_fun_t AF = AF5; };
+template<> struct alt_fun_traits<PA12, COMP2_OUT> { static const alt_fun_t AF = AF7; };
+template<> struct alt_fun_traits<PA13, SWDIO> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA13, IR_OUT> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA14, SWCLK> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA14, USART2_TX> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA15, SPI1_NSS> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA15, I2S1_WS> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA15, USART2_RX> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PA15, TIM2_CH1_ETR> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA15, EVENTOUT> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PA15, USART4_RTS> { static const alt_fun_t AF = AF4; };
+template<> struct alt_fun_traits<PB0, EVENTOUT> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB0, TIM3_CH3> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PB0, TIM1_CH2N> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PB0, TSC_G3_IO2> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PB1, TIM14_CH1> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB1, TIM3_CH4> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PB1, TIM1_CH3N> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PB1, TSC_G3_IO3> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PB2, TSC_G3_IO4> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PB3, SPI1_SCK> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB3, I2S1_CK> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB3, EVENTOUT> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PB3, TIM2_CH2> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PB3, TSC_G5_IO1> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PB4, SPI1_MISO> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB4, I2S1_MCK> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB4, TIM3_CH1> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PB4, EVENTOUT> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PB4, TSC_G5_IO2> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PB5, SPI1_MOSI> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB5, I2S1_SD> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB5, TIM3_CH2> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PB5, TIM16_BKIN> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PB5, I2C1_SMBA> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PB6, USART1_TX> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB6, I2C1_SCL> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PB6, TIM16_CH1N> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PB6, TSC_G5_IO3> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PB7, USART1_RX> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB7, I2C1_SDA> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PB7, TIM17_CH1N> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PB7, TSC_G5_IO4> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PB8, CEC> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB8, I2C1_SCL> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PB8, TIM16_CH1> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PB8, TSC_SYNC> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PB9, IR_OUT> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB9, I2C1_SDA> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PB9, TIM17_CH1> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PB9, EVENTOUT> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PB10, CEC> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB10, I2C2_SCL> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PB10, TIM2_CH3> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PB10, TSC_SYNC> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PB11, EVENTOUT> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB11, I2C2_SDA> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PB11, TIM2_CH4> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PB11, TSC_G6_IO1> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PB12, SPI2_NSS> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB12, EVENTOUT> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PB12, TIM1_BKIN> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PB12, TSC_G6_IO2> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PB13, SPI2_SCK> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB13, TIM1_CH1N> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PB13, TSC_G6_IO3> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PB14, SPI2_MISO> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB14, TIM15_CH1> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PB14, TIM1_CH2N> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PB14, TSC_G6_IO4> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PB15, SPI2_MOSI> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PB15, TIM15_CH2> { static const alt_fun_t AF = AF1; };
+template<> struct alt_fun_traits<PB15, TIM1_CH3N> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PB15, TIM15_CH1N> { static const alt_fun_t AF = AF3; };
+template<> struct alt_fun_traits<PC0, EVENTOUT> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PC1, EVENTOUT> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PC2, EVENTOUT> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PC3, EVENTOUT> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PC4, EVENTOUT> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PC5, TSC_G3_IO1> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PC6, TIM3_CH1> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PC7, TIM3_CH2> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PC8, TIM3_CH3> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PC9, TIM3_CH4> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PD2, TIM3_ETR> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PF6, I2C2_SCL> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PF7, I2C2_SDA> { static const alt_fun_t AF = AF0; };
