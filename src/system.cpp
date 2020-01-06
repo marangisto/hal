@@ -162,7 +162,7 @@ void sys_clock::init()
 
     while ((RCC.CFGR & encode<0x3, _::CFGR_SWS0, 2>()) != encode<0x2, _::CFGR_SWS0, 2>());
 #elif defined(STM32F767)
-    m_freq = 8000000;
+    m_freq = 16000000;
 #elif defined(STM32H743)
     m_freq = 8000000;
 #elif defined(STM32G070)
