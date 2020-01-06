@@ -66,10 +66,11 @@ enum alternate_function_t
     , TIM1_CH3N
     , TIM1_CH4
     , TIM1_ETR
-    , TIM2_CH1_ETR
+    , TIM2_CH1
     , TIM2_CH2
     , TIM2_CH3
     , TIM2_CH4
+    , TIM2_ETR
     , TIM3_CH1
     , TIM3_CH2
     , TIM3_CH3
@@ -125,7 +126,8 @@ struct alt_fun_traits
 };
 
 template<> struct alt_fun_traits<PA0, USART2_CTS> { static const alt_fun_t AF = AF1; };
-template<> struct alt_fun_traits<PA0, TIM2_CH1_ETR> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA0, TIM2_CH1> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA0, TIM2_ETR> { static const alt_fun_t AF = AF2; };
 template<> struct alt_fun_traits<PA0, TSC_G1_IO1> { static const alt_fun_t AF = AF3; };
 template<> struct alt_fun_traits<PA0, USART4_TX> { static const alt_fun_t AF = AF4; };
 template<> struct alt_fun_traits<PA0, COMP1_OUT> { static const alt_fun_t AF = AF7; };
@@ -153,7 +155,8 @@ template<> struct alt_fun_traits<PA4, USART6_TX> { static const alt_fun_t AF = A
 template<> struct alt_fun_traits<PA5, SPI1_SCK> { static const alt_fun_t AF = AF0; };
 template<> struct alt_fun_traits<PA5, I2S1_CK> { static const alt_fun_t AF = AF0; };
 template<> struct alt_fun_traits<PA5, CEC> { static const alt_fun_t AF = AF1; };
-template<> struct alt_fun_traits<PA5, TIM2_CH1_ETR> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA5, TIM2_CH1> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA5, TIM2_ETR> { static const alt_fun_t AF = AF2; };
 template<> struct alt_fun_traits<PA5, TSC_G2_IO2> { static const alt_fun_t AF = AF3; };
 template<> struct alt_fun_traits<PA5, USART6_RX> { static const alt_fun_t AF = AF5; };
 template<> struct alt_fun_traits<PA6, SPI1_MISO> { static const alt_fun_t AF = AF0; };
@@ -211,7 +214,8 @@ template<> struct alt_fun_traits<PA14, USART2_TX> { static const alt_fun_t AF = 
 template<> struct alt_fun_traits<PA15, SPI1_NSS> { static const alt_fun_t AF = AF0; };
 template<> struct alt_fun_traits<PA15, I2S1_WS> { static const alt_fun_t AF = AF0; };
 template<> struct alt_fun_traits<PA15, USART2_RX> { static const alt_fun_t AF = AF1; };
-template<> struct alt_fun_traits<PA15, TIM2_CH1_ETR> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA15, TIM2_CH1> { static const alt_fun_t AF = AF2; };
+template<> struct alt_fun_traits<PA15, TIM2_ETR> { static const alt_fun_t AF = AF2; };
 template<> struct alt_fun_traits<PA15, EVENTOUT> { static const alt_fun_t AF = AF3; };
 template<> struct alt_fun_traits<PA15, USART4_RTS> { static const alt_fun_t AF = AF4; };
 template<> struct alt_fun_traits<PB0, EVENTOUT> { static const alt_fun_t AF = AF0; };

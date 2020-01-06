@@ -30,6 +30,7 @@ enum i2s_format_t
 
 template<int NO> struct i2s_traits {};
 
+#if !defined(STM32G431)
 template<> struct i2s_traits<1>
 {
     typedef spi1_t T;
@@ -40,6 +41,7 @@ template<> struct i2s_traits<1>
     static const gpio::internal::alternate_function_t ws = gpio::internal::I2S1_WS;
     static const dma::resource_t tx_request = dma::SPI1_TX;
 };
+#endif
 
 template<> struct i2s_traits<2>
 {

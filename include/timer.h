@@ -82,7 +82,7 @@ template<> struct timer_traits<2>
     static inline T& TIM() { return TIM2; }
 };
 
-template<> struct timer_altfun_traits<CH1, tim2_t> { static const alternate_function_t altfun = gpio::internal::TIM2_CH1_ETR; };
+template<> struct timer_altfun_traits<CH1, tim2_t> { static const alternate_function_t altfun = gpio::internal::TIM2_CH1; };
 template<> struct timer_altfun_traits<CH2, tim2_t> { static const alternate_function_t altfun = gpio::internal::TIM2_CH2; };
 template<> struct timer_altfun_traits<CH3, tim2_t> { static const alternate_function_t altfun = gpio::internal::TIM2_CH3; };
 template<> struct timer_altfun_traits<CH4, tim2_t> { static const alternate_function_t altfun = gpio::internal::TIM2_CH4; };

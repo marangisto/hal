@@ -249,10 +249,10 @@ enum alternate_function_t
     , I2S3_SDO
     , I2S3_WS
     , I2S_CKIN
-    , JTCK-SWCLK
+    , JTCK_SWCLK
     , JTDI
     , JTDO
-    , JTMS-SWDIO
+    , JTMS_SWDIO
     , LCD_B0
     , LCD_B1
     , LCD_B2
@@ -706,9 +706,9 @@ template<> struct alt_fun_traits<PA12, FDCAN1_TX> { static const alt_fun_t AF = 
 template<> struct alt_fun_traits<PA12, OTG_FS_DP> { static const alt_fun_t AF = AF10; };
 template<> struct alt_fun_traits<PA12, LCD_R5> { static const alt_fun_t AF = AF14; };
 template<> struct alt_fun_traits<PA12, EVENTOUT> { static const alt_fun_t AF = AF15; };
-template<> struct alt_fun_traits<PA13, JTMS-SWDIO> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA13, JTMS_SWDIO> { static const alt_fun_t AF = AF0; };
 template<> struct alt_fun_traits<PA13, EVENTOUT> { static const alt_fun_t AF = AF15; };
-template<> struct alt_fun_traits<PA14, JTCK-SWCLK> { static const alt_fun_t AF = AF0; };
+template<> struct alt_fun_traits<PA14, JTCK_SWCLK> { static const alt_fun_t AF = AF0; };
 template<> struct alt_fun_traits<PA14, EVENTOUT> { static const alt_fun_t AF = AF15; };
 template<> struct alt_fun_traits<PA15, JTDI> { static const alt_fun_t AF = AF0; };
 template<> struct alt_fun_traits<PA15, TIM2_CH1> { static const alt_fun_t AF = AF1; };

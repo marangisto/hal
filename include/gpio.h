@@ -272,6 +272,8 @@ namespace internal
 #include "gpio/stm32f411.h"
 #elif defined(STM32F767)
 #include "gpio/stm32f767.h"
+#elif defined(STM32H743)
+#include "gpio/stm32h743.h"
 #elif defined(STM32G070)
 #include "gpio/stm32g070.h"
 #elif defined(STM32G431)

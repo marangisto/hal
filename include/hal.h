@@ -4,10 +4,11 @@
 
 #if defined(STM32F051)
     #include <device/stm32f0x1.h>
-//    #undef HAVE_PERIPHERAL_GPIOE    // should not be present
+    #undef HAVE_PERIPHERAL_USART3
     namespace device = stm32f0x1;
 #elif defined(STM32F103)
     #include <device/stm32f103.h>
+    #undef HAVE_PERIPHERAL_SPI3
     namespace device = stm32f103;
 #elif defined(STM32F411)
     #include <device/stm32f411.h>
@@ -20,6 +21,8 @@
     namespace device = stm32h7x3;
 #elif defined(STM32G070)
     #include <device/stm32g07x.h>
+    #undef HAVE_PERIPHERAL_TIM2
+    #undef HAVE_PERIPHERAL_SPI3
     namespace device = stm32g07x;
 #elif defined(STM32G431)
     #include <device/stm32g431.h>
