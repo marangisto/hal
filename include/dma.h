@@ -15,6 +15,7 @@ enum dma_interrupt_status
     , dma_transfer_error    = 0x8
     };
 
+#if defined(HAVE_PERIPHERAL_DMAMUX)
 template<uint8_t NO, uint8_t CH> struct dmamux_traits {};
 
 template<> struct dmamux_traits<1, 1> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C0CR; } };
@@ -34,7 +35,8 @@ template<> struct dmamux_traits<2, 5> { static inline volatile uint32_t& CCR() {
 template<> struct dmamux_traits<2, 6> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C13CR; } };
 template<> struct dmamux_traits<2, 7> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C14CR; } };
 template<> struct dmamux_traits<2, 8> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C15CR; } };
-#endif
+#endif // STM32G431
+#endif // HAVE_PERIPHERAL_DMAMUX
 
 template<uint8_t NO> struct dma_traits {};
 
@@ -310,14 +312,16 @@ struct dma_t
     typedef typename dma_traits<NO>::T _;
     static inline typename dma_traits<NO>::T& DMA() { return dma_traits<NO>::DMA(); }
 
+#if defined(HAVE_PERIPHERAL_DMAMUX)
     typedef typename device::dmamux_t MUX;
     static inline MUX& DMAMUX() { return device::DMAMUX; }
+#endif // HAVE_PERIPHERAL_DMAMUX
 
     static void setup()
     {
-#if !defined(STM32G070)                                         // no separate dmamux clock enable
+#if defined(HAVE_PERIPHERAL_DMAMUX) && !defined(STM32G070)
         device::peripheral_traits<MUX>::enable();               // enable dma multiplexer
-#endif
+#endif // HAVE_PERIPHERAL_DMAMUX
         device::peripheral_traits<_>::enable();                 // enable dma clock
     }
 
@@ -326,7 +330,9 @@ struct dma_t
     {
         typedef dma_channel_traits<NO, CH> __;
 
+#if defined(HAVE_PERIPHERAL_DMAMUX)
         DMAMUX().CFR &= ~(1 << (CH-1));                                 // clear synchronization overrun flag
+#endif // HAVE_PERIPHERAL_DMAMUX
         clear_interrupt_flags<CH>();                                    // clear all interrupt flags
         __::CNDTR() = nelem;                                            // set number of data elements
         __::CPAR() = reinterpret_cast<uint32_t>(source);
@@ -345,7 +351,9 @@ struct dma_t
     {
         typedef dma_channel_traits<NO, CH> __;
 
+#if defined(HAVE_PERIPHERAL_DMAMUX)
         DMAMUX().CFR &= ~(1 << (CH-1));                                 // clear synchronization overrun flag
+#endif // HAVE_PERIPHERAL_DMAMUX
         clear_interrupt_flags<CH>();                                    // clear all interrupt flags
         __::CNDTR() = nelem;                                            // set number of data elements
         __::CPAR() = reinterpret_cast<uint32_t>(dest);
@@ -409,10 +417,14 @@ struct dma_t
     static inline void abort()
     {
         disable_interrupt<CH>();                                // disable dma channel interrupts
+#if defined(HAVE_PERIPHERAL_DMAMUX)
         dmamux_traits<NO, CH>::CCR() &= ~MUX::C0CR_SOIE;        // disable synchronization overrun interrupt
+#endif // HAVE_PERIPHERAL_DMAMUX
         disable<CH>();                                          // disable dma channel
         clear_interrupt_flags<CH>();                            // clear all interrupt flags
+#if defined(HAVE_PERIPHERAL_DMAMUX)
         DMAMUX().CFR &= ~(1 << (CH-1));                         // clear synchronization overrun flag
+#endif // HAVE_PERIPHERAL_DMAMUX
     }
 };
 
