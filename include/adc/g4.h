@@ -3,6 +3,48 @@
 namespace internal
 {
 
+template<> struct adc_traits<1>
+{
+    typedef device::adc1_t T;
+    typedef device::adc12_common_t C;
+    static inline T& ADC() { return device::ADC1; }
+    static inline C& COMMON() { return device::ADC12_COMMON; }
+};
+
+template<> struct adc_traits<2>
+{
+    typedef device::adc2_t T;
+    typedef device::adc12_common_t C;
+    static inline T& ADC() { return device::ADC2; }
+    static inline C& COMMON() { return device::ADC12_COMMON; }
+};
+
+template<uint16_t> struct prescale_traits {};
+
+template<> struct prescale_traits<1> { static const uint8_t presc = 0x0; };
+template<> struct prescale_traits<2> { static const uint8_t presc = 0x1; };
+template<> struct prescale_traits<4> { static const uint8_t presc = 0x2; };
+template<> struct prescale_traits<6> { static const uint8_t presc = 0x3; };
+template<> struct prescale_traits<8> { static const uint8_t presc = 0x4; };
+template<> struct prescale_traits<10> { static const uint8_t presc = 0x5; };
+template<> struct prescale_traits<12> { static const uint8_t presc = 0x6; };
+template<> struct prescale_traits<16> { static const uint8_t presc = 0x7; };
+template<> struct prescale_traits<32> { static const uint8_t presc = 0x8; };
+template<> struct prescale_traits<64> { static const uint8_t presc = 0x9; };
+template<> struct prescale_traits<128> { static const uint8_t presc = 0xa; };
+template<> struct prescale_traits<256> { static const uint8_t presc = 0xb; };
+
+template<uint16_t> struct oversampling_traits {};
+
+template<> struct oversampling_traits<2> { static const uint8_t ratio = 0x0; };
+template<> struct oversampling_traits<4> { static const uint8_t ratio = 0x1; };
+template<> struct oversampling_traits<8> { static const uint8_t ratio = 0x2; };
+template<> struct oversampling_traits<16> { static const uint8_t ratio = 0x3; };
+template<> struct oversampling_traits<32> { static const uint8_t ratio = 0x4; };
+template<> struct oversampling_traits<64> { static const uint8_t ratio = 0x5; };
+template<> struct oversampling_traits<128> { static const uint8_t ratio = 0x6; };
+template<> struct oversampling_traits<256> { static const uint8_t ratio = 0x7; };
+
 template<uint8_t NO>
 struct adc_impl_g4
 {

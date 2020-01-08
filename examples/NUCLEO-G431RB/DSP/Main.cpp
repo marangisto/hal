@@ -96,7 +96,7 @@ int main()
     dma::enable_interrupt<dac_dma_ch, true>();
 
     ain::setup();
-    adc::setup();
+    adc::setup<4>();
     adc::sequence<1>();
     adc::dma<dma, adc_dma_ch, uint16_t>(input_buffer, buffer_size);
     adc::trigger<0xd>();            // FIXME: use constant for TIM6_TRGO
