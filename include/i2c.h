@@ -50,6 +50,15 @@ struct i2c_t
     }
 
     // FIXME: template type to use 10-bit
+    static void own_address(uint8_t addr)
+    {
+        I2C().OAR1 = _::OAR1_RESET_VALUE            // reset own address register
+                   | _::OAR1_OA1EN                  // enable own address (ACK)
+                   | addr
+                   ;
+    }
+
+    // FIXME: template type to use 10-bit
     static void write(uint8_t addr, const uint8_t *buf, uint8_t nbytes)
     {
         I2C().CR2 = _::CR2_RESET_VALUE              // reset control register 2
