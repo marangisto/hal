@@ -6,16 +6,8 @@ namespace hal
 {
 namespace i2c
 {
-
-enum i2c_interrupt_t
-    { i2c_error                 = 0x01
-    , i2c_transfer_complete     = 0x02
-    , i2c_stop_detection        = 0x04
-    , i2c_nack_received         = 0x08
-    , i2c_address_match         = 0x10
-    , i2c_receive               = 0x20
-    , i2c_transmit              = 0x40
-    };
+namespace internal
+{
 
 template<int NO> struct i2c_traits {};
 
@@ -60,73 +52,6 @@ struct i2c_t
     }
 
     // FIXME: template type to use 10-bit
-    static void own_address(uint8_t addr)
-    {
-        I2C().OAR1 = _::OAR1_RESET_VALUE            // reset own address register
-                   | _::OAR1_OA1EN                  // enable own address (ACK)
-                   | addr
-                   ;
-    }
-
-    static void enable_interrupt(uint32_t x)
-    {
-        I2C().CR1 |= ((x & i2c_error) ? _::CR1_ERRIE : 0)
-                  |  ((x & i2c_transfer_complete) ? _::CR1_TCIE : 0)
-                  |  ((x & i2c_stop_detection) ? _::CR1_STOPIE : 0)
-                  |  ((x & i2c_nack_received) ? _::CR1_NACKIE : 0)
-                  |  ((x & i2c_address_match) ? _::CR1_ADDRIE : 0)
-                  |  ((x & i2c_receive) ? _::CR1_RXIE : 0)
-                  |  ((x & i2c_transmit) ? _::CR1_TXIE : 0)
-                  ;
-    }
-
-    static void disable_interrupt(uint32_t x)
-    {
-        I2C().CR1 &= ~(0
-             |  ((x & i2c_error) ? _::CR1_ERRIE : 0)
-             |  ((x & i2c_transfer_complete) ? _::CR1_TCIE : 0)
-             |  ((x & i2c_stop_detection) ? _::CR1_STOPIE : 0)
-             |  ((x & i2c_nack_received) ? _::CR1_NACKIE : 0)
-             |  ((x & i2c_address_match) ? _::CR1_ADDRIE : 0)
-             |  ((x & i2c_receive) ? _::CR1_RXIE : 0)
-             |  ((x & i2c_transmit) ? _::CR1_TXIE : 0)
-             );
-    }
-
-    enum status_flag_t
-        { sts_read_transfer_direction   = _::ISR_DIR
-        , sts_busy                      = _::ISR_BUSY
-        , sts_overrun                   = _::ISR_OVR
-        , sts_arbitration_lost          = _::ISR_ARLO
-        , sts_bus_error                 = _::ISR_BERR
-        , sts_transfer_complete_reload  = _::ISR_TCR
-        , sts_transfer_complete         = _::ISR_TC
-        , sts_stop_detected             = _::ISR_STOPF
-        , sts_nack_detected             = _::ISR_NACKF
-        , sts_address_matched           = _::ISR_ADDR
-        , sts_receive_data_not_empty    = _::ISR_RXNE
-        , sts_transmit_interrupt_status = _::ISR_TXIS
-        , sts_transmit_data_empty       = _::ISR_TXE
-        };
-
-    template<status_flag_t FLAG>
-    static bool read_flag()
-    {
-        return (I2C().ISR & FLAG) != 0;
-    }
-
-    template<status_flag_t FLAG>
-    static void clear_flag()
-    {
-        I2C().ICR |= FLAG;
-    }
-
-    static uint32_t matched_address()
-    {
-        return I2C().ISR & _::template ISR_ADDCODE<0x7f>;
-    }
-
-    // FIXME: template type to use 10-bit
     static void write(uint8_t addr, const uint8_t *buf, uint8_t nbytes)
     {
         I2C().CR2 = _::CR2_RESET_VALUE              // reset control register 2
@@ -148,14 +73,95 @@ struct i2c_t
         I2C().ICR |= _::ICR_STOPCF;                 // clear stop condition flag
     }
 
-    static uint8_t read()
-    {
-        return I2C().RXDR;
-    }
-
 private:
     static inline typename i2c_traits<NO>::T& I2C() { return i2c_traits<NO>::I2C(); }
 };
+
+} // namespace internal
+
+template<int NO, gpio::gpio_pin_t SCL, gpio::gpio_pin_t SDA>
+struct i2c_master_t
+{
+    template<uint32_t SPEED = 100000>
+    static void setup()
+    {
+        internal::i2c_t<NO, SCL, SDA>::template setup<SPEED>();
+    }
+
+    static void write(uint8_t addr, const uint8_t *buf, uint8_t nbytes)
+    {
+        internal::i2c_t<NO, SCL, SDA>::write(addr, buf, nbytes);
+    }
+};
+
+template<int NO, gpio::gpio_pin_t SCL, gpio::gpio_pin_t SDA>
+class i2c_slave_t
+{
+public:
+    typedef void (*callback_t)();
+
+    // FIXME: template type to use 10-bit
+    template<uint32_t SPEED = 100000>
+    static void setup(uint8_t addr, callback_t callback)
+    {
+        m_callback = callback;
+        internal::i2c_t<NO, SCL, SDA>::template setup<SPEED>();
+        I2C().OAR1 = _::OAR1_RESET_VALUE            // reset own address register
+                   | _::OAR1_OA1EN                  // enable own address (ACK)
+                   | addr
+                   ;
+        I2C().CR1 |= _::CR1_ERRIE                   // enable receive interrupt
+                  |  _::CR1_NACKIE                  // enable nack received interrupt
+                  |  _::CR1_ADDRIE                  // enable address match interrupt
+                  |  _::CR1_STOPIE                  // enable stop condition interrupt
+                  ;
+    }
+
+    static void isr()
+    {
+        uint32_t sts = I2C().ISR;
+
+        if (sts & _::ISR_ADDR)                      // address matched
+        {
+            I2C().ICR |= _::ICR_ADDRCF;             // clear the address matched flag
+
+            if (sts & _::ISR_DIR)                   // direction (true = read / slave transmit)
+            {
+                                                    // FIXME: do the right thing!
+            }
+            else
+            {
+                                                    // FIXME: reset buffer pointer here
+                I2C().CR1 |= _::CR1_RXIE;           // enable receive interrupt
+            }
+        }
+        else if (sts & _::ISR_RXNE)
+        {
+                                                    // FIXME: check for buffer overrun
+            I2C().RXDR;                             // FIXME: assign buffer slot
+        }
+        else if (sts & _::ISR_STOPF)                // stop condition detected
+        {
+            I2C().ICR |= _::ICR_STOPCF;             // clear the stop condition flag
+            I2C().CR1 &= ~_::CR1_RXIE;              // disable receive interrupt
+            m_callback();                           // invoke slave callback
+        }
+        else
+            ;   // FIXME: handle error condition
+    }
+
+private:
+    typedef typename internal::i2c_traits<NO>::T _;
+    static inline typename internal::i2c_traits<NO>::T& I2C()
+    {
+        return internal::i2c_traits<NO>::I2C();
+    }
+
+    static callback_t m_callback;
+};
+
+template<int NO, gpio::gpio_pin_t SCL, gpio::gpio_pin_t SDA>
+typename i2c_slave_t<NO, SCL, SDA>::callback_t i2c_slave_t<NO, SCL, SDA>::m_callback = 0;
 
 } // namespace i2c
 } // namespace hal
