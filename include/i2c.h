@@ -80,6 +80,52 @@ struct i2c_t
                   ;
     }
 
+    static void disable_interrupt(uint32_t x)
+    {
+        I2C().CR1 &= ~(0
+             |  ((x & i2c_error) ? _::CR1_ERRIE : 0)
+             |  ((x & i2c_transfer_complete) ? _::CR1_TCIE : 0)
+             |  ((x & i2c_stop_detection) ? _::CR1_STOPIE : 0)
+             |  ((x & i2c_nack_received) ? _::CR1_NACKIE : 0)
+             |  ((x & i2c_address_match) ? _::CR1_ADDRIE : 0)
+             |  ((x & i2c_receive) ? _::CR1_RXIE : 0)
+             |  ((x & i2c_transmit) ? _::CR1_TXIE : 0)
+             );
+    }
+
+    enum status_flag_t
+        { sts_read_transfer_direction   = _::ISR_DIR
+        , sts_busy                      = _::ISR_BUSY
+        , sts_overrun                   = _::ISR_OVR
+        , sts_arbitration_lost          = _::ISR_ARLO
+        , sts_bus_error                 = _::ISR_BERR
+        , sts_transfer_complete_reload  = _::ISR_TCR
+        , sts_transfer_complete         = _::ISR_TC
+        , sts_stop_detected             = _::ISR_STOPF
+        , sts_nack_detected             = _::ISR_NACKF
+        , sts_address_matched           = _::ISR_ADDR
+        , sts_receive_data_not_empty    = _::ISR_RXNE
+        , sts_transmit_interrupt_status = _::ISR_TXIS
+        , sts_transmit_data_empty       = _::ISR_TXE
+        };
+
+    template<status_flag_t FLAG>
+    static bool read_flag()
+    {
+        return (I2C().ISR & FLAG) != 0;
+    }
+
+    template<status_flag_t FLAG>
+    static void clear_flag()
+    {
+        I2C().ICR |= FLAG;
+    }
+
+    static uint32_t matched_address()
+    {
+        return I2C().ISR & _::template ISR_ADDCODE<0x7f>;
+    }
+
     // FIXME: template type to use 10-bit
     static void write(uint8_t addr, const uint8_t *buf, uint8_t nbytes)
     {
@@ -99,7 +145,12 @@ struct i2c_t
                 I2C().TXDR = *buf++;                // send next byte
         }
 
-        I2C().ICR &= ~_::ICR_STOPCF;                // clear stop condition flag
+        I2C().ICR |= _::ICR_STOPCF;                 // clear stop condition flag
+    }
+
+    static uint8_t read()
+    {
+        return I2C().RXDR;
     }
 
 private:
