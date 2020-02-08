@@ -7,6 +7,16 @@ namespace hal
 namespace i2c
 {
 
+enum i2c_interrupt_t
+    { i2c_error                 = 0x01
+    , i2c_transfer_complete     = 0x02
+    , i2c_stop_detection        = 0x04
+    , i2c_nack_received         = 0x08
+    , i2c_address_match         = 0x10
+    , i2c_receive               = 0x20
+    , i2c_transmit              = 0x40
+    };
+
 template<int NO> struct i2c_traits {};
 
 template<> struct i2c_traits<1>
@@ -56,6 +66,18 @@ struct i2c_t
                    | _::OAR1_OA1EN                  // enable own address (ACK)
                    | addr
                    ;
+    }
+
+    static void enable_interrupt(uint32_t x)
+    {
+        I2C().CR1 |= ((x & i2c_error) ? _::CR1_ERRIE : 0)
+                  |  ((x & i2c_transfer_complete) ? _::CR1_TCIE : 0)
+                  |  ((x & i2c_stop_detection) ? _::CR1_STOPIE : 0)
+                  |  ((x & i2c_nack_received) ? _::CR1_NACKIE : 0)
+                  |  ((x & i2c_address_match) ? _::CR1_ADDRIE : 0)
+                  |  ((x & i2c_receive) ? _::CR1_RXIE : 0)
+                  |  ((x & i2c_transmit) ? _::CR1_TXIE : 0)
+                  ;
     }
 
     // FIXME: template type to use 10-bit
