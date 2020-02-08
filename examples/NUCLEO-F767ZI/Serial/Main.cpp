@@ -21,7 +21,7 @@ template<> void handler<interrupt::USART3>()
 int main()
 {
     led::setup();
-    serial::setup<230400>();
+    serial::setup<115200>();
     hal::nvic<interrupt::USART3>::enable();
     interrupt::enable();
 

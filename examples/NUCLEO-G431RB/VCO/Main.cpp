@@ -169,7 +169,7 @@ int main()
     sig_gen.setup();
 
     ain::setup();
-    adc::setup();
+    adc::setup<4>();
     adc::sequence<1>();
     adc::enable();
 

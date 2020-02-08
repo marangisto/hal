@@ -15,7 +15,7 @@ struct adc_api_t: private IMPL<NO>
     typedef IMPL<NO> impl;
     static constexpr uint8_t nulch = impl::nulch;
 
-    template<uint16_t PRESCALE = 4>
+    template<uint16_t PRESCALE = 1>
     static void setup() { impl::template setup<PRESCALE>(); }
 
     static void enable() { impl::enable(); }
@@ -46,64 +46,15 @@ namespace internal
 
 template<uint8_t NO> struct adc_traits {};
 
-#if defined(HAVE_PERIPHERAL_ADC2)
-template<> struct adc_traits<1>
-{
-    typedef device::adc1_t T;
-    typedef device::adc12_common_t C;
-    static inline T& ADC() { return device::ADC1; }
-#if defined(HAVE_PERIPHERAL_ADC12_COMMON)
-    static inline C& COMMON() { return device::ADC12_COMMON; }
-#endif
-};
-
-template<> struct adc_traits<2>
-{
-    typedef device::adc2_t T;
-    typedef device::adc12_common_t C;
-    static inline T& ADC() { return device::ADC2; }
-    static inline C& COMMON() { return device::ADC12_COMMON; }
-};
-#else
-template<> struct adc_traits<1>
-{
-    typedef device::adc_t T;
-    static inline T& ADC() { return device::ADC; }
-};
-#endif
-
-template<uint16_t> struct prescale_traits {};
-
-template<> struct prescale_traits<1> { static const uint8_t presc = 0x0; };
-template<> struct prescale_traits<2> { static const uint8_t presc = 0x1; };
-template<> struct prescale_traits<4> { static const uint8_t presc = 0x2; };
-template<> struct prescale_traits<6> { static const uint8_t presc = 0x3; };
-template<> struct prescale_traits<8> { static const uint8_t presc = 0x4; };
-template<> struct prescale_traits<10> { static const uint8_t presc = 0x5; };
-template<> struct prescale_traits<12> { static const uint8_t presc = 0x6; };
-template<> struct prescale_traits<16> { static const uint8_t presc = 0x7; };
-template<> struct prescale_traits<32> { static const uint8_t presc = 0x8; };
-template<> struct prescale_traits<64> { static const uint8_t presc = 0x9; };
-template<> struct prescale_traits<128> { static const uint8_t presc = 0xa; };
-template<> struct prescale_traits<256> { static const uint8_t presc = 0xb; };
-
-template<uint16_t> struct oversampling_traits {};
-
-template<> struct oversampling_traits<2> { static const uint8_t ratio = 0x0; };
-template<> struct oversampling_traits<4> { static const uint8_t ratio = 0x1; };
-template<> struct oversampling_traits<8> { static const uint8_t ratio = 0x2; };
-template<> struct oversampling_traits<16> { static const uint8_t ratio = 0x3; };
-template<> struct oversampling_traits<32> { static const uint8_t ratio = 0x4; };
-template<> struct oversampling_traits<64> { static const uint8_t ratio = 0x5; };
-template<> struct oversampling_traits<128> { static const uint8_t ratio = 0x6; };
-template<> struct oversampling_traits<256> { static const uint8_t ratio = 0x7; };
-
 } // namespace internal
 
-#if defined(STM32G070)
+#if defined(STM32F1) || defined(STM32F4) || defined(STM32F7)
+#include "adc/f1.h"
+template<int NO> using adc_t = adc_api_t<NO, internal::adc_impl_f1>;
+#elif defined(STM32G0)
 #include "adc/g0.h"
 template<int NO> using adc_t = adc_api_t<NO, internal::adc_impl_g0>;
-#elif defined(STM32G431)
+#elif defined(STM32G4)
 #include "adc/g4.h"
 template<int NO> using adc_t = adc_api_t<NO, internal::adc_impl_g4>;
 #else

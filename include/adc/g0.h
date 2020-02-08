@@ -3,16 +3,24 @@
 namespace internal
 {
 
+template<> struct adc_traits<1>
+{
+    typedef device::adc_t T;
+    static inline T& ADC() { return device::ADC; }
+};
+
 template<uint8_t NO>
 struct adc_impl_g0
 {
     typedef typename adc_traits<NO>::T _;
     static inline typename adc_traits<NO>::T& ADC() { return adc_traits<NO>::ADC(); }
 
-    template<uint16_t PRESCALE = 4>
+    template<uint16_t PRESCALE>
     static void setup()
     {
         using namespace device;
+
+        static_assert(PRESCALE == 1, "ADC prescale other than 1 currently unsupported by driver");
 
         peripheral_traits<_>::enable();                         // enable adc clock
         ADC().CR = _::CR_RESET_VALUE;                           // reset control register
