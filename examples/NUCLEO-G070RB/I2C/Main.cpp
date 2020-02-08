@@ -18,12 +18,13 @@ typedef hal::timer::timer_t<3> aux;
 typedef usart_t<2, PA2, PA3> serial;
 typedef output_t<PA5> led;
 typedef output_t<PD9> probe;
-typedef i2c_master_t<2, PB13, PB14> master;
-typedef i2c_slave_t<1, PB8, PB9> slave;
+typedef i2c_master_t<1, PB8, PB9> master;
+typedef i2c_slave_t<2, PB13, PB14> slave;
 
 static uint8_t slave_address = 0x5a;
+static uint8_t recv_buf[32];
 
-static volatile uint32_t x = 0;
+static volatile uint8_t fire = 0;
 
 template<> void handler<interrupt::TIM3>()
 {
@@ -31,15 +32,16 @@ template<> void handler<interrupt::TIM3>()
     btn::update();
 }
 
-template<> void handler<interrupt::I2C1>()
+template<> void handler<interrupt::I2C2>()
 {
     probe::toggle();
     slave::isr();
 }
 
-static void slave_callback()
+static void slave_callback(uint8_t *buf, uint8_t len)
 {
     led::toggle();
+    fire = len;
 }
 
 int main()
@@ -53,24 +55,23 @@ int main()
     aux::update_interrupt_enable();
     hal::nvic<interrupt::TIM3>::enable();
     master::setup();
-    slave::setup(slave_address, slave_callback);
-    hal::nvic<interrupt::I2C1>::enable();
+    slave::setup(slave_address, slave_callback, recv_buf, sizeof(recv_buf));
+    hal::nvic<interrupt::I2C2>::enable();
     printf("Welcome to the STM32G070!\n");
-
-    uint32_t last_x = 4711;
 
     for (;;)
     {
         if (btn::read())
         {
-            static uint8_t buf[4] = { 0xb, 0xe, 0xe, 0xf };
+            static uint8_t buf[] = { 0xd, 0xe, 0xa, 0xd, 0xb, 0xe, 0xe, 0xf };
             master::write(slave_address, buf, sizeof(buf));
         }
 
-        if (x != last_x)
+        if (fire)
         {
-            printf("%lx\n", x);
-            last_x = x;
+            for (int i = 0; i < fire; ++i)
+                printf("%x%s", recv_buf[i], i + 1 == fire ? "\n" : "");
+            fire = 0;
         }
     }
 }
