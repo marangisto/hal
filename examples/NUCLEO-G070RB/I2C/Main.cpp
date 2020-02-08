@@ -13,7 +13,7 @@ using namespace hal::usart;
 using namespace hal::i2c;
 using namespace hal::timer;
 
-typedef button_t<PD8> btn;              // not on-board!
+typedef button_t<PC13> btn;
 typedef hal::timer::timer_t<3> aux;
 typedef usart_t<2, PA2, PA3> serial;
 typedef output_t<PA5> led;
