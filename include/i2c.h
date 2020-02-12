@@ -51,6 +51,22 @@ struct i2c_t
                   ;
     }
 
+private:
+    static inline typename i2c_traits<NO>::T& I2C() { return i2c_traits<NO>::I2C(); }
+};
+
+} // namespace internal
+
+template<int NO, gpio::gpio_pin_t SCL, gpio::gpio_pin_t SDA>
+class i2c_master_t
+{
+public:
+    template<uint32_t SPEED = 100000>
+    static void setup()
+    {
+        internal::i2c_t<NO, SCL, SDA>::template setup<SPEED>();
+    }
+
     // FIXME: template type to use 10-bit
     static void write(uint8_t addr, const uint8_t *buf, uint8_t nbytes)
     {
@@ -58,7 +74,6 @@ struct i2c_t
                   | nbytes << 16                    // transmit message size FIXME: shift hack!
                   | _::CR2_AUTOEND                  // stop condition after n bytes
                   | (false ? _::CR2_ADD10 : 0)      // enable for 10-bit addressing
-                  | (false ? _::CR2_RD_WRN : 0)     // master read (true) or write (false)
                   | _::CR2_START                    // generate start condition when free
                   | addr                            // slave address FIXME: check range!
                   ;
@@ -73,24 +88,34 @@ struct i2c_t
         I2C().ICR |= _::ICR_STOPCF;                 // clear stop condition flag
     }
 
-private:
-    static inline typename i2c_traits<NO>::T& I2C() { return i2c_traits<NO>::I2C(); }
-};
-
-} // namespace internal
-
-template<int NO, gpio::gpio_pin_t SCL, gpio::gpio_pin_t SDA>
-struct i2c_master_t
-{
-    template<uint32_t SPEED = 100000>
-    static void setup()
+    // FIXME: template type to use 10-bit
+    static void read(uint8_t addr, uint8_t *buf, uint8_t nbytes)
     {
-        internal::i2c_t<NO, SCL, SDA>::template setup<SPEED>();
+        I2C().CR2 = _::CR2_RESET_VALUE              // reset control register 2
+                  | nbytes << 16                    // receive message size FIXME: shift hack!
+                  | _::CR2_AUTOEND                  // stop condition after n bytes
+                  | (false ? _::CR2_ADD10 : 0)      // enable for 10-bit addressing
+                  | _::CR2_RD_WRN                   // master read (true) or write (false)
+                  | _::CR2_START                    // generate start condition when free
+                  | addr                            // slave address FIXME: check range!
+                  ;
+
+        while (!(I2C().ISR & _::ISR_STOPF))         // while we don't see stop condition
+        {
+                                                    // FIXME: insert time-out handling code here
+                                                    // FIXME: insert buffer over-run check
+            if (I2C().ISR & _::ISR_RXNE)            // receive buffer is not empty
+                *buf++ = I2C().RXDR;                // send next byte
+        }
+
+        I2C().ICR |= _::ICR_STOPCF;                 // clear stop condition flag
     }
 
-    static void write(uint8_t addr, const uint8_t *buf, uint8_t nbytes)
+private:
+    typedef typename internal::i2c_traits<NO>::T _;
+    static inline typename internal::i2c_traits<NO>::T& I2C()
     {
-        internal::i2c_t<NO, SCL, SDA>::write(addr, buf, nbytes);
+        return internal::i2c_traits<NO>::I2C();
     }
 };
 
