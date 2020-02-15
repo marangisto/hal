@@ -81,6 +81,7 @@ public:
         while (!(I2C().ISR & _::ISR_STOPF))         // while we don't see stop condition
         {
                                                     // FIXME: insert time-out handling code here
+                                                    // FIXME: insert buffer over-run check
             if (I2C().ISR & _::ISR_TXIS)            // transmit buffer is empty (why not TXE?)
                 I2C().TXDR = *buf++;                // send next byte
         }
@@ -176,7 +177,6 @@ public:
                     m_txlen = m_cb(0);              // invoke slave callback
                     m_txptr = m_txbuf;              // reset transmit buffer pointer
                     m_state = transmitting;         // wait to send bytes
-                    I2C().ISR |= _::ISR_TXE;        // flush transmit register
                     I2C().CR1 |= _::CR1_TXIE;       // enable transmit interrupt
                 }
                 else
@@ -227,6 +227,7 @@ public:
             {
                 I2C().ICR |= _::ICR_STOPCF;         // clear the stop condition flag
                 I2C().CR1 &= ~_::CR1_TXIE;          // disable transmit interrupt
+                I2C().ISR |= _::ISR_TXE;            // flush transmit register
                 m_state = initial;                  // wait for next transaction
             }
             else
