@@ -43,7 +43,8 @@ template<> void handler<interrupt::I2C2>()
 
 static uint8_t slave_callback(uint8_t len)
 {
-    led::toggle();
+    for (uint32_t i = 0; i < 101; ++i)
+        led::toggle();
     fire = len;
     return sizeof(txbuf);
 }
@@ -77,7 +78,7 @@ int main()
             }
             else
             {
-                static uint8_t buf[32], len = 6;
+                static uint8_t buf[32], len = 8;
 
                 master::read(slave_address, buf, len);
             }
