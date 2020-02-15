@@ -5,6 +5,7 @@
 #include <button.h>
 #include <timer.h>
 #include <i2c.h>
+#include <fifo.h>
 
 using hal::sys_tick;
 using hal::sys_clock;
@@ -20,12 +21,12 @@ typedef output_t<PA5> led;
 typedef output_t<PD9> probe;
 typedef i2c_master_t<1, PB8, PB9> master;
 typedef i2c_slave_t<2, PB13, PB14> slave;
+typedef fifo_t<uint32_t, 0, 32> fifo;
 
 static uint8_t slave_address = 0x5a;
-static uint8_t recv_buf[32];
+static uint8_t rxbuf[32], txbuf[32] = { 0xff, 0xff, 0xff, 0xff };
 
 static volatile uint8_t fire = 0;
-static volatile uint32_t sts = 0;
 
 template<> void handler<interrupt::TIM3>()
 {
@@ -36,15 +37,15 @@ template<> void handler<interrupt::TIM3>()
 template<> void handler<interrupt::I2C2>()
 {
     probe::toggle();
-    sts = slave::isr();
-        if (sts != 0)
-            printf("sts = %lx\n", sts);
+    fifo::put(device::I2C2.ISR);
+    slave::isr();
 }
 
-static void slave_callback(uint8_t *buf, uint8_t len)
+static uint8_t slave_callback(uint8_t len)
 {
     led::toggle();
     fire = len;
+    return sizeof(txbuf);
 }
 
 int main()
@@ -58,7 +59,7 @@ int main()
     aux::update_interrupt_enable();
     hal::nvic<interrupt::TIM3>::enable();
     master::setup();
-    slave::setup(slave_address, slave_callback, recv_buf, sizeof(recv_buf));
+    slave::setup(slave_address, slave_callback, rxbuf, sizeof(rxbuf), txbuf);
     hal::nvic<interrupt::I2C2>::enable();
     printf("Welcome to the STM32G070!\n");
 
@@ -68,6 +69,7 @@ int main()
     {
         if (btn::read())
         {
+            printf("--------------------------------------------\n");
             if (b)
             {
                 static uint8_t buf[] = { 0xd, 0xe, 0xa, 0xd, 0xb, 0xe, 0xe, 0xf };
@@ -75,7 +77,7 @@ int main()
             }
             else
             {
-                static uint8_t buf[32], len = 1;
+                static uint8_t buf[32], len = 6;
 
                 master::read(slave_address, buf, len);
             }
@@ -85,9 +87,15 @@ int main()
         if (fire)
         {
             for (int i = 0; i < fire; ++i)
-                printf("%x%s", recv_buf[i], i + 1 == fire ? "\n" : "");
+                printf("%x%s", rxbuf[i], i + 1 == fire ? "\n" : "");
             fire = 0;
         }
+
+        uint32_t s;
+
+        for (int i = 0; fifo::get(s); ++i)
+            printf("%02d %lx\n", i, s);
+
     }
 }
 
