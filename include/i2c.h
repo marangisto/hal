@@ -124,11 +124,17 @@ class i2c_slave_t
 {
 public:
     typedef void (*callback_t)(uint8_t *buf, uint8_t nbytes);
+    enum state_t
+        { initial
+        , transmitting
+        , receiving
+        };
 
     // FIXME: template type to use 10-bit
     template<uint32_t SPEED = 100000>
     static void setup(uint8_t addr, callback_t cb, uint8_t *buf, uint8_t bufsize)
     {
+        m_state = initial;
         m_callback = cb;
         m_buf = m_ptr = buf;
         m_bufsize = bufsize;
@@ -150,35 +156,43 @@ public:
     {
         uint32_t sts = I2C().ISR;
 
-        if (sts & _::ISR_ADDR)                      // address matched
+        switch (m_state)
         {
-            I2C().ICR |= _::ICR_ADDRCF;             // clear the address matched flag
-
-            if (sts & _::ISR_DIR)                   // direction (true = read / slave transmit)
-            {
-                                                    // FIXME: do the right thing!
-            }
-            else
+        case initial:
+            if (sts & _::ISR_ADDR)                  // address matched
             {
                 m_ptr = m_buf;                      // reset buffer pointer
-                I2C().CR1 |= _::CR1_RXIE;           // enable receive interrupt
+                I2C().ICR |= _::ICR_ADDRCF;         // clear the address matched flag
+                if (sts & _::ISR_DIR)
+                    m_state = transmitting;         // wait to send bytes
+                else
+                {
+                    m_state = receiving;            // wait for bytes to arrive
+                    I2C().CR1 |= _::CR1_RXIE;       // enable receive interrupt
+                }
             }
-        }
-        else if (sts & _::ISR_RXNE)
-        {
-            if (m_ptr < m_buf + m_bufsize)          // check for buffer overrun
-                *m_ptr++ = I2C().RXDR;              // read byte into buffer slot
+            break;
+        case receiving:
+            if (sts & _::ISR_RXNE)
+            {
+                if (m_ptr < m_buf + m_bufsize)      // check for buffer overrun
+                    *m_ptr++ = I2C().RXDR;          // read byte into buffer slot
+                else
+                    ;                               // FIXME: signal error somehow
+            }
+            else if (sts & _::ISR_STOPF)            // stop condition detected
+            {
+                I2C().ICR |= _::ICR_STOPCF;         // clear the stop condition flag
+                I2C().CR1 &= ~_::CR1_RXIE;          // disable receive interrupt
+                m_callback(m_buf, m_ptr - m_buf);   // invoke slave callback
+                m_state = initial;                  // wait for next transaction
+            }
             else
-                ;                                   // FIXME: signal error somehow
+                ; // FIXME: handle error
+            break;
+        default:
+            ; // FIXME: handle error
         }
-        else if (sts & _::ISR_STOPF)                // stop condition detected
-        {
-            I2C().ICR |= _::ICR_STOPCF;             // clear the stop condition flag
-            I2C().CR1 &= ~_::CR1_RXIE;              // disable receive interrupt
-            m_callback(m_buf, m_ptr - m_buf);       // invoke slave callback
-        }
-        else
-            ;   // FIXME: handle error condition
     }
 
 private:
@@ -188,10 +202,15 @@ private:
         return internal::i2c_traits<NO>::I2C();
     }
 
+    static state_t      m_state;
     static callback_t   m_callback;
     static uint8_t      *m_buf, *m_ptr;
     static uint8_t      m_bufsize;
 };
+
+template<int NO, gpio::gpio_pin_t SCL, gpio::gpio_pin_t SDA>
+typename i2c_slave_t<NO, SCL, SDA>::state_t i2c_slave_t<NO, SCL, SDA>::m_state
+    = i2c_slave_t<NO, SCL, SDA>::initial;
 
 template<int NO, gpio::gpio_pin_t SCL, gpio::gpio_pin_t SDA>
 typename i2c_slave_t<NO, SCL, SDA>::callback_t i2c_slave_t<NO, SCL, SDA>::m_callback = 0;
