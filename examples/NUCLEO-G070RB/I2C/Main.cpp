@@ -25,6 +25,7 @@ static uint8_t slave_address = 0x5a;
 static uint8_t recv_buf[32];
 
 static volatile uint8_t fire = 0;
+static volatile uint32_t sts = 0;
 
 template<> void handler<interrupt::TIM3>()
 {
@@ -35,7 +36,9 @@ template<> void handler<interrupt::TIM3>()
 template<> void handler<interrupt::I2C2>()
 {
     probe::toggle();
-    slave::isr();
+    sts = slave::isr();
+        if (sts != 0)
+            printf("sts = %lx\n", sts);
 }
 
 static void slave_callback(uint8_t *buf, uint8_t len)
@@ -59,12 +62,24 @@ int main()
     hal::nvic<interrupt::I2C2>::enable();
     printf("Welcome to the STM32G070!\n");
 
+    bool b = true;
+
     for (;;)
     {
         if (btn::read())
         {
-            static uint8_t buf[] = { 0xd, 0xe, 0xa, 0xd, 0xb, 0xe, 0xe, 0xf };
-            master::write(slave_address, buf, sizeof(buf));
+            if (b)
+            {
+                static uint8_t buf[] = { 0xd, 0xe, 0xa, 0xd, 0xb, 0xe, 0xe, 0xf };
+                master::write(slave_address, buf, sizeof(buf));
+            }
+            else
+            {
+                static uint8_t buf[32], len = 1;
+
+                master::read(slave_address, buf, len);
+            }
+            b = !b;
         }
 
         if (fire)

@@ -152,7 +152,7 @@ public:
                   ;
     }
 
-    static void isr()
+    static uint32_t isr()
     {
         uint32_t sts = I2C().ISR;
 
@@ -164,7 +164,10 @@ public:
                 m_ptr = m_buf;                      // reset buffer pointer
                 I2C().ICR |= _::ICR_ADDRCF;         // clear the address matched flag
                 if (sts & _::ISR_DIR)
+                {
                     m_state = transmitting;         // wait to send bytes
+                    I2C().CR1 |= _::CR1_TXIE;       // enable transmit interrupt
+                }
                 else
                 {
                     m_state = receiving;            // wait for bytes to arrive
@@ -173,7 +176,7 @@ public:
             }
             break;
         case receiving:
-            if (sts & _::ISR_RXNE)
+            if (sts & _::ISR_RXNE)                  // receive register not empty
             {
                 if (m_ptr < m_buf + m_bufsize)      // check for buffer overrun
                     *m_ptr++ = I2C().RXDR;          // read byte into buffer slot
@@ -188,11 +191,34 @@ public:
                 m_state = initial;                  // wait for next transaction
             }
             else
-                ; // FIXME: handle error
+                return sts;                         // FIXME: handle error
+            break;
+        case transmitting:
+            if (sts & _::ISR_TXIS)                  // transmit register empty
+            {
+                I2C().TXDR = 0x0f;
+            }
+            else if (sts & (_::ISR_NACKF | _::ISR_STOPF))
+            {
+                if (sts & _::ISR_NACKF)
+                    I2C().ICR |= _::ICR_NACKCF;     // clear the nack flag
+                if (sts & _::ISR_STOPF)
+                {
+                    I2C().ICR |= _::ICR_STOPCF;     // clear the stop condition flag
+                    I2C().CR1 &= ~_::CR1_TXIE;      // disable transmit interrupt
+                    if (sts & _::ISR_TXE)           // check transmit is empty
+                        I2C().ISR |= _::ISR_TXE;    // flush transmit register
+                    m_state = initial;              // wait for next transaction
+                }
+            }
+            else
+                return sts;                         // FIXME: handle error
             break;
         default:
-            ; // FIXME: handle error
+            return sts;                             // FIXME: handle error
         }
+
+        return 0;   // all ok!
     }
 
 private:
