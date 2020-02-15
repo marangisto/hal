@@ -106,7 +106,44 @@ public:
                                                     // FIXME: insert time-out handling code here
                                                     // FIXME: insert buffer over-run check
             if (I2C().ISR & _::ISR_RXNE)            // receive buffer is not empty
-                *buf++ = I2C().RXDR;                // send next byte
+                *buf++ = I2C().RXDR;                // read next byte
+        }
+
+        I2C().ICR |= _::ICR_STOPCF;                 // clear stop condition flag
+    }
+
+    // FIXME: template type to use 10-bit
+    static void write_read(uint8_t addr, uint8_t *txbuf, uint8_t txlen, uint8_t *rxbuf, uint8_t rxlen)
+    {
+        I2C().CR2 = _::CR2_RESET_VALUE              // reset control register 2
+                  | txlen << 16                     // transmit message size FIXME: shift hack!
+                  | (false ? _::CR2_ADD10 : 0)      // enable for 10-bit addressing
+                  | _::CR2_START                    // generate start condition when free
+                  | addr                            // slave address FIXME: check range!
+                  ;
+
+        for (uint8_t i = 0; i < txlen; ++i)
+        {
+                                                    // FIXME: insert time-out handling code here
+            while (!(I2C().ISR & _::ISR_TXIS))      // transmit buffer is empty (why not TXE?)
+                ;
+            I2C().TXDR = *txbuf++;                  // send next byte
+        }
+
+        I2C().CR2 |= _::CR2_START                   // generate repeated start condition
+                  | rxlen << 16                     // receive message size FIXME: shift hack!
+                  | _::CR2_RD_WRN                   // master read (true) or write (false)
+                  | addr                            // slave address FIXME: check range!
+                  ;
+
+        for (uint8_t i = 0; i < rxlen; ++i)
+        {
+            if (i + 1 == rxlen)                                        
+                I2C().CR2 |= _::CR2_STOP;           // generate stop condition
+                                                    // FIXME: insert time-out handling code here
+            while (!(I2C().ISR & _::ISR_RXNE))      // receive buffer is not empty
+                ;
+            *rxbuf++ = I2C().RXDR;                  // read next byte
         }
 
         I2C().ICR |= _::ICR_STOPCF;                 // clear stop condition flag
@@ -187,7 +224,7 @@ public:
                 }
             }
             else
-                ;                                   // FIXME: handle error
+                error();                            // handle error
             break;
         case receiving:
             if (sts & _::ISR_RXNE)                  // receive register not empty
@@ -195,7 +232,7 @@ public:
                 if (m_rxptr < m_rxbuf + m_rxsize)   // check for buffer overrun
                     *m_rxptr++ = I2C().RXDR;        // read byte into buffer slot
                 else
-                    ;                               // FIXME: signal error somehow
+                    error();                        // handle error
             }
             else if (sts & _::ISR_STOPF)            // stop condition detected
             {
@@ -204,8 +241,26 @@ public:
                 m_txlen = m_cb(m_rxptr - m_rxbuf);  // invoke slave callback
                 m_state = initial;                  // wait for next transaction
             }
+            else if (sts & _::ISR_ADDR)             // repeated start condition detected
+            {
+                I2C().ICR |= _::ICR_ADDRCF;         // clear the address matched flag
+                if (sts & _::ISR_DIR)
+                {
+                    m_txlen = m_cb(m_rxptr - m_rxbuf);  // invoke slave callback
+                    m_txptr = m_txbuf;              // reset transmit buffer pointer
+                    m_state = transmitting;         // wait to send bytes
+                    I2C().CR1 &= ~_::CR1_RXIE;      // disable receive interrupt
+                    I2C().CR1 |= _::CR1_TXIE;       // enable transmit interrupt
+                }
+                else
+                {
+                                                    // FIXME: how do we support repeated reads?
+                    m_rxptr = m_rxbuf;              // reset recive buffer pointer
+                    m_state = receiving;            // wait for bytes to arrive
+                }
+            }
             else
-                ;                                   // FIXME: handle error
+                error();                            // handle error
             break;
         case transmitting:
             if (sts & _::ISR_NACKF)
@@ -231,14 +286,19 @@ public:
                 m_state = initial;                  // wait for next transaction
             }
             else
-                ;                                   // FIXME: handle error
+                error();                            // handle error
             break;
         default:
-            ;                                       // FIXME: handle error
+            error();                                // handle error
         }
     }
 
 private:
+    static void error()
+    {
+        I2C().CR1 = _::CR1_RESET_VALUE;             // disables all interrupts
+    }
+
     typedef typename internal::i2c_traits<NO>::T _;
     static inline typename internal::i2c_traits<NO>::T& I2C()
     {
