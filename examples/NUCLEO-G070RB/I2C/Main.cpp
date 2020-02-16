@@ -43,7 +43,7 @@ template<> void handler<interrupt::I2C2>()
 
 static uint8_t slave_callback(uint8_t len)
 {
-    for (uint32_t i = 0; i < 1; ++i)
+    for (uint32_t i = 0; i < 51; ++i)
         led::toggle();
     fire = len;
 
@@ -91,8 +91,8 @@ int main()
 
             switch (mode)
             {
-                case 1: master::write(slave_address, txbuf, 8); break;
-                case 0: master::read(slave_address, rxbuf, rxlen = 2); break;
+                case 0: master::write(slave_address, txbuf, 8); break;
+                case 1: master::read(slave_address, rxbuf, rxlen = 4); break;
                 case 2: master::write_read(slave_address, txbuf, 2, rxbuf, rxlen = 2); break;
             }
 

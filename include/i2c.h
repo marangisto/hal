@@ -71,7 +71,6 @@ public:
     // FIXME: template type to use 10-bit
     static void write(uint8_t addr, const uint8_t *buf, uint8_t nbytes)
     {
-        I2C().ICR |= _::ICR_STOPCF;                 // clear stop condition flag
         I2C().CR2 = _::CR2_RESET_VALUE              // reset control register 2
                   | nbytes << 16                    // transmit message size FIXME: shift hack!
                   | _::CR2_AUTOEND                  // stop condition after n bytes
@@ -94,7 +93,6 @@ public:
     // FIXME: template type to use 10-bit
     static void read(uint8_t addr, uint8_t *buf, uint8_t nbytes)
     {
-        I2C().ICR |= _::ICR_STOPCF;                 // clear stop condition flag
         I2C().CR2 = _::CR2_RESET_VALUE              // reset control register 2
                   | nbytes << 16                    // receive message size FIXME: shift hack!
                   | _::CR2_AUTOEND                  // stop condition after n bytes
@@ -148,6 +146,9 @@ public:
                 ;
             *rxbuf++ = I2C().RXDR;                  // read next byte
         }
+
+        while (!(I2C().ISR & _::ISR_STOPF))         // while we don't see stop condition
+            ;                                       // do nothing
 
         I2C().ICR |= _::ICR_STOPCF;                 // clear stop condition flag
     }
