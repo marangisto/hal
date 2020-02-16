@@ -46,6 +46,7 @@ struct i2c_t
         device::peripheral_traits<_>::enable();     // enable peripheral clock
 
         I2C().TIMINGR = static_cast<uint32_t>(0x00F02B86);  // FIXME: compute speed!
+        I2C().CR2 = _::CR2_RESET_VALUE;             // reset control register 2
         I2C().CR1 = _::CR1_RESET_VALUE              // reset control register 1
                   | _::CR1_PE                       // enable i2c peripheral
                   ;
@@ -70,6 +71,7 @@ public:
     // FIXME: template type to use 10-bit
     static void write(uint8_t addr, const uint8_t *buf, uint8_t nbytes)
     {
+        I2C().ICR |= _::ICR_STOPCF;                 // clear stop condition flag
         I2C().CR2 = _::CR2_RESET_VALUE              // reset control register 2
                   | nbytes << 16                    // transmit message size FIXME: shift hack!
                   | _::CR2_AUTOEND                  // stop condition after n bytes
@@ -92,6 +94,7 @@ public:
     // FIXME: template type to use 10-bit
     static void read(uint8_t addr, uint8_t *buf, uint8_t nbytes)
     {
+        I2C().ICR |= _::ICR_STOPCF;                 // clear stop condition flag
         I2C().CR2 = _::CR2_RESET_VALUE              // reset control register 2
                   | nbytes << 16                    // receive message size FIXME: shift hack!
                   | _::CR2_AUTOEND                  // stop condition after n bytes
@@ -296,7 +299,7 @@ public:
 private:
     static void error()
     {
-        I2C().CR1 = _::CR1_RESET_VALUE;             // disables all interrupts
+        //I2C().CR1 = _::CR1_RESET_VALUE;             // disables all interrupts
     }
 
     typedef typename internal::i2c_traits<NO>::T _;

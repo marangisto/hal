@@ -43,7 +43,7 @@ template<> void handler<interrupt::I2C2>()
 
 static uint8_t slave_callback(uint8_t len)
 {
-    for (uint32_t i = 0; i < 101; ++i)
+    for (uint32_t i = 0; i < 1; ++i)
         led::toggle();
     fire = len;
 
@@ -77,7 +77,7 @@ int main()
     printf("Welcome to the STM32G070!\n");
     printf("--------------------------------------------\n");
 
-    uint8_t mode = 1;
+    uint8_t mode = 0;
 
     static uint8_t txbuf[16] = { 0xd, 0xe, 0xa, 0xd, 0xb, 0xe, 0xe, 0xf }, rxbuf[16];
 
@@ -87,12 +87,14 @@ int main()
         {
             uint8_t rxlen = 0;
 
-            if (mode == 0)
-                master::write(slave_address, txbuf, 8);
-            else if (mode == 1)
-                master::read(slave_address, rxbuf, rxlen = 2);
-            else if (mode == 2)
-                master::write_read(slave_address, txbuf, 2, rxbuf, rxlen = 2);
+            printf("mode = %d\n", mode);
+
+            switch (mode)
+            {
+                case 1: master::write(slave_address, txbuf, 8); break;
+                case 0: master::read(slave_address, rxbuf, rxlen = 2); break;
+                case 2: master::write_read(slave_address, txbuf, 2, rxbuf, rxlen = 2); break;
+            }
 
             show_buf("master_rxbuf", rxbuf, rxlen);
             show_buf("slave_rxbuf", slave_rxbuf, sizeof(slave_rxbuf));
