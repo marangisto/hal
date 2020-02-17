@@ -71,7 +71,7 @@ int main()
     aux::setup(100, 1000);
     aux::update_interrupt_enable();
     hal::nvic<interrupt::TIM3>::enable();
-    master::setup();
+    master::setup<1000000>();
     slave::setup(slave_address, slave_callback, slave_rxbuf, sizeof(slave_rxbuf), slave_txbuf);
     hal::nvic<interrupt::I2C2>::enable();
     printf("Welcome to the STM32G070!\n");

@@ -27,25 +27,31 @@ template<> struct i2c_traits<2>
     static const gpio::internal::alternate_function_t sda = gpio::internal::I2C2_SDA;
 };
 
+template<int SPEED> struct i2c_timing
+{
+    static_assert(always_false_i<SPEED>::value, "don't know timing for this speed");
+};
+
+template<> struct i2c_timing<100000> { static const uint32_t value = 0x10707DBC; };
+template<> struct i2c_timing<400000> { static const uint32_t value = 0x00602173; };
+template<> struct i2c_timing<1000000> { static const uint32_t value = 0x00300B29; };
+
 template<int NO, gpio::gpio_pin_t SCL, gpio::gpio_pin_t SDA>
 struct i2c_t
 {
     typedef typename i2c_traits<NO>::T _;
 
-    template
-        < uint32_t              transfer_speed  = 100000
-        , gpio::output_speed_t  pin_speed       = gpio::high_speed
-        >
+    template<int SPEED>
     static void setup()
     {
         using namespace gpio::internal;
 
-        alternate_t<SCL, i2c_traits<NO>::scl>::template setup<pin_speed, open_drain>();
-        alternate_t<SDA, i2c_traits<NO>::sda>::template setup<pin_speed, open_drain>();
+        alternate_t<SCL, i2c_traits<NO>::scl>::template setup<gpio::low_speed, open_drain>();
+        alternate_t<SDA, i2c_traits<NO>::sda>::template setup<gpio::low_speed, open_drain>();
 
         device::peripheral_traits<_>::enable();     // enable peripheral clock
 
-        I2C().TIMINGR = static_cast<uint32_t>(0x00F02B86);  // FIXME: compute speed!
+        I2C().TIMINGR = i2c_timing<SPEED>::value;   // set timing register
         I2C().CR2 = _::CR2_RESET_VALUE;             // reset control register 2
         I2C().CR1 = _::CR1_RESET_VALUE              // reset control register 1
                   | _::CR1_PE                       // enable i2c peripheral
@@ -62,7 +68,7 @@ template<int NO, gpio::gpio_pin_t SCL, gpio::gpio_pin_t SDA>
 class i2c_master_t
 {
 public:
-    template<uint32_t SPEED = 100000>
+    template<int SPEED = 100000>
     static void setup()
     {
         internal::i2c_t<NO, SCL, SDA>::template setup<SPEED>();
