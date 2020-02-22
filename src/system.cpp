@@ -1,4 +1,5 @@
 #include <hal.h>
+#include <algorithm>
 
 namespace hal
 {
@@ -45,7 +46,7 @@ void sys_tick::delay_us(uint32_t us)
 #else
     static_assert(false, "no featured sys-tick micro-second delay");
 #endif
-    const uint32_t fuzz = 50;
+    const uint32_t fuzz = ticks_per_us - (ticks_per_us >> 2);   // approx 3/4
     const uint32_t n = us * ticks_per_us - fuzz;
     const uint32_t now = c;
     const uint32_t then = now >= n ? now - n : (c_max - n + now);
