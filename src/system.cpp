@@ -34,12 +34,35 @@ void sys_tick::delay_ms(uint32_t ms)
         ;   // busy wait
 }
 
+void sys_tick::delay_us(uint32_t us)
+{
+#if defined(STM32F051) || defined (STM32F767) || defined(STM32H743) || defined(STM32G070)
+    volatile uint32_t& c = STK.CVR;
+    const uint32_t c_max = STK.RVR;
+#elif defined(STM32F103) || defined(STM32F411) || defined(STM32G431)
+    volatile uint32_t& c = STK.VAL;
+    const uint32_t c_max = STK.LOAD;
+#else
+    static_assert(false, "no featured sys-tick micro-second delay");
+#endif
+    const uint32_t fuzz = 50;
+    const uint32_t n = us * ticks_per_us - fuzz;
+    const uint32_t now = c;
+    const uint32_t then = now >= n ? now - n : (c_max - n + now);
+
+    if (now > then)
+        while (c > then && c < now);
+    else
+        while (c < then || c > now);
+}
+
 void sys_tick::init(uint32_t n)
 {
     using namespace hal;
     typedef stk_t _;
 
     ms_counter = 0;                             // start new epoq
+    ticks_per_us = n / 1000;                    // for us in delay_us
 
 #if defined(STM32F051) || defined (STM32F767) || defined(STM32H743) || defined(STM32G070)
     STK.CSR = _::CSR_RESET_VALUE;               // reset controls
@@ -59,6 +82,7 @@ void sys_tick::init(uint32_t n)
 }
 
 volatile uint32_t sys_tick::ms_counter = 0;
+uint32_t sys_tick::ticks_per_us = 0;
 
 inline void sys_tick_init(uint32_t n) { sys_tick::init(n); }
 inline void sys_tick_update() { ++sys_tick::ms_counter; } // N.B. wraps in 49 days!
@@ -101,7 +125,7 @@ void sys_clock::init()
     m_freq = 72000000;
 
     // set system clock to HSE-PLL 72MHz
- 
+
     FLASH.ACR |= flash_t::ACR_PRFTBE | flash_t::template ACR_LATENCY<0x2>;
 
     RCC.CR |= _::CR_HSEON;                  // enable external clock

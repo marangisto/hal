@@ -42,6 +42,7 @@ class sys_tick
 {
 public:
     static void delay_ms(uint32_t ms);
+    static void delay_us(uint32_t ms);
     static inline uint32_t count() { return ms_counter; }
 
 private:
@@ -52,6 +53,7 @@ private:
     static inline void update();
 
     static volatile uint32_t ms_counter;
+    static uint32_t ticks_per_us;
 };
 
 class sys_clock
@@ -59,15 +61,6 @@ class sys_clock
 public:
     static void init();
     static uint32_t freq() { return m_freq; }
-
-    __attribute__((always_inline))
-    static inline void delay_us(uint32_t us)
-    {
-        volatile uint32_t n = (us * (m_freq / 100000)) / 250;
-
-        while (n > 0)
-            --n;
-    }
 
 #if defined(USE_HAL_DRIVER) || defined(USE_FULL_LL_DRIVER)
     static void copy_system_core_clock()

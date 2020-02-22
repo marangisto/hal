@@ -118,7 +118,7 @@ struct dac_t
     static inline void enable()
     {
         DAC().CR |= dac_channel_traits<NO, CH>::CR_EN;      // enable dac channel
-        sys_clock::delay_us(8);                                 // wait for voltage to settle
+        sys_tick::delay_us(8);                              // wait for voltage to settle
     }
 
     template<uint8_t CH>
@@ -150,7 +150,7 @@ struct dac_t
     {
         DAC().CR &= ~dac_channel_traits<NO, CH>::CR_DMAEN;      // disable dac channel dma
         disable<CH>();                                              // disable dac channel
-        sys_clock::delay_us(1000);                                  // ensure miniumum wait before next enable
+        sys_tick::delay_us(500);                                // ensure miniumum wait before next enable
         DMA::template abort<DMACH>();                               // stop dma on relevant dma channel
         DAC().CR &= ~dac_channel_traits<NO, CH>::CR_DMAUDRIE;   // disable dac channel underrun interrupt
     }

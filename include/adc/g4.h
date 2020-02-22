@@ -82,7 +82,7 @@ struct adc_impl_g4
 
         ADC().CR &= ~_::CR_DEEPPWD;                             // disable deep power down mode
         ADC().CR |= _::CR_ADVREGEN;                             // enable adc voltage regulator
-        sys_clock::delay_us(10);                                // wait for regulator to stabilize
+        sys_tick::delay_us(10);                                 // wait for regulator to stabilize
         ADC().CFGR &= ~_::CFGR_DMAEN;                           // ensure DMA is disabled during calibration
         ADC().CR |= _::CR_ADCAL;                                // start calibration
         while (ADC().CR & _::CR_ADCAL);                         // wait for calibration to complete
