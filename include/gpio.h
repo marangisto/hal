@@ -153,13 +153,13 @@ private:
     typedef pin_t<PIN> pin;
 };
 
-#if defined(STM32G431)
 template<int POS, typename = is_in_range<true> >
 struct syscfg_traits
 {
     static_assert(always_false_i<POS>::value, "pin out of range for syscfg exticr");
 };
 
+#if defined(STM32G431)
 template<int POS>
 struct syscfg_traits<POS, is_in_range<(0 <= POS && POS < 4)> >
 {
@@ -182,6 +182,30 @@ template<int POS>
 struct syscfg_traits<POS, is_in_range<(12 <= POS && POS < 16)> >
 {
     static volatile uint32_t& EXTICR() { return device::SYSCFG.EXTICR4; }
+};
+#elif defined(STM32F051)
+template<int POS>
+struct syscfg_traits<POS, is_in_range<(0 <= POS && POS < 4)> >
+{
+    static volatile uint32_t& EXTICR() { return device::SYSCFG_COMP.SYSCFG_EXTICR1; }
+};
+
+template<int POS>
+struct syscfg_traits<POS, is_in_range<(4 <= POS && POS < 8)> >
+{
+    static volatile uint32_t& EXTICR() { return device::SYSCFG_COMP.SYSCFG_EXTICR2; }
+};
+
+template<int POS>
+struct syscfg_traits<POS, is_in_range<(8 <= POS && POS < 12)> >
+{
+    static volatile uint32_t& EXTICR() { return device::SYSCFG_COMP.SYSCFG_EXTICR3; }
+};
+
+template<int POS>
+struct syscfg_traits<POS, is_in_range<(12 <= POS && POS < 16)> >
+{
+    static volatile uint32_t& EXTICR() { return device::SYSCFG_COMP.SYSCFG_EXTICR4; }
 };
 #endif
 
@@ -237,6 +261,29 @@ public:
 
     static inline bool interrupt_pending() { return (device::EXTI.PR1 & pin::bit_mask) != 0; }
     static inline void clear_interrupt() { device::EXTI.PR1 = pin::bit_mask; }
+#elif defined(STM32F051)
+    template<trigger_edge_t EDGE = rising_edge>
+    static void enable_interrupt()
+    {
+        using namespace device;
+
+        peripheral_traits<syscfg_comp_t>::enable();
+        constexpr gpio_port_t port = pin_port(PIN);
+        constexpr uint8_t shift = (pin_bit(PIN) & 0x3) << 2;
+        volatile uint32_t& EXTICR = syscfg_traits<pin_bit(PIN)>::EXTICR();
+
+        EXTICR &= ~(0xf << shift);
+        EXTICR |= (port << shift);
+
+        EXTI.IMR |= pin::bit_mask;
+        if (EDGE == rising_edge || EDGE == both_edges)
+            EXTI.RTSR |= pin::bit_mask;
+        if (EDGE == falling_edge || EDGE == both_edges)
+            EXTI.FTSR |= pin::bit_mask;
+    }
+
+    static inline bool interrupt_pending() { return (device::EXTI.PR & pin::bit_mask) != 0; }
+    static inline void clear_interrupt() { device::EXTI.PR = pin::bit_mask; }
 #endif
 
 private:
