@@ -53,7 +53,7 @@ void sys_tick::delay_us(uint32_t us)
     if (now > then)
         while (c > then && c < now);
     else
-        while (c < then || c > now);
+        while (!(c > now && c < then));
 }
 
 void sys_tick::init(uint32_t n)
