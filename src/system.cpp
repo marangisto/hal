@@ -37,7 +37,7 @@ void sys_tick::delay_ms(uint32_t ms)
 
 void sys_tick::delay_us(uint32_t us)
 {
-#if defined(STM32F051) || defined (STM32F767) || defined(STM32H743) || defined(STM32G070)
+#if defined(STM32F051) || defined(STM32F072) || defined (STM32F767) || defined(STM32H743) || defined(STM32G070)
     volatile uint32_t& c = STK.CVR;
     const uint32_t c_max = STK.RVR;
 #elif defined(STM32F103) || defined(STM32F411) || defined(STM32G431)
