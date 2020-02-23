@@ -48,7 +48,7 @@ struct adc_impl_f0
         while (!(ADC().ISR & _::ISR_ADRDY));                    // wait for adc ready 
     }
 
-    static constexpr uint8_t nulch = 0xf;
+    static constexpr uint8_t nulch = 0xff;
 
     template< uint8_t S1, uint8_t S2 = nulch, uint8_t S3 = nulch, uint8_t S4 = nulch
             , uint8_t S5 = nulch, uint8_t S6 = nulch, uint8_t S7 = nulch, uint8_t S8 = nulch>
