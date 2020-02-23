@@ -20,6 +20,13 @@ enum mco_sel_t
     , mco_xt1       = 0xa
     , mco_pll3e     = 0xb   // pll3 for ethernet
     };
+#elif defined(STM32F767)
+enum mco_sel_t
+    { mco_hsi       = 0
+    , mco_lse       = 1
+    , mco_hse       = 2
+    , mco_pll       = 3
+    };
 #else
 enum mco_sel_t
     { mco_off       = 0
@@ -40,6 +47,12 @@ template<int PRESCALE> struct mco_prescale
 
 #if defined(STM32F103)
 template<> struct mco_prescale<1> { static const uint8_t value = 0; };
+#elif defined(STM32F767)
+template<> struct mco_prescale<1> { static const uint8_t value = 0; };
+template<> struct mco_prescale<2> { static const uint8_t value = 4; };
+template<> struct mco_prescale<3> { static const uint8_t value = 5; };
+template<> struct mco_prescale<4> { static const uint8_t value = 6; };
+template<> struct mco_prescale<5> { static const uint8_t value = 7; };
 #elif defined(STM32G070)
 template<> struct mco_prescale<1> { static const uint8_t value = 0; };
 template<> struct mco_prescale<2> { static const uint8_t value = 1; };
@@ -60,7 +73,11 @@ template<> struct mco_prescale<16> { static const uint8_t value = 4; };
 template<gpio::gpio_pin_t PIN, mco_sel_t SEL, int PRESCALE = 1>
 struct mco_t
 {
+#if defined(STM32F767)
+    typedef gpio::internal::alternate_t<PIN, gpio::internal::MCO1> mco;
+#else
     typedef gpio::internal::alternate_t<PIN, gpio::internal::MCO> mco;
+#endif
     typedef device::rcc_t _;
 
     static void setup()
@@ -70,6 +87,9 @@ struct mco_t
 #if defined(STM32F103)
         static_assert(mco_prescale<PRESCALE>::value == 0, "illegal PRESCALE for this MCU");
         RCC.CFGR |= _::CFGR_MCO<SEL>;
+#elif defined(STM32F767)
+        RCC.CFGR |= _::CFGR_MCO1PRE<mco_prescale<PRESCALE>::value>;
+        RCC.CFGR |= _::CFGR_MCO1<SEL>;
 #else
         RCC.CFGR |= _::CFGR_MCOPRE<mco_prescale<PRESCALE>::value>;
         RCC.CFGR |= _::CFGR_MCOSEL<SEL>;
