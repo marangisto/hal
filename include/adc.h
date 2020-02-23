@@ -48,7 +48,10 @@ template<uint8_t NO> struct adc_traits {};
 
 } // namespace internal
 
-#if defined(STM32F1) || defined(STM32F4) || defined(STM32F7)
+#if defined(STM32F0)
+#include "adc/f0.h"
+template<int NO> using adc_t = adc_api_t<NO, internal::adc_impl_f0>;
+#elif defined(STM32F1) || defined(STM32F4) || defined(STM32F7)
 #include "adc/f1.h"
 template<int NO> using adc_t = adc_api_t<NO, internal::adc_impl_f1>;
 #elif defined(STM32G0)
