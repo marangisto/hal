@@ -272,6 +272,11 @@ public:
         TIM().BDTR |= _::BDTR_MOE;
     }
 
+    static inline void set_auto_reload_value(count_t arr)
+    {
+        TIM().ARR = arr;
+    }
+
 //private:
     template<typename, channel_t, gpio::gpio_pin_t> friend class pwm_t;
     static inline typename timer_traits<TN>::T& TIM() { return timer_traits<TN>::TIM(); }
