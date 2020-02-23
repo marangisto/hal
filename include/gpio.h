@@ -313,6 +313,8 @@ namespace internal
 
 #if defined(STM32F051)
 #include "gpio/stm32f051.h"
+#elif defined(STM32F072)
+#include "gpio/stm32f072.h"
 #elif defined(STM32F103)
 #include "gpio/stm32f103.h"
 #elif defined(STM32F411)

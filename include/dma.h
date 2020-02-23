@@ -15,6 +15,11 @@ enum dma_interrupt_status
     , dma_transfer_error    = 0x8
     };
 
+enum circular_mode
+    { circular
+    , linear
+    };
+
 #if defined(HAVE_PERIPHERAL_DMAMUX)
 template<uint8_t NO, uint8_t CH> struct dmamux_traits {};
 
@@ -40,19 +45,23 @@ template<> struct dmamux_traits<2, 8> { static inline volatile uint32_t& CCR() {
 
 template<uint8_t NO> struct dma_traits {};
 
-#if defined(HAVE_PERIPHERAL_DMA2)
+#if defined(HAVE_PERIPHERAL_DMA1)
 template<> struct dma_traits<1>
 {
     typedef device::dma1_t T;
     static inline T& DMA() { return device::DMA1; }
 };
+#endif
 
+#if defined(HAVE_PERIPHERAL_DMA2)
 template<> struct dma_traits<2>
 {
     typedef device::dma2_t T;
     static inline T& DMA() { return device::DMA2; }
 };
-#else
+#endif
+
+#if defined(HAVE_PERIPHERAL_DMA)
 template<> struct dma_traits<1>
 {
     typedef device::dma_t T;
@@ -294,6 +303,28 @@ template<uint8_t NO> struct dma_channel_traits<NO, 2>
     static inline volatile uint32_t& CPAR() { return DMA().CPAR2; }
     static inline volatile uint32_t& CMAR() { return DMA().CMAR2; }
 };
+#elif defined(STM32F072)
+// TODO: Complete this section
+template<uint8_t NO> struct dma_channel_traits<NO, 5>
+{
+    typedef typename dma_traits<NO>::T _;
+    static inline typename dma_traits<NO>::T& DMA() { return dma_traits<NO>::DMA(); }
+
+    static constexpr uint32_t ISR_TEIF = _::ISR_TEIF5;
+    static constexpr uint32_t ISR_HTIF = _::ISR_HTIF5;
+    static constexpr uint32_t ISR_TCIF = _::ISR_TCIF5;
+    static constexpr uint32_t ISR_GIF = _::ISR_GIF5;
+
+    static constexpr uint32_t IFCR_TEIF = _::IFCR_CTEIF5;
+    static constexpr uint32_t IFCR_HTIF = _::IFCR_CHTIF5;
+    static constexpr uint32_t IFCR_TCIF = _::IFCR_CTCIF5;
+    static constexpr uint32_t IFCR_GIF = _::IFCR_CGIF5;
+
+    static inline volatile uint32_t& CCR() { return DMA().CCR5; }
+    static inline volatile uint32_t& CNDTR() { return DMA().CNDTR5; }
+    static inline volatile uint32_t& CPAR() { return DMA().CPAR5; }
+    static inline volatile uint32_t& CMAR() { return DMA().CMAR5; }
+};
 #endif
 
 template<uint8_t W> struct dma_size_bits {};
@@ -346,7 +377,7 @@ struct dma_t
                   ;
     }
 
-    template<uint8_t CH, typename T>
+    template<uint8_t CH, typename T, uint32_t PERIPH_REG_SIZE = dma_type_size<uint32_t>(), circular_mode CIRC_MODE = circular>
     static inline void mem_to_periph(const T *source, uint16_t nelem, volatile uint32_t *dest)
     {
         typedef dma_channel_traits<NO, CH> __;
@@ -362,9 +393,9 @@ struct dma_t
         __::CCR() = _::CCR1_RESET_VALUE                                 // reset channel configuration register
                   | _::CCR1_DIR                                         // direction read from memory, write periphal
                   | _::CCR1_MINC                                        // set memory increment mode
-                  | _::CCR1_CIRC                                        // use circular mode
+                  | (CIRC_MODE == circular ? _::CCR1_CIRC : 0)          // use circular mode
                   | _::template CCR1_MSIZE<dma_type_size<T>()>          // set memory item size
-                  | _::template CCR1_PSIZE<dma_type_size<uint32_t>()>   // set peripheral register size to 32-bits
+                  | _::template CCR1_PSIZE<PERIPH_REG_SIZE>             // set peripheral register size
                   ;
     }
 
@@ -428,7 +459,7 @@ struct dma_t
     }
 };
 
-} // namespace adc
+} // namespace dma
 
 } // namespace hal
 
