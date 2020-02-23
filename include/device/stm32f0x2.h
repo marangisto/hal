@@ -10245,6 +10245,13 @@ template<> struct peripheral_traits<dma1_t>
     static void disable() { RCC.AHBENR &= ~rcc_t::AHBENR_DMA1EN; }
 };
 
+template<> struct peripheral_traits<syscfg_comp_t>
+{
+    static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_SYSCFGEN; }
+    static void disable() { RCC.APB2ENR &= ~rcc_t::APB2ENR_SYSCFGEN; }
+    static void reset() { RCC.APB2RSTR |= rcc_t::APB2RSTR_SYSCFGRST; }
+};
+
 template<> struct peripheral_traits<adc_t>
 {
     static void enable() { RCC.APB2ENR |= rcc_t::APB2ENR_ADCEN; }
