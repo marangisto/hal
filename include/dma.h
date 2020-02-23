@@ -30,7 +30,7 @@ template<> struct dmamux_traits<1, 4> { static inline volatile uint32_t& CCR() {
 template<> struct dmamux_traits<1, 5> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C4CR; } };
 template<> struct dmamux_traits<1, 6> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C5CR; } };
 template<> struct dmamux_traits<1, 7> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C6CR; } };
-#if defined(STM32G431)
+#if defined(STM32G4)
 template<> struct dmamux_traits<1, 8> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C7CR; } };
 template<> struct dmamux_traits<2, 1> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C8CR; } };
 template<> struct dmamux_traits<2, 2> { static inline volatile uint32_t& CCR() { return device::DMAMUX.C9CR; } };
@@ -71,7 +71,7 @@ template<> struct dma_traits<1>
 
 template<uint8_t NO, uint8_t CH> struct dma_channel_traits {};
 
-#if defined(STM32G431)
+#if defined(STM32G4)
 enum resource_t
     { DMAMUX_REQ_G0 = 1, DMAMUX_REQ_G1 = 2, DMAMUX_REQG2 = 3, DMAMUX_REQ_G3 = 4, ADC1 = 5, DAC1_CH1 = 6
     , DAC1_CH2 = 7, TIM6_UP = 8, TIM7_UP = 9, SPI1_RX = 10, SPI1_TX = 11, SPI2_RX = 12, SPI2_TX = 13
@@ -261,7 +261,7 @@ template<uint8_t NO> struct dma_channel_traits<NO, 8>
     static inline volatile uint32_t& CPAR() { return DMA().CPAR8; }
     static inline volatile uint32_t& CMAR() { return DMA().CMAR8; }
 };
-#elif defined(STM32G070)
+#elif defined(STM32G0)
 template<uint8_t NO> struct dma_channel_traits<NO, 1>
 {
     typedef typename dma_traits<NO>::T _;
@@ -303,8 +303,29 @@ template<uint8_t NO> struct dma_channel_traits<NO, 2>
     static inline volatile uint32_t& CPAR() { return DMA().CPAR2; }
     static inline volatile uint32_t& CMAR() { return DMA().CMAR2; }
 };
-#elif defined(STM32F072)
+#elif defined(STM32F0)
 // TODO: Complete this section
+template<uint8_t NO> struct dma_channel_traits<NO, 1>
+{
+    typedef typename dma_traits<NO>::T _;
+    static inline typename dma_traits<NO>::T& DMA() { return dma_traits<NO>::DMA(); }
+
+    static constexpr uint32_t ISR_TEIF = _::ISR_TEIF1;
+    static constexpr uint32_t ISR_HTIF = _::ISR_HTIF1;
+    static constexpr uint32_t ISR_TCIF = _::ISR_TCIF1;
+    static constexpr uint32_t ISR_GIF = _::ISR_GIF1;
+
+    static constexpr uint32_t IFCR_TEIF = _::IFCR_CTEIF1;
+    static constexpr uint32_t IFCR_HTIF = _::IFCR_CHTIF1;
+    static constexpr uint32_t IFCR_TCIF = _::IFCR_CTCIF1;
+    static constexpr uint32_t IFCR_GIF = _::IFCR_CGIF1;
+
+    static inline volatile uint32_t& CCR() { return DMA().CCR1; }
+    static inline volatile uint32_t& CNDTR() { return DMA().CNDTR1; }
+    static inline volatile uint32_t& CPAR() { return DMA().CPAR1; }
+    static inline volatile uint32_t& CMAR() { return DMA().CMAR1; }
+};
+
 template<uint8_t NO> struct dma_channel_traits<NO, 5>
 {
     typedef typename dma_traits<NO>::T _;
@@ -350,7 +371,7 @@ struct dma_t
 
     static void setup()
     {
-#if defined(HAVE_PERIPHERAL_DMAMUX) && !defined(STM32G070)
+#if defined(HAVE_PERIPHERAL_DMAMUX) && !defined(STM32G0)
         device::peripheral_traits<MUX>::enable();               // enable dma multiplexer
 #endif // HAVE_PERIPHERAL_DMAMUX
         device::peripheral_traits<_>::enable();                 // enable dma clock
