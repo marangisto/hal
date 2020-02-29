@@ -23,12 +23,6 @@ struct list_iterator
         return *this;
     }
 
-    list_iterator& operator--()
-    {
-        p = p->prev;
-        return *this;
-    }
-
     T& operator*() const
     {
         return p->value;
