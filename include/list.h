@@ -113,6 +113,18 @@ public:
         node->prev = s;
     }
 
+    void pop_front()
+    {
+        if (s->next != s)
+        {
+            list_node<T> *p = s->next;
+
+            s->next = p->next;
+            p->next->prev = s;
+            delete p;
+        }
+    }
+
     void push_back(const T& value)
     {
         list_node<T> *node = new list_node<T>(value);
@@ -121,6 +133,18 @@ public:
         node->prev = s->prev;
         s->prev = node;
         node->next = s;
+    }
+
+    void pop_back()
+    {
+        if (s->prev != s)
+        {
+            list_node<T> *p = s->prev;
+
+            s->prev = p->prev;
+            p->prev->next = s;
+            delete p;
+        }
     }
 
     void splice(const list_iterator<T>& p, const list& c)
