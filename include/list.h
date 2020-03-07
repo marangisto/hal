@@ -93,6 +93,11 @@ public:
         delete s;
     }
 
+    bool empty() const
+    {
+        return s->next == s;
+    }
+
     list_iterator<T> begin() const
     {
         return list_iterator<T>(s->next);
