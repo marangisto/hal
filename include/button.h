@@ -9,7 +9,7 @@ template<gpio_pin_t PIN>
 class button_t
 {
 public:
-    static inline bool read()
+    static inline bool read()               // call from main thread only
     {
         interrupt::disable();
         bool b = m_pressed;
@@ -26,6 +26,14 @@ public:
         if (m_count == m_stable_count)
             m_pressed = true;
         m_last_state = this_state;
+    }
+
+    static inline bool update_read()        // combined call for isr
+    {
+        update();
+        bool b = m_pressed;
+        m_pressed = false;
+        return b;
     }
 
     template<input_type_t input_type>
