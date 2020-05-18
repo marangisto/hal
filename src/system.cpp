@@ -112,7 +112,7 @@ void sys_clock::init()
 
     // set system clock to HSI-PLL 48MHz
 
-    FLASH.ACR = flash_t::ACR_PRFTBE | flash_t::ACR_LATENCY<0x1>;
+    FLASH.ACR |= flash_t::ACR_PRFTBE | flash_t::ACR_LATENCY<0x1>;
 
     RCC.CFGR |= _::CFGR_PLLMUL<0xa>;        // PLL multiplier 12
     RCC.CR |= _::CR_PLLON;                  // enable PLL
@@ -153,7 +153,7 @@ void sys_clock::init()
 
     constexpr uint8_t wait_states = 0x3;    // 3 wait-states for 100MHz at 2.7-3.3V
 
-    FLASH.ACR = flash_t::ACR_PRFTEN | flash_t::ACR_LATENCY<wait_states>;
+    FLASH.ACR |= flash_t::ACR_PRFTEN | flash_t::ACR_LATENCY<wait_states>;
     while ((FLASH.ACR & flash_t::ACR_LATENCY<0x7>) != flash_t::ACR_LATENCY<wait_states>); // wait to take effect
 
     enum pllP_t { pllP_2 = 0x0, pllP_4 = 0x1, pllP_6 = 0x2, pllP_8 = 0x3 };
@@ -197,7 +197,7 @@ void sys_clock::init()
 
     constexpr uint8_t wait_states = 0x2;                // 2 wait-states for 64Hz at Vcore range 1
 
-    FLASH.ACR = flash_t::ACR_PRFTEN | flash_t::ACR_LATENCY<wait_states>;
+    FLASH.ACR |= flash_t::ACR_PRFTEN | flash_t::ACR_LATENCY<wait_states>;
     while ((FLASH.ACR & flash_t::ACR_LATENCY<0x7>) != flash_t::ACR_LATENCY<wait_states>); // wait to take effect
 
     // fR (fSYS) = fVCO / pllR                          // <= 64MHz
@@ -235,7 +235,7 @@ void sys_clock::init()
 
     constexpr uint8_t wait_states = 0x8;                // 8 wait-states for 170MHz at Vcore range 1
 
-    FLASH.ACR = flash_t::ACR_PRFTEN | flash_t::ACR_LATENCY<wait_states>;
+    FLASH.ACR |= flash_t::ACR_PRFTEN | flash_t::ACR_LATENCY<wait_states>;
     while ((FLASH.ACR & flash_t::ACR_LATENCY<0xf>) != flash_t::ACR_LATENCY<wait_states>); // wait to take effect
 
 #if defined(HSE)
