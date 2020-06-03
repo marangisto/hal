@@ -235,6 +235,7 @@ void sys_clock::init()
 
     constexpr uint8_t wait_states = 0x8;                // 8 wait-states for 170MHz at Vcore range 1
 
+    FLASH.ACR = flash_t::ACR_RESET_VALUE;
     FLASH.ACR |= flash_t::ACR_PRFTEN | flash_t::ACR_LATENCY<wait_states>;
     while ((FLASH.ACR & flash_t::ACR_LATENCY<0xf>) != flash_t::ACR_LATENCY<wait_states>); // wait to take effect
 
